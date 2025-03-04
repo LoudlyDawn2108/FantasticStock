@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2C1DF23C-AEF7-4B44-A95F-7ABC7B3743B4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>FantasticStock</RootNamespace>
+    <AssemblyName>FantasticStock</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CommandManager.cs" />
+    <Compile Include="Common\CurrentUser.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\ServiceLocator.cs" />
+    <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="Models\Admin\AuditLogEntry.cs" />
+    <Compile Include="Models\Admin\BackupHistory.cs" />
+    <Compile Include="Models\Admin\CompanyInformation.cs" />
+    <Compile Include="Models\Admin\ErrorLogEntry.cs" />
+    <Compile Include="Models\Admin\Permission.cs" />
+    <Compile Include="Models\Admin\Role.cs" />
+    <Compile Include="Models\Admin\SystemSetting.cs" />
+    <Compile Include="Models\Admin\User.cs" />
+    <Compile Include="Models\Financial\Expense.cs" />
+    <Compile Include="Models\Financial\Payment.cs" />
+    <Compile Include="Models\Inventory\Category.cs" />
+    <Compile Include="Models\Inventory\InventoryTransaction.cs" />
+    <Compile Include="Models\Inventory\Product.cs" />
+    <Compile Include="Models\Inventory\ProductInventory.cs" />
+    <Compile Include="Models\Inventory\Supplier.cs" />
+    <Compile Include="Models\Sales\Customer.cs" />
+    <Compile Include="Models\Sales\Invoice.cs" />
+    <Compile Include="Models\Sales\InvoiceDetail.cs" />
+    <Compile Include="Models\Sales\SalesOrder.cs" />
+    <Compile Include="Models\Sales\SalesOrderDetail.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Admin\AuditService.cs" />
+    <Compile Include="Services\Admin\BackupService.cs" />
+    <Compile Include="Services\Admin\ConfigService.cs" />
+    <Compile Include="Services\Admin\MonitoringService.cs" />
+    <Compile Include="Services\Admin\UserService.cs" />
+    <Compile Include="Services\Financial\FinancialService.cs" />
+    <Compile Include="Services\Interfaces\IAuditService.cs" />
+    <Compile Include="Services\Interfaces\IBackupService.cs" />
+    <Compile Include="Services\Interfaces\IConfigService.cs" />
+    <Compile Include="Services\Interfaces\IDatabaseService.cs" />
+    <Compile Include="Services\Interfaces\IFinancialService.cs" />
+    <Compile Include="Services\Interfaces\IInventoryService.cs" />
+    <Compile Include="Services\Interfaces\IMonitoringService.cs" />
+    <Compile Include="Services\Interfaces\ISalesService.cs" />
+    <Compile Include="Services\Interfaces\IUserService.cs" />
+    <Compile Include="Services\Inventory\InventoryService.cs" />
+    <Compile Include="Services\Sales\SalesService.cs" />
+    <Compile Include="Services\SqlDatabaseService.cs" />
+    <Compile Include="ViewModels\Admin\BackupViewModel.cs" />
+    <Compile Include="ViewModels\Admin\MonitoringViewModel.cs" />
+    <Compile Include="ViewModels\Admin\SystemConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\Admin\UserManagementViewModel.cs" />
+    <Compile Include="ViewModels\Financial\FinancialDashboardViewModel.cs" />
+    <Compile Include="ViewModels\Inventory\ProductViewModel.cs" />
+    <Compile Include="ViewModels\Sales\SalesOrderViewModel.cs" />
+    <Compile Include="Views\Admin\BackupView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\BackupView.Designer.cs">
+      <DependentUpon>BackupView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\ChangePasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\ChangePasswordForm.Designer.cs">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Financial\FinancialDashboardView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\FinancialDashboardView.Designer.cs">
+      <DependentUpon>FinancialDashboardView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inventory\ProductManagementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Inventory\ProductManagementView.Designer.cs">
+      <DependentUpon>ProductManagementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\MonitoringView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\MonitoringView.Designer.cs">
+      <DependentUpon>MonitoringView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\SystemConfigurationView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\SystemConfigurationView.Designer.cs">
+      <DependentUpon>SystemConfigurationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Admin\UserManagementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\UserManagementView.Designer.cs">
+      <DependentUpon>UserManagementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\SalesOrderView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\SalesOrderView.Designer.cs">
+      <DependentUpon>SalesOrderView.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sales\SalesOrderView.resx">
+      <DependentUpon>SalesOrderView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
