@@ -1,6 +1,6 @@
 using System;
 
-namespace AdminDomain.Common
+namespace FantasticStock.Common
 {
     public static class CurrentUser
     {

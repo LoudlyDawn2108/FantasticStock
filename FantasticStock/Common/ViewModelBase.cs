@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace AdminDomain.Common
+namespace FantasticStock.Common
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

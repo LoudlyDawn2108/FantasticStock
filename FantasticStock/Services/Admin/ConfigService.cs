@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using AdminDomain.Models;
+using FantasticStock.Models;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public class ConfigService : IConfigService
     {

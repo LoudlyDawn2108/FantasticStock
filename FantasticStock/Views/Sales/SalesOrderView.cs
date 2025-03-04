@@ -1,4 +1,4 @@
-﻿using AdminDomain.ViewModels.Sales;
+﻿using FantasticStock.ViewModels.Sales;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -98,7 +98,7 @@ namespace FantasticStock.Views.Sales
             {
                 if (dgvOrders.SelectedRows.Count > 0)
                 {
-                    _viewModel.SelectedOrder = dgvOrders.SelectedRows[0].DataBoundItem as AdminDomain.Models.Sales.SalesOrder;
+                    _viewModel.SelectedOrder = dgvOrders.SelectedRows[0].DataBoundItem as FantasticStock.Models.Sales.SalesOrder;
                 }
             };
 
@@ -106,7 +106,7 @@ namespace FantasticStock.Views.Sales
             {
                 if (dgvOrderDetails.SelectedRows.Count > 0)
                 {
-                    _viewModel.SelectedOrderDetail = dgvOrderDetails.SelectedRows[0].DataBoundItem as AdminDomain.Models.Sales.SalesOrderDetail;
+                    _viewModel.SelectedOrderDetail = dgvOrderDetails.SelectedRows[0].DataBoundItem as FantasticStock.Models.Sales.SalesOrderDetail;
                 }
             };
 

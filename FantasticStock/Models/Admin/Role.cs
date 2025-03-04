@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AdminDomain.Models
+namespace FantasticStock.Models
 {
     public class Role
     {

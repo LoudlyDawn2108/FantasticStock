@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AdminDomain.Properties
+namespace FantasticStock.Properties
 {
 
 

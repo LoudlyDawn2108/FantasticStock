@@ -1,6 +1,6 @@
 using System;
 
-namespace AdminDomain.Models.Inventory
+namespace FantasticStock.Models.Inventory
 {
     public class InventoryTransaction
     {

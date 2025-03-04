@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AdminDomain.Common
+namespace FantasticStock.Common
 {
     public static class ServiceLocator
     {

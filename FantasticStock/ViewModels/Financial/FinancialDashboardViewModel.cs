@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using AdminDomain.Models.Financial;
-using AdminDomain.Models.Sales;
-using AdminDomain.Services;
-using AdminDomain.Common;
+using FantasticStock.Models.Financial;
+using FantasticStock.Models.Sales;
+using FantasticStock.Services;
+using FantasticStock.Common;
 
-namespace AdminDomain.ViewModels.Financial
+namespace FantasticStock.ViewModels.Financial
 {
     public class FinancialDashboardViewModel : ViewModelBase
     {

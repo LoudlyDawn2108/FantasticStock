@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public class SqlDatabaseService : IDatabaseService
     {
@@ -12,7 +12,7 @@ namespace AdminDomain.Services
         
         public SqlDatabaseService()
         {
-            _connectionString = "Data Source=.;Initial Catalog=AdminDomain;Integrated Security=True;";
+            _connectionString = "Data Source=.;Initial Catalog=FantasticStock;Integrated Security=True;";
             _masterConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
         }
 
@@ -26,7 +26,7 @@ namespace AdminDomain.Services
             using (var connection = new SqlConnection(_masterConnectionString))
             {
                 connection.Open();
-                using (var command = new SqlCommand("SELECT COUNT(*) FROM sys.databases WHERE name = 'AdminDomain'", connection))
+                using (var command = new SqlCommand("SELECT COUNT(*) FROM sys.databases WHERE name = 'FantasticStock'", connection))
                 {
                     dbExists = (int)command.ExecuteScalar() > 0;
                 }
@@ -38,7 +38,7 @@ namespace AdminDomain.Services
                 using (var connection = new SqlConnection(_masterConnectionString))
                 {
                     connection.Open();
-                    using (var command = new SqlCommand("CREATE DATABASE AdminDomain", connection))
+                    using (var command = new SqlCommand("CREATE DATABASE FantasticStock", connection))
                     {
                         command.ExecuteNonQuery();
                     }
@@ -54,7 +54,7 @@ namespace AdminDomain.Services
             // In a real application, you would load this from a file
             // For this example, we'll use a hardcoded simplified schema
             string schemaScript = @"
-USE AdminDomain;
+USE FantasticStock;
 
 -- User Management Tables
 CREATE TABLE Roles (

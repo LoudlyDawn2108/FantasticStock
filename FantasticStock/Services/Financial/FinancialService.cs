@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdminDomain.Models.Financial;
-using AdminDomain.Models.Sales;
+using FantasticStock.Models.Financial;
+using FantasticStock.Models.Sales;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public class FinancialService : IFinancialService
     {

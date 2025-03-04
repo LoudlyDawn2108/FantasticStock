@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using AdminDomain.Models.Sales;
+using FantasticStock.Models.Sales;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public interface ISalesService
     {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using AdminDomain.Models;
+using FantasticStock.Models;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public interface IMonitoringService
     {

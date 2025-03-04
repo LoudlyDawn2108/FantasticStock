@@ -4,9 +4,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
-using AdminDomain.Models;
+using FantasticStock.Models;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public class UserService : IUserService
     {

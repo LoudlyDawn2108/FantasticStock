@@ -1,6 +1,6 @@
 using System;
 
-namespace AdminDomain.Models.Financial
+namespace FantasticStock.Models.Financial
 {
     public class Payment
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace AdminDomain.Common
+namespace FantasticStock.Common
 {
     public class RelayCommand : ICommand
     {

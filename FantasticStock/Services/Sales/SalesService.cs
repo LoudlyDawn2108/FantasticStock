@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AdminDomain.Models.Sales;
+using FantasticStock.Models.Sales;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public class SalesService : ISalesService
     {

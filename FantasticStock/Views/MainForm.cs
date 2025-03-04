@@ -1,5 +1,5 @@
-﻿using AdminDomain.Common;
-using AdminDomain.Services;
+﻿using FantasticStock.Common;
+using FantasticStock.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AdminDomain.Views
+namespace FantasticStock.Views
 {
     public partial class MainForm : Form
     {

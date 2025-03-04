@@ -1,4 +1,4 @@
-﻿using AdminDomain.ViewModels.Inventory;
+﻿using FantasticStock.ViewModels.Inventory;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -97,7 +97,7 @@ namespace FantasticStock.Views.Inventory
             {
                 if (dgvProducts.SelectedRows.Count > 0)
                 {
-                    _viewModel.SelectedProduct = dgvProducts.SelectedRows[0].DataBoundItem as AdminDomain.Models.Inventory.Product;
+                    _viewModel.SelectedProduct = dgvProducts.SelectedRows[0].DataBoundItem as FantasticStock.Models.Inventory.Product;
                 }
             };
 
@@ -105,7 +105,7 @@ namespace FantasticStock.Views.Inventory
             {
                 if (dgvInventory.SelectedRows.Count > 0)
                 {
-                    _viewModel.SelectedInventoryItem = dgvInventory.SelectedRows[0].DataBoundItem as AdminDomain.Models.Inventory.ProductInventory;
+                    _viewModel.SelectedInventoryItem = dgvInventory.SelectedRows[0].DataBoundItem as FantasticStock.Models.Inventory.ProductInventory;
                 }
             };
 

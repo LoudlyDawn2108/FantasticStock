@@ -1,4 +1,4 @@
-﻿namespace AdminDomain.Views
+﻿namespace FantasticStock.Views
 {
     partial class MainForm
     {

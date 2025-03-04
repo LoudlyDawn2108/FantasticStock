@@ -1,6 +1,6 @@
 using System;
 
-namespace AdminDomain.Models
+namespace FantasticStock.Models
 {
     public class SystemSetting
     {

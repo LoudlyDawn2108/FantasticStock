@@ -6,15 +6,15 @@ using System.IO;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
-using AdminDomain.Models;
+using FantasticStock.Models;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public class BackupService : IBackupService
     {
         private readonly IDatabaseService _databaseService;
         private readonly IAuditService _auditService;
-        private static readonly string ConnectionString = "Data Source=.;Initial Catalog=AdminDomain;Integrated Security=True;";
+        private static readonly string ConnectionString = "Data Source=.;Initial Catalog=FantasticStock;Integrated Security=True;";
 
         public BackupService()
         {
@@ -74,7 +74,7 @@ namespace AdminDomain.Services
                 using (var connection = new SqlConnection(ConnectionString))
                 {
                     connection.Open();
-                    var command = new SqlCommand($"BACKUP DATABASE AdminDomain TO DISK = '{backupFile}'", connection);
+                    var command = new SqlCommand($"BACKUP DATABASE FantasticStock TO DISK = '{backupFile}'", connection);
                     command.ExecuteNonQuery();
                 }
 
@@ -180,15 +180,15 @@ namespace AdminDomain.Services
                 using (var connection = new SqlConnection("Data Source=.;Initial Catalog=master;Integrated Security=True;"))
                 {
                     connection.Open();
-                    var command = new SqlCommand("ALTER DATABASE AdminDomain SET SINGLE_USER WITH ROLLBACK IMMEDIATE", connection);
+                    var command = new SqlCommand("ALTER DATABASE FantasticStock SET SINGLE_USER WITH ROLLBACK IMMEDIATE", connection);
                     command.ExecuteNonQuery();
                     
                     // Restore database
-                    command = new SqlCommand($"RESTORE DATABASE AdminDomain FROM DISK = '{backupFile}' WITH REPLACE", connection);
+                    command = new SqlCommand($"RESTORE DATABASE FantasticStock FROM DISK = '{backupFile}' WITH REPLACE", connection);
                     command.ExecuteNonQuery();
                     
                     // Set back to multi user mode
-                    command = new SqlCommand("ALTER DATABASE AdminDomain SET MULTI_USER", connection);
+                    command = new SqlCommand("ALTER DATABASE FantasticStock SET MULTI_USER", connection);
                     command.ExecuteNonQuery();
                 }
 

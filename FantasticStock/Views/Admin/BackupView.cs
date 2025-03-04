@@ -1,4 +1,4 @@
-﻿using AdminDomain.ViewModels;
+﻿using FantasticStock.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AdminDomain.Views
+namespace FantasticStock.Views
 {
     public partial class BackupView : UserControl
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace AdminDomain.Models.Sales
+namespace FantasticStock.Models.Sales
 {
     public class SalesOrderDetail
     {

@@ -6,9 +6,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Net;
-using AdminDomain.Models;
+using FantasticStock.Models;
 
-namespace AdminDomain.Services
+namespace FantasticStock.Services
 {
     public class MonitoringService : IMonitoringService
     {

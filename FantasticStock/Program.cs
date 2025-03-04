@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
-using AdminDomain.Common;
-using AdminDomain.Services;
-using AdminDomain.Views;
+using FantasticStock.Common;
+using FantasticStock.Services;
+using FantasticStock.Views;
 
-namespace AdminDomain
+namespace FantasticStock
 {
     static class Program
     {

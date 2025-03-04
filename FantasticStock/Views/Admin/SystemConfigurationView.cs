@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace AdminDomain.Views
+namespace FantasticStock.Views
 {
     public partial class SystemConfigurationView : UserControl
     {

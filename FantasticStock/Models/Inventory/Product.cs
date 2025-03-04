@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AdminDomain.Models.Inventory
+namespace FantasticStock.Models.Inventory
 {
     public class Product
     {

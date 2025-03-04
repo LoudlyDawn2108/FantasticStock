@@ -2,11 +2,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-using AdminDomain.Common;
-using AdminDomain.Models;
-using AdminDomain.Services;
+using FantasticStock.Common;
+using FantasticStock.Models;
+using FantasticStock.Services;
 
-namespace AdminDomain.ViewModels
+namespace FantasticStock.ViewModels
 {
     public class MonitoringViewModel : ViewModelBase
     {

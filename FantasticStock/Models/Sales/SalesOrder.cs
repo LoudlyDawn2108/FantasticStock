@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AdminDomain.Models.Sales
+namespace FantasticStock.Models.Sales
 {
     public class SalesOrder
     {

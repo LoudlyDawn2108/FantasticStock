@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using AdminDomain.Models.Inventory;
-using AdminDomain.Services;
-using AdminDomain.Common;
+using FantasticStock.Models.Inventory;
+using FantasticStock.Services;
+using FantasticStock.Common;
 
-namespace AdminDomain.ViewModels.Inventory
+namespace FantasticStock.ViewModels.Inventory
 {
     public class ProductViewModel : ViewModelBase
     {
