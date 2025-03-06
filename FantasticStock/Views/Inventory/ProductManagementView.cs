@@ -27,7 +27,7 @@ namespace FantasticStock.Views.Inventory
         }
 
         private void SetupBindings()
-        {
+        {/*
             // Bind products grid
             dgvProducts.DataSource = _viewModel.Products;
 
@@ -114,13 +114,13 @@ namespace FantasticStock.Views.Inventory
             {
                 if (e.PropertyName == "IsEditing")
                 {
-                    pnlProductDetails.Enabled = _viewModel.IsEditing;
-                    btnSaveProduct.Enabled = _viewModel.IsEditing;
-                    btnAddProduct.Enabled = !_viewModel.IsEditing;
-                    btnEditProduct.Enabled = !_viewModel.IsEditing;
-                    btnDeleteProduct.Enabled = !_viewModel.IsEditing;
+                    //pnlProductDetails.Enabled = _viewModel.IsEditing;
+                    //btnSaveProduct.Enabled = _viewModel.IsEditing;
+                    //btnAddProduct.Enabled = !_viewModel.IsEditing;
+                    //btnEditProduct.Enabled = !_viewModel.IsEditing;
+                    //btnDeleteProduct.Enabled = !_viewModel.IsEditing;
                 }
             };
-        }
+        */}
     }
 }

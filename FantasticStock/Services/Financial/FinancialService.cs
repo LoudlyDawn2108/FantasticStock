@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FantasticStock.Common;
 using FantasticStock.Models.Financial;
 using FantasticStock.Models.Sales;
 

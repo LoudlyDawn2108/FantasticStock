@@ -27,7 +27,7 @@ namespace FantasticStock.Views.Sales
         }
 
         private void SetupBindings()
-        {
+        {/*
             // Bind sales orders grid
             dgvOrders.DataSource = _viewModel.SalesOrders;
 
@@ -125,6 +125,6 @@ namespace FantasticStock.Views.Sales
                     btnGenerateInvoice.Enabled = !_viewModel.IsEditing;
                 }
             };
-        }
+        */}
     }
 }

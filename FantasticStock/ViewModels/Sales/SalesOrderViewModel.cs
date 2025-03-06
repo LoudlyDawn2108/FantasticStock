@@ -10,7 +10,7 @@ using FantasticStock.Common;
 namespace FantasticStock.ViewModels.Sales
 {
     public class SalesOrderViewModel : ViewModelBase
-    {
+    {/*
         private readonly ISalesService _salesService;
         private readonly IInventoryService _inventoryService;
         
@@ -67,7 +67,7 @@ namespace FantasticStock.ViewModels.Sales
             PrintOrderCommand = new RelayCommand(PrintOrder, CanPrintOrder);
             UpdateOrderStatusCommand = new RelayCommand(UpdateOrderStatus, CanUpdateOrderStatus);
             RefreshDataCommand = new RelayCommand(LoadData);
-            
+
             // Load initial data
             LoadData();
         }
@@ -93,7 +93,7 @@ namespace FantasticStock.ViewModels.Sales
         private void NewOrder()
         {
             IsEditing = true;
-            
+
             // Create a new order
             var newOrder = new SalesOrder
             {
@@ -116,7 +116,7 @@ namespace FantasticStock.ViewModels.Sales
                 return;
                 
             IsEditing = true;
-            
+
             // Load order details
             var details = _salesService.GetSalesOrderDetails(SelectedOrder.OrderID);
             OrderDetails = new BindingList<SalesOrderDetail>(details);
@@ -166,7 +166,7 @@ namespace FantasticStock.ViewModels.Sales
         {
             if (!IsEditing || SelectedOrder == null)
                 return false;
-                
+
             // Basic validation
             return SelectedOrder.CustomerID > 0 &&
                    OrderDetails != null &&
@@ -224,7 +224,7 @@ namespace FantasticStock.ViewModels.Sales
                 
             // Check if product already exists in order
             var existingDetail = OrderDetails.FirstOrDefault(d => d.ProductID == SelectedProduct.ProductID);
-            
+
             if (existingDetail != null)
             {
                 // Increase quantity if product already in order
@@ -246,19 +246,19 @@ namespace FantasticStock.ViewModels.Sales
                     TaxPercent = 10, // Default tax percentage, would be retrieved from settings
                     CreatedDate = DateTime.Parse("2025-03-04 02:04:43")
                 };
-                
+
                 OrderDetails.Add(newDetail);
             }
-            
+
             // Recalculate order totals
             CalculateOrderTotals();
         }
-        
+
         private bool CanAddProduct()
         {
             return IsEditing && SelectedOrder != null && SelectedProduct != null;
         }
-        
+
         private void RemoveProduct()
         {
             if (SelectedOrder == null || SelectedOrderDetail == null)
@@ -269,37 +269,37 @@ namespace FantasticStock.ViewModels.Sales
             // Recalculate order totals
             CalculateOrderTotals();
         }
-        
+
         private bool CanRemoveProduct()
         {
             return IsEditing && SelectedOrder != null && SelectedOrderDetail != null;
         }
-        
+
         private void FilterOrders()
         {
             var filteredOrders = _salesService.GetSalesOrdersByDateRange(StartDate, EndDate);
-            
+
             // Apply additional filters if specified
             if (!string.IsNullOrEmpty(StatusFilter))
             {
                 filteredOrders = filteredOrders.Where(o => o.Status == StatusFilter).ToList();
             }
-            
+
             if (CustomerFilter.HasValue)
             {
                 filteredOrders = filteredOrders.Where(o => o.CustomerID == CustomerFilter.Value).ToList();
             }
-            
+
             if (!string.IsNullOrEmpty(SearchText))
             {
-                filteredOrders = filteredOrders.Where(o => 
-                    o.OrderNumber.Contains(SearchText) || 
+                filteredOrders = filteredOrders.Where(o =>
+                    o.OrderNumber.Contains(SearchText) ||
                     o.CustomerName.Contains(SearchText)).ToList();
             }
-            
+
             SalesOrders = new BindingList<SalesOrder>(filteredOrders);
         }
-        
+
         private void GenerateInvoice()
         {
             if (SelectedOrder == null)
@@ -530,5 +530,5 @@ namespace FantasticStock.ViewModels.Sales
                 OnPropertyChanged();
             }
         }
-    }
+    */}
 }

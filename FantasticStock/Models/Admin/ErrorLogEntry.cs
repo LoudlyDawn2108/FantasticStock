@@ -13,19 +13,24 @@ namespace FantasticStock.Models
         public string Username { get; set; }
         public string IPAddress { get; set; }
         public DateTime Timestamp { get; set; }
-        
+
         public string SeverityText
         {
             get
             {
-                return SeverityLevel switch
+                switch (SeverityLevel)
                 {
-                    1 => "Low",
-                    2 => "Medium",
-                    3 => "High",
-                    4 => "Critical",
-                    _ => "Unknown"
-                };
+                    case 1:
+                        return "Low";
+                    case 2:
+                        return "Medium";
+                    case 3:
+                        return "High";
+                    case 4:
+                        return "Critical";
+                    default:
+                        return "Unknown";
+                }
             }
         }
     }

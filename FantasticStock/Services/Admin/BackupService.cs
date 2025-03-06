@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.IO.Compression;
+using System.Linq;
 using System.Security.Cryptography;
-using System.Text;
+using System.IO.Compression;
+using FantasticStock.Common;
 using FantasticStock.Models;
 
 namespace FantasticStock.Services

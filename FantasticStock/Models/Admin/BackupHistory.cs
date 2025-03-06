@@ -16,7 +16,7 @@ namespace FantasticStock.Models
         public int? CreatedBy { get; set; }
         public string CreatedByName { get; set; }
         public DateTime CreatedDate { get; set; }
-        
+
         public string FormattedSize
         {
             get
@@ -32,32 +32,36 @@ namespace FantasticStock.Models
                 return $"{len:0.##} {sizes[order]}";
             }
         }
-        
+
         public string DurationDisplay
         {
             get
             {
                 TimeSpan time = TimeSpan.FromSeconds(Duration);
-                return time.TotalMinutes < 1 ? 
-                    $"{time.Seconds} sec" : 
+                return time.TotalMinutes < 1 ?
+                    $"{time.Seconds} sec" :
                     $"{(int)time.TotalMinutes} min {time.Seconds} sec";
             }
         }
-        
+
         public string CompressionLevelDisplay
         {
             get
             {
-                return CompressionLevel switch
+                switch (CompressionLevel)
                 {
-                    0 => "None",
-                    1 => "Normal",
-                    2 => "High",
-                    _ => "Unknown"
-                };
+                    case 0:
+                        return "None";
+                    case 1:
+                        return "Normal";
+                    case 2:
+                        return "High";
+                    default:
+                        return "Unknown";
+                }
             }
         }
-        
+
         public string CreatedDateDisplay => CreatedDate.ToString("yyyy-MM-dd HH:mm:ss");
     }
 }

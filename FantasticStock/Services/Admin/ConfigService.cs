@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using FantasticStock.Common;
 using FantasticStock.Models;
 
 namespace FantasticStock.Services

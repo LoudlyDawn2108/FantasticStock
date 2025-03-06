@@ -1,4 +1,5 @@
-﻿using FantasticStock.ViewModels;
+﻿using FantasticStock.Models;
+using FantasticStock.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

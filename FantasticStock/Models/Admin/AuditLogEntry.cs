@@ -15,21 +15,25 @@ namespace FantasticStock.Models
         public string IPAddress { get; set; }
         public int SeverityLevel { get; set; }
         public DateTime Timestamp { get; set; }
-        
+
         public string SeverityText
         {
             get
             {
-                return SeverityLevel switch
+                switch (SeverityLevel)
                 {
-                    1 => "Information",
-                    2 => "Warning",
-                    3 => "Security",
-                    _ => "Unknown"
-                };
+                    case 1:
+                        return "Information";
+                    case 2:
+                        return "Warning";
+                    case 3:
+                        return "Security";
+                    default:
+                        return "Unknown";
+                }
             }
         }
-        
+
         public string FormattedTimestamp => Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
     }
 }

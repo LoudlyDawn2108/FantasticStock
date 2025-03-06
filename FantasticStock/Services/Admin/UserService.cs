@@ -4,7 +4,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
+using FantasticStock.Common;
 using FantasticStock.Models;
+using FantasticStock.ViewModels;
 
 namespace FantasticStock.Services
 {

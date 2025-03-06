@@ -33,8 +33,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,6 +68,8 @@
     <Compile Include="Models\Admin\ErrorLogEntry.cs" />
     <Compile Include="Models\Admin\Permission.cs" />
     <Compile Include="Models\Admin\Role.cs" />
+    <Compile Include="Models\Admin\ScheduledBackup.cs" />
+    <Compile Include="Models\Admin\SystemResources.cs" />
     <Compile Include="Models\Admin\SystemSetting.cs" />
     <Compile Include="Models\Admin\User.cs" />
     <Compile Include="Models\Financial\Expense.cs" />
@@ -152,6 +165,12 @@
     <Compile Include="Views\Admin\UserManagementView.Designer.cs">
       <DependentUpon>UserManagementView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\NewMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\NewMainForm.Designer.cs">
+      <DependentUpon>NewMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\SalesOrderView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -167,12 +186,19 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Admin\MonitoringView.resx">
+      <DependentUpon>MonitoringView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NewMainForm.resx">
+      <DependentUpon>NewMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Sales\SalesOrderView.resx">
       <DependentUpon>SalesOrderView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Net;
+using FantasticStock.Common;
 using FantasticStock.Models;
 
 namespace FantasticStock.Services

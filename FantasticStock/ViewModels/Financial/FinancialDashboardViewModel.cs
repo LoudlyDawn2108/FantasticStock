@@ -10,7 +10,7 @@ using FantasticStock.Common;
 namespace FantasticStock.ViewModels.Financial
 {
     public class FinancialDashboardViewModel : ViewModelBase
-    {
+    {/*
         private readonly IFinancialService _financialService;
         private readonly ISalesService _salesService;
         
@@ -241,5 +241,5 @@ namespace FantasticStock.ViewModels.Financial
                 OnPropertyChanged();
             }
         }
-    }
+    */}
 }

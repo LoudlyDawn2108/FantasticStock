@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FantasticStock.Models.Sales;
+using FantasticStock.Common;
 
 namespace FantasticStock.Services
 {
@@ -191,7 +192,7 @@ namespace FantasticStock.Services
                     Status = "Draft",
                     Subtotal = 100.00M,
                     TaxAmount = 10.00M,
-                    TotalAmount = 110.00M,
+                    //TotalAmount = 110.00M,
                     CreatedBy = CurrentUser.UserID,
                     CreatedDate = DateTime.Parse("2025-03-03 16:31:01"),
                     ModifiedBy = CurrentUser.UserID,

@@ -9,7 +9,7 @@ using FantasticStock.Common;
 namespace FantasticStock.ViewModels.Inventory
 {
     public class ProductViewModel : ViewModelBase
-    {
+    {/*
         private readonly IInventoryService _inventoryService;
         
         // Lists for data binding
@@ -347,5 +347,5 @@ namespace FantasticStock.ViewModels.Inventory
                 OnPropertyChanged();
             }
         }
-    }
+    */}
 }

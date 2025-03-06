@@ -1,5 +1,8 @@
 ﻿using FantasticStock.Common;
 using FantasticStock.Services;
+using FantasticStock.Views.Financial;
+using FantasticStock.Views.Inventory;
+using FantasticStock.Views.Sales;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,12 +21,6 @@ namespace FantasticStock.Views
         private readonly IDatabaseService _databaseService;
         private readonly IAuditService _auditService;
 
-        // User controls for each tab
-        private UserManagementView _userManagementView;
-        private SystemConfigurationView _systemConfigView;
-        private BackupView _backupView;
-        private MonitoringView _monitoringView;
-
         public MainForm()
         {
             InitializeComponent();
@@ -31,49 +28,142 @@ namespace FantasticStock.Views
             _databaseService = ServiceLocator.GetService<IDatabaseService>();
             _auditService = ServiceLocator.GetService<IAuditService>();
 
-            // Initialize views
-            InitializeViews();
+            flowLayoutPanel2.Height = 35;
+            flowLayoutPanel3.Height = 35;
+            flowLayoutPanel4.Height = 35;
+            flowLayoutPanel5.Height = 35;
 
             // Update status bar with current user info
             UpdateStatusBar();
         }
 
-        private void InitializeViews()
+        public enum ModuleType
         {
-            // Create user management view
-            _userManagementView = new UserManagementView
-            {
-                Dock = DockStyle.Fill
-            };
-            tabUserManagement.Controls.Add(_userManagementView);
+            // Inventory module types
+            Products,
+            Categories,
+            Suppliers,
+            StockLevels,
 
-            // Create system configuration view
-            _systemConfigView = new SystemConfigurationView
-            {
-                Dock = DockStyle.Fill
-            };
-            tabSystemConfig.Controls.Add(_systemConfigView);
+            // Sales module types
+            Customers,
+            SalesOrders,
+            Invoices,
+            SalesReports,
 
-            // Create backup view
-            _backupView = new BackupView
-            {
-                Dock = DockStyle.Fill
-            };
-            tabBackup.Controls.Add(_backupView);
+            // Financial module types
+            FinancialDashboard,
+            Payments,
+            Expenses,
+            FinancialReports,
 
-            // Create monitoring view
-            _monitoringView = new MonitoringView
+            // Admin module types
+            UserManagement,
+            SystemConfiguration,
+            BackupRestore,
+            SystemMonitoring,
+        }
+
+        private void menuButton_Click(object sender, EventArgs e)
+        {
+            var thisButton = sender as Button;
+            LoadModule((ModuleType) thisButton.Tag);
+        }
+
+        private void headerMenuButton_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+
+            if (button != null)
             {
+                // Get the parent panel of the button
+                Panel parentPanel = button.Parent as Panel;
+
+                if (parentPanel != null)
+                {
+                    // Resize the height of the parent panel
+                    parentPanel.Height = parentPanel.Height == 175 ? 35 : 175; // Set the desired height
+                }
+            }
+        }
+
+        private void LoadModule(ModuleType moduleType)
+        {
+            // Clear current content
+            moduleContentPanel.Controls.Clear();
+
+            // Create and load appropriate module
+            Control moduleControl = null;
+
+            switch (moduleType)
+            {
+                // Existing cases...
+
+                // Inventory modules
+                case ModuleType.Products:
+                    moduleControl = new ProductManagementView();
+                    break;
+
+                // Sales modules
+                case ModuleType.SalesOrders:
+                    moduleControl = new SalesOrderView();
+                    break;
+
+                // Financial modules
+                case ModuleType.FinancialDashboard:
+                    moduleControl = new FinancialDashboardView();
+                    break;
+
+                // Future modules - stubs for now
+                case ModuleType.Categories:
+                case ModuleType.Suppliers:
+                case ModuleType.StockLevels:
+                case ModuleType.Customers:
+                case ModuleType.Invoices:
+                case ModuleType.SalesReports:
+                case ModuleType.Payments:
+                case ModuleType.Expenses:
+                case ModuleType.FinancialReports:
+                    moduleControl = CreatePlaceholderModule(moduleType.ToString());
+                    break;
+            }
+
+            if (moduleControl != null)
+            {
+                moduleControl.Dock = DockStyle.Fill;
+                moduleContentPanel.Controls.Add(moduleControl);
+
+                // Log access to the module
+                ServiceLocator.GetService<IAuditService>().LogEvent(
+                    CurrentUser.UserID,
+                    "Access",
+                    "Module",
+                    moduleType.ToString(),
+                    null,
+                    $"User {CurrentUser.Username} accessed {moduleType} module at {DateTime.Parse("2025-03-04 02:19:11").ToString("yyyy-MM-dd HH:mm:ss")}"
+                );
+            }
+        }
+
+        private UserControl CreatePlaceholderModule(string moduleName)
+        {
+            Panel panel = new Panel { Dock = DockStyle.Fill };
+            Label label = new Label
+            {
+                Text = $"{moduleName} module is under construction",
+                Font = new System.Drawing.Font("Arial", 16, System.Drawing.FontStyle.Bold),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 Dock = DockStyle.Fill
             };
-            tabMonitoring.Controls.Add(_monitoringView);
+            panel.Controls.Add(label);
+            return new UserControl { Controls = { panel } };
         }
 
         private void UpdateStatusBar()
         {
             // Display user info in status bar
-            lblUserStatus.Text = $"Logged in as: {CurrentUser.DisplayName} ({CurrentUser.RoleName})";
-            lblDateTime.Text = DateTime.Parse("2025-03-02 16:16:14").ToString("yyyy-MM-dd HH:mm:ss");
+            //lblUserStatus.Text = $"Logged in as: {CurrentUser.DisplayName} ({CurrentUser.RoleName})";
+            //lblDateTime.Text = DateTime.Parse("2025-03-02 16:16:14").ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -121,7 +211,7 @@ namespace FantasticStock.Views
         private void timer1_Tick(object sender, EventArgs e)
         {
             // Update the date/time display
-            lblDateTime.Text = DateTime.Parse("2025-03-02 16:19:04").ToString("yyyy-MM-dd HH:mm:ss");
+            //lblDateTime.Text = DateTime.Parse("2025-03-02 16:19:04").ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }
