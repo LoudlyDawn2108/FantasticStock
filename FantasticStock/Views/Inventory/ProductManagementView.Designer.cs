@@ -28,13 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabProducts = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dgvProducts = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnFilter = new System.Windows.Forms.Button();
@@ -46,14 +44,7 @@
             this.lblCategoryFilter = new System.Windows.Forms.Label();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
-            this.dgvProducts = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnDeleteProduct = new System.Windows.Forms.Button();
-            this.btnEditProduct = new System.Windows.Forms.Button();
-            this.btnAddProduct = new System.Windows.Forms.Button();
             this.pnlProductDetails = new System.Windows.Forms.Panel();
-            this.btnSaveProduct = new System.Windows.Forms.Button();
-            this.btnBrowseImage = new System.Windows.Forms.Button();
             this.pictureBoxProduct = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chkActive = new System.Windows.Forms.CheckBox();
@@ -83,13 +74,35 @@
             this.lblBarcode = new System.Windows.Forms.Label();
             this.txtSKU = new System.Windows.Forms.TextBox();
             this.lblSKU = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnDeleteProduct = new System.Windows.Forms.Button();
+            this.btnEditProduct = new System.Windows.Forms.Button();
+            this.btnAddProduct = new System.Windows.Forms.Button();
             this.tabInventory = new System.Windows.Forms.TabPage();
             this.dgvInventory = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnTransactionHistory = new System.Windows.Forms.Button();
             this.btnUpdateStock = new System.Windows.Forms.Button();
-
-            // Set up basic layout
+            this.tabControl1.SuspendLayout();
+            this.tabProducts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.pnlProductDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProduct)).BeginInit();
+            this.groupBox2.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.tabInventory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).BeginInit();
+            this.panel3.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // tabControl1
+            // 
             this.tabControl1.Controls.Add(this.tabProducts);
             this.tabControl1.Controls.Add(this.tabInventory);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -98,44 +111,67 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1016, 626);
             this.tabControl1.TabIndex = 0;
-
-            // Configure products tab
+            // 
+            // tabProducts
+            // 
             this.tabProducts.Controls.Add(this.splitContainer1);
-            this.tabProducts.Location = new System.Drawing.Point(4, 24);
+            this.tabProducts.Location = new System.Drawing.Point(4, 29);
             this.tabProducts.Name = "tabProducts";
             this.tabProducts.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProducts.Size = new System.Drawing.Size(1008, 598);
+            this.tabProducts.Size = new System.Drawing.Size(1008, 593);
             this.tabProducts.TabIndex = 0;
             this.tabProducts.Text = "Products";
             this.tabProducts.UseVisualStyleBackColor = true;
-
-            // Split container for product list and details
+            // 
+            // splitContainer1
+            // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(3, 3);
             this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.splitContainer1.Size = new System.Drawing.Size(1002, 592);
-            this.splitContainer1.SplitterDistance = 300;
-            this.splitContainer1.TabIndex = 0;
-
-            // Product list panel
+            // 
+            // splitContainer1.Panel1
+            // 
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
-
-            // Product details panel
+            // 
+            // splitContainer1.Panel2
+            // 
             this.splitContainer1.Panel2.Controls.Add(this.pnlProductDetails);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-
-            // Product list groupbox
+            this.splitContainer1.Size = new System.Drawing.Size(1002, 587);
+            this.splitContainer1.SplitterDistance = 300;
+            this.splitContainer1.TabIndex = 0;
+            // 
+            // groupBox1
+            // 
             this.groupBox1.Controls.Add(this.dgvProducts);
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1002, 300);
+            this.groupBox1.Size = new System.Drawing.Size(300, 587);
             this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Products";
-
-            // Filter panel
+            // 
+            // dgvProducts
+            // 
+            this.dgvProducts.AllowUserToAddRows = false;
+            this.dgvProducts.AllowUserToDeleteRows = false;
+            this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvProducts.Location = new System.Drawing.Point(3, 82);
+            this.dgvProducts.MultiSelect = false;
+            this.dgvProducts.Name = "dgvProducts";
+            this.dgvProducts.ReadOnly = true;
+            this.dgvProducts.RowHeadersVisible = false;
+            this.dgvProducts.RowHeadersWidth = 62;
+            this.dgvProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvProducts.Size = new System.Drawing.Size(294, 502);
+            this.dgvProducts.TabIndex = 1;
+            // 
+            // panel1
+            // 
             this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.btnFilter);
             this.panel1.Controls.Add(this.cmbActiveFilter);
@@ -147,49 +183,104 @@
             this.panel1.Controls.Add(this.txtSearch);
             this.panel1.Controls.Add(this.lblSearch);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(3, 19);
+            this.panel1.Location = new System.Drawing.Point(3, 22);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(996, 60);
+            this.panel1.Size = new System.Drawing.Size(294, 60);
             this.panel1.TabIndex = 0;
-
-            // Products grid
-            this.dgvProducts.AllowUserToAddRows = false;
-            this.dgvProducts.AllowUserToDeleteRows = false;
-            this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvProducts.Location = new System.Drawing.Point(3, 79);
-            this.dgvProducts.MultiSelect = false;
-            this.dgvProducts.Name = "dgvProducts";
-            this.dgvProducts.ReadOnly = true;
-            this.dgvProducts.RowHeadersVisible = false;
-            this.dgvProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProducts.Size = new System.Drawing.Size(996, 218);
-            this.dgvProducts.TabIndex = 1;
-
-            // Button panel
-            this.panel2.Controls.Add(this.btnDeleteProduct);
-            this.panel2.Controls.Add(this.btnEditProduct);
-            this.panel2.Controls.Add(this.btnAddProduct);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1002, 40);
-            this.panel2.TabIndex = 0;
-
-            // Product details panel
-            this.pnlProductDetails.Controls.Add(this.btnSaveProduct);
-            this.pnlProductDetails.Controls.Add(this.btnBrowseImage);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(0, 0);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 0;
+            this.btnRefresh.Text = "Refresh";
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.Location = new System.Drawing.Point(0, 0);
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnFilter.TabIndex = 1;
+            this.btnFilter.Text = "Apply Filter";
+            // 
+            // cmbActiveFilter
+            // 
+            this.cmbActiveFilter.Location = new System.Drawing.Point(0, 0);
+            this.cmbActiveFilter.Name = "cmbActiveFilter";
+            this.cmbActiveFilter.Size = new System.Drawing.Size(121, 28);
+            this.cmbActiveFilter.TabIndex = 2;
+            // 
+            // lblActiveFilter
+            // 
+            this.lblActiveFilter.Location = new System.Drawing.Point(0, 0);
+            this.lblActiveFilter.Name = "lblActiveFilter";
+            this.lblActiveFilter.Size = new System.Drawing.Size(100, 23);
+            this.lblActiveFilter.TabIndex = 3;
+            // 
+            // cmbSupplierFilter
+            // 
+            this.cmbSupplierFilter.Location = new System.Drawing.Point(0, 0);
+            this.cmbSupplierFilter.Name = "cmbSupplierFilter";
+            this.cmbSupplierFilter.Size = new System.Drawing.Size(121, 28);
+            this.cmbSupplierFilter.TabIndex = 4;
+            // 
+            // lblSupplierFilter
+            // 
+            this.lblSupplierFilter.Location = new System.Drawing.Point(0, 0);
+            this.lblSupplierFilter.Name = "lblSupplierFilter";
+            this.lblSupplierFilter.Size = new System.Drawing.Size(100, 23);
+            this.lblSupplierFilter.TabIndex = 5;
+            // 
+            // cmbCategoryFilter
+            // 
+            this.cmbCategoryFilter.Location = new System.Drawing.Point(0, 0);
+            this.cmbCategoryFilter.Name = "cmbCategoryFilter";
+            this.cmbCategoryFilter.Size = new System.Drawing.Size(121, 28);
+            this.cmbCategoryFilter.TabIndex = 6;
+            // 
+            // lblCategoryFilter
+            // 
+            this.lblCategoryFilter.Location = new System.Drawing.Point(0, 0);
+            this.lblCategoryFilter.Name = "lblCategoryFilter";
+            this.lblCategoryFilter.Size = new System.Drawing.Size(100, 23);
+            this.lblCategoryFilter.TabIndex = 7;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(0, 0);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(100, 26);
+            this.txtSearch.TabIndex = 8;
+            // 
+            // lblSearch
+            // 
+            this.lblSearch.Location = new System.Drawing.Point(0, 0);
+            this.lblSearch.Name = "lblSearch";
+            this.lblSearch.Size = new System.Drawing.Size(100, 23);
+            this.lblSearch.TabIndex = 9;
+            // 
+            // pnlProductDetails
+            // 
             this.pnlProductDetails.Controls.Add(this.pictureBoxProduct);
             this.pnlProductDetails.Controls.Add(this.groupBox2);
             this.pnlProductDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlProductDetails.Enabled = false;
             this.pnlProductDetails.Location = new System.Drawing.Point(0, 40);
             this.pnlProductDetails.Name = "pnlProductDetails";
-            this.pnlProductDetails.Size = new System.Drawing.Size(1002, 248);
+            this.pnlProductDetails.Size = new System.Drawing.Size(698, 547);
             this.pnlProductDetails.TabIndex = 1;
-            this.pnlProductDetails.Enabled = false;
-
-            // Product details fields
+            // 
+            // pictureBoxProduct
+            // 
+            this.pictureBoxProduct.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxProduct.Name = "pictureBoxProduct";
+            this.pictureBoxProduct.Size = new System.Drawing.Size(100, 50);
+            this.pictureBoxProduct.TabIndex = 2;
+            this.pictureBoxProduct.TabStop = false;
+            // 
+            // groupBox2
+            // 
             this.groupBox2.Controls.Add(this.chkActive);
             this.groupBox2.Controls.Add(this.chkAllowFractional);
             this.groupBox2.Controls.Add(this.chkManageStock);
@@ -221,20 +312,247 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(780, 202);
             this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Product Details";
-
-            // Configure inventory tab
+            // 
+            // chkActive
+            // 
+            this.chkActive.Location = new System.Drawing.Point(0, 0);
+            this.chkActive.Name = "chkActive";
+            this.chkActive.Size = new System.Drawing.Size(104, 24);
+            this.chkActive.TabIndex = 0;
+            // 
+            // chkAllowFractional
+            // 
+            this.chkAllowFractional.Location = new System.Drawing.Point(0, 0);
+            this.chkAllowFractional.Name = "chkAllowFractional";
+            this.chkAllowFractional.Size = new System.Drawing.Size(104, 24);
+            this.chkAllowFractional.TabIndex = 1;
+            // 
+            // chkManageStock
+            // 
+            this.chkManageStock.Location = new System.Drawing.Point(0, 0);
+            this.chkManageStock.Name = "chkManageStock";
+            this.chkManageStock.Size = new System.Drawing.Size(104, 24);
+            this.chkManageStock.TabIndex = 2;
+            // 
+            // txtUnitOfMeasure
+            // 
+            this.txtUnitOfMeasure.Location = new System.Drawing.Point(0, 0);
+            this.txtUnitOfMeasure.Name = "txtUnitOfMeasure";
+            this.txtUnitOfMeasure.Size = new System.Drawing.Size(100, 26);
+            this.txtUnitOfMeasure.TabIndex = 3;
+            // 
+            // lblUnitOfMeasure
+            // 
+            this.lblUnitOfMeasure.Location = new System.Drawing.Point(0, 0);
+            this.lblUnitOfMeasure.Name = "lblUnitOfMeasure";
+            this.lblUnitOfMeasure.Size = new System.Drawing.Size(100, 23);
+            this.lblUnitOfMeasure.TabIndex = 4;
+            // 
+            // txtTargetStockLevel
+            // 
+            this.txtTargetStockLevel.Location = new System.Drawing.Point(0, 0);
+            this.txtTargetStockLevel.Name = "txtTargetStockLevel";
+            this.txtTargetStockLevel.Size = new System.Drawing.Size(100, 26);
+            this.txtTargetStockLevel.TabIndex = 5;
+            // 
+            // lblTargetStockLevel
+            // 
+            this.lblTargetStockLevel.Location = new System.Drawing.Point(0, 0);
+            this.lblTargetStockLevel.Name = "lblTargetStockLevel";
+            this.lblTargetStockLevel.Size = new System.Drawing.Size(100, 23);
+            this.lblTargetStockLevel.TabIndex = 6;
+            // 
+            // txtReorderLevel
+            // 
+            this.txtReorderLevel.Location = new System.Drawing.Point(0, 0);
+            this.txtReorderLevel.Name = "txtReorderLevel";
+            this.txtReorderLevel.Size = new System.Drawing.Size(100, 26);
+            this.txtReorderLevel.TabIndex = 7;
+            // 
+            // lblReorderLevel
+            // 
+            this.lblReorderLevel.Location = new System.Drawing.Point(0, 0);
+            this.lblReorderLevel.Name = "lblReorderLevel";
+            this.lblReorderLevel.Size = new System.Drawing.Size(100, 23);
+            this.lblReorderLevel.TabIndex = 8;
+            // 
+            // txtWholesalePrice
+            // 
+            this.txtWholesalePrice.Location = new System.Drawing.Point(0, 0);
+            this.txtWholesalePrice.Name = "txtWholesalePrice";
+            this.txtWholesalePrice.Size = new System.Drawing.Size(100, 26);
+            this.txtWholesalePrice.TabIndex = 9;
+            // 
+            // lblWholesalePrice
+            // 
+            this.lblWholesalePrice.Location = new System.Drawing.Point(0, 0);
+            this.lblWholesalePrice.Name = "lblWholesalePrice";
+            this.lblWholesalePrice.Size = new System.Drawing.Size(100, 23);
+            this.lblWholesalePrice.TabIndex = 10;
+            // 
+            // txtSellingPrice
+            // 
+            this.txtSellingPrice.Location = new System.Drawing.Point(0, 0);
+            this.txtSellingPrice.Name = "txtSellingPrice";
+            this.txtSellingPrice.Size = new System.Drawing.Size(100, 26);
+            this.txtSellingPrice.TabIndex = 11;
+            // 
+            // lblSellingPrice
+            // 
+            this.lblSellingPrice.Location = new System.Drawing.Point(0, 0);
+            this.lblSellingPrice.Name = "lblSellingPrice";
+            this.lblSellingPrice.Size = new System.Drawing.Size(100, 23);
+            this.lblSellingPrice.TabIndex = 12;
+            // 
+            // txtCostPrice
+            // 
+            this.txtCostPrice.Location = new System.Drawing.Point(0, 0);
+            this.txtCostPrice.Name = "txtCostPrice";
+            this.txtCostPrice.Size = new System.Drawing.Size(100, 26);
+            this.txtCostPrice.TabIndex = 13;
+            // 
+            // lblCostPrice
+            // 
+            this.lblCostPrice.Location = new System.Drawing.Point(0, 0);
+            this.lblCostPrice.Name = "lblCostPrice";
+            this.lblCostPrice.Size = new System.Drawing.Size(100, 23);
+            this.lblCostPrice.TabIndex = 14;
+            // 
+            // cmbSupplier
+            // 
+            this.cmbSupplier.Location = new System.Drawing.Point(0, 0);
+            this.cmbSupplier.Name = "cmbSupplier";
+            this.cmbSupplier.Size = new System.Drawing.Size(121, 28);
+            this.cmbSupplier.TabIndex = 15;
+            // 
+            // lblSupplier
+            // 
+            this.lblSupplier.Location = new System.Drawing.Point(0, 0);
+            this.lblSupplier.Name = "lblSupplier";
+            this.lblSupplier.Size = new System.Drawing.Size(100, 23);
+            this.lblSupplier.TabIndex = 16;
+            // 
+            // cmbCategory
+            // 
+            this.cmbCategory.Location = new System.Drawing.Point(0, 0);
+            this.cmbCategory.Name = "cmbCategory";
+            this.cmbCategory.Size = new System.Drawing.Size(121, 28);
+            this.cmbCategory.TabIndex = 17;
+            // 
+            // lblCategory
+            // 
+            this.lblCategory.Location = new System.Drawing.Point(0, 0);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(100, 23);
+            this.lblCategory.TabIndex = 18;
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.Location = new System.Drawing.Point(0, 0);
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.Size = new System.Drawing.Size(100, 26);
+            this.txtDescription.TabIndex = 19;
+            // 
+            // lblDescription
+            // 
+            this.lblDescription.Location = new System.Drawing.Point(0, 0);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(100, 23);
+            this.lblDescription.TabIndex = 20;
+            // 
+            // txtProductName
+            // 
+            this.txtProductName.Location = new System.Drawing.Point(0, 0);
+            this.txtProductName.Name = "txtProductName";
+            this.txtProductName.Size = new System.Drawing.Size(100, 26);
+            this.txtProductName.TabIndex = 21;
+            // 
+            // lblProductName
+            // 
+            this.lblProductName.Location = new System.Drawing.Point(0, 0);
+            this.lblProductName.Name = "lblProductName";
+            this.lblProductName.Size = new System.Drawing.Size(100, 23);
+            this.lblProductName.TabIndex = 22;
+            // 
+            // txtBarcode
+            // 
+            this.txtBarcode.Location = new System.Drawing.Point(0, 0);
+            this.txtBarcode.Name = "txtBarcode";
+            this.txtBarcode.Size = new System.Drawing.Size(100, 26);
+            this.txtBarcode.TabIndex = 23;
+            // 
+            // lblBarcode
+            // 
+            this.lblBarcode.Location = new System.Drawing.Point(0, 0);
+            this.lblBarcode.Name = "lblBarcode";
+            this.lblBarcode.Size = new System.Drawing.Size(100, 23);
+            this.lblBarcode.TabIndex = 24;
+            // 
+            // txtSKU
+            // 
+            this.txtSKU.Location = new System.Drawing.Point(0, 0);
+            this.txtSKU.Name = "txtSKU";
+            this.txtSKU.Size = new System.Drawing.Size(100, 26);
+            this.txtSKU.TabIndex = 25;
+            // 
+            // lblSKU
+            // 
+            this.lblSKU.Location = new System.Drawing.Point(0, 0);
+            this.lblSKU.Name = "lblSKU";
+            this.lblSKU.Size = new System.Drawing.Size(100, 23);
+            this.lblSKU.TabIndex = 26;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnDeleteProduct);
+            this.panel2.Controls.Add(this.btnEditProduct);
+            this.panel2.Controls.Add(this.btnAddProduct);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(698, 40);
+            this.panel2.TabIndex = 0;
+            // 
+            // btnDeleteProduct
+            // 
+            this.btnDeleteProduct.Location = new System.Drawing.Point(0, 0);
+            this.btnDeleteProduct.Name = "btnDeleteProduct";
+            this.btnDeleteProduct.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteProduct.TabIndex = 0;
+            this.btnDeleteProduct.Text = "Delete";
+            // 
+            // btnEditProduct
+            // 
+            this.btnEditProduct.Location = new System.Drawing.Point(0, 0);
+            this.btnEditProduct.Name = "btnEditProduct";
+            this.btnEditProduct.Size = new System.Drawing.Size(75, 23);
+            this.btnEditProduct.TabIndex = 1;
+            this.btnEditProduct.Text = "Edit";
+            // 
+            // btnAddProduct
+            // 
+            this.btnAddProduct.Location = new System.Drawing.Point(0, 0);
+            this.btnAddProduct.Name = "btnAddProduct";
+            this.btnAddProduct.Size = new System.Drawing.Size(75, 23);
+            this.btnAddProduct.TabIndex = 2;
+            this.btnAddProduct.Text = "Add New";
+            // 
+            // tabInventory
+            // 
             this.tabInventory.Controls.Add(this.dgvInventory);
             this.tabInventory.Controls.Add(this.panel3);
-            this.tabInventory.Location = new System.Drawing.Point(4, 24);
+            this.tabInventory.Location = new System.Drawing.Point(4, 29);
             this.tabInventory.Name = "tabInventory";
             this.tabInventory.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInventory.Size = new System.Drawing.Size(1008, 598);
+            this.tabInventory.Size = new System.Drawing.Size(1008, 593);
             this.tabInventory.TabIndex = 1;
             this.tabInventory.Text = "Inventory";
             this.tabInventory.UseVisualStyleBackColor = true;
-
-            // Inventory grid
+            // 
+            // dgvInventory
+            // 
             this.dgvInventory.AllowUserToAddRows = false;
             this.dgvInventory.AllowUserToDeleteRows = false;
             this.dgvInventory.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -245,11 +563,13 @@
             this.dgvInventory.Name = "dgvInventory";
             this.dgvInventory.ReadOnly = true;
             this.dgvInventory.RowHeadersVisible = false;
+            this.dgvInventory.RowHeadersWidth = 62;
             this.dgvInventory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInventory.Size = new System.Drawing.Size(1002, 552);
+            this.dgvInventory.Size = new System.Drawing.Size(1002, 547);
             this.dgvInventory.TabIndex = 0;
-
-            // Inventory buttons panel
+            // 
+            // panel3
+            // 
             this.panel3.Controls.Add(this.btnTransactionHistory);
             this.panel3.Controls.Add(this.btnUpdateStock);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
@@ -257,27 +577,50 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1002, 40);
             this.panel3.TabIndex = 1;
-
-            // Add the tab control to the main form
+            // 
+            // btnTransactionHistory
+            // 
+            this.btnTransactionHistory.Location = new System.Drawing.Point(0, 0);
+            this.btnTransactionHistory.Name = "btnTransactionHistory";
+            this.btnTransactionHistory.Size = new System.Drawing.Size(75, 23);
+            this.btnTransactionHistory.TabIndex = 0;
+            this.btnTransactionHistory.Text = "Transaction History";
+            // 
+            // btnUpdateStock
+            // 
+            this.btnUpdateStock.Location = new System.Drawing.Point(0, 0);
+            this.btnUpdateStock.Name = "btnUpdateStock";
+            this.btnUpdateStock.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdateStock.TabIndex = 1;
+            this.btnUpdateStock.Text = "Update Stock";
+            // 
+            // ProductManagementView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl1);
             this.Name = "ProductManagementView";
             this.Size = new System.Drawing.Size(1016, 626);
-
-            // Button configurations
-            this.btnAddProduct.Text = "Add New";
-            this.btnEditProduct.Text = "Edit";
-            this.btnSaveProduct.Text = "Save";
-            this.btnDeleteProduct.Text = "Delete";
-            this.btnRefresh.Text = "Refresh";
-            this.btnFilter.Text = "Apply Filter";
-            this.btnBrowseImage.Text = "Browse...";
-            this.btnUpdateStock.Text = "Update Stock";
-            this.btnTransactionHistory.Text = "Transaction History";
-
-            // Additional components setup would go here
-            // For brevity, I'm omitting detailed control setup code that would be generated by the designer
-
+            this.tabControl1.ResumeLayout(false);
+            this.tabProducts.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.pnlProductDetails.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProduct)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.tabInventory.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).EndInit();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -304,8 +647,6 @@
         private System.Windows.Forms.Button btnEditProduct;
         private System.Windows.Forms.Button btnAddProduct;
         private System.Windows.Forms.Panel pnlProductDetails;
-        private System.Windows.Forms.Button btnSaveProduct;
-        private System.Windows.Forms.Button btnBrowseImage;
         private System.Windows.Forms.PictureBox pictureBoxProduct;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chkActive;
