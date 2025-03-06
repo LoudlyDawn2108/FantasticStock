@@ -165,12 +165,6 @@
     <Compile Include="Views\Admin\UserManagementView.Designer.cs">
       <DependentUpon>UserManagementView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewMainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\NewMainForm.Designer.cs">
-      <DependentUpon>NewMainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\Sales\SalesOrderView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -191,9 +185,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\NewMainForm.resx">
-      <DependentUpon>NewMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Sales\SalesOrderView.resx">
       <DependentUpon>SalesOrderView.cs</DependentUpon>

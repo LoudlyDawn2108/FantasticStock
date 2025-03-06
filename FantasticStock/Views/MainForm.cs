@@ -33,8 +33,15 @@ namespace FantasticStock.Views
             flowLayoutPanel4.Height = 35;
             flowLayoutPanel5.Height = 35;
 
+            InitializeMeunuButton();
+
             // Update status bar with current user info
             UpdateStatusBar();
+        }
+
+        private void InitializeMeunuButton()
+        {
+            button2.Tag = ModuleType.Products;
         }
 
         public enum ModuleType
@@ -163,7 +170,7 @@ namespace FantasticStock.Views
         {
             // Display user info in status bar
             //lblUserStatus.Text = $"Logged in as: {CurrentUser.DisplayName} ({CurrentUser.RoleName})";
-            //lblDateTime.Text = DateTime.Parse("2025-03-02 16:16:14").ToString("yyyy-MM-dd HH:mm:ss");
+            lblDateTime.Text = DateTime.Parse("2025-03-02 16:16:14").ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -211,7 +218,7 @@ namespace FantasticStock.Views
         private void timer1_Tick(object sender, EventArgs e)
         {
             // Update the date/time display
-            //lblDateTime.Text = DateTime.Parse("2025-03-02 16:19:04").ToString("yyyy-MM-dd HH:mm:ss");
+            lblDateTime.Text = DateTime.Parse("2025-03-02 16:19:04").ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }
