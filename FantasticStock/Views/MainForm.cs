@@ -44,6 +44,11 @@ namespace FantasticStock.Views
         private void InitializeMeunuButton()
         {
             button2.Tag = ModuleType.Products;
+
+            button17.Tag = ModuleType.UserManagement;
+            button18.Tag = ModuleType.SystemConfiguration;
+            button19.Tag = ModuleType.BackupRestore;
+            button20.Tag = ModuleType.SystemMonitoring;
         }
 
         public enum ModuleType
@@ -113,7 +118,21 @@ namespace FantasticStock.Views
 
             switch (moduleType)
             {
-                // Existing cases...
+                case ModuleType.UserManagement:
+                    moduleControl = new UserManagementView();
+                    break;
+
+                case ModuleType.SystemConfiguration: 
+                    moduleControl = new SystemConfigurationView(); 
+                    break;
+
+                case ModuleType.BackupRestore:
+                    moduleControl = new SystemConfigurationView();
+                    break;
+
+                case ModuleType.SystemMonitoring:
+                    moduleControl = new MonitoringView();
+                    break;
 
                 // Inventory modules
                 case ModuleType.Products:

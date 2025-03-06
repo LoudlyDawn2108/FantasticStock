@@ -183,6 +183,9 @@
     <EmbeddedResource Include="Views\Admin\MonitoringView.resx">
       <DependentUpon>MonitoringView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Admin\UserManagementView.resx">
+      <DependentUpon>UserManagementView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

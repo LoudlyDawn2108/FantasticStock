@@ -87,6 +87,7 @@
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel5);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(168, 474);
@@ -115,9 +116,9 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(63, 6);
+            this.label1.Location = new System.Drawing.Point(59, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(43, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
@@ -125,9 +126,9 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(66, 31);
+            this.label2.Location = new System.Drawing.Point(65, 30);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.Size = new System.Drawing.Size(31, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "User";
             // 
@@ -135,9 +136,9 @@
             // 
             this.lblDateTime.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDateTime.AutoSize = true;
-            this.lblDateTime.Location = new System.Drawing.Point(28, 56);
+            this.lblDateTime.Location = new System.Drawing.Point(20, 55);
             this.lblDateTime.Name = "lblDateTime";
-            this.lblDateTime.Size = new System.Drawing.Size(106, 13);
+            this.lblDateTime.Size = new System.Drawing.Size(121, 15);
             this.lblDateTime.TabIndex = 2;
             this.lblDateTime.Text = "2025-03-02 16:16:14";
             // 
@@ -145,9 +146,9 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(47, 81);
+            this.label4.Location = new System.Drawing.Point(38, 80);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.Size = new System.Drawing.Size(85, 15);
             this.label4.TabIndex = 3;
             this.label4.Text = "Administrator";
             // 
@@ -176,6 +177,7 @@
             this.button1.Size = new System.Drawing.Size(165, 35);
             this.button1.TabIndex = 4;
             this.button1.Text = "Inventory Management";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.headerMenuButton_Click);
             // 
@@ -186,9 +188,11 @@
             this.button2.Location = new System.Drawing.Point(0, 35);
             this.button2.Margin = new System.Windows.Forms.Padding(0);
             this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button2.Size = new System.Drawing.Size(165, 35);
             this.button2.TabIndex = 5;
             this.button2.Text = "Product Management";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -199,9 +203,11 @@
             this.button3.Location = new System.Drawing.Point(0, 70);
             this.button3.Margin = new System.Windows.Forms.Padding(0);
             this.button3.Name = "button3";
+            this.button3.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button3.Size = new System.Drawing.Size(165, 35);
             this.button3.TabIndex = 6;
             this.button3.Text = "Inventory";
+            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -212,9 +218,11 @@
             this.button4.Location = new System.Drawing.Point(0, 105);
             this.button4.Margin = new System.Windows.Forms.Padding(0);
             this.button4.Name = "button4";
+            this.button4.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button4.Size = new System.Drawing.Size(165, 35);
             this.button4.TabIndex = 7;
             this.button4.Text = "Inventory";
+            this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -225,9 +233,11 @@
             this.button5.Location = new System.Drawing.Point(0, 140);
             this.button5.Margin = new System.Windows.Forms.Padding(0);
             this.button5.Name = "button5";
+            this.button5.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button5.Size = new System.Drawing.Size(165, 35);
             this.button5.TabIndex = 8;
             this.button5.Text = "Inventory";
+            this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -256,6 +266,7 @@
             this.button6.Size = new System.Drawing.Size(165, 35);
             this.button6.TabIndex = 6;
             this.button6.Text = "Sales Management";
+            this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.headerMenuButton_Click);
             // 
@@ -266,9 +277,11 @@
             this.button7.Location = new System.Drawing.Point(0, 35);
             this.button7.Margin = new System.Windows.Forms.Padding(0);
             this.button7.Name = "button7";
+            this.button7.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(165, 35);
             this.button7.TabIndex = 5;
             this.button7.Text = "Inventory";
+            this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -279,9 +292,11 @@
             this.button8.Location = new System.Drawing.Point(0, 70);
             this.button8.Margin = new System.Windows.Forms.Padding(0);
             this.button8.Name = "button8";
+            this.button8.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button8.Size = new System.Drawing.Size(165, 35);
             this.button8.TabIndex = 6;
             this.button8.Text = "Inventory";
+            this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -292,9 +307,11 @@
             this.button9.Location = new System.Drawing.Point(0, 105);
             this.button9.Margin = new System.Windows.Forms.Padding(0);
             this.button9.Name = "button9";
+            this.button9.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button9.Size = new System.Drawing.Size(165, 35);
             this.button9.TabIndex = 7;
             this.button9.Text = "Inventory";
+            this.button9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -305,9 +322,11 @@
             this.button10.Location = new System.Drawing.Point(0, 140);
             this.button10.Margin = new System.Windows.Forms.Padding(0);
             this.button10.Name = "button10";
+            this.button10.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button10.Size = new System.Drawing.Size(165, 35);
             this.button10.TabIndex = 8;
             this.button10.Text = "Inventory";
+            this.button10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -335,6 +354,7 @@
             this.button11.Size = new System.Drawing.Size(165, 35);
             this.button11.TabIndex = 8;
             this.button11.Text = "Financial Management";
+            this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.headerMenuButton_Click);
             // 
@@ -345,9 +365,11 @@
             this.button12.Location = new System.Drawing.Point(0, 35);
             this.button12.Margin = new System.Windows.Forms.Padding(0);
             this.button12.Name = "button12";
+            this.button12.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button12.Size = new System.Drawing.Size(165, 35);
             this.button12.TabIndex = 5;
             this.button12.Text = "Inventory";
+            this.button12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -358,9 +380,11 @@
             this.button13.Location = new System.Drawing.Point(0, 70);
             this.button13.Margin = new System.Windows.Forms.Padding(0);
             this.button13.Name = "button13";
+            this.button13.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button13.Size = new System.Drawing.Size(165, 35);
             this.button13.TabIndex = 6;
             this.button13.Text = "Inventory";
+            this.button13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -371,9 +395,11 @@
             this.button14.Location = new System.Drawing.Point(0, 105);
             this.button14.Margin = new System.Windows.Forms.Padding(0);
             this.button14.Name = "button14";
+            this.button14.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button14.Size = new System.Drawing.Size(165, 35);
             this.button14.TabIndex = 7;
             this.button14.Text = "Inventory";
+            this.button14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button14.UseVisualStyleBackColor = true;
             this.button14.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -384,9 +410,11 @@
             this.button15.Location = new System.Drawing.Point(0, 140);
             this.button15.Margin = new System.Windows.Forms.Padding(0);
             this.button15.Name = "button15";
+            this.button15.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button15.Size = new System.Drawing.Size(165, 35);
             this.button15.TabIndex = 8;
             this.button15.Text = "Inventory";
+            this.button15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -414,6 +442,7 @@
             this.button16.Size = new System.Drawing.Size(165, 35);
             this.button16.TabIndex = 10;
             this.button16.Text = "System Administration";
+            this.button16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button16.UseVisualStyleBackColor = true;
             this.button16.Click += new System.EventHandler(this.headerMenuButton_Click);
             // 
@@ -424,9 +453,11 @@
             this.button17.Location = new System.Drawing.Point(0, 35);
             this.button17.Margin = new System.Windows.Forms.Padding(0);
             this.button17.Name = "button17";
+            this.button17.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button17.Size = new System.Drawing.Size(165, 35);
             this.button17.TabIndex = 5;
-            this.button17.Text = "Inventory";
+            this.button17.Text = "User Management";
+            this.button17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button17.UseVisualStyleBackColor = true;
             this.button17.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -437,9 +468,11 @@
             this.button18.Location = new System.Drawing.Point(0, 70);
             this.button18.Margin = new System.Windows.Forms.Padding(0);
             this.button18.Name = "button18";
+            this.button18.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button18.Size = new System.Drawing.Size(165, 35);
             this.button18.TabIndex = 6;
-            this.button18.Text = "Inventory";
+            this.button18.Text = "System Config";
+            this.button18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button18.UseVisualStyleBackColor = true;
             this.button18.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -450,9 +483,11 @@
             this.button19.Location = new System.Drawing.Point(0, 105);
             this.button19.Margin = new System.Windows.Forms.Padding(0);
             this.button19.Name = "button19";
+            this.button19.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button19.Size = new System.Drawing.Size(165, 35);
             this.button19.TabIndex = 7;
-            this.button19.Text = "Inventory";
+            this.button19.Text = "Backup Restore";
+            this.button19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button19.UseVisualStyleBackColor = true;
             this.button19.Click += new System.EventHandler(this.menuButton_Click);
             // 
@@ -463,9 +498,11 @@
             this.button20.Location = new System.Drawing.Point(0, 140);
             this.button20.Margin = new System.Windows.Forms.Padding(0);
             this.button20.Name = "button20";
+            this.button20.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button20.Size = new System.Drawing.Size(165, 35);
             this.button20.TabIndex = 8;
-            this.button20.Text = "Inventory";
+            this.button20.Text = "System Monitoring";
+            this.button20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button20.UseVisualStyleBackColor = true;
             this.button20.Click += new System.EventHandler(this.menuButton_Click);
             // 
