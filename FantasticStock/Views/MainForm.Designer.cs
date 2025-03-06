@@ -190,6 +190,7 @@
             this.button2.TabIndex = 5;
             this.button2.Text = "Product Management";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button3
             // 
@@ -202,6 +203,7 @@
             this.button3.TabIndex = 6;
             this.button3.Text = "Inventory";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button4
             // 
@@ -214,6 +216,7 @@
             this.button4.TabIndex = 7;
             this.button4.Text = "Inventory";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button5
             // 
@@ -226,6 +229,7 @@
             this.button5.TabIndex = 8;
             this.button5.Text = "Inventory";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // flowLayoutPanel3
             // 
@@ -266,6 +270,7 @@
             this.button7.TabIndex = 5;
             this.button7.Text = "Inventory";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button8
             // 
@@ -278,6 +283,7 @@
             this.button8.TabIndex = 6;
             this.button8.Text = "Inventory";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button9
             // 
@@ -290,6 +296,7 @@
             this.button9.TabIndex = 7;
             this.button9.Text = "Inventory";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button10
             // 
@@ -302,6 +309,7 @@
             this.button10.TabIndex = 8;
             this.button10.Text = "Inventory";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // flowLayoutPanel4
             // 
@@ -341,6 +349,7 @@
             this.button12.TabIndex = 5;
             this.button12.Text = "Inventory";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button13
             // 
@@ -353,6 +362,7 @@
             this.button13.TabIndex = 6;
             this.button13.Text = "Inventory";
             this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button14
             // 
@@ -365,6 +375,7 @@
             this.button14.TabIndex = 7;
             this.button14.Text = "Inventory";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button15
             // 
@@ -377,6 +388,7 @@
             this.button15.TabIndex = 8;
             this.button15.Text = "Inventory";
             this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // flowLayoutPanel5
             // 
@@ -416,6 +428,7 @@
             this.button17.TabIndex = 5;
             this.button17.Text = "Inventory";
             this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button18
             // 
@@ -428,6 +441,7 @@
             this.button18.TabIndex = 6;
             this.button18.Text = "Inventory";
             this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button19
             // 
@@ -440,6 +454,7 @@
             this.button19.TabIndex = 7;
             this.button19.Text = "Inventory";
             this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // button20
             // 
@@ -452,6 +467,7 @@
             this.button20.TabIndex = 8;
             this.button20.Text = "Inventory";
             this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.menuButton_Click);
             // 
             // moduleContentPanel
             // 

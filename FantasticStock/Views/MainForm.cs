@@ -28,6 +28,8 @@ namespace FantasticStock.Views
             _databaseService = ServiceLocator.GetService<IDatabaseService>();
             _auditService = ServiceLocator.GetService<IAuditService>();
 
+            
+
             flowLayoutPanel2.Height = 35;
             flowLayoutPanel3.Height = 35;
             flowLayoutPanel4.Height = 35;
@@ -74,7 +76,14 @@ namespace FantasticStock.Views
         private void menuButton_Click(object sender, EventArgs e)
         {
             var thisButton = sender as Button;
-            LoadModule((ModuleType) thisButton.Tag);
+            if (thisButton.Tag != null)
+            {
+                LoadModule((ModuleType)thisButton.Tag);
+            }
+            else
+            {
+                LoadModule(ModuleType.FinancialReports);
+            }
         }
 
         private void headerMenuButton_Click(object sender, EventArgs e)
@@ -141,14 +150,14 @@ namespace FantasticStock.Views
                 moduleContentPanel.Controls.Add(moduleControl);
 
                 // Log access to the module
-                ServiceLocator.GetService<IAuditService>().LogEvent(
-                    CurrentUser.UserID,
-                    "Access",
-                    "Module",
-                    moduleType.ToString(),
-                    null,
-                    $"User {CurrentUser.Username} accessed {moduleType} module at {DateTime.Parse("2025-03-04 02:19:11").ToString("yyyy-MM-dd HH:mm:ss")}"
-                );
+                //ServiceLocator.GetService<IAuditService>().LogEvent(
+                //    CurrentUser.UserID,
+                //    "Access",
+                //    "Module",
+                //    moduleType.ToString(),
+                //    null,
+                //    $"User {CurrentUser.Username} accessed {moduleType} module at {DateTime.Parse("2025-03-04 02:19:11").ToString("yyyy-MM-dd HH:mm:ss")}"
+                //);
             }
         }
 
