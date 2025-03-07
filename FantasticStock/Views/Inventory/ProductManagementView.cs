@@ -122,5 +122,53 @@ namespace FantasticStock.Views.Inventory
                 }
             };
         */}
+
+        private void lblDescription_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtProductName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblProductName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBarcode_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblBarcode_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSKU_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSKU_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_SizeChanged(object sender, EventArgs e)
+        {
+            if(sender is TextBox textbox)
+            {
+                textbox.Width = 40;
+            }
+        }
+
+        private void flowLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
