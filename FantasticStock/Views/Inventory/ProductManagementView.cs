@@ -15,16 +15,16 @@ namespace FantasticStock.Views.Inventory
     {
         private ProductViewModel _viewModel;
 
-        public ProductManagementView()
-        {
-            InitializeComponent();
+        //public ProductManagementView()
+        //{
+        //    InitializeComponent();
 
-            // Initialize view model
-            _viewModel = new ProductViewModel();
+        //    // Initialize view model
+        //    _viewModel = new ProductViewModel();
 
-            // Set up data bindings
-            SetupBindings();
-        }
+        //    // Set up data bindings
+        //    SetupBindings();
+        //}
 
         private void SetupBindings()
         {/*
@@ -167,6 +167,21 @@ namespace FantasticStock.Views.Inventory
         }
 
         private void flowLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }

@@ -145,6 +145,18 @@
     <Compile Include="Views\Inventory\ProductManagementView.Designer.cs">
       <DependentUpon>ProductManagementView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Inventory\SupplierManagementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Inventory\SupplierManagementView.Designer.cs">
+      <DependentUpon>SupplierManagementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inventory\test.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Inventory\test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +208,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Inventory\ProductManagementView.resx">
       <DependentUpon>ProductManagementView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Inventory\SupplierManagementView.resx">
+      <DependentUpon>SupplierManagementView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Inventory\test.resx">
+      <DependentUpon>test.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

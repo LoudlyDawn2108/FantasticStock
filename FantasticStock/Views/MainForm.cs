@@ -44,6 +44,7 @@ namespace FantasticStock.Views
         private void InitializeMeunuButton()
         {
             button2.Tag = ModuleType.Products;
+            button3.Tag = ModuleType.Suppliers;
 
             button17.Tag = ModuleType.UserManagement;
             button18.Tag = ModuleType.SystemConfiguration;
@@ -55,9 +56,10 @@ namespace FantasticStock.Views
         {
             // Inventory module types
             Products,
-            Categories,
             Suppliers,
-            StockLevels,
+            //Categories,
+            
+            //StockLevels,
 
             // Sales module types
             Customers,
@@ -138,7 +140,9 @@ namespace FantasticStock.Views
                 case ModuleType.Products:
                     moduleControl = new ProductManagementView();
                     break;
-
+                case ModuleType.Suppliers:
+                    moduleControl = new SupplierManagementView();
+                    break;
                 // Sales modules
                 case ModuleType.SalesOrders:
                     moduleControl = new SalesOrderView();
@@ -150,9 +154,9 @@ namespace FantasticStock.Views
                     break;
 
                 // Future modules - stubs for now
-                case ModuleType.Categories:
-                case ModuleType.Suppliers:
-                case ModuleType.StockLevels:
+                //case ModuleType.Categories:
+                //case ModuleType.Suppliers:
+                //case ModuleType.StockLevels:
                 case ModuleType.Customers:
                 case ModuleType.Invoices:
                 case ModuleType.SalesReports:
