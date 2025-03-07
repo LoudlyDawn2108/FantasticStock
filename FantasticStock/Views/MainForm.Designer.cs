@@ -280,7 +280,7 @@
             this.button7.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(165, 35);
             this.button7.TabIndex = 5;
-            this.button7.Text = "Inventory";
+            this.button7.Text = "Sales Order";
             this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.menuButton_Click);

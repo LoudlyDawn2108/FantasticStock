@@ -45,6 +45,8 @@ namespace FantasticStock.Views
         {
             button2.Tag = ModuleType.Products;
 
+            button7.Tag = ModuleType.SalesOrders;
+
             button17.Tag = ModuleType.UserManagement;
             button18.Tag = ModuleType.SystemConfiguration;
             button19.Tag = ModuleType.BackupRestore;
@@ -60,8 +62,8 @@ namespace FantasticStock.Views
             StockLevels,
 
             // Sales module types
-            Customers,
             SalesOrders,
+            Customers,
             Invoices,
             SalesReports,
 
@@ -206,14 +208,15 @@ namespace FantasticStock.Views
             // Log the logout event
             try
             {
-                _auditService.LogEvent(
-                    CurrentUser.UserID,
-                    "UserLogout",
-                    "Users",
-                    CurrentUser.UserID.ToString(),
-                    null,
-                    $"User '{CurrentUser.Username}' logged out at {DateTime.Parse("2025-03-02 16:16:14"):yyyy-MM-dd HH:mm:ss}"
-                );
+                Console.WriteLine("Exited");
+                //_auditService.LogEvent(
+                //    CurrentUser.UserID,
+                //    "UserLogout",
+                //    "Users",
+                //    CurrentUser.UserID.ToString(),
+                //    null,
+                //    $"User '{CurrentUser.Username}' logged out at {DateTime.Parse("2025-03-02 16:16:14"):yyyy-MM-dd HH:mm:ss}"
+                //);
             }
             catch
             {
