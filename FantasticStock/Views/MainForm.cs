@@ -164,9 +164,9 @@ namespace FantasticStock.Views
                     break;
 
                 // Future modules - stubs for now
-                case ModuleType.Categories:
-                case ModuleType.Suppliers:
-                case ModuleType.StockLevels:
+                //case ModuleType.Categories:
+                //case ModuleType.Suppliers:
+                //case ModuleType.StockLevels:
                 //case ModuleType.Customers:
                 //case ModuleType.Invoices:
                 case ModuleType.SalesReports:
