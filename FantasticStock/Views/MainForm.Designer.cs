@@ -280,7 +280,7 @@
             this.button7.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(165, 35);
             this.button7.TabIndex = 5;
-            this.button7.Text = "Sales Order";
+            this.button7.Text = "Point of Sale";
             this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.menuButton_Click);
@@ -295,7 +295,7 @@
             this.button8.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button8.Size = new System.Drawing.Size(165, 35);
             this.button8.TabIndex = 6;
-            this.button8.Text = "Inventory";
+            this.button8.Text = "Customer Management";
             this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.menuButton_Click);

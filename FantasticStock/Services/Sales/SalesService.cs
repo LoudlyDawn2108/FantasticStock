@@ -29,7 +29,7 @@ namespace FantasticStock.Services
                 new Customer { 
                     CustomerID = 1, 
                     CustomerName = "Sample Customer", 
-                    ContactName = "John Doe", 
+                    //ContactName = "John Doe", 
                     Email = "john@example.com", 
                     Phone = "123-456-7890", 
                     IsActive = true,
@@ -50,29 +50,29 @@ namespace FantasticStock.Services
         {
             // Implementation to search customers
             var customers = GetAllCustomers();
-            
+
             // Apply filters
             var query = customers.AsQueryable();
-            
+
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                query = query.Where(c => 
+                query = query.Where(c =>
                     c.CustomerName.Contains(searchQuery) ||
-                    c.ContactName.Contains(searchQuery) ||
                     c.Email.Contains(searchQuery) ||
                     c.Phone.Contains(searchQuery));
             }
-            
-            if (customerTypeId.HasValue)
-            {
-                query = query.Where(c => c.CustomerTypeID == customerTypeId.Value);
-            }
-            
+
+            // Removed the filter for CustomerTypeID as it does not exist in the Customer class
+            // if (customerTypeId.HasValue)
+            // {
+            //     query = query.Where(c => c.CustomerTypeID == customerTypeId.Value);
+            // }
+
             if (isActive.HasValue)
             {
                 query = query.Where(c => c.IsActive == isActive.Value);
             }
-            
+
             return query.ToList();
         }
 

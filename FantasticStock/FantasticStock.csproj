@@ -66,6 +66,24 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ServiceLocator.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
+    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Data/\FakeDataRepository.cs">
+      <Link>FakeDataRepository.cs</Link>
+    </Compile>
+    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\Payment.cs">
+      <Link>Payment.cs</Link>
+    </Compile>
+    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\Product.cs">
+      <Link>Product.cs</Link>
+    </Compile>
+    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\ProductCategory.cs">
+      <Link>ProductCategory.cs</Link>
+    </Compile>
+    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\Sale.cs">
+      <Link>Sale.cs</Link>
+    </Compile>
+    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\SaleItem.cs">
+      <Link>SaleItem.cs</Link>
+    </Compile>
     <Compile Include="Models\Admin\AuditLogEntry.cs" />
     <Compile Include="Models\Admin\BackupHistory.cs" />
     <Compile Include="Models\Admin\CompanyInformation.cs" />
@@ -169,6 +187,24 @@
     <Compile Include="Views\Admin\UserManagementView.Designer.cs">
       <DependentUpon>UserManagementView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sales\CMView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\CMView.Designer.cs">
+      <DependentUpon>CMView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\CustomerManagementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\CustomerManagementView.Designer.cs">
+      <DependentUpon>CustomerManagementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\POSView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\POSView.Designer.cs">
+      <DependentUpon>POSView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\SalesOrderView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,6 +235,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sales\CMView.resx">
+      <DependentUpon>CMView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sales\POSView.resx">
+      <DependentUpon>POSView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Sales\SalesOrderView.resx">
       <DependentUpon>SalesOrderView.cs</DependentUpon>

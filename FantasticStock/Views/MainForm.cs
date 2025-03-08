@@ -45,7 +45,9 @@ namespace FantasticStock.Views
         {
             button2.Tag = ModuleType.Products;
 
-            button7.Tag = ModuleType.SalesOrders;
+            //button7.Tag = ModuleType.SalesOrders;
+            button7.Tag = ModuleType.PointOfSale;
+            button8.Tag = ModuleType.Customers;
 
             button17.Tag = ModuleType.UserManagement;
             button18.Tag = ModuleType.SystemConfiguration;
@@ -64,7 +66,7 @@ namespace FantasticStock.Views
             // Sales module types
             SalesOrders,
             Customers,
-            Invoices,
+            PointOfSale,
             SalesReports,
 
             // Financial module types
@@ -145,6 +147,12 @@ namespace FantasticStock.Views
                 case ModuleType.SalesOrders:
                     moduleControl = new SalesOrderView();
                     break;
+                case ModuleType.PointOfSale:
+                    moduleControl = new POSView();
+                    break;
+                case ModuleType.Customers:
+                    moduleControl = new CustomerManagementView();
+                    break;
 
                 // Financial modules
                 case ModuleType.FinancialDashboard:
@@ -155,8 +163,8 @@ namespace FantasticStock.Views
                 case ModuleType.Categories:
                 case ModuleType.Suppliers:
                 case ModuleType.StockLevels:
-                case ModuleType.Customers:
-                case ModuleType.Invoices:
+                //case ModuleType.Customers:
+                //case ModuleType.Invoices:
                 case ModuleType.SalesReports:
                 case ModuleType.Payments:
                 case ModuleType.Expenses:

@@ -52,7 +52,9 @@
             this.txtTotalAmount = new System.Windows.Forms.TextBox();
             this.lblTotal = new System.Windows.Forms.Label();
             this.txtDiscountAmount = new System.Windows.Forms.TextBox();
+            this.btnEditOrder = new System.Windows.Forms.Button();
             this.lblDiscount = new System.Windows.Forms.Label();
+            this.btnNewOrder = new System.Windows.Forms.Button();
             this.txtShippingAmount = new System.Windows.Forms.TextBox();
             this.lblShipping = new System.Windows.Forms.Label();
             this.txtTaxAmount = new System.Windows.Forms.TextBox();
@@ -73,8 +75,6 @@
             this.btnGenerateInvoice = new System.Windows.Forms.Button();
             this.btnDeleteOrder = new System.Windows.Forms.Button();
             this.btnSaveOrder = new System.Windows.Forms.Button();
-            this.btnEditOrder = new System.Windows.Forms.Button();
-            this.btnNewOrder = new System.Windows.Forms.Button();
             this.pnlOrderItems = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dgvOrderDetails = new System.Windows.Forms.DataGridView();
@@ -116,8 +116,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1016, 626);
-            this.splitContainer1.SplitterDistance = 300;
+            this.splitContainer1.Size = new System.Drawing.Size(1454, 626);
+            this.splitContainer1.SplitterDistance = 429;
             this.splitContainer1.TabIndex = 0;
             // 
             // groupBox1
@@ -127,7 +127,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(300, 626);
+            this.groupBox1.Size = new System.Drawing.Size(429, 626);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Sales Orders";
@@ -139,13 +139,13 @@
             this.dgvOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvOrders.Location = new System.Drawing.Point(3, 76);
+            this.dgvOrders.Location = new System.Drawing.Point(3, 70);
             this.dgvOrders.MultiSelect = false;
             this.dgvOrders.Name = "dgvOrders";
             this.dgvOrders.ReadOnly = true;
             this.dgvOrders.RowHeadersVisible = false;
             this.dgvOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvOrders.Size = new System.Drawing.Size(294, 547);
+            this.dgvOrders.Size = new System.Drawing.Size(423, 553);
             this.dgvOrders.TabIndex = 1;
             // 
             // panel1
@@ -165,12 +165,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 16);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(294, 60);
+            this.panel1.Size = new System.Drawing.Size(423, 54);
             this.panel1.TabIndex = 0;
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(0, 0);
+            this.btnRefresh.Location = new System.Drawing.Point(14, 27);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 0;
@@ -178,7 +178,7 @@
             // 
             // btnFilter
             // 
-            this.btnFilter.Location = new System.Drawing.Point(0, 0);
+            this.btnFilter.Location = new System.Drawing.Point(14, 1);
             this.btnFilter.Name = "btnFilter";
             this.btnFilter.Size = new System.Drawing.Size(75, 23);
             this.btnFilter.TabIndex = 1;
@@ -186,9 +186,9 @@
             // 
             // cmbCustomerFilter
             // 
-            this.cmbCustomerFilter.Location = new System.Drawing.Point(0, 0);
+            this.cmbCustomerFilter.Location = new System.Drawing.Point(139, 3);
             this.cmbCustomerFilter.Name = "cmbCustomerFilter";
-            this.cmbCustomerFilter.Size = new System.Drawing.Size(121, 21);
+            this.cmbCustomerFilter.Size = new System.Drawing.Size(96, 21);
             this.cmbCustomerFilter.TabIndex = 2;
             // 
             // lblCustomerFilter
@@ -200,9 +200,9 @@
             // 
             // cmbStatusFilter
             // 
-            this.cmbStatusFilter.Location = new System.Drawing.Point(0, 0);
+            this.cmbStatusFilter.Location = new System.Drawing.Point(139, 32);
             this.cmbStatusFilter.Name = "cmbStatusFilter";
-            this.cmbStatusFilter.Size = new System.Drawing.Size(121, 21);
+            this.cmbStatusFilter.Size = new System.Drawing.Size(96, 21);
             this.cmbStatusFilter.TabIndex = 4;
             // 
             // lblStatusFilter
@@ -214,9 +214,10 @@
             // 
             // dtpEndDate
             // 
-            this.dtpEndDate.Location = new System.Drawing.Point(0, 0);
+            this.dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpEndDate.Location = new System.Drawing.Point(283, 29);
             this.dtpEndDate.Name = "dtpEndDate";
-            this.dtpEndDate.Size = new System.Drawing.Size(200, 20);
+            this.dtpEndDate.Size = new System.Drawing.Size(125, 20);
             this.dtpEndDate.TabIndex = 6;
             // 
             // lblEndDate
@@ -228,9 +229,10 @@
             // 
             // dtpStartDate
             // 
-            this.dtpStartDate.Location = new System.Drawing.Point(0, 0);
+            this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpStartDate.Location = new System.Drawing.Point(283, 3);
             this.dtpStartDate.Name = "dtpStartDate";
-            this.dtpStartDate.Size = new System.Drawing.Size(200, 20);
+            this.dtpStartDate.Size = new System.Drawing.Size(128, 20);
             this.dtpStartDate.TabIndex = 8;
             // 
             // lblStartDate
@@ -268,8 +270,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.pnlOrderItems);
-            this.splitContainer2.Size = new System.Drawing.Size(712, 626);
-            this.splitContainer2.SplitterDistance = 350;
+            this.splitContainer2.Size = new System.Drawing.Size(1021, 626);
+            this.splitContainer2.SplitterDistance = 501;
             this.splitContainer2.TabIndex = 0;
             // 
             // pnlOrderDetails
@@ -279,7 +281,7 @@
             this.pnlOrderDetails.Enabled = false;
             this.pnlOrderDetails.Location = new System.Drawing.Point(0, 40);
             this.pnlOrderDetails.Name = "pnlOrderDetails";
-            this.pnlOrderDetails.Size = new System.Drawing.Size(350, 586);
+            this.pnlOrderDetails.Size = new System.Drawing.Size(501, 586);
             this.pnlOrderDetails.TabIndex = 1;
             // 
             // groupBox2
@@ -289,6 +291,7 @@
             this.groupBox2.Controls.Add(this.txtTotalAmount);
             this.groupBox2.Controls.Add(this.lblTotal);
             this.groupBox2.Controls.Add(this.txtDiscountAmount);
+            this.groupBox2.Controls.Add(this.btnEditOrder);
             this.groupBox2.Controls.Add(this.lblDiscount);
             this.groupBox2.Controls.Add(this.txtShippingAmount);
             this.groupBox2.Controls.Add(this.lblShipping);
@@ -307,45 +310,53 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(350, 586);
+            this.groupBox2.Size = new System.Drawing.Size(501, 586);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Order Details";
             // 
             // txtNotes
             // 
-            this.txtNotes.Location = new System.Drawing.Point(0, 0);
+            this.txtNotes.Location = new System.Drawing.Point(103, 10);
             this.txtNotes.Name = "txtNotes";
             this.txtNotes.Size = new System.Drawing.Size(100, 20);
             this.txtNotes.TabIndex = 0;
             // 
             // lblNotes
             // 
-            this.lblNotes.Location = new System.Drawing.Point(0, 0);
+            this.lblNotes.Location = new System.Drawing.Point(2, 59);
             this.lblNotes.Name = "lblNotes";
             this.lblNotes.Size = new System.Drawing.Size(100, 23);
             this.lblNotes.TabIndex = 1;
             // 
             // txtTotalAmount
             // 
-            this.txtTotalAmount.Location = new System.Drawing.Point(0, 0);
+            this.txtTotalAmount.Location = new System.Drawing.Point(114, 37);
             this.txtTotalAmount.Name = "txtTotalAmount";
             this.txtTotalAmount.Size = new System.Drawing.Size(100, 20);
             this.txtTotalAmount.TabIndex = 2;
             // 
             // lblTotal
             // 
-            this.lblTotal.Location = new System.Drawing.Point(0, 0);
+            this.lblTotal.Location = new System.Drawing.Point(-3, 30);
             this.lblTotal.Name = "lblTotal";
             this.lblTotal.Size = new System.Drawing.Size(100, 23);
             this.lblTotal.TabIndex = 3;
             // 
             // txtDiscountAmount
             // 
-            this.txtDiscountAmount.Location = new System.Drawing.Point(0, 0);
+            this.txtDiscountAmount.Location = new System.Drawing.Point(260, 36);
             this.txtDiscountAmount.Name = "txtDiscountAmount";
             this.txtDiscountAmount.Size = new System.Drawing.Size(100, 20);
             this.txtDiscountAmount.TabIndex = 4;
+            // 
+            // btnEditOrder
+            // 
+            this.btnEditOrder.Location = new System.Drawing.Point(6, 6);
+            this.btnEditOrder.Name = "btnEditOrder";
+            this.btnEditOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnEditOrder.TabIndex = 5;
+            this.btnEditOrder.Text = "Edit";
             // 
             // lblDiscount
             // 
@@ -353,6 +364,14 @@
             this.lblDiscount.Name = "lblDiscount";
             this.lblDiscount.Size = new System.Drawing.Size(100, 23);
             this.lblDiscount.TabIndex = 5;
+            // 
+            // btnNewOrder
+            // 
+            this.btnNewOrder.Location = new System.Drawing.Point(160, 4);
+            this.btnNewOrder.Name = "btnNewOrder";
+            this.btnNewOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnNewOrder.TabIndex = 6;
+            this.btnNewOrder.Text = "New Order";
             // 
             // txtShippingAmount
             // 
@@ -412,7 +431,7 @@
             // 
             // dtpOrderDate
             // 
-            this.dtpOrderDate.Location = new System.Drawing.Point(0, 0);
+            this.dtpOrderDate.Location = new System.Drawing.Point(264, 6);
             this.dtpOrderDate.Name = "dtpOrderDate";
             this.dtpOrderDate.Size = new System.Drawing.Size(200, 20);
             this.dtpOrderDate.TabIndex = 14;
@@ -440,9 +459,9 @@
             // 
             // cmbCustomer
             // 
-            this.cmbCustomer.Location = new System.Drawing.Point(0, 0);
+            this.cmbCustomer.Location = new System.Drawing.Point(366, 36);
             this.cmbCustomer.Name = "cmbCustomer";
-            this.cmbCustomer.Size = new System.Drawing.Size(121, 21);
+            this.cmbCustomer.Size = new System.Drawing.Size(107, 21);
             this.cmbCustomer.TabIndex = 18;
             // 
             // lblCustomer
@@ -459,70 +478,53 @@
             this.panel2.Controls.Add(this.btnGenerateInvoice);
             this.panel2.Controls.Add(this.btnDeleteOrder);
             this.panel2.Controls.Add(this.btnSaveOrder);
-            this.panel2.Controls.Add(this.btnEditOrder);
             this.panel2.Controls.Add(this.btnNewOrder);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(350, 40);
+            this.panel2.Size = new System.Drawing.Size(501, 40);
             this.panel2.TabIndex = 0;
             // 
             // btnUpdateStatus
             // 
-            this.btnUpdateStatus.Location = new System.Drawing.Point(0, 0);
+            this.btnUpdateStatus.Location = new System.Drawing.Point(384, 6);
             this.btnUpdateStatus.Name = "btnUpdateStatus";
-            this.btnUpdateStatus.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdateStatus.Size = new System.Drawing.Size(70, 22);
             this.btnUpdateStatus.TabIndex = 0;
             this.btnUpdateStatus.Text = "Update Status";
             // 
             // btnPrintOrder
             // 
-            this.btnPrintOrder.Location = new System.Drawing.Point(0, 0);
+            this.btnPrintOrder.Location = new System.Drawing.Point(313, 5);
             this.btnPrintOrder.Name = "btnPrintOrder";
-            this.btnPrintOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnPrintOrder.Size = new System.Drawing.Size(65, 23);
             this.btnPrintOrder.TabIndex = 1;
             this.btnPrintOrder.Text = "Print";
             // 
             // btnGenerateInvoice
             // 
-            this.btnGenerateInvoice.Location = new System.Drawing.Point(0, 0);
+            this.btnGenerateInvoice.Location = new System.Drawing.Point(241, 5);
             this.btnGenerateInvoice.Name = "btnGenerateInvoice";
-            this.btnGenerateInvoice.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerateInvoice.Size = new System.Drawing.Size(66, 21);
             this.btnGenerateInvoice.TabIndex = 2;
             this.btnGenerateInvoice.Text = "Generate Invoice";
             // 
             // btnDeleteOrder
             // 
-            this.btnDeleteOrder.Location = new System.Drawing.Point(0, 0);
+            this.btnDeleteOrder.Location = new System.Drawing.Point(95, 3);
             this.btnDeleteOrder.Name = "btnDeleteOrder";
-            this.btnDeleteOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteOrder.Size = new System.Drawing.Size(59, 23);
             this.btnDeleteOrder.TabIndex = 3;
             this.btnDeleteOrder.Text = "Delete";
             // 
             // btnSaveOrder
             // 
             this.btnSaveOrder.Enabled = false;
-            this.btnSaveOrder.Location = new System.Drawing.Point(0, 0);
+            this.btnSaveOrder.Location = new System.Drawing.Point(15, 4);
             this.btnSaveOrder.Name = "btnSaveOrder";
-            this.btnSaveOrder.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveOrder.Size = new System.Drawing.Size(66, 22);
             this.btnSaveOrder.TabIndex = 4;
             this.btnSaveOrder.Text = "Save";
-            // 
-            // btnEditOrder
-            // 
-            this.btnEditOrder.Location = new System.Drawing.Point(0, 0);
-            this.btnEditOrder.Name = "btnEditOrder";
-            this.btnEditOrder.Size = new System.Drawing.Size(75, 23);
-            this.btnEditOrder.TabIndex = 5;
-            this.btnEditOrder.Text = "Edit";
-            // 
-            // btnNewOrder
-            // 
-            this.btnNewOrder.Location = new System.Drawing.Point(0, 0);
-            this.btnNewOrder.Name = "btnNewOrder";
-            this.btnNewOrder.Size = new System.Drawing.Size(75, 23);
-            this.btnNewOrder.TabIndex = 6;
-            this.btnNewOrder.Text = "New Order";
             // 
             // pnlOrderItems
             // 
@@ -531,7 +533,7 @@
             this.pnlOrderItems.Enabled = false;
             this.pnlOrderItems.Location = new System.Drawing.Point(0, 0);
             this.pnlOrderItems.Name = "pnlOrderItems";
-            this.pnlOrderItems.Size = new System.Drawing.Size(358, 626);
+            this.pnlOrderItems.Size = new System.Drawing.Size(516, 626);
             this.pnlOrderItems.TabIndex = 0;
             // 
             // groupBox3
@@ -541,7 +543,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(358, 626);
+            this.groupBox3.Size = new System.Drawing.Size(516, 626);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Order Items";
@@ -559,7 +561,7 @@
             this.dgvOrderDetails.ReadOnly = true;
             this.dgvOrderDetails.RowHeadersVisible = false;
             this.dgvOrderDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvOrderDetails.Size = new System.Drawing.Size(352, 567);
+            this.dgvOrderDetails.Size = new System.Drawing.Size(510, 567);
             this.dgvOrderDetails.TabIndex = 1;
             // 
             // panel3
@@ -571,12 +573,12 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 16);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(352, 40);
+            this.panel3.Size = new System.Drawing.Size(510, 40);
             this.panel3.TabIndex = 0;
             // 
             // btnRemoveProduct
             // 
-            this.btnRemoveProduct.Location = new System.Drawing.Point(0, 0);
+            this.btnRemoveProduct.Location = new System.Drawing.Point(251, 3);
             this.btnRemoveProduct.Name = "btnRemoveProduct";
             this.btnRemoveProduct.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveProduct.TabIndex = 0;
@@ -584,7 +586,7 @@
             // 
             // btnAddProduct
             // 
-            this.btnAddProduct.Location = new System.Drawing.Point(0, 0);
+            this.btnAddProduct.Location = new System.Drawing.Point(151, 5);
             this.btnAddProduct.Name = "btnAddProduct";
             this.btnAddProduct.Size = new System.Drawing.Size(75, 23);
             this.btnAddProduct.TabIndex = 1;
@@ -592,14 +594,14 @@
             // 
             // cmbProduct
             // 
-            this.cmbProduct.Location = new System.Drawing.Point(0, 0);
+            this.cmbProduct.Location = new System.Drawing.Point(351, 5);
             this.cmbProduct.Name = "cmbProduct";
             this.cmbProduct.Size = new System.Drawing.Size(121, 21);
             this.cmbProduct.TabIndex = 2;
             // 
             // lblProduct
             // 
-            this.lblProduct.Location = new System.Drawing.Point(0, 0);
+            this.lblProduct.Location = new System.Drawing.Point(29, 5);
             this.lblProduct.Name = "lblProduct";
             this.lblProduct.Size = new System.Drawing.Size(100, 23);
             this.lblProduct.TabIndex = 3;
@@ -610,7 +612,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Name = "SalesOrderView";
-            this.Size = new System.Drawing.Size(1016, 626);
+            this.Size = new System.Drawing.Size(1454, 626);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
