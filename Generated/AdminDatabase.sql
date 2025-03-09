@@ -1,8 +1,10 @@
+SELECT COUNT(*) FROM sys.databases WHERE name = 'FantasticStock'
+
 -- Create the Administrative Domain Database
-CREATE DATABASE AdminDomain;
+CREATE DATABASE FantasticStock;
 GO
 
-USE AdminDomain;
+USE FantasticStock;
 GO
 
 -- User Management Tables
@@ -205,6 +207,7 @@ SELECT 1, PermissionID FROM Permissions;
 -- Insert admin user (password is 'admin123' with salt)
 INSERT INTO Users (Username, PasswordHash, Salt, DisplayName, Email, RoleID)
 VALUES ('admin', 'f07a147a4e14f6027c9d248a379c2212d7cd4fb5e34908de6c732978de4e239c', 'adminSalt123', 'System Administrator', 'admin@example.com', 1);
+
 
 -- Insert default company information
 INSERT INTO CompanyInformation (CompanyName, Address, City, State, ZipCode, Country, Phone, Email)

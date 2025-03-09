@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using FantasticStock.Common;
@@ -13,8 +14,8 @@ namespace FantasticStock.ViewModels
         private readonly IMonitoringService _monitoringService;
         private readonly IAuditService _auditService;
 
-        private ObservableCollection<ErrorLogEntry> _errorLogs;
-        private ObservableCollection<AuditLogEntry> _auditLogs;
+        private BindingList<ErrorLogEntry> _errorLogs;
+        private BindingList<AuditLogEntry> _auditLogs;
         private SystemResources _currentResources;
         private DateTime _startDate;
         private DateTime _endDate;
@@ -50,13 +51,13 @@ namespace FantasticStock.ViewModels
 
         #region Properties
 
-        public ObservableCollection<ErrorLogEntry> ErrorLogs
+        public BindingList<ErrorLogEntry> ErrorLogs
         {
             get => _errorLogs;
             set => SetProperty(ref _errorLogs, value);
         }
 
-        public ObservableCollection<AuditLogEntry> AuditLogs
+        public BindingList<AuditLogEntry> AuditLogs
         {
             get => _auditLogs;
             set => SetProperty(ref _auditLogs, value);
@@ -319,7 +320,7 @@ namespace FantasticStock.ViewModels
                     ErrorSeverityFilter,
                     !string.IsNullOrWhiteSpace(ErrorModuleFilter) ? ErrorModuleFilter : null);
                     
-                ErrorLogs = new ObservableCollection<ErrorLogEntry>(logs);
+                ErrorLogs = new BindingList<ErrorLogEntry>(logs);
             }
             catch (Exception ex)
             {
@@ -338,7 +339,7 @@ namespace FantasticStock.ViewModels
                     AuditUserFilter,
                     !string.IsNullOrWhiteSpace(AuditTableFilter) ? AuditTableFilter : null);
                     
-                AuditLogs = new ObservableCollection<AuditLogEntry>(logs);
+                AuditLogs = new BindingList<AuditLogEntry>(logs);
             }
             catch (Exception ex)
             {

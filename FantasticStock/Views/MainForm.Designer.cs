@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -61,12 +62,15 @@
             this.button19 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.moduleContentPanel = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
+            this.moduleContentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -87,11 +91,10 @@
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel5);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.flowLayoutPanel1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(251, 729);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(168, 474);
             this.flowLayoutPanel1.TabIndex = 3;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -103,36 +106,35 @@
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblDateTime, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 5);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(243, 154);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(162, 100);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(86, 8);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(39, 6);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 22);
+            this.label1.Size = new System.Drawing.Size(84, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.label1.Text = "Fantastic Stock";
             // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(96, 46);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(66, 31);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 22);
+            this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "User";
             // 
@@ -140,10 +142,10 @@
             // 
             this.lblDateTime.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDateTime.AutoSize = true;
-            this.lblDateTime.Location = new System.Drawing.Point(21, 84);
-            this.lblDateTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDateTime.Location = new System.Drawing.Point(27, 56);
+            this.lblDateTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDateTime.Name = "lblDateTime";
-            this.lblDateTime.Size = new System.Drawing.Size(200, 22);
+            this.lblDateTime.Size = new System.Drawing.Size(108, 13);
             this.lblDateTime.TabIndex = 2;
             this.lblDateTime.Text = "2025-03-02 16:16:14";
             // 
@@ -151,10 +153,10 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(51, 123);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(42, 81);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(140, 22);
+            this.label4.Size = new System.Drawing.Size(77, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Administrator";
             // 
@@ -166,10 +168,10 @@
             this.flowLayoutPanel2.Controls.Add(this.button4);
             this.flowLayoutPanel2.Controls.Add(this.button5);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 164);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 106);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(248, 269);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(165, 175);
             this.flowLayoutPanel2.TabIndex = 5;
             this.flowLayoutPanel2.WrapContents = false;
             // 
@@ -180,7 +182,7 @@
             this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Margin = new System.Windows.Forms.Padding(0);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(248, 54);
+            this.button1.Size = new System.Drawing.Size(165, 35);
             this.button1.TabIndex = 4;
             this.button1.Text = "Inventory Management";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -191,11 +193,11 @@
             // 
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Location = new System.Drawing.Point(0, 54);
+            this.button2.Location = new System.Drawing.Point(0, 35);
             this.button2.Margin = new System.Windows.Forms.Padding(0);
             this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button2.Size = new System.Drawing.Size(248, 54);
+            this.button2.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button2.Size = new System.Drawing.Size(165, 35);
             this.button2.TabIndex = 5;
             this.button2.Text = "Product Management";
             this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -206,11 +208,11 @@
             // 
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(0, 108);
+            this.button3.Location = new System.Drawing.Point(0, 70);
             this.button3.Margin = new System.Windows.Forms.Padding(0);
             this.button3.Name = "button3";
-            this.button3.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button3.Size = new System.Drawing.Size(248, 54);
+            this.button3.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button3.Size = new System.Drawing.Size(165, 35);
             this.button3.TabIndex = 6;
             this.button3.Text = "Supplier Management";
             this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -221,13 +223,13 @@
             // 
             this.button4.FlatAppearance.BorderSize = 0;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(0, 162);
+            this.button4.Location = new System.Drawing.Point(0, 105);
             this.button4.Margin = new System.Windows.Forms.Padding(0);
             this.button4.Name = "button4";
-            this.button4.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button4.Size = new System.Drawing.Size(248, 54);
+            this.button4.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button4.Size = new System.Drawing.Size(165, 35);
             this.button4.TabIndex = 7;
-            this.button4.Text = "Inventory";
+            this.button4.Text = "Stock Management";
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.menuButton_Click);
@@ -236,13 +238,13 @@
             // 
             this.button5.FlatAppearance.BorderSize = 0;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Location = new System.Drawing.Point(0, 216);
+            this.button5.Location = new System.Drawing.Point(0, 140);
             this.button5.Margin = new System.Windows.Forms.Padding(0);
             this.button5.Name = "button5";
-            this.button5.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button5.Size = new System.Drawing.Size(248, 54);
+            this.button5.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button5.Size = new System.Drawing.Size(165, 35);
             this.button5.TabIndex = 8;
-            this.button5.Text = "Inventory";
+            this.button5.Text = "Inventory Reports";
             this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.menuButton_Click);
@@ -255,10 +257,10 @@
             this.flowLayoutPanel3.Controls.Add(this.button9);
             this.flowLayoutPanel3.Controls.Add(this.button10);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 433);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(0, 281);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(248, 269);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(165, 175);
             this.flowLayoutPanel3.TabIndex = 7;
             this.flowLayoutPanel3.WrapContents = false;
             // 
@@ -269,7 +271,7 @@
             this.button6.Location = new System.Drawing.Point(0, 0);
             this.button6.Margin = new System.Windows.Forms.Padding(0);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(248, 54);
+            this.button6.Size = new System.Drawing.Size(165, 35);
             this.button6.TabIndex = 6;
             this.button6.Text = "Sales Management";
             this.button6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -280,11 +282,11 @@
             // 
             this.button7.FlatAppearance.BorderSize = 0;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button7.Location = new System.Drawing.Point(0, 54);
+            this.button7.Location = new System.Drawing.Point(0, 35);
             this.button7.Margin = new System.Windows.Forms.Padding(0);
             this.button7.Name = "button7";
-            this.button7.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button7.Size = new System.Drawing.Size(248, 54);
+            this.button7.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button7.Size = new System.Drawing.Size(165, 35);
             this.button7.TabIndex = 5;
             this.button7.Text = "Sales Order";
             this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -295,11 +297,11 @@
             // 
             this.button8.FlatAppearance.BorderSize = 0;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button8.Location = new System.Drawing.Point(0, 108);
+            this.button8.Location = new System.Drawing.Point(0, 70);
             this.button8.Margin = new System.Windows.Forms.Padding(0);
             this.button8.Name = "button8";
-            this.button8.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button8.Size = new System.Drawing.Size(248, 54);
+            this.button8.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button8.Size = new System.Drawing.Size(165, 35);
             this.button8.TabIndex = 6;
             this.button8.Text = "Inventory";
             this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -310,11 +312,11 @@
             // 
             this.button9.FlatAppearance.BorderSize = 0;
             this.button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button9.Location = new System.Drawing.Point(0, 162);
+            this.button9.Location = new System.Drawing.Point(0, 105);
             this.button9.Margin = new System.Windows.Forms.Padding(0);
             this.button9.Name = "button9";
-            this.button9.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button9.Size = new System.Drawing.Size(248, 54);
+            this.button9.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button9.Size = new System.Drawing.Size(165, 35);
             this.button9.TabIndex = 7;
             this.button9.Text = "Inventory";
             this.button9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -325,11 +327,11 @@
             // 
             this.button10.FlatAppearance.BorderSize = 0;
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button10.Location = new System.Drawing.Point(0, 216);
+            this.button10.Location = new System.Drawing.Point(0, 140);
             this.button10.Margin = new System.Windows.Forms.Padding(0);
             this.button10.Name = "button10";
-            this.button10.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button10.Size = new System.Drawing.Size(248, 54);
+            this.button10.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button10.Size = new System.Drawing.Size(165, 35);
             this.button10.TabIndex = 8;
             this.button10.Text = "Inventory";
             this.button10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -344,10 +346,10 @@
             this.flowLayoutPanel4.Controls.Add(this.button14);
             this.flowLayoutPanel4.Controls.Add(this.button15);
             this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(0, 702);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(0, 456);
             this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(248, 269);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(165, 175);
             this.flowLayoutPanel4.TabIndex = 9;
             // 
             // button11
@@ -357,7 +359,7 @@
             this.button11.Location = new System.Drawing.Point(0, 0);
             this.button11.Margin = new System.Windows.Forms.Padding(0);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(248, 54);
+            this.button11.Size = new System.Drawing.Size(165, 35);
             this.button11.TabIndex = 8;
             this.button11.Text = "Financial Management";
             this.button11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -368,11 +370,11 @@
             // 
             this.button12.FlatAppearance.BorderSize = 0;
             this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button12.Location = new System.Drawing.Point(0, 54);
+            this.button12.Location = new System.Drawing.Point(0, 35);
             this.button12.Margin = new System.Windows.Forms.Padding(0);
             this.button12.Name = "button12";
-            this.button12.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button12.Size = new System.Drawing.Size(248, 54);
+            this.button12.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button12.Size = new System.Drawing.Size(165, 35);
             this.button12.TabIndex = 5;
             this.button12.Text = "Inventory";
             this.button12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -383,11 +385,11 @@
             // 
             this.button13.FlatAppearance.BorderSize = 0;
             this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button13.Location = new System.Drawing.Point(0, 108);
+            this.button13.Location = new System.Drawing.Point(0, 70);
             this.button13.Margin = new System.Windows.Forms.Padding(0);
             this.button13.Name = "button13";
-            this.button13.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button13.Size = new System.Drawing.Size(248, 54);
+            this.button13.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button13.Size = new System.Drawing.Size(165, 35);
             this.button13.TabIndex = 6;
             this.button13.Text = "Inventory";
             this.button13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -398,11 +400,11 @@
             // 
             this.button14.FlatAppearance.BorderSize = 0;
             this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button14.Location = new System.Drawing.Point(0, 162);
+            this.button14.Location = new System.Drawing.Point(0, 105);
             this.button14.Margin = new System.Windows.Forms.Padding(0);
             this.button14.Name = "button14";
-            this.button14.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button14.Size = new System.Drawing.Size(248, 54);
+            this.button14.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button14.Size = new System.Drawing.Size(165, 35);
             this.button14.TabIndex = 7;
             this.button14.Text = "Inventory";
             this.button14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -413,11 +415,11 @@
             // 
             this.button15.FlatAppearance.BorderSize = 0;
             this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button15.Location = new System.Drawing.Point(248, 0);
+            this.button15.Location = new System.Drawing.Point(0, 140);
             this.button15.Margin = new System.Windows.Forms.Padding(0);
             this.button15.Name = "button15";
-            this.button15.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button15.Size = new System.Drawing.Size(248, 54);
+            this.button15.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button15.Size = new System.Drawing.Size(165, 35);
             this.button15.TabIndex = 8;
             this.button15.Text = "Inventory";
             this.button15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -432,10 +434,10 @@
             this.flowLayoutPanel5.Controls.Add(this.button19);
             this.flowLayoutPanel5.Controls.Add(this.button20);
             this.flowLayoutPanel5.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel5.Location = new System.Drawing.Point(0, 971);
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(0, 631);
             this.flowLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
-            this.flowLayoutPanel5.Size = new System.Drawing.Size(248, 269);
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(165, 175);
             this.flowLayoutPanel5.TabIndex = 11;
             // 
             // button16
@@ -445,7 +447,7 @@
             this.button16.Location = new System.Drawing.Point(0, 0);
             this.button16.Margin = new System.Windows.Forms.Padding(0);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(248, 54);
+            this.button16.Size = new System.Drawing.Size(165, 35);
             this.button16.TabIndex = 10;
             this.button16.Text = "System Administration";
             this.button16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -456,11 +458,11 @@
             // 
             this.button17.FlatAppearance.BorderSize = 0;
             this.button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button17.Location = new System.Drawing.Point(0, 54);
+            this.button17.Location = new System.Drawing.Point(0, 35);
             this.button17.Margin = new System.Windows.Forms.Padding(0);
             this.button17.Name = "button17";
-            this.button17.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button17.Size = new System.Drawing.Size(248, 54);
+            this.button17.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button17.Size = new System.Drawing.Size(165, 35);
             this.button17.TabIndex = 5;
             this.button17.Text = "User Management";
             this.button17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -471,11 +473,11 @@
             // 
             this.button18.FlatAppearance.BorderSize = 0;
             this.button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button18.Location = new System.Drawing.Point(0, 108);
+            this.button18.Location = new System.Drawing.Point(0, 70);
             this.button18.Margin = new System.Windows.Forms.Padding(0);
             this.button18.Name = "button18";
-            this.button18.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button18.Size = new System.Drawing.Size(248, 54);
+            this.button18.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button18.Size = new System.Drawing.Size(165, 35);
             this.button18.TabIndex = 6;
             this.button18.Text = "System Config";
             this.button18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -486,11 +488,11 @@
             // 
             this.button19.FlatAppearance.BorderSize = 0;
             this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button19.Location = new System.Drawing.Point(0, 162);
+            this.button19.Location = new System.Drawing.Point(0, 105);
             this.button19.Margin = new System.Windows.Forms.Padding(0);
             this.button19.Name = "button19";
-            this.button19.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button19.Size = new System.Drawing.Size(248, 54);
+            this.button19.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button19.Size = new System.Drawing.Size(165, 35);
             this.button19.TabIndex = 7;
             this.button19.Text = "Backup Restore";
             this.button19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -501,11 +503,11 @@
             // 
             this.button20.FlatAppearance.BorderSize = 0;
             this.button20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button20.Location = new System.Drawing.Point(248, 0);
+            this.button20.Location = new System.Drawing.Point(0, 140);
             this.button20.Margin = new System.Windows.Forms.Padding(0);
             this.button20.Name = "button20";
-            this.button20.Padding = new System.Windows.Forms.Padding(45, 0, 0, 0);
-            this.button20.Size = new System.Drawing.Size(248, 54);
+            this.button20.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
+            this.button20.Size = new System.Drawing.Size(165, 35);
             this.button20.TabIndex = 8;
             this.button20.Text = "System Monitoring";
             this.button20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -514,24 +516,34 @@
             // 
             // moduleContentPanel
             // 
+            this.moduleContentPanel.Controls.Add(this.pictureBox1);
             this.moduleContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.moduleContentPanel.Location = new System.Drawing.Point(251, 0);
-            this.moduleContentPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.moduleContentPanel.Location = new System.Drawing.Point(168, 0);
             this.moduleContentPanel.Name = "moduleContentPanel";
-            this.moduleContentPanel.Size = new System.Drawing.Size(1073, 729);
+            this.moduleContentPanel.Size = new System.Drawing.Size(715, 474);
             this.moduleContentPanel.TabIndex = 4;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(230, 117);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(225, 225);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1324, 729);
+            this.ClientSize = new System.Drawing.Size(883, 474);
             this.Controls.Add(this.moduleContentPanel);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Admin Domain Management System";
+            this.Text = "Fantastic Stock";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -540,6 +552,9 @@
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel5.ResumeLayout(false);
+            this.moduleContentPanel.ResumeLayout(false);
+            this.moduleContentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -578,5 +593,6 @@
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Panel moduleContentPanel;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

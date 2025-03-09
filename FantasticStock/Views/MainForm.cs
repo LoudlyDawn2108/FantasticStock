@@ -45,6 +45,8 @@ namespace FantasticStock.Views
         {
             button2.Tag = ModuleType.Products;
             button3.Tag = ModuleType.Suppliers;
+            button4.Tag = ModuleType.StockLevels;
+            button5.Tag = ModuleType.InventoryReports;
 
             button7.Tag = ModuleType.SalesOrders;
 
@@ -59,8 +61,10 @@ namespace FantasticStock.Views
             // Inventory module types
             Products,
             Suppliers,
+            StockLevels,
+            InventoryReports,
             //Categories,
-            
+
             //StockLevels,
 
             // Sales module types
@@ -158,7 +162,8 @@ namespace FantasticStock.Views
                 // Future modules - stubs for now
                 //case ModuleType.Categories:
                 //case ModuleType.Suppliers:
-                //case ModuleType.StockLevels:
+                case ModuleType.StockLevels:
+                case ModuleType.InventoryReports:
                 case ModuleType.Customers:
                 case ModuleType.Invoices:
                 case ModuleType.SalesReports:
@@ -253,7 +258,7 @@ namespace FantasticStock.Views
         private void timer1_Tick(object sender, EventArgs e)
         {
             // Update the date/time display
-            lblDateTime.Text = DateTime.Parse("2025-03-02 16:19:04").ToString("yyyy-MM-dd HH:mm:ss");
+            lblDateTime.Text = "   " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }

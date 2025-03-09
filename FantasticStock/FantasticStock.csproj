@@ -133,6 +133,9 @@
     <Compile Include="Views\Admin\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Custom Components\TextBoxWithPlaceholder.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\Financial\FinancialDashboardView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -222,6 +225,7 @@
       <DependentUpon>SalesOrderView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\FantasticStock.ViewModels.UserManagementViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -235,6 +239,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Screenshot 2025-03-07 164102.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

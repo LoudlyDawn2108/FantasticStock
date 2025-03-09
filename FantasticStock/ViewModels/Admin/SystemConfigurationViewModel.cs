@@ -16,10 +16,10 @@ namespace FantasticStock.ViewModels
         private readonly IAuditService _auditService;
 
         private CompanyInformation _companyInfo;
-        private ObservableCollection<SystemSetting> _generalSettings;
-        private ObservableCollection<SystemSetting> _inventorySettings;
-        private ObservableCollection<SystemSetting> _salesSettings;
-        private ObservableCollection<SystemSetting> _financialSettings;
+        private BindingList<SystemSetting> _generalSettings;
+        private BindingList<SystemSetting> _inventorySettings;
+        private BindingList<SystemSetting> _salesSettings;
+        private BindingList<SystemSetting> _financialSettings;
         private byte[] _logoImageData;
         private bool _isDirty;
 
@@ -53,25 +53,25 @@ namespace FantasticStock.ViewModels
             }
         }
 
-        public ObservableCollection<SystemSetting> GeneralSettings
+        public BindingList<SystemSetting> GeneralSettings
         {
             get => _generalSettings;
             set => SetProperty(ref _generalSettings, value);
         }
 
-        public ObservableCollection<SystemSetting> InventorySettings
+        public BindingList<SystemSetting> InventorySettings
         {
             get => _inventorySettings;
             set => SetProperty(ref _inventorySettings, value);
         }
 
-        public ObservableCollection<SystemSetting> SalesSettings
+        public BindingList<SystemSetting> SalesSettings
         {
             get => _salesSettings;
             set => SetProperty(ref _salesSettings, value);
         }
 
-        public ObservableCollection<SystemSetting> FinancialSettings
+        public BindingList<SystemSetting> FinancialSettings
         {
             get => _financialSettings;
             set => SetProperty(ref _financialSettings, value);
@@ -213,10 +213,10 @@ namespace FantasticStock.ViewModels
             try
             {
                 // Load settings by category
-                GeneralSettings = new ObservableCollection<SystemSetting>(_configService.GetSettingsByCategory("General"));
-                InventorySettings = new ObservableCollection<SystemSetting>(_configService.GetSettingsByCategory("Inventory"));
-                SalesSettings = new ObservableCollection<SystemSetting>(_configService.GetSettingsByCategory("Sales"));
-                FinancialSettings = new ObservableCollection<SystemSetting>(_configService.GetSettingsByCategory("Financial"));
+                GeneralSettings = new BindingList<SystemSetting>(_configService.GetSettingsByCategory("General"));
+                InventorySettings = new BindingList<SystemSetting>(_configService.GetSettingsByCategory("Inventory"));
+                SalesSettings = new BindingList<SystemSetting>(_configService.GetSettingsByCategory("Sales"));
+                FinancialSettings = new BindingList<SystemSetting>(_configService.GetSettingsByCategory("Financial"));
                 
                 // Add property changed handlers for all settings
                 AddPropertyChangedHandlers(GeneralSettings);
@@ -230,7 +230,7 @@ namespace FantasticStock.ViewModels
             }
         }
 
-        private void AddPropertyChangedHandlers(ObservableCollection<SystemSetting> settings)
+        private void AddPropertyChangedHandlers(BindingList<SystemSetting> settings)
         {
             foreach (var setting in settings)
             {

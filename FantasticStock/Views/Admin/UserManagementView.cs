@@ -24,6 +24,8 @@ namespace FantasticStock.Views
 
             // Set up data bindings
             SetupBindings();
+
+            FormatUserGrid();
         }
 
         private void SetupBindings()
@@ -68,13 +70,13 @@ namespace FantasticStock.Views
             btnFilterActivity.Click += (s, e) => _viewModel.FilterActivityCommand.Execute(null);
 
             // Selection change events
-            dgvUsers.SelectionChanged += (s, e) =>
-            {
-                if (dgvUsers.SelectedRows.Count > 0)
-                {
-                    _viewModel.SelectedUser = dgvUsers.SelectedRows[0].DataBoundItem as FantasticStock.Models.User;
-                }
-            };
+            //dgvUsers.SelectionChanged += (s, e) =>
+            //{
+            //    if (dgvUsers.SelectedRows.Count > 0)
+            //    {
+            //        _viewModel.SelectedUser = dgvUsers.SelectedRows[0].DataBoundItem as FantasticStock.Models.User;
+            //    }
+            //};
 
             dgvRoles.SelectionChanged += (s, e) =>
             {
@@ -83,6 +85,70 @@ namespace FantasticStock.Views
                     _viewModel.SelectedRole = dgvRoles.SelectedRows[0].DataBoundItem as FantasticStock.Models.Role;
                 }
             };
+        }
+
+        private void FormatUserGrid()
+        {
+            dgvUsers.ReadOnly = true;
+            dgvUsers.AllowUserToAddRows = false;
+            dgvUsers.AllowUserToDeleteRows = false;
+            dgvUsers.MultiSelect = false;
+
+            dgvUsers.Columns["UserID"].Visible = false;
+            dgvUsers.Columns["RoleID"].Visible = false;
+            dgvUsers.Columns["TwoFactorEnabled"].Visible = false;
+            dgvUsers.Columns["AccountExpiry"].Visible = false;
+            dgvUsers.Columns["LastLogin"].HeaderText = "Last Login";
+            dgvUsers.Columns["CreatedDate"].Visible = false;
+            dgvUsers.Columns["ModifiedDate"].Visible = false;
+            dgvUsers.Columns["Email"].Visible = false;
+            dgvUsers.Columns["Phone"].Visible = false;
+            dgvUsers.Columns["Status"].HeaderText = "Status";
+            dgvUsers.Columns["Username"].HeaderText = "Username";
+            dgvUsers.Columns["DisplayName"].HeaderText = "Display Name";
+            dgvUsers.Columns["DisplayName"].Width = 150;
+            dgvUsers.Columns["RoleName"].HeaderText = "Role";
+        }
+
+        private void dgvUsers_SelectionChanged(object sender, EventArgs e)
+        {
+            dgvUsers.ClearSelection();
+        }
+
+        private void flowLayoutPanel3_Resize(object sender, EventArgs e)
+        {
+            label6.Width = flowLayoutPanel3.Width - flowLayoutPanel3.Padding.Left * 2;
+            label1.Width = label6.Width;
+            if (label6.Width < 600)
+            {
+                flowLayoutPanel2.SetFlowBreak(panel5, true);
+                flowLayoutPanel4.SetFlowBreak(panel9, true);
+                flowLayoutPanel5.SetFlowBreak(panel11, true);
+                flowLayoutPanel2.WrapContents = true;
+                flowLayoutPanel4.WrapContents = true;
+                flowLayoutPanel5.WrapContents = true;
+                panel9.Width = label6.Width;
+                panel10.Width = label6.Width;
+                panel11.Width = label6.Width;
+                panel12.Width = label6.Width;
+                panel5.Width = label6.Width;
+                panel6.Width = label6.Width;
+            }
+            else
+            {
+                flowLayoutPanel2.SetFlowBreak(panel5, false);
+                flowLayoutPanel4.SetFlowBreak(panel9, false);
+                flowLayoutPanel5.SetFlowBreak(panel9, false);
+                flowLayoutPanel2.WrapContents = false;
+                flowLayoutPanel4.WrapContents = false;
+                flowLayoutPanel5.WrapContents = false;
+                panel9.Width = label6.Width / 2;
+                panel10.Width = label6.Width / 2;
+                panel11.Width = label6.Width / 2;
+                panel12.Width = label6.Width / 2;
+                panel5.Width = label6.Width / 2;
+                panel6.Width = label6.Width / 2;
+            }
         }
     }
 }

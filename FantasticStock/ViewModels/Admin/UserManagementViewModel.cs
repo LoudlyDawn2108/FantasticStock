@@ -14,10 +14,10 @@ namespace FantasticStock.ViewModels
         private readonly IUserService _userService;
         private readonly IAuditService _auditService;
 
-        private ObservableCollection<User> _users;
-        private ObservableCollection<Role> _roles;
-        private ObservableCollection<Permission> _permissions;
-        private ObservableCollection<AuditLogEntry> _activityLogs;
+        private BindingList<User> _users;
+        private BindingList<Role> _roles;
+        private BindingList<Permission> _permissions;
+        private BindingList<AuditLogEntry> _activityLogs;
         private User _selectedUser;
         private Role _selectedRole;
         private string _searchText;
@@ -26,6 +26,9 @@ namespace FantasticStock.ViewModels
         private DateTime? _activityStartDate;
         private DateTime? _activityEndDate;
         private string _activityTypeFilter;
+
+        private int _currentUserPage;
+        private const int PageSize = 10;
 
         public UserManagementViewModel()
         {
@@ -43,32 +46,35 @@ namespace FantasticStock.ViewModels
             RefreshDataCommand = new RelayCommand(RefreshData);
             ExportActivityCommand = new RelayCommand(ExportActivity);
             FilterActivityCommand = new RelayCommand(FilterActivity);
-            
+
+            _currentUserPage = 0;
+
             // Initialize data
             LoadData();
         }
 
         #region Properties
 
-        public ObservableCollection<User> Users
+        public BindingList<User> Users
         {
-            get => _users;
+            get => new BindingList<User>(_users.Skip(_currentUserPage * PageSize).Take(PageSize).ToList());
+        
             private set => SetProperty(ref _users, value);
         }
 
-        public ObservableCollection<Role> Roles
+        public BindingList<Role> Roles
         {
             get => _roles;
             private set => SetProperty(ref _roles, value);
         }
 
-        public ObservableCollection<Permission> Permissions
+        public BindingList<Permission> Permissions
         {
             get => _permissions;
             private set => SetProperty(ref _permissions, value);
         }
 
-        public ObservableCollection<AuditLogEntry> ActivityLogs
+        public BindingList<AuditLogEntry> ActivityLogs
         {
             get => _activityLogs;
             private set => SetProperty(ref _activityLogs, value);
@@ -330,6 +336,12 @@ namespace FantasticStock.ViewModels
             LoadActivityLogs();
         }
 
+        public void NextPage()
+        {
+            _currentUserPage++;
+            OnPropertyChanged(nameof(Users));
+        }
+
         #endregion
 
         #region Helper Methods
@@ -354,15 +366,15 @@ namespace FantasticStock.ViewModels
             {
                 // Load users
                 var userList = _userService.GetAllUsers();
-                Users = new ObservableCollection<User>(userList);
+                Users = new BindingList<User>(userList);
                 
                 // Load roles
                 var roleList = _userService.GetAllRoles();
-                Roles = new ObservableCollection<Role>(roleList);
+                Roles = new BindingList<Role>(roleList);
                 
                 // Load permissions
                 var permissionList = _userService.GetAllPermissions();
-                Permissions = new ObservableCollection<Permission>(permissionList);
+                Permissions = new BindingList<Permission>(permissionList);
                 
                 // Load activity logs
                 LoadActivityLogs();
@@ -400,7 +412,7 @@ namespace FantasticStock.ViewModels
                     string.IsNullOrWhiteSpace(ActivityTypeFilter) ? null : ActivityTypeFilter,
                     userId);
                 
-                ActivityLogs = new ObservableCollection<AuditLogEntry>(logs);
+                ActivityLogs = new BindingList<AuditLogEntry>(logs);
             }
             catch (Exception ex)
             {
@@ -488,7 +500,7 @@ namespace FantasticStock.ViewModels
             }
             
             // Update the collection
-            Users = new ObservableCollection<User>(filteredUsers);
+            Users = new BindingList<User>(filteredUsers.ToList());
         }
         
         #endregion
