@@ -96,6 +96,9 @@ namespace FantasticStock.Views.Inventory
             this.panelActions = new System.Windows.Forms.Panel();
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.panelProductsContainer = new System.Windows.Forms.Panel();
+            this.dgvProducts = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.paginationPanel = new System.Windows.Forms.Panel();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.lblPageInfo = new System.Windows.Forms.Label();
@@ -131,18 +134,17 @@ namespace FantasticStock.Views.Inventory
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dgvProducts = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
             this.tableLayoutMain.SuspendLayout();
             this.panelProductsContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
+            this.panel1.SuspendLayout();
             this.paginationPanel.SuspendLayout();
             this.panelDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProductImage)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // colProductID
@@ -201,9 +203,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtSearch
             // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.BackColor = System.Drawing.Color.White;
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.Location = new System.Drawing.Point(239, 9);
+            this.txtSearch.Location = new System.Drawing.Point(644, 6);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(200, 26);
             this.txtSearch.TabIndex = 0;
@@ -212,10 +215,11 @@ namespace FantasticStock.Views.Inventory
             // btnAddProduct
             // 
             this.btnAddProduct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
+            this.btnAddProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnAddProduct.ForeColor = System.Drawing.Color.White;
-            this.btnAddProduct.Location = new System.Drawing.Point(22, 9);
+            this.btnAddProduct.Location = new System.Drawing.Point(3, 3);
             this.btnAddProduct.Name = "btnAddProduct";
-            this.btnAddProduct.Size = new System.Drawing.Size(120, 35);
+            this.btnAddProduct.Size = new System.Drawing.Size(109, 44);
             this.btnAddProduct.TabIndex = 0;
             this.btnAddProduct.Text = "New Product";
             this.btnAddProduct.UseVisualStyleBackColor = false;
@@ -223,36 +227,40 @@ namespace FantasticStock.Views.Inventory
             // 
             // btnBulkImport
             // 
-            this.btnBulkImport.Location = new System.Drawing.Point(149, 9);
+            this.btnBulkImport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnBulkImport.Location = new System.Drawing.Point(118, 3);
             this.btnBulkImport.Name = "btnBulkImport";
-            this.btnBulkImport.Size = new System.Drawing.Size(120, 35);
+            this.btnBulkImport.Size = new System.Drawing.Size(109, 44);
             this.btnBulkImport.TabIndex = 1;
             this.btnBulkImport.Text = "Bulk Import";
             this.btnBulkImport.Click += new System.EventHandler(this.btnBulkImport_Click);
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(279, 9);
+            this.btnExport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExport.Location = new System.Drawing.Point(233, 3);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(120, 35);
+            this.btnExport.Size = new System.Drawing.Size(109, 44);
             this.btnExport.TabIndex = 2;
             this.btnExport.Text = "Export";
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // btnPrintList
             // 
-            this.btnPrintList.Location = new System.Drawing.Point(409, 9);
+            this.btnPrintList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPrintList.Location = new System.Drawing.Point(348, 3);
             this.btnPrintList.Name = "btnPrintList";
-            this.btnPrintList.Size = new System.Drawing.Size(120, 35);
+            this.btnPrintList.Size = new System.Drawing.Size(109, 44);
             this.btnPrintList.TabIndex = 3;
             this.btnPrintList.Text = "Print List";
             this.btnPrintList.Click += new System.EventHandler(this.btnPrintList_Click);
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(539, 9);
+            this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnRefresh.Location = new System.Drawing.Point(463, 3);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(120, 35);
+            this.btnRefresh.Size = new System.Drawing.Size(111, 44);
             this.btnRefresh.TabIndex = 4;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
@@ -277,11 +285,7 @@ namespace FantasticStock.Views.Inventory
             // 
             // panelActions
             // 
-            this.panelActions.Controls.Add(this.btnAddProduct);
-            this.panelActions.Controls.Add(this.btnBulkImport);
-            this.panelActions.Controls.Add(this.btnExport);
-            this.panelActions.Controls.Add(this.btnPrintList);
-            this.panelActions.Controls.Add(this.btnRefresh);
+            this.panelActions.Controls.Add(this.tableLayoutPanel1);
             this.panelActions.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelActions.Location = new System.Drawing.Point(0, 50);
             this.panelActions.Name = "panelActions";
@@ -314,6 +318,40 @@ namespace FantasticStock.Views.Inventory
             this.panelProductsContainer.Padding = new System.Windows.Forms.Padding(15);
             this.panelProductsContainer.Size = new System.Drawing.Size(898, 694);
             this.panelProductsContainer.TabIndex = 0;
+            // 
+            // dgvProducts
+            // 
+            this.dgvProducts.AllowUserToAddRows = false;
+            this.dgvProducts.AllowUserToDeleteRows = false;
+            this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvProducts.ColumnHeadersHeight = 34;
+            this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvProducts.Location = new System.Drawing.Point(15, 57);
+            this.dgvProducts.Name = "dgvProducts";
+            this.dgvProducts.ReadOnly = true;
+            this.dgvProducts.RowHeadersWidth = 62;
+            this.dgvProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvProducts.Size = new System.Drawing.Size(868, 582);
+            this.dgvProducts.TabIndex = 8;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.txtSearch);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(15, 15);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(868, 42);
+            this.panel1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(30, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 20);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Products";
             // 
             // paginationPanel
             // 
@@ -355,6 +393,7 @@ namespace FantasticStock.Views.Inventory
             // 
             // panelDetails
             // 
+            this.panelDetails.AutoScroll = true;
             this.panelDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDetails.Controls.Add(this.lblDetailsHeader);
             this.panelDetails.Controls.Add(this.lblProductName);
@@ -642,39 +681,26 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // panel1
+            // tableLayoutPanel1
             // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.txtSearch);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(15, 15);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(868, 42);
-            this.panel1.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(30, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 20);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Products";
-            // 
-            // dgvProducts
-            // 
-            this.dgvProducts.AllowUserToAddRows = false;
-            this.dgvProducts.AllowUserToDeleteRows = false;
-            this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvProducts.ColumnHeadersHeight = 34;
-            this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvProducts.Location = new System.Drawing.Point(15, 57);
-            this.dgvProducts.Name = "dgvProducts";
-            this.dgvProducts.ReadOnly = true;
-            this.dgvProducts.RowHeadersWidth = 62;
-            this.dgvProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProducts.Size = new System.Drawing.Size(868, 582);
-            this.dgvProducts.TabIndex = 8;
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnAddProduct, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnPrintList, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnBulkImport, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnExport, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(930, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 50);
+            this.tableLayoutPanel1.TabIndex = 5;
             // 
             // ProductManagementView
             // 
@@ -687,14 +713,15 @@ namespace FantasticStock.Views.Inventory
             this.panelActions.ResumeLayout(false);
             this.tableLayoutMain.ResumeLayout(false);
             this.panelProductsContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.paginationPanel.ResumeLayout(false);
             this.paginationPanel.PerformLayout();
             this.panelDetails.ResumeLayout(false);
             this.panelDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProductImage)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1087,5 +1114,6 @@ namespace FantasticStock.Views.Inventory
         private Panel panel1;
         private Label label1;
         private DataGridView dgvProducts;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }
