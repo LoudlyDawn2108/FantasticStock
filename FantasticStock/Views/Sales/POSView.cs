@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FantasticStock.Models.Sales;
+using FantasticStock.Models.Inventory;
 
 namespace FantasticStock.Views.Sales
 {

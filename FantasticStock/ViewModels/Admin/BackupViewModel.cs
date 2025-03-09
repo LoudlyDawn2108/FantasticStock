@@ -24,7 +24,7 @@ namespace FantasticStock.ViewModels
         private BindingList<ScheduledBackup> _scheduledBackups;
         private ScheduledBackup _selectedSchedule;
         
-                public BackupViewModel()
+        public BackupViewModel()
         {
             _backupService = ServiceLocator.GetService<IBackupService>();
             

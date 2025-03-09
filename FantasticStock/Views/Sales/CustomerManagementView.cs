@@ -1,5 +1,5 @@
-﻿using FantasticStock.Data;
-using FantasticStock.Models.Sales;
+﻿using FantasticStock.Models.Sales;
+using FantasticStock.ViewModels.Sales;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace FantasticStock.Views.Sales
 {
     public partial class CustomerManagementView : UserControl
     {
-        private FakeDataRepository _repository;
+        private CustomerManagementViewModel _viewmodel;
         private List<Customer> _filteredCustomers;
         private Customer _selectedCustomer;
         private bool _isEditing = false;
@@ -24,7 +24,7 @@ namespace FantasticStock.Views.Sales
             InitializeComponent();
 
             // Initialize repository
-            _repository = FakeDataRepository.Instance;
+            _viewmodel = new CustomerManagementViewModel();
 
             // Set up UI behavior
             SetupUIBehavior();
@@ -99,7 +99,7 @@ namespace FantasticStock.Views.Sales
             try
             {
                 // Initial load of all customers
-                _filteredCustomers = _repository.Customers.Where(c => c.IsActive).ToList();
+                _filteredCustomers = _viewmodel.Customers.Where(c => c.IsActive).ToList();
                 dgvCustomers.DataSource = _filteredCustomers;
 
                 // Setup search dropdown options
@@ -300,17 +300,17 @@ namespace FantasticStock.Views.Sales
                 if (string.IsNullOrEmpty(searchText) && !showInactive)
                 {
                     // Show all active customers
-                    _filteredCustomers = _repository.Customers.Where(c => c.IsActive).ToList();
+                    _filteredCustomers = _viewmodel.Customers.Where(c => c.IsActive).ToList();
                 }
                 else if (string.IsNullOrEmpty(searchText) && showInactive)
                 {
                     // Show all customers including inactive
-                    _filteredCustomers = _repository.Customers.ToList();
+                    _filteredCustomers = _viewmodel.Customers.ToList();
                 }
                 else
                 {
                     // Search by text and status
-                    _filteredCustomers = _repository.Customers.Where(c =>
+                    _filteredCustomers = _viewmodel.Customers.Where(c =>
                         (showInactive || c.IsActive) &&
                         (
                             searchBy == "All Fields" ? (
@@ -392,7 +392,7 @@ namespace FantasticStock.Views.Sales
                     UpdateCustomerFromFields(_selectedCustomer);
 
                     // Add to repository
-                    var addedCustomer = _repository.AddCustomer(_selectedCustomer);
+                    var addedCustomer = _viewmodel.AddCustomer(_selectedCustomer);
                     _selectedCustomer = addedCustomer; // Update to get the assigned ID
 
                     // Add to grid if we're showing the right filter
@@ -406,7 +406,7 @@ namespace FantasticStock.Views.Sales
                     UpdateCustomerFromFields(_selectedCustomer);
 
                     // Update in repository
-                    bool success = _repository.UpdateCustomer(_selectedCustomer);
+                    bool success = _viewmodel.UpdateCustomer(_selectedCustomer);
                     if (!success)
                     {
                         MessageBox.Show("Failed to update the customer in the database.", "Update Error",
@@ -472,7 +472,7 @@ namespace FantasticStock.Views.Sales
                                   MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     // Deactivate in repository
-                    bool success = _repository.DeactivateCustomer(_selectedCustomer.CustomerID);
+                    bool success = _viewmodel.DeactivateCustomer(_selectedCustomer.CustomerID);
 
                     if (!success)
                     {
@@ -523,7 +523,7 @@ namespace FantasticStock.Views.Sales
                 else if (_selectedCustomer != null) // Existing customer
                 {
                     // Reload customer details from repository to discard changes
-                    _selectedCustomer = _repository.GetCustomer(_selectedCustomer.CustomerID);
+                    _selectedCustomer = _viewmodel.GetCustomer(_selectedCustomer.CustomerID);
                     DisplayCustomerDetails(_selectedCustomer);
                 }
 
@@ -626,7 +626,7 @@ namespace FantasticStock.Views.Sales
         {
             try
             {
-                var customer = _repository.GetCustomer(customerId);
+                var customer = _viewmodel.GetCustomer(customerId);
                 if (customer != null)
                 {
                     // Make sure we don't go below zero points
@@ -637,7 +637,7 @@ namespace FantasticStock.Views.Sales
 
                     customer.LoyaltyPoints += points;
                     customer.ModifiedDate = DateTime.Now;
-                    _repository.UpdateCustomer(customer);
+                    _viewmodel.UpdateCustomer(customer);
 
                     // Update UI if this is the selected customer
                     if (_selectedCustomer != null && _selectedCustomer.CustomerID == customerId)
@@ -807,7 +807,7 @@ namespace FantasticStock.Views.Sales
                         // Save imported customers to repository
                         foreach (var customer in importedCustomers)
                         {
-                            _repository.AddCustomer(customer);
+                            _viewmodel.AddCustomer(customer);
                         }
 
                         // Refresh the grid

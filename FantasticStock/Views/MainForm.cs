@@ -65,9 +65,6 @@ namespace FantasticStock.Views
             Suppliers,
             StockLevels,
             InventoryReports,
-            //Categories,
-
-            //StockLevels,
 
             // Sales module types
             SalesOrders,
@@ -172,8 +169,6 @@ namespace FantasticStock.Views
                 //case ModuleType.Suppliers:
                 case ModuleType.StockLevels:
                 case ModuleType.InventoryReports:
-                case ModuleType.Customers:
-                case ModuleType.Invoices:
                 case ModuleType.SalesReports:
                 case ModuleType.Payments:
                 case ModuleType.Expenses:

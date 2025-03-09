@@ -1,5 +1,5 @@
-﻿using FantasticStock.Data;
-using FantasticStock.Models.Sales;
+﻿using FantasticStock.Models.Sales;
+using FantasticStock.ViewModels.Sales;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +14,7 @@ namespace FantasticStock.Views.Sales
 {
     public partial class CMView : UserControl
     {
-        private FakeDataRepository _repository;
+        private CustomerManagementViewModel _viewmodel;
         private List<Customer> _filteredCustomers;
         private Customer _selectedCustomer;
         private bool _isEditing = false;
@@ -24,7 +24,7 @@ namespace FantasticStock.Views.Sales
             InitializeComponent();
 
             // Initialize repository
-            _repository = FakeDataRepository.Instance;
+            _viewmodel = new CustomerManagementViewModel();
 
             // Set up UI behavior
             SetupUIBehavior();
@@ -77,7 +77,7 @@ namespace FantasticStock.Views.Sales
         private void LoadData()
         {
             // Initial load of all customers
-            _filteredCustomers = _repository.Customers.Where(c => c.IsActive).ToList();
+            _filteredCustomers = _viewmodel.Customers.Where(c => c.IsActive).ToList();
             dgvCustomers.DataSource = _filteredCustomers;
         }
 
@@ -178,24 +178,24 @@ namespace FantasticStock.Views.Sales
             if (string.IsNullOrEmpty(searchText) && !showInactive)
             {
                 // Show all active customers
-                _filteredCustomers = _repository.Customers.Where(c => c.IsActive).ToList();
+                _filteredCustomers = _viewmodel.Customers.Where(c => c.IsActive).ToList();
             }
             else if (string.IsNullOrEmpty(searchText) && showInactive)
             {
                 // Show all customers including inactive
-                _filteredCustomers = _repository.Customers.ToList();
+                _filteredCustomers = _viewmodel.Customers.ToList();
             }
             else
             {
                 // Search by text and status
-                var results = _repository.SearchCustomers(searchText);
+                var results = _viewmodel.SearchCustomers(searchText);
 
                 if (!showInactive)
                 {
                     results = results.Where(c => c.IsActive).ToList();
                 }
 
-                _filteredCustomers = results;
+                _filteredCustomers = results.ToList();
             }
 
             // Update DataGridView
@@ -253,7 +253,7 @@ namespace FantasticStock.Views.Sales
                 _selectedCustomer.Address = txtAddress.Text.Trim();
 
                 // Add to repository
-                _repository.AddCustomer(_selectedCustomer);
+                _viewmodel.AddCustomer(_selectedCustomer);
 
                 // Add to grid
                 _filteredCustomers.Add(_selectedCustomer);
@@ -267,7 +267,7 @@ namespace FantasticStock.Views.Sales
                 _selectedCustomer.ModifiedDate = DateTime.Now;
 
                 // Update in repository
-                _repository.UpdateCustomer(_selectedCustomer);
+                _viewmodel.UpdateCustomer(_selectedCustomer);
             }
 
             // Exit edit mode
@@ -291,7 +291,7 @@ namespace FantasticStock.Views.Sales
                                MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 // Deactivate in repository
-                _repository.DeactivateCustomer(_selectedCustomer.CustomerID);
+                _viewmodel.DeactivateCustomer(_selectedCustomer.CustomerID);
 
                 // Remove from filtered list if it doesn't show inactive
                 if (!chkShowInactive.Checked)
@@ -378,12 +378,12 @@ namespace FantasticStock.Views.Sales
 
         public void AdjustLoyaltyPoints(int customerId, int points)
         {
-            var customer = _repository.GetCustomer(customerId);
+            var customer = _viewmodel.GetCustomer(customerId);
             if (customer != null)
             {
                 customer.LoyaltyPoints += points;
                 customer.ModifiedDate = DateTime.Now;
-                _repository.UpdateCustomer(customer);
+                _viewmodel.UpdateCustomer(customer);
 
                 // Update UI if this is the selected customer
                 if (_selectedCustomer != null && _selectedCustomer.CustomerID == customerId)

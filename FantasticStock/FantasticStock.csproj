@@ -66,24 +66,6 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ServiceLocator.cs" />
     <Compile Include="Common\ViewModelBase.cs" />
-    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Data/\FakeDataRepository.cs">
-      <Link>FakeDataRepository.cs</Link>
-    </Compile>
-    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\Payment.cs">
-      <Link>Payment.cs</Link>
-    </Compile>
-    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\Product.cs">
-      <Link>Product.cs</Link>
-    </Compile>
-    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\ProductCategory.cs">
-      <Link>ProductCategory.cs</Link>
-    </Compile>
-    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\Sale.cs">
-      <Link>Sale.cs</Link>
-    </Compile>
-    <Compile Include="D:/BTAP/Winform/FantasticStock/FantasticStock/Models/Sales/\SaleItem.cs">
-      <Link>SaleItem.cs</Link>
-    </Compile>
     <Compile Include="Models\Admin\AuditLogEntry.cs" />
     <Compile Include="Models\Admin\BackupHistory.cs" />
     <Compile Include="Models\Admin\CompanyInformation.cs" />
@@ -132,6 +114,7 @@
     <Compile Include="ViewModels\Admin\UserManagementViewModel.cs" />
     <Compile Include="ViewModels\Financial\FinancialDashboardViewModel.cs" />
     <Compile Include="ViewModels\Inventory\ProductViewModel.cs" />
+    <Compile Include="ViewModels\Sales\CustomerManagementViewModel.cs" />
     <Compile Include="ViewModels\Sales\SalesOrderViewModel.cs" />
     <Compile Include="Views\Admin\BackupView.cs">
       <SubType>UserControl</SubType>
