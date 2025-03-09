@@ -12,8 +12,10 @@ namespace FantasticStock.Services
         
         public SqlDatabaseService()
         {
-            _connectionString = "Data Source=.;Initial Catalog=FantasticStock;Integrated Security=True;";
-            _masterConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
+            _connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;";
+            _masterConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=master;Integrated Security=True;";
+
+            //EnsureDatabaseExists();
         }
 
         public string ConnectionString => _connectionString;

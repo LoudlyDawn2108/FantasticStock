@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -61,12 +62,15 @@
             this.button19 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.moduleContentPanel = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
+            this.moduleContentPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -87,7 +91,7 @@
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel5);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Font = new System.Drawing.Font("Cascadia Mono", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.flowLayoutPanel1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(168, 474);
@@ -116,19 +120,21 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(59, 5);
+            this.label1.Location = new System.Drawing.Point(39, 6);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 15);
+            this.label1.Size = new System.Drawing.Size(84, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.label1.Text = "Fantastic Stock";
             // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(65, 30);
+            this.label2.Location = new System.Drawing.Point(66, 31);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(31, 15);
+            this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "User";
             // 
@@ -136,9 +142,10 @@
             // 
             this.lblDateTime.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblDateTime.AutoSize = true;
-            this.lblDateTime.Location = new System.Drawing.Point(20, 55);
+            this.lblDateTime.Location = new System.Drawing.Point(27, 56);
+            this.lblDateTime.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblDateTime.Name = "lblDateTime";
-            this.lblDateTime.Size = new System.Drawing.Size(121, 15);
+            this.lblDateTime.Size = new System.Drawing.Size(108, 13);
             this.lblDateTime.TabIndex = 2;
             this.lblDateTime.Text = "2025-03-02 16:16:14";
             // 
@@ -146,9 +153,10 @@
             // 
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(38, 80);
+            this.label4.Location = new System.Drawing.Point(42, 81);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 15);
+            this.label4.Size = new System.Drawing.Size(77, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Administrator";
             // 
@@ -206,7 +214,7 @@
             this.button3.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button3.Size = new System.Drawing.Size(165, 35);
             this.button3.TabIndex = 6;
-            this.button3.Text = "Inventory";
+            this.button3.Text = "Supplier Management";
             this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.menuButton_Click);
@@ -221,7 +229,7 @@
             this.button4.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button4.Size = new System.Drawing.Size(165, 35);
             this.button4.TabIndex = 7;
-            this.button4.Text = "Inventory";
+            this.button4.Text = "Stock Management";
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.menuButton_Click);
@@ -236,7 +244,7 @@
             this.button5.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button5.Size = new System.Drawing.Size(165, 35);
             this.button5.TabIndex = 8;
-            this.button5.Text = "Inventory";
+            this.button5.Text = "Inventory Reports";
             this.button5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.menuButton_Click);
@@ -280,7 +288,7 @@
             this.button7.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(165, 35);
             this.button7.TabIndex = 5;
-            this.button7.Text = "Sales Order";
+            this.button7.Text = "Point of Sale";
             this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.menuButton_Click);
@@ -295,7 +303,7 @@
             this.button8.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button8.Size = new System.Drawing.Size(165, 35);
             this.button8.TabIndex = 6;
-            this.button8.Text = "Inventory";
+            this.button8.Text = "Customer Management";
             this.button8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.menuButton_Click);
@@ -508,11 +516,23 @@
             // 
             // moduleContentPanel
             // 
+            this.moduleContentPanel.Controls.Add(this.pictureBox1);
             this.moduleContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.moduleContentPanel.Location = new System.Drawing.Point(168, 0);
             this.moduleContentPanel.Name = "moduleContentPanel";
             this.moduleContentPanel.Size = new System.Drawing.Size(715, 474);
             this.moduleContentPanel.TabIndex = 4;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(230, 117);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(225, 225);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
@@ -523,7 +543,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Admin Domain Management System";
+            this.Text = "Fantastic Stock";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -532,6 +552,9 @@
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel5.ResumeLayout(false);
+            this.moduleContentPanel.ResumeLayout(false);
+            this.moduleContentPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -570,5 +593,6 @@
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Panel moduleContentPanel;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

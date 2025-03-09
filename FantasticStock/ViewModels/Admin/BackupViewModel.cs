@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Input;
 using FantasticStock.Common;
@@ -12,7 +13,7 @@ namespace FantasticStock.ViewModels
     {
         private readonly IBackupService _backupService;
         
-        private ObservableCollection<BackupHistory> _backupHistory;
+        private BindingList<BackupHistory> _backupHistory;
         private BackupHistory _selectedBackup;
         private string _backupLocation;
         private string _backupDescription;
@@ -20,10 +21,10 @@ namespace FantasticStock.ViewModels
         private int _compressionLevel;
         private bool _encryptBackup;
         private string _encryptionPassword;
-        private ObservableCollection<ScheduledBackup> _scheduledBackups;
+        private BindingList<ScheduledBackup> _scheduledBackups;
         private ScheduledBackup _selectedSchedule;
         
-                public BackupViewModel()
+        public BackupViewModel()
         {
             _backupService = ServiceLocator.GetService<IBackupService>();
             
@@ -52,7 +53,7 @@ namespace FantasticStock.ViewModels
 
         #region Properties
 
-        public ObservableCollection<BackupHistory> BackupHistory
+        public BindingList<BackupHistory> BackupHistory
         {
             get => _backupHistory;
             set => SetProperty(ref _backupHistory, value);
@@ -106,7 +107,7 @@ namespace FantasticStock.ViewModels
             set => SetProperty(ref _encryptionPassword, value);
         }
 
-        public ObservableCollection<ScheduledBackup> ScheduledBackups
+        public BindingList<ScheduledBackup> ScheduledBackups
         {
             get => _scheduledBackups;
             set => SetProperty(ref _scheduledBackups, value);
@@ -514,7 +515,7 @@ namespace FantasticStock.ViewModels
             try
             {
                 var backups = _backupService.GetBackupHistory();
-                BackupHistory = new ObservableCollection<BackupHistory>(backups);
+                BackupHistory = new BindingList<BackupHistory>(backups);
             }
             catch (Exception ex)
             {
@@ -527,7 +528,7 @@ namespace FantasticStock.ViewModels
             try
             {
                 var schedules = _backupService.GetScheduledBackups();
-                ScheduledBackups = new ObservableCollection<ScheduledBackup>(schedules);
+                ScheduledBackups = new BindingList<ScheduledBackup>(schedules);
             }
             catch (Exception ex)
             {

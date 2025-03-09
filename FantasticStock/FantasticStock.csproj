@@ -114,6 +114,7 @@
     <Compile Include="ViewModels\Admin\UserManagementViewModel.cs" />
     <Compile Include="ViewModels\Financial\FinancialDashboardViewModel.cs" />
     <Compile Include="ViewModels\Inventory\ProductViewModel.cs" />
+    <Compile Include="ViewModels\Sales\CustomerManagementViewModel.cs" />
     <Compile Include="ViewModels\Sales\SalesOrderViewModel.cs" />
     <Compile Include="Views\Admin\BackupView.cs">
       <SubType>UserControl</SubType>
@@ -157,6 +158,18 @@
     <Compile Include="Views\Inventory\ProductManagementView.Designer.cs">
       <DependentUpon>ProductManagementView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Inventory\SupplierManagementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Inventory\SupplierManagementView.Designer.cs">
+      <DependentUpon>SupplierManagementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Inventory\test.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Inventory\test.Designer.cs">
+      <DependentUpon>test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,6 +193,24 @@
     </Compile>
     <Compile Include="Views\Admin\UserManagementView.Designer.cs">
       <DependentUpon>UserManagementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\CMView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\CMView.Designer.cs">
+      <DependentUpon>CMView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\CustomerManagementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\CustomerManagementView.Designer.cs">
+      <DependentUpon>CustomerManagementView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\POSView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\POSView.Designer.cs">
+      <DependentUpon>POSView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Sales\SalesOrderView.cs">
       <SubType>UserControl</SubType>
@@ -215,13 +246,26 @@
     <EmbeddedResource Include="Views\Inventory\ProductManagementView.resx">
       <DependentUpon>ProductManagementView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Inventory\SupplierManagementView.resx">
+      <DependentUpon>SupplierManagementView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Inventory\test.resx">
+      <DependentUpon>test.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sales\CMView.resx">
+      <DependentUpon>CMView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sales\POSView.resx">
+      <DependentUpon>POSView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Sales\SalesOrderView.resx">
       <DependentUpon>SalesOrderView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\FantasticStock.ViewModels.UserManagementViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -235,6 +279,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Screenshot 2025-03-07 164102.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

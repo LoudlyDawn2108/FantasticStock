@@ -44,8 +44,13 @@ namespace FantasticStock.Views
         private void InitializeMeunuButton()
         {
             button2.Tag = ModuleType.Products;
+            button3.Tag = ModuleType.Suppliers;
+            button4.Tag = ModuleType.StockLevels;
+            button5.Tag = ModuleType.InventoryReports;
 
-            button7.Tag = ModuleType.SalesOrders;
+            //button7.Tag = ModuleType.SalesOrders;
+            button7.Tag = ModuleType.PointOfSale;
+            button8.Tag = ModuleType.Customers;
 
             // Financial modules
             button12.Tag = ModuleType.FinancialDashboard;
@@ -63,14 +68,14 @@ namespace FantasticStock.Views
         {
             // Inventory module types
             Products,
-            Categories,
             Suppliers,
             StockLevels,
+            InventoryReports,
 
             // Sales module types
             SalesOrders,
             Customers,
-            Invoices,
+            PointOfSale,
             SalesReports,
 
             // Financial module types
@@ -146,10 +151,18 @@ namespace FantasticStock.Views
                 case ModuleType.Products:
                     moduleControl = new ProductManagementView();
                     break;
-
+                case ModuleType.Suppliers:
+                    moduleControl = new SupplierManagementView();
+                    break;
                 // Sales modules
                 case ModuleType.SalesOrders:
                     moduleControl = new SalesOrderView();
+                    break;
+                case ModuleType.PointOfSale:
+                    moduleControl = new POSView();
+                    break;
+                case ModuleType.Customers:
+                    moduleControl = new CustomerManagementView();
                     break;
 
                 // Financial modules
@@ -158,11 +171,10 @@ namespace FantasticStock.Views
                     break;
 
                 // Future modules - stubs for now
-                case ModuleType.Categories:
-                case ModuleType.Suppliers:
+                //case ModuleType.Categories:
+                //case ModuleType.Suppliers:
                 case ModuleType.StockLevels:
-                case ModuleType.Customers:
-                case ModuleType.Invoices:
+                case ModuleType.InventoryReports:
                 case ModuleType.SalesReports:
                 case ModuleType.Payments:
                     moduleControl = new PaymentsView();
@@ -259,7 +271,7 @@ namespace FantasticStock.Views
         private void timer1_Tick(object sender, EventArgs e)
         {
             // Update the date/time display
-            lblDateTime.Text = DateTime.Parse("2025-03-02 16:19:04").ToString("yyyy-MM-dd HH:mm:ss");
+            lblDateTime.Text = "   " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
     }
 }
