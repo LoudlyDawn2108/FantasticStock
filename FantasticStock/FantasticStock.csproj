@@ -86,6 +86,7 @@
     <Compile Include="Models\Sales\Customer.cs" />
     <Compile Include="Models\Sales\Invoice.cs" />
     <Compile Include="Models\Sales\InvoiceDetail.cs" />
+    <Compile Include="Models\Sales\SaleItem.cs" />
     <Compile Include="Models\Sales\SalesOrder.cs" />
     <Compile Include="Models\Sales\SalesOrderDetail.cs" />
     <Compile Include="Program.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="ViewModels\Financial\FinancialDashboardViewModel.cs" />
     <Compile Include="ViewModels\Inventory\ProductViewModel.cs" />
     <Compile Include="ViewModels\Sales\CustomerManagementViewModel.cs" />
+    <Compile Include="ViewModels\Sales\FakeDataRepository.cs" />
     <Compile Include="ViewModels\Sales\SalesOrderViewModel.cs" />
     <Compile Include="Views\Admin\BackupView.cs">
       <SubType>UserControl</SubType>

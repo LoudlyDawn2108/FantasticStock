@@ -7,6 +7,7 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+
         /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
@@ -120,7 +121,7 @@
             this.filterFlowPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.txtSearch = new FantasticStock.Views.Custom_Components.TextBoxWithPlaceholder();
+            //this.txtSearch = new FantasticStock.Views.Custom_Components.TextBoxWithPlaceholder();
             this.tabActivity = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.usersBindingSource = new System.Windows.Forms.BindingSource(this.components);

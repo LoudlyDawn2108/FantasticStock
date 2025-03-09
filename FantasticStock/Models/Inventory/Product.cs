@@ -30,7 +30,7 @@ namespace FantasticStock.Models.Inventory
         public int CreatedBy { get; set; }
         public DateTime ModifiedDate { get; set; }
         public int ModifiedBy { get; set; }
-        
+        public int UnitsInStock { get; set; }
         public string Status => IsActive ? "Active" : "Inactive";
     }
 }

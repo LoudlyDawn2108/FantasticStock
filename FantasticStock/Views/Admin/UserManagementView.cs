@@ -15,6 +15,8 @@ namespace FantasticStock.Views
     {
         private UserManagementViewModel _viewModel;
 
+
+
         public UserManagementView()
         {
             InitializeComponent();

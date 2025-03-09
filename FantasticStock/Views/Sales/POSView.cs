@@ -18,6 +18,7 @@ namespace FantasticStock.Views.Sales
         private List<Customer> customers;
         private List<SaleItem> currentSaleItems;
         private decimal taxRate = 0.08m; // 8% tax rate
+      
 
         public POSView()
         {
@@ -193,7 +194,11 @@ namespace FantasticStock.Views.Sales
                     }
                     else
                     {
-                        currentSaleItems[e.RowIndex].Quantity = quantity;
+                        // Access via index since we don't have direct quantity property in referenced model
+                        var item = currentSaleItems[e.RowIndex];
+                        // We'll store quantity in Tag since SaleItem doesn't have a Quantity property
+                        item.Tag = quantity;
+                        CalculateLineTotal(item);
                     }
 
                     UpdateCartDisplay();
@@ -275,26 +280,53 @@ namespace FantasticStock.Views.Sales
 
         private void AddProductToCart(Product product)
         {
-            SaleItem existingItem = currentSaleItems.FirstOrDefault(item => item.ProductID == product.ProductID);
+            SaleItem existingItem = currentSaleItems.FirstOrDefault(item =>
+                (int)item.ItemID == product.ProductID);
 
             if (existingItem != null)
             {
-                existingItem.Quantity++;
+                // Increment quantity stored in Tag
+                int quantity = (int)existingItem.Tag + 1;
+                existingItem.Tag = quantity;
+                CalculateLineTotal(existingItem);
             }
             else
             {
-                currentSaleItems.Add(new SaleItem
+                // Create new SaleItem using correct properties from the signature
+                var newItem = new SaleItem
                 {
-                    ProductID = product.ProductID,
+                    ItemID = product.ProductID,
+                    DiscountAmount = 0,
+                    DiscountPercent = 0,
+                    Tag = 1 // Store quantity in Tag
+                };
+
+                // Store product info in the Tag property for reference
+                newItem.ItemInfo = new
+                {
                     ProductName = product.ProductName,
-                    Quantity = 1,
-                    UnitPrice = product.SellingPrice,
-                    Discount = 0
-                });
+                    UnitPrice = product.SellingPrice
+                };
+
+                CalculateLineTotal(newItem);
+                currentSaleItems.Add(newItem);
             }
 
             UpdateCartDisplay();
             UpdateSummary();
+        }
+
+        private void CalculateLineTotal(SaleItem item)
+        {
+            // Get quantity from Tag
+            int quantity = (int)item.Tag;
+
+            // Get unit price from ItemInfo
+            decimal unitPrice = ((dynamic)item.ItemInfo).UnitPrice;
+
+            // Calculate line total accounting for discount
+            decimal discountedUnitPrice = unitPrice * (1 - (item.DiscountPercent / 100)) - item.DiscountAmount;
+            item.LineTotal = discountedUnitPrice * quantity;
         }
 
         private void UpdateCustomerInfo()
@@ -311,7 +343,21 @@ namespace FantasticStock.Views.Sales
                 {
                     foreach (var item in currentSaleItems)
                     {
-                        item.Discount = item.UnitPrice * 0.05m; // 5% discount
+                        // Apply 5% discount using DiscountPercent property
+                        item.DiscountPercent = 5.0m;
+                        CalculateLineTotal(item);
+                    }
+                    UpdateCartDisplay();
+                    UpdateSummary();
+                }
+                else
+                {
+                    // Remove discounts if loyalty points are insufficient
+                    foreach (var item in currentSaleItems)
+                    {
+                        item.DiscountPercent = 0;
+                        item.DiscountAmount = 0;
+                        CalculateLineTotal(item);
                     }
                     UpdateCartDisplay();
                     UpdateSummary();
@@ -320,6 +366,16 @@ namespace FantasticStock.Views.Sales
             else
             {
                 loyaltyInfoLabel.Text = "Loyalty Points: None";
+
+                // Remove discounts if no customer selected
+                foreach (var item in currentSaleItems)
+                {
+                    item.DiscountPercent = 0;
+                    item.DiscountAmount = 0;
+                    CalculateLineTotal(item);
+                }
+                UpdateCartDisplay();
+                UpdateSummary();
             }
         }
 
@@ -329,17 +385,24 @@ namespace FantasticStock.Views.Sales
 
             foreach (var item in currentSaleItems)
             {
-                decimal totalPrice = (item.UnitPrice - item.Discount) * item.Quantity;
+                // Get product information from ItemInfo
+                dynamic itemInfo = item.ItemInfo;
+                string productName = itemInfo.ProductName;
+                decimal unitPrice = itemInfo.UnitPrice;
+                int quantity = (int)item.Tag;
+
+                // Calculate discount amount for display
+                decimal totalDiscount = (unitPrice * (item.DiscountPercent / 100) + item.DiscountAmount) * quantity;
 
                 cartDataGridView.Rows.Add(
-                    item.ProductID,
-                    item.ProductName,
-                    item.Quantity,
-                    $"${item.UnitPrice:F2}",
-                    $"${item.Discount:F2}",
-                    $"${totalPrice:F2}",
-                    "Remove"
-                );
+    (int)item.ItemID,
+    productName,
+    quantity,
+    $"${unitPrice:F2}",
+    $"${totalDiscount:F2}",
+    $"${item.LineTotal:F2}",
+    "Remove"
+);
             }
         }
 
@@ -350,8 +413,12 @@ namespace FantasticStock.Views.Sales
 
             foreach (var item in currentSaleItems)
             {
-                decimal itemTotal = item.UnitPrice * item.Quantity;
-                decimal itemDiscount = item.Discount * item.Quantity;
+                dynamic itemInfo = item.ItemInfo;
+                decimal unitPrice = itemInfo.UnitPrice;
+                int quantity = (int)item.Tag;
+
+                decimal itemTotal = unitPrice * quantity;
+                decimal itemDiscount = (unitPrice * (item.DiscountPercent / 100) + item.DiscountAmount) * quantity;
 
                 subtotal += itemTotal;
                 totalDiscount += itemDiscount;
@@ -376,7 +443,7 @@ namespace FantasticStock.Views.Sales
 
         private decimal GetTotalAmount()
         {
-            decimal subtotal = currentSaleItems.Sum(item => (item.UnitPrice - item.Discount) * item.Quantity);
+            decimal subtotal = currentSaleItems.Sum(item => item.LineTotal);
             decimal tax = subtotal * taxRate;
             return subtotal + tax;
         }
@@ -396,13 +463,5 @@ namespace FantasticStock.Views.Sales
         }
     }
 
-    // SaleItem class modified to work with the existing Product model
-    public class SaleItem
-    {
-        public int ProductID { get; set; }
-        public string ProductName { get; set; }
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal Discount { get; set; }
-    }
+    
 }

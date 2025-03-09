@@ -6,19 +6,19 @@ using FantasticStock.Models.Sales;
 
 namespace FantasticStock.Data
 {
-    public class FakeDataRepository
+    public class CustomerManagementViewModel
     {
-        private static FakeDataRepository _instance;
+        private static CustomerManagementViewModel _instance;
         private static readonly object _lock = new object();
 
         private List<Product> _products;
-        private List<ProductCategory> _categories;
+        private List<Category> _categories;
         private List<Customer> _customers;
         private BindingList<SaleItem> _currentSaleItems;
         private int _nextSaleItemId = 1;
 
         public List<Product> Products => _products;
-        public List<ProductCategory> Categories => _categories;
+        public List<Category> Categories => _categories;
         public List<Customer> Customers => _customers;
         public BindingList<SaleItem> CurrentSaleItems => _currentSaleItems;
 
@@ -28,12 +28,12 @@ namespace FantasticStock.Data
         public decimal DiscountAmount { get; set; } = 0;
         public decimal TotalAmount => Subtotal + TaxAmount - DiscountAmount;
 
-        private FakeDataRepository()
+        private CustomerManagementViewModel()
         {
             InitializeData();
         }
 
-        public static FakeDataRepository Instance
+        public static CustomerManagementViewModel Instance
         {
             get
             {
@@ -43,7 +43,7 @@ namespace FantasticStock.Data
                     {
                         if (_instance == null)
                         {
-                            _instance = new FakeDataRepository();
+                            _instance = new CustomerManagementViewModel();
                         }
                     }
                 }
@@ -54,13 +54,13 @@ namespace FantasticStock.Data
         private void InitializeData()
         {
             // Initialize product categories
-            _categories = new List<ProductCategory>
+            _categories = new List<Category>
             {
-                new ProductCategory { CategoryID = 1, CategoryName = "Electronics", Description = "Electronic devices and accessories", IsActive = true },
-                new ProductCategory { CategoryID = 2, CategoryName = "Clothing", Description = "Apparel and accessories", IsActive = true },
-                new ProductCategory { CategoryID = 3, CategoryName = "Books", Description = "Books, magazines and publications", IsActive = true },
-                new ProductCategory { CategoryID = 4, CategoryName = "Groceries", Description = "Food items and household supplies", IsActive = true },
-                new ProductCategory { CategoryID = 5, CategoryName = "Toys", Description = "Toys and games", IsActive = true }
+                new Category { CategoryID = 1, CategoryName = "Electronics", Description = "Electronic devices and accessories", IsActive = true },
+                new Category { CategoryID = 2, CategoryName = "Clothing", Description = "Apparel and accessories", IsActive = true },
+                new Category { CategoryID = 3, CategoryName = "Books", Description = "Books, magazines and publications", IsActive = true },
+                new Category { CategoryID = 4, CategoryName = "Groceries", Description = "Food items and household supplies", IsActive = true },
+                new Category { CategoryID = 5, CategoryName = "Toys", Description = "Toys and games", IsActive = true }
             };
 
             // Initialize products
@@ -569,7 +569,7 @@ namespace FantasticStock.Data
         
         #region Category Management
         
-        public ProductCategory AddCategory(ProductCategory category)
+        public Category AddCategory(Category category)
         {
             // Generate a new ID
             int newId = _categories.Count > 0 ? _categories.Max(c => c.CategoryID) + 1 : 1;
@@ -582,7 +582,7 @@ namespace FantasticStock.Data
             return category;
         }
         
-        public bool UpdateCategory(ProductCategory category)
+        public bool UpdateCategory(Category category)
         {
             var existingCategory = _categories.FirstOrDefault(c => c.CategoryID == category.CategoryID);
             if (existingCategory == null)
