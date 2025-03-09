@@ -133,11 +133,23 @@
     <Compile Include="Views\Admin\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Financial\ExpensesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\ExpensesView.Designer.cs">
+      <DependentUpon>ExpensesView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Financial\FinancialDashboardView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\Financial\FinancialDashboardView.Designer.cs">
       <DependentUpon>FinancialDashboardView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Financial\PaymentsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\PaymentsView.Designer.cs">
+      <DependentUpon>PaymentsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Inventory\ProductManagementView.cs">
       <SubType>UserControl</SubType>
@@ -191,8 +203,14 @@
     <EmbeddedResource Include="Views\Admin\UserManagementView.resx">
       <DependentUpon>UserManagementView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Financial\ExpensesView.resx">
+      <DependentUpon>ExpensesView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Financial\FinancialDashboardView.resx">
       <DependentUpon>FinancialDashboardView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Financial\PaymentsView.resx">
+      <DependentUpon>PaymentsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Inventory\ProductManagementView.resx">
       <DependentUpon>ProductManagementView.cs</DependentUpon>
