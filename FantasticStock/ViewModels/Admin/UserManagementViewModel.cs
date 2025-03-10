@@ -267,7 +267,7 @@ namespace FantasticStock.ViewModels
         }
 
         private User OriginalUser { get; set; }
-        private bool IsEditMode { get; set; }
+        public bool IsEditMode { get; set; }
 
         private void SaveUser(object parameter)
         {

@@ -134,6 +134,12 @@
     <Compile Include="Views\Admin\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Admin\UserManagementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Admin\UserManagementView.Designer.cs">
+      <DependentUpon>UserManagementView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Custom Components\TextBoxWithPlaceholder.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -178,12 +184,6 @@
     </Compile>
     <Compile Include="Views\Admin\SystemConfigurationView.Designer.cs">
       <DependentUpon>SystemConfigurationView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Admin\UserManagementView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\Admin\UserManagementView.Designer.cs">
-      <DependentUpon>UserManagementView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Sales\CMView.cs">
       <SubType>UserControl</SubType>

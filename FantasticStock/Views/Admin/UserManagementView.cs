@@ -1,4 +1,5 @@
-﻿using FantasticStock.ViewModels;
+﻿using FantasticStock.Models;
+using FantasticStock.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace FantasticStock.Views
     public partial class UserManagementView : UserControl
     {
         private UserManagementViewModel _viewModel;
+        private bool _isInitialized = false;
 
         public UserManagementView()
         {
@@ -25,130 +27,386 @@ namespace FantasticStock.Views
             // Set up data bindings
             SetupBindings();
 
+            // Format the grids
             FormatUserGrid();
+            FormatActivityLogGrid();
+
+            // Initialize UI elements
+            InitializeStatusFilter();
+            InitializePermissionsTreeView();
+
+            _isInitialized = true;
         }
 
         private void SetupBindings()
         {
-            // Bind users grid
-            dgvUsers.DataSource = _viewModel.Users;
-
-            // Bind roles grid
-            dgvRoles.DataSource = _viewModel.Roles;
-
-            // Bind permissions list
-            lstPermissions.DataSource = _viewModel.Permissions;
-            lstPermissions.DisplayMember = "PermissionName";
-            lstPermissions.ValueMember = "PermissionID";
-
-            // Bind activity logs grid
-            dgvActivityLogs.DataSource = _viewModel.ActivityLogs;
-
-            // Bind search and filter controls
-            txtSearch.DataBindings.Add("Text", _viewModel, "SearchText", true, DataSourceUpdateMode.OnPropertyChanged);
-            cmbStatusFilter.DataBindings.Add("SelectedItem", _viewModel, "StatusFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-            cmbRoleFilter.DataSource = _viewModel.Roles;
-            cmbRoleFilter.DisplayMember = "RoleName";
-            cmbRoleFilter.ValueMember = "RoleID";
-            cmbRoleFilter.DataBindings.Add("SelectedValue", _viewModel, "RoleFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // Activity log filters
-            dtpStartDate.DataBindings.Add("Value", _viewModel, "ActivityStartDate", true, DataSourceUpdateMode.OnPropertyChanged);
-            dtpEndDate.DataBindings.Add("Value", _viewModel, "ActivityEndDate", true, DataSourceUpdateMode.OnPropertyChanged);
-            cmbActivityType.DataBindings.Add("Text", _viewModel, "ActivityTypeFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // Bind commands to buttons
-            btnAddUser.Click += (s, e) => _viewModel.AddUserCommand.Execute(null);
-            btnEditUser.Click += (s, e) => _viewModel.EditUserCommand.Execute(null);
-            btnDeactivate.Click += (s, e) => _viewModel.DeactivateUserCommand.Execute(null);
-            btnDelete.Click += (s, e) => _viewModel.DeleteUserCommand.Execute(null);
-            btnResetPassword.Click += (s, e) => _viewModel.ResetPasswordCommand.Execute(null);
-            btnSaveUser.Click += (s, e) => _viewModel.SaveUserCommand.Execute(null);
-            btnCancel.Click += (s, e) => _viewModel.CancelEditCommand.Execute(null);
-            btnRefresh.Click += (s, e) => _viewModel.RefreshDataCommand.Execute(null);
-            btnExportActivity.Click += (s, e) => _viewModel.ExportActivityCommand.Execute(null);
-            btnFilterActivity.Click += (s, e) => _viewModel.FilterActivityCommand.Execute(null);
-
-            // Selection change events
-            //dgvUsers.SelectionChanged += (s, e) =>
-            //{
-            //    if (dgvUsers.SelectedRows.Count > 0)
-            //    {
-            //        _viewModel.SelectedUser = dgvUsers.SelectedRows[0].DataBoundItem as FantasticStock.Models.User;
-            //    }
-            //};
-
-            dgvRoles.SelectionChanged += (s, e) =>
+            try
             {
-                if (dgvRoles.SelectedRows.Count > 0)
-                {
-                    _viewModel.SelectedRole = dgvRoles.SelectedRows[0].DataBoundItem as FantasticStock.Models.Role;
-                }
-            };
+                // Bind users grid
+                dgvUsers.DataSource = _viewModel.Users;
+
+                // Bind user detail fields
+                txtUsername.DataBindings.Add("Text", _viewModel, "SelectedUser.Username", true, DataSourceUpdateMode.OnPropertyChanged);
+                txtDisplayName.DataBindings.Add("Text", _viewModel, "SelectedUser.DisplayName", true, DataSourceUpdateMode.OnPropertyChanged);
+                txtEmail.DataBindings.Add("Text", _viewModel, "SelectedUser.Email", true, DataSourceUpdateMode.OnPropertyChanged);
+                txtPhone.DataBindings.Add("Text", _viewModel, "SelectedUser.Phone", true, DataSourceUpdateMode.OnPropertyChanged);
+                chkTwoFactorEnabled.DataBindings.Add("Checked", _viewModel, "SelectedUser.TwoFactorEnabled", true, DataSourceUpdateMode.OnPropertyChanged);
+
+                // Bind account expiry date
+                dateTimePickerExpiration.DataBindings.Add("Value", _viewModel, "SelectedUser.AccountExpiry", true, DataSourceUpdateMode.OnPropertyChanged);
+                dateTimePickerExpiration.Checked = _viewModel.SelectedUser?.AccountExpiry != null;
+
+                // Bind role dropdown
+                cmbRoles.DataSource = _viewModel.Roles;
+                cmbRoles.DisplayMember = "RoleName";
+                cmbRoles.ValueMember = "RoleID";
+                cmbRoles.DataBindings.Add("SelectedValue", _viewModel, "SelectedUser.RoleID", true, DataSourceUpdateMode.OnPropertyChanged);
+
+                // Bind search and filter controls
+                txtSearch.DataBindings.Add("Text", _viewModel, "SearchText", true, DataSourceUpdateMode.OnPropertyChanged);
+
+                // Status filter setup
+                cmbStatusFilter.Items.Add(""); // Empty option for "Any status"
+                cmbStatusFilter.Items.Add("Active");
+                cmbStatusFilter.Items.Add("Inactive");
+                cmbStatusFilter.Items.Add("Locked");
+                cmbStatusFilter.DataBindings.Add("SelectedItem", _viewModel, "StatusFilter", true, DataSourceUpdateMode.OnPropertyChanged);
+
+                // Role filter setup
+                cmbRoleFilter.DataSource = new BindingSource(_viewModel.Roles, null);
+                cmbRoleFilter.DisplayMember = "RoleName";
+                cmbRoleFilter.ValueMember = "RoleID";
+                cmbRoleFilter.DataBindings.Add("SelectedValue", _viewModel, "RoleFilter", true, DataSourceUpdateMode.OnPropertyChanged);
+
+                // Insert a blank item at the beginning of the role filter
+                ((BindingSource)cmbRoleFilter.DataSource).Insert(0, new Role { RoleID = 0, RoleName = "All Roles" });
+
+                // Bind activity log grid
+                dgvActivityLog.DataSource = _viewModel.ActivityLogs;
+
+                // Activity log filters
+                dtpStartDate.DataBindings.Add("Value", _viewModel, "ActivityStartDate", true, DataSourceUpdateMode.OnPropertyChanged);
+                dtpEndDate.DataBindings.Add("Value", _viewModel, "ActivityEndDate", true, DataSourceUpdateMode.OnPropertyChanged);
+                cmbActionType.DataBindings.Add("SelectedItem", _viewModel, "ActivityTypeFilter", true, DataSourceUpdateMode.OnPropertyChanged);
+
+                // Bind commands to buttons
+                btnAddUser.Click += (s, e) => _viewModel.AddUserCommand.Execute(null);
+                btnEdit.Click += (s, e) => _viewModel.EditUserCommand.Execute(null);
+                btnDeactivate.Click += (s, e) => _viewModel.DeactivateUserCommand.Execute(null);
+                btnDelete.Click += (s, e) => _viewModel.DeleteUserCommand.Execute(null);
+                btnResetPassword.Click += (s, e) => _viewModel.ResetPasswordCommand.Execute(null);
+                btnSave.Click += (s, e) => _viewModel.SaveUserCommand.Execute(null);
+                btnCancel.Click += (s, e) => _viewModel.CancelEditCommand.Execute(null);
+                btnNextPage.Click += (s, e) => _viewModel.NextPage();
+                btnExport.Click += (s, e) => _viewModel.ExportActivityCommand.Execute(null);
+                btnFilter.Click += (s, e) => _viewModel.FilterActivityCommand.Execute(null);
+
+                // Set up selection change events
+                dgvUsers.SelectionChanged += DgvUsers_SelectionChanged;
+                txtPassword.TextChanged += TxtPassword_TextChanged;
+
+                // Update UI based on edit mode
+                UpdateUIState(_viewModel.IsEditMode);
+                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error setting up bindings: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void FormatUserGrid()
         {
-            dgvUsers.ReadOnly = true;
-            dgvUsers.AllowUserToAddRows = false;
-            dgvUsers.AllowUserToDeleteRows = false;
-            dgvUsers.MultiSelect = false;
+            dgvUsers.AutoGenerateColumns = false;
+            dgvUsers.Columns.Clear();
 
-            dgvUsers.Columns["UserID"].Visible = false;
-            dgvUsers.Columns["RoleID"].Visible = false;
-            dgvUsers.Columns["TwoFactorEnabled"].Visible = false;
-            dgvUsers.Columns["AccountExpiry"].Visible = false;
-            dgvUsers.Columns["LastLogin"].HeaderText = "Last Login";
-            dgvUsers.Columns["CreatedDate"].Visible = false;
-            dgvUsers.Columns["ModifiedDate"].Visible = false;
-            dgvUsers.Columns["Email"].Visible = false;
-            dgvUsers.Columns["Phone"].Visible = false;
-            dgvUsers.Columns["Status"].HeaderText = "Status";
-            dgvUsers.Columns["Username"].HeaderText = "Username";
-            dgvUsers.Columns["DisplayName"].HeaderText = "Display Name";
-            dgvUsers.Columns["DisplayName"].Width = 150;
-            dgvUsers.Columns["RoleName"].HeaderText = "Role";
-        }
-
-        private void dgvUsers_SelectionChanged(object sender, EventArgs e)
-        {
-            dgvUsers.ClearSelection();
-        }
-
-        private void flowLayoutPanel3_Resize(object sender, EventArgs e)
-        {
-            label6.Width = flowLayoutPanel3.Width - flowLayoutPanel3.Padding.Left * 2;
-            label1.Width = label6.Width;
-            if (label6.Width < 600)
+            // Add columns
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
-                flowLayoutPanel2.SetFlowBreak(panel5, true);
-                flowLayoutPanel4.SetFlowBreak(panel9, true);
-                flowLayoutPanel5.SetFlowBreak(panel11, true);
-                flowLayoutPanel2.WrapContents = true;
-                flowLayoutPanel4.WrapContents = true;
-                flowLayoutPanel5.WrapContents = true;
-                panel9.Width = label6.Width;
-                panel10.Width = label6.Width;
-                panel11.Width = label6.Width;
-                panel12.Width = label6.Width;
-                panel5.Width = label6.Width;
-                panel6.Width = label6.Width;
+                DataPropertyName = "UserID",
+                HeaderText = "ID",
+                Width = 50,
+                Visible = false
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Username",
+                HeaderText = "Username",
+                Width = 100
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "DisplayName",
+                HeaderText = "Name",
+                Width = 150
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Email",
+                HeaderText = "Email",
+                Width = 200
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "RoleName",
+                HeaderText = "Role",
+                Width = 100
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Status",
+                HeaderText = "Status",
+                Width = 80
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewCheckBoxColumn
+            {
+                DataPropertyName = "TwoFactorEnabled",
+                HeaderText = "2FA",
+                Width = 50
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "LastLogin",
+                HeaderText = "Last Login",
+                Width = 120
+            });
+        }
+
+        private void FormatActivityLogGrid()
+        {
+            dgvActivityLog.AutoGenerateColumns = false;
+            dgvActivityLog.Columns.Clear();
+
+            // Add columns
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Timestamp",
+                HeaderText = "Timestamp",
+                Width = 150
+            });
+
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Username",
+                HeaderText = "User",
+                Width = 100
+            });
+
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "EventType",
+                HeaderText = "Action",
+                Width = 100
+            });
+
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "TableName",
+                HeaderText = "Module",
+                Width = 100
+            });
+
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "RecordID",
+                HeaderText = "Record ID",
+                Width = 80
+            });
+
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "IPAddress",
+                HeaderText = "IP Address",
+                Width = 120
+            });
+
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "SeverityText",
+                HeaderText = "Severity",
+                Width = 80
+            });
+        }
+
+        private void InitializeStatusFilter()
+        {
+            // Already implemented in SetupBindings
+        }
+
+        private void InitializePermissionsTreeView()
+        {
+            treeViewPermissions.Nodes.Clear();
+
+            // Group permissions by category/module
+            var permissionGroups = _viewModel.Permissions
+                .GroupBy(p => p.Category ?? "General")
+                .OrderBy(g => g.Key);
+
+            foreach (var group in permissionGroups)
+            {
+                var categoryNode = new TreeNode(group.Key);
+
+                foreach (var permission in group.OrderBy(p => p.PermissionName))
+                {
+                    var permissionNode = new TreeNode(permission.PermissionName)
+                    {
+                        Tag = permission.PermissionID,
+                        ToolTipText = permission.Description,
+                        Checked = permission.IsAssigned
+                    };
+
+                    categoryNode.Nodes.Add(permissionNode);
+                }
+
+                treeViewPermissions.Nodes.Add(categoryNode);
+            }
+
+            // Expand all nodes for better visibility
+            treeViewPermissions.ExpandAll();
+        }
+
+        private void DgvUsers_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvUsers.SelectedRows.Count > 0 && !_viewModel.IsEditMode)
+            {
+                User selectedUser = dgvUsers.SelectedRows[0].DataBoundItem as User;
+                _viewModel.SelectedUser = selectedUser;
+            }
+        }
+
+        private void TxtPassword_TextChanged(object sender, EventArgs e)
+        {
+            // Calculate password strength
+            string password = txtPassword.Text;
+            int strength = CalculatePasswordStrength(password);
+
+            // Update progress bar
+            progressBarPasswordStrength.Value = strength;
+
+            // Update strength label text and color
+            if (strength < 40)
+            {
+                lblPasswordStrength.Text = "Weak";
+                lblPasswordStrength.ForeColor = Color.Red;
+            }
+            else if (strength < 70)
+            {
+                lblPasswordStrength.Text = "Medium";
+                lblPasswordStrength.ForeColor = Color.Orange;
             }
             else
             {
-                flowLayoutPanel2.SetFlowBreak(panel5, false);
-                flowLayoutPanel4.SetFlowBreak(panel9, false);
-                flowLayoutPanel5.SetFlowBreak(panel9, false);
-                flowLayoutPanel2.WrapContents = false;
-                flowLayoutPanel4.WrapContents = false;
-                flowLayoutPanel5.WrapContents = false;
-                panel9.Width = label6.Width / 2;
-                panel10.Width = label6.Width / 2;
-                panel11.Width = label6.Width / 2;
-                panel12.Width = label6.Width / 2;
-                panel5.Width = label6.Width / 2;
-                panel6.Width = label6.Width / 2;
+                lblPasswordStrength.Text = "Strong";
+                lblPasswordStrength.ForeColor = Color.Green;
             }
+        }
+
+        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsEditMode")
+            {
+                UpdateUIState(_viewModel.IsEditMode);
+            }
+        }
+
+        private void UpdateUIState(bool isEditMode)
+        {
+            // Update control states based on edit mode
+            txtUsername.ReadOnly = !isEditMode || (_viewModel.SelectedUser?.UserID > 0);
+            txtDisplayName.ReadOnly = !isEditMode;
+            txtEmail.ReadOnly = !isEditMode;
+            txtPhone.ReadOnly = !isEditMode;
+            cmbRoles.Enabled = isEditMode;
+            chkTwoFactorEnabled.Enabled = isEditMode;
+            dateTimePickerExpiration.Enabled = isEditMode;
+
+            // Security tab controls
+            txtPassword.Enabled = isEditMode;
+            txtConfirmPassword.Enabled = isEditMode;
+
+            // Day restriction checkboxes
+            chkSunday.Enabled = isEditMode;
+            chkMonday.Enabled = isEditMode;
+            chkTuesday.Enabled = isEditMode;
+            chkWednesday.Enabled = isEditMode;
+            chkThursday.Enabled = isEditMode;
+            chkFriday.Enabled = isEditMode;
+            chkSaturday.Enabled = isEditMode;
+
+            // Button states
+            btnSave.Enabled = isEditMode;
+            btnCancel.Enabled = isEditMode;
+            btnResetPassword.Enabled = !isEditMode && _viewModel.SelectedUser?.UserID > 0;
+
+            // The following controls should be disabled in edit mode
+            btnAddUser.Enabled = !isEditMode;
+            btnEdit.Enabled = !isEditMode && _viewModel.SelectedUser != null;
+            btnDeactivate.Enabled = !isEditMode && _viewModel.SelectedUser != null;
+            btnDelete.Enabled = !isEditMode && _viewModel.SelectedUser != null;
+
+            // Update permissions tree based on role selection
+            if (_viewModel.SelectedUser != null)
+            {
+                UpdatePermissionsTree();
+            }
+        }
+
+        private void UpdatePermissionsTree()
+        {
+            if (_viewModel.SelectedUser != null && treeViewPermissions.Nodes.Count > 0)
+            {
+                // Disable or enable nodes based on edit mode
+                SetTreeNodesEnabled(treeViewPermissions.Nodes, false);
+            }
+        }
+
+        private void SetTreeNodesEnabled(TreeNodeCollection nodes, bool enabled)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                node.ForeColor = enabled ? SystemColors.ControlText : SystemColors.GrayText;
+
+                if (node.Nodes.Count > 0)
+                {
+                    SetTreeNodesEnabled(node.Nodes, enabled);
+                }
+            }
+        }
+
+        private int CalculatePasswordStrength(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+                return 0;
+
+            int score = 0;
+
+            // Length check
+            if (password.Length >= 8)
+                score += 20;
+            else if (password.Length >= 6)
+                score += 10;
+
+            // Complexity checks
+            if (password.Any(char.IsUpper))
+                score += 20;
+
+            if (password.Any(char.IsLower))
+                score += 20;
+
+            if (password.Any(char.IsDigit))
+                score += 20;
+
+            if (password.Any(c => !char.IsLetterOrDigit(c)))
+                score += 20;
+
+            return Math.Min(100, score);
         }
     }
 }
