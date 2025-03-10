@@ -681,34 +681,124 @@ namespace FantasticStock.Views.Sales
                 // Update customer from form fields
                 UpdateCustomerFromFields(_selectedCustomer);
 
-                // Handle new vs. existing customer
-                if (_selectedCustomer.CustomerID == 0) // New customer
+                try
                 {
-                    var addedCustomer = _viewmodel.AddCustomer(_selectedCustomer);
-                    if (addedCustomer == null)
+                    // Handle new vs. existing customer
+                    if (_selectedCustomer.CustomerID == 0) // New customer
                     {
-                        MessageBox.Show("Failed to add the customer to the database.", "Add Customer Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        var addedCustomer = _viewmodel.AddCustomer(_selectedCustomer);
+                        if (addedCustomer == null)
+                        {
+                            MessageBox.Show("Failed to add the customer to the database.", "Add Customer Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        _selectedCustomer = addedCustomer; // Update with DB-assigned ID
+
+                        // Add to filtered list if it should be visible
+                        if (_selectedCustomer.IsActive || chkShowInactive.Checked)
+                        {
+                            _filteredCustomers.Add(_selectedCustomer);
+                        }
                     }
-
-                    _selectedCustomer = addedCustomer; // Update with DB-assigned ID
-
-                    // Add to filtered list if it should be visible
-                    if (_selectedCustomer.IsActive || chkShowInactive.Checked)
+                    else // Existing customer
                     {
-                        _filteredCustomers.Add(_selectedCustomer);
+                        bool success = _viewmodel.UpdateCustomer(_selectedCustomer);
+                        if (!success)
+                        {
+                            MessageBox.Show("Failed to update the customer in the database.", "Update Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        // Update the filtered list with the updated customer
+                        var existingCustomer = _filteredCustomers.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        if (existingCustomer != null)
+                        {
+                            existingCustomer.CustomerName = _selectedCustomer.CustomerName;
+                            existingCustomer.Phone = _selectedCustomer.Phone;
+                            existingCustomer.Email = _selectedCustomer.Email;
+                            existingCustomer.Address = _selectedCustomer.Address;
+                            existingCustomer.LoyaltyPoints = _selectedCustomer.LoyaltyPoints;
+                            existingCustomer.IsActive = _selectedCustomer.IsActive;
+                            existingCustomer.ModifiedDate = _selectedCustomer.ModifiedDate;
+                        }
                     }
                 }
-                else // Existing customer
+                catch (NotImplementedException)
                 {
-                    bool success = _viewmodel.UpdateCustomer(_selectedCustomer);
-                    if (!success)
+                    // Handle the case where the repository methods are not implemented
+                    // Create a fallback implementation for demo/testing purposes
+
+                    if (_selectedCustomer.CustomerID == 0) // New customer
                     {
-                        MessageBox.Show("Failed to update the customer in the database.", "Update Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        // Assign a new ID (this would normally be done by the database)
+                        int maxId = _viewmodel.Customers?.Any() == true ?
+                            _viewmodel.Customers.Max(c => c.CustomerID) : 0;
+                        _selectedCustomer.CustomerID = maxId + 1;
+
+                        // Add to the collection
+                        if (_viewmodel.Customers == null)
+                        {
+                            try
+                            {
+                                // Try to create a new list using reflection
+                                var prop = _viewmodel.GetType().GetProperty("Customers");
+                                if (prop != null && prop.CanWrite)
+                                {
+                                    prop.SetValue(_viewmodel, new List<Customer>());
+                                }
+                            }
+                            catch
+                            {
+                                // If we can't set it, create a local list for now
+                                _filteredCustomers = new List<Customer>();
+                                _filteredCustomers.Add(_selectedCustomer);
+                                RefreshGrid();
+                                MessageBox.Show("Added customer to local cache only. Repository not available.",
+                                    "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
+
+                        // Add to the ViewModel's collection if available
+                        if (_viewmodel.Customers is List<Customer> customersList)
+                        {
+                            customersList.Add(_selectedCustomer);
+                        }
+                        else if (_viewmodel.Customers is ICollection<Customer> customersCollection)
+                        {
+                            customersCollection.Add(_selectedCustomer);
+                        }
+
+                        // Add to filtered list if it should be visible
+                        if (_selectedCustomer.IsActive || chkShowInactive.Checked)
+                        {
+                            _filteredCustomers.Add(_selectedCustomer);
+                        }
                     }
+                    else
+                    {
+                        // For editing existing customers, the changes are already in the _selectedCustomer
+                        // which is a reference to the object in the collection, so no need to update the collection
+
+                        // Update the filtered list with the updated customer
+                        var existingCustomer = _filteredCustomers.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        if (existingCustomer != null)
+                        {
+                            existingCustomer.CustomerName = _selectedCustomer.CustomerName;
+                            existingCustomer.Phone = _selectedCustomer.Phone;
+                            existingCustomer.Email = _selectedCustomer.Email;
+                            existingCustomer.Address = _selectedCustomer.Address;
+                            existingCustomer.LoyaltyPoints = _selectedCustomer.LoyaltyPoints;
+                            existingCustomer.IsActive = _selectedCustomer.IsActive;
+                            existingCustomer.ModifiedDate = _selectedCustomer.ModifiedDate;
+                        }
+                    }
+
+                    MessageBox.Show("Repository methods not implemented. Using local data only.",
+                        "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 // Exit edit mode
@@ -729,6 +819,7 @@ namespace FantasticStock.Views.Sales
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void UpdateCustomerFromFields(Customer customer)
         {
@@ -758,16 +849,32 @@ namespace FantasticStock.Views.Sales
                                 MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    bool success = _viewmodel.DeactivateCustomer(_selectedCustomer.CustomerID);
-                    if (!success)
+                    try
                     {
-                        MessageBox.Show("Failed to deactivate the customer.", "Deactivation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        // Try to use the repository method
+                        bool success = _viewmodel.DeactivateCustomer(_selectedCustomer.CustomerID);
+                        if (!success)
+                        {
+                            MessageBox.Show("Failed to deactivate the customer.", "Deactivation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
+                    catch (NotImplementedException)
+                    {
+                        // If the repository method is not implemented, update locally
+                        _selectedCustomer.IsActive = false;
 
-                    // Update local object
-                    _selectedCustomer.IsActive = false;
+                        // Attempt to update the customer in the main collection if possible
+                        var mainListCustomer = _viewmodel.Customers?.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        if (mainListCustomer != null)
+                        {
+                            mainListCustomer.IsActive = false;
+                        }
+
+                        MessageBox.Show("Repository method not implemented. Customer deactivated in local data only.",
+                            "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
 
                     // Remove from filtered list if not showing inactive
                     if (!chkShowInactive.Checked)
@@ -798,15 +905,39 @@ namespace FantasticStock.Views.Sales
         {
             try
             {
-                if (_selectedCustomer?.CustomerID == 0) // New unsaved customer
+                try
                 {
-                    _selectedCustomer = null;
-                    ClearCustomerDetails();
+                    if (_selectedCustomer?.CustomerID == 0) // New unsaved customer
+                    {
+                        _selectedCustomer = null;
+                        ClearCustomerDetails();
+                    }
+                    else if (_selectedCustomer != null) // Existing customer - reload
+                    {
+                        Customer refreshedCustomer = null;
+
+                        try
+                        {
+                            refreshedCustomer = _viewmodel.GetCustomer(_selectedCustomer.CustomerID);
+                        }
+                        catch (NotImplementedException)
+                        {
+                            // If GetCustomer is not implemented, just use the customer from the filtered list
+                            refreshedCustomer = _filteredCustomers.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        }
+
+                        if (refreshedCustomer != null)
+                        {
+                            _selectedCustomer = refreshedCustomer;
+                        }
+
+                        DisplayCustomerDetails(_selectedCustomer);
+                    }
                 }
-                else if (_selectedCustomer != null) // Existing customer - reload
+                catch (Exception ex)
                 {
-                    _selectedCustomer = _viewmodel.GetCustomer(_selectedCustomer.CustomerID);
-                    DisplayCustomerDetails(_selectedCustomer);
+                    System.Diagnostics.Debug.WriteLine($"Error refreshing customer data: {ex.Message}");
+                    // Even if refresh fails, still exit edit mode
                 }
 
                 SetDetailsEditMode(false);
