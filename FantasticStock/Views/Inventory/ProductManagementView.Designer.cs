@@ -94,6 +94,7 @@ namespace FantasticStock.Views.Inventory
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
             this.panelActions = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.panelProductsContainer = new System.Windows.Forms.Panel();
             this.dgvProducts = new System.Windows.Forms.DataGridView();
@@ -134,9 +135,9 @@ namespace FantasticStock.Views.Inventory
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutMain.SuspendLayout();
             this.panelProductsContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
@@ -144,7 +145,6 @@ namespace FantasticStock.Views.Inventory
             this.paginationPanel.SuspendLayout();
             this.panelDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProductImage)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // colProductID
@@ -208,7 +208,7 @@ namespace FantasticStock.Views.Inventory
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Location = new System.Drawing.Point(644, 6);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(200, 26);
+            this.txtSearch.Size = new System.Drawing.Size(200, 20);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
@@ -276,10 +276,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // lblHeader
             // 
-            this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHeader.Location = new System.Drawing.Point(15, 15);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(346, 23);
+            this.lblHeader.Size = new System.Drawing.Size(352, 32);
             this.lblHeader.TabIndex = 0;
             this.lblHeader.Text = "Product Management";
             // 
@@ -291,6 +291,27 @@ namespace FantasticStock.Views.Inventory
             this.panelActions.Name = "panelActions";
             this.panelActions.Size = new System.Drawing.Size(1507, 50);
             this.panelActions.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 5;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnAddProduct, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnPrintList, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnBulkImport, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnExport, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(930, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 50);
+            this.tableLayoutPanel1.TabIndex = 5;
             // 
             // tableLayoutMain
             // 
@@ -349,7 +370,7 @@ namespace FantasticStock.Views.Inventory
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(30, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 20);
+            this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 1;
             this.label1.Text = "Products";
             // 
@@ -378,7 +399,7 @@ namespace FantasticStock.Views.Inventory
             this.lblPageInfo.AutoSize = true;
             this.lblPageInfo.Location = new System.Drawing.Point(110, 15);
             this.lblPageInfo.Name = "lblPageInfo";
-            this.lblPageInfo.Size = new System.Drawing.Size(90, 20);
+            this.lblPageInfo.Size = new System.Drawing.Size(62, 13);
             this.lblPageInfo.TabIndex = 1;
             this.lblPageInfo.Text = "Page 1 of 4";
             // 
@@ -453,7 +474,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.txtProductName.Location = new System.Drawing.Point(15, 70);
             this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(350, 26);
+            this.txtProductName.Size = new System.Drawing.Size(350, 20);
             this.txtProductName.TabIndex = 2;
             // 
             // lblSKU
@@ -468,7 +489,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.txtSKU.Location = new System.Drawing.Point(15, 120);
             this.txtSKU.Name = "txtSKU";
-            this.txtSKU.Size = new System.Drawing.Size(350, 26);
+            this.txtSKU.Size = new System.Drawing.Size(350, 20);
             this.txtSKU.TabIndex = 4;
             // 
             // lblBarcode
@@ -483,7 +504,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.txtBarcode.Location = new System.Drawing.Point(15, 170);
             this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.Size = new System.Drawing.Size(350, 26);
+            this.txtBarcode.Size = new System.Drawing.Size(350, 20);
             this.txtBarcode.TabIndex = 6;
             // 
             // lblCategory
@@ -499,7 +520,7 @@ namespace FantasticStock.Views.Inventory
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.Location = new System.Drawing.Point(15, 220);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(350, 28);
+            this.cmbCategory.Size = new System.Drawing.Size(350, 21);
             this.cmbCategory.TabIndex = 8;
             // 
             // lblSupplier
@@ -515,7 +536,7 @@ namespace FantasticStock.Views.Inventory
             this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSupplier.Location = new System.Drawing.Point(15, 270);
             this.cmbSupplier.Name = "cmbSupplier";
-            this.cmbSupplier.Size = new System.Drawing.Size(350, 28);
+            this.cmbSupplier.Size = new System.Drawing.Size(350, 21);
             this.cmbSupplier.TabIndex = 10;
             // 
             // lblSalePrice
@@ -530,7 +551,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.txtSalePrice.Location = new System.Drawing.Point(15, 320);
             this.txtSalePrice.Name = "txtSalePrice";
-            this.txtSalePrice.Size = new System.Drawing.Size(170, 26);
+            this.txtSalePrice.Size = new System.Drawing.Size(170, 20);
             this.txtSalePrice.TabIndex = 12;
             this.txtSalePrice.TextChanged += new System.EventHandler(this.txtSalePrice_TextChanged);
             // 
@@ -546,7 +567,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.txtCostPrice.Location = new System.Drawing.Point(15, 370);
             this.txtCostPrice.Name = "txtCostPrice";
-            this.txtCostPrice.Size = new System.Drawing.Size(170, 26);
+            this.txtCostPrice.Size = new System.Drawing.Size(170, 20);
             this.txtCostPrice.TabIndex = 14;
             this.txtCostPrice.TextChanged += new System.EventHandler(this.txtCostPrice_TextChanged);
             // 
@@ -563,7 +584,7 @@ namespace FantasticStock.Views.Inventory
             this.txtMarkup.Location = new System.Drawing.Point(195, 370);
             this.txtMarkup.Name = "txtMarkup";
             this.txtMarkup.ReadOnly = true;
-            this.txtMarkup.Size = new System.Drawing.Size(170, 26);
+            this.txtMarkup.Size = new System.Drawing.Size(170, 20);
             this.txtMarkup.TabIndex = 16;
             // 
             // lblQuantityInStock
@@ -578,7 +599,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.txtQuantityInStock.Location = new System.Drawing.Point(15, 420);
             this.txtQuantityInStock.Name = "txtQuantityInStock";
-            this.txtQuantityInStock.Size = new System.Drawing.Size(170, 26);
+            this.txtQuantityInStock.Size = new System.Drawing.Size(170, 20);
             this.txtQuantityInStock.TabIndex = 18;
             // 
             // lblReorderLevel
@@ -593,7 +614,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.txtReorderLevel.Location = new System.Drawing.Point(195, 420);
             this.txtReorderLevel.Name = "txtReorderLevel";
-            this.txtReorderLevel.Size = new System.Drawing.Size(170, 26);
+            this.txtReorderLevel.Size = new System.Drawing.Size(170, 20);
             this.txtReorderLevel.TabIndex = 20;
             // 
             // lblDescription
@@ -681,27 +702,6 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 5;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.btnRefresh, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnAddProduct, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnPrintList, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnBulkImport, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnExport, 2, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(930, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 50);
-            this.tableLayoutPanel1.TabIndex = 5;
-            // 
             // ProductManagementView
             // 
             this.Controls.Add(this.tableLayoutMain);
@@ -711,6 +711,7 @@ namespace FantasticStock.Views.Inventory
             this.Size = new System.Drawing.Size(1507, 800);
             this.panelHeader.ResumeLayout(false);
             this.panelActions.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutMain.ResumeLayout(false);
             this.panelProductsContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
@@ -721,7 +722,6 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.ResumeLayout(false);
             this.panelDetails.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProductImage)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
