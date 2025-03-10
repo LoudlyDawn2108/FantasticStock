@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Views\Custom Components\TextBoxWithPlaceholder.cs">
       <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\Financial\ExpensesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
