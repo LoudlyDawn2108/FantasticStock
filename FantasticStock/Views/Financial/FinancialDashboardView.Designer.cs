@@ -158,7 +158,7 @@
             // 
             // lblEndDate
             // 
-            this.lblEndDate.Location = new System.Drawing.Point(198, 4);
+            this.lblEndDate.Location = new System.Drawing.Point(198, 7);
             this.lblEndDate.Name = "lblEndDate";
             this.lblEndDate.Size = new System.Drawing.Size(100, 23);
             this.lblEndDate.TabIndex = 2;

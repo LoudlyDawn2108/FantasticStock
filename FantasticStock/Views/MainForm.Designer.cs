@@ -376,7 +376,7 @@
             this.button12.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button12.Size = new System.Drawing.Size(165, 35);
             this.button12.TabIndex = 5;
-            this.button12.Text = "Inventory";
+            this.button12.Text = "Dashboard";
             this.button12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button12.UseVisualStyleBackColor = true;
             this.button12.Click += new System.EventHandler(this.menuButton_Click);
@@ -391,7 +391,7 @@
             this.button13.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button13.Size = new System.Drawing.Size(165, 35);
             this.button13.TabIndex = 6;
-            this.button13.Text = "Inventory";
+            this.button13.Text = "Payments";
             this.button13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.menuButton_Click);
@@ -406,7 +406,7 @@
             this.button14.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button14.Size = new System.Drawing.Size(165, 35);
             this.button14.TabIndex = 7;
-            this.button14.Text = "Inventory";
+            this.button14.Text = "Expenses";
             this.button14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button14.UseVisualStyleBackColor = true;
             this.button14.Click += new System.EventHandler(this.menuButton_Click);
@@ -421,7 +421,7 @@
             this.button15.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button15.Size = new System.Drawing.Size(165, 35);
             this.button15.TabIndex = 8;
-            this.button15.Text = "Inventory";
+            this.button15.Text = "Financial Reports";
             this.button15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.menuButton_Click);

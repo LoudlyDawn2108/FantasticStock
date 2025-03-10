@@ -52,6 +52,12 @@ namespace FantasticStock.Views
             button7.Tag = ModuleType.PointOfSale;
             button8.Tag = ModuleType.Customers;
 
+            // Financial modules
+            button12.Tag = ModuleType.FinancialDashboard;
+            button13.Tag = ModuleType.Payments;
+            button14.Tag = ModuleType.Expenses;
+            button15.Tag = ModuleType.FinancialReports;
+
             button17.Tag = ModuleType.UserManagement;
             button18.Tag = ModuleType.SystemConfiguration;
             button19.Tag = ModuleType.BackupRestore;
@@ -171,7 +177,11 @@ namespace FantasticStock.Views
                 case ModuleType.InventoryReports:
                 case ModuleType.SalesReports:
                 case ModuleType.Payments:
+                    moduleControl = new PaymentsView();
+                    break;
                 case ModuleType.Expenses:
+                    moduleControl = new ExpensesView();
+                    break;
                 case ModuleType.FinancialReports:
                     moduleControl = CreatePlaceholderModule(moduleType.ToString());
                     break;
