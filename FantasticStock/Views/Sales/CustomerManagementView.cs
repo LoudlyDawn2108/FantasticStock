@@ -23,22 +23,34 @@ namespace FantasticStock.Views.Sales
         {
             InitializeComponent();
 
-            // Initialize repository
-            _viewmodel = new CustomerManagementViewModel();
+            try
+            {
+                // Initialize repository
+                _viewmodel = new CustomerManagementViewModel();
 
-            // Set up UI behavior
-            SetupUIBehavior();
+                // Set up UI behavior
+                SetupUIBehavior();
 
-            // Load data
-            LoadData();
+                // Initialize customer data
+                InitializeData();
 
-            // Initialize default state
-            InitializeDefaultState();
+                // Initialize default state
+                InitializeDefaultState();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing Customer Management: {ex.Message}",
+                    "Initialization Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        #region Setup Methods
+        #region Initialization Methods
         private void SetupUIBehavior()
         {
+            // Add event handlers for export/import buttons
+            btnExport.Click += (s, e) => ExportCustomers();
+            btnImport.Click += (s, e) => ImportCustomers();
+
             // Setup DataGridView
             dgvCustomers.AutoGenerateColumns = false;
 
@@ -47,10 +59,7 @@ namespace FantasticStock.Views.Sales
             colCustomerName.DataPropertyName = "CustomerName";
             colPhone.DataPropertyName = "Phone";
             colEmail.DataPropertyName = "Email";
-
-            // Map Address to City column
-            colCity.DataPropertyName = "Address";
-
+            colCity.DataPropertyName = "Address"; // Map Address to City column
             colLoyaltyPoints.DataPropertyName = "LoyaltyPoints";
             colIsActive.DataPropertyName = "IsActive";
 
@@ -62,6 +71,12 @@ namespace FantasticStock.Views.Sales
             btnCancel.Click += (s, e) => CancelEdit();
             btnEdit.Click += (s, e) => EditCustomer();
             btnDelete.Click += (s, e) => DeactivateCustomer();
+
+            // Add event handlers for export/import if available
+            if (btnExport != null)
+                btnExport.Click += (s, e) => ExportCustomers();
+            if (btnImport != null)
+                btnImport.Click += (s, e) => ImportCustomers();
 
             // Selection change events
             dgvCustomers.SelectionChanged += DgvCustomers_SelectionChanged;
@@ -83,43 +98,19 @@ namespace FantasticStock.Views.Sales
 
             // Date picker setup
             dtpBirthDate.Format = DateTimePickerFormat.Short;
-            dtpBirthDate.Value = DateTime.Now.AddYears(-30); // Default to 30 years ago
-
-            // Tab index setup for better navigation
-            SetupTabOrder();
+            dtpBirthDate.Value = DateTime.Now.AddYears(-30);
         }
 
-        private void SetupTabOrder()
+        private void InitializeData()
         {
-            // Tab order already correctly set in the code
-        }
+            // Make sure customer collection exists
+            EnsureCustomerCollectionInitialized();
 
-        private void LoadData()
-        {
-            try
-            {
-                // Initial load of all customers
-                _filteredCustomers = _viewmodel.Customers.Where(c => c.IsActive).ToList();
-                dgvCustomers.DataSource = _filteredCustomers;
+            // Add sample data if needed
+            AddSampleCustomersIfNeeded();
 
-                // Setup search dropdown options
-                cboSearchBy.Items.Clear();
-                cboSearchBy.Items.AddRange(new string[] {
-                    "All Fields",
-                    "Customer Name",
-                    "Phone",
-                    "Email",
-                    "Address"
-                });
-                cboSearchBy.SelectedIndex = 0;
-
-                lblResults.Text = $"{_filteredCustomers.Count} customer(s) found";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading customer data: {ex.Message}", "Data Loading Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Load data into UI
+            LoadCustomerData();
         }
 
         private void InitializeDefaultState()
@@ -135,11 +126,250 @@ namespace FantasticStock.Views.Sales
             ClearCustomerDetails();
         }
 
+        private void EnsureCustomerCollectionInitialized()
+        {
+            if (_viewmodel.Customers == null)
+            {
+                try
+                {
+                    // First try: Use reflection to set the property directly
+                    var prop = _viewmodel.GetType().GetProperty("Customers");
+                    if (prop != null && prop.CanWrite)
+                    {
+                        prop.SetValue(_viewmodel, new List<Customer>());
+                        System.Diagnostics.Debug.WriteLine("Customer collection initialized via reflection");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Could not initialize Customers property: {ex.Message}");
+                }
+
+                try
+                {
+                    // Second try: Create a dummy customer to trigger initialization
+                    var dummyCustomer = new Customer
+                    {
+                        CustomerName = "System Initialization",
+                        Phone = "0000000000",
+                        Email = "init@system.test",
+                        Address = "System",
+                        IsActive = false,
+                        CreatedDate = DateTime.Now,
+                        ModifiedDate = DateTime.Now
+                    };
+
+                    var result = _viewmodel.AddCustomer(dummyCustomer);
+                    if (result != null)
+                    {
+                        // Success - now clean up by deactivating the dummy customer
+                        _viewmodel.DeactivateCustomer(result.CustomerID);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Could not initialize via AddCustomer: {ex.Message}");
+
+                    // If all initialization attempts fail, create local fallback
+                    _filteredCustomers = new List<Customer>();
+                }
+            }
+        }
+
+        private void AddSampleCustomersIfNeeded()
+        {
+            try
+            {
+                // Only add sample data if no customers exist
+                bool hasCustomers = _viewmodel.Customers != null &&
+                    _viewmodel.Customers.Any(c => c.CustomerName != "System Initialization");
+
+                if (!hasCustomers)
+                {
+                    var sampleCustomers = CreateSampleCustomers();
+                    int addedCount = 0;
+                    StringBuilder errors = new StringBuilder();
+
+                    foreach (var customer in sampleCustomers)
+                    {
+                        try
+                        {
+                            // Important: Don't set CustomerID as it's likely auto-assigned
+                            customer.CustomerID = 0;
+
+                            var result = _viewmodel.AddCustomer(customer);
+                            if (result != null)
+                            {
+                                addedCount++;
+                            }
+                            else
+                            {
+                                errors.AppendLine($"- Failed to add {customer.CustomerName}");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            errors.AppendLine($"- Error adding {customer.CustomerName}: {ex.Message}");
+                        }
+                    }
+
+                    // Report results
+                    if (addedCount > 0)
+                    {
+                        MessageBox.Show($"Added {addedCount} sample customer(s) successfully.",
+                            "Sample Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (errors.Length > 0)
+                    {
+                        // Try direct property setting as fallback
+                        try
+                        {
+                            var prop = _viewmodel.GetType().GetProperty("Customers");
+                            if (prop != null && prop.CanWrite)
+                            {
+                                // Assign IDs when setting directly
+                                for (int i = 0; i < sampleCustomers.Count; i++)
+                                {
+                                    sampleCustomers[i].CustomerID = i + 1;
+                                }
+
+                                prop.SetValue(_viewmodel, sampleCustomers);
+                                MessageBox.Show("Sample data initialized via direct assignment.",
+                                    "Sample Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Failed to add sample customers.",
+                                    "Sample Data Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                System.Diagnostics.Debug.WriteLine(errors.ToString());
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Diagnostics.Debug.WriteLine($"Failed direct assignment: {ex.Message}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error adding sample data: {ex.Message}",
+                    "Sample Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private List<Customer> CreateSampleCustomers()
+        {
+            return new List<Customer>
+            {
+                new Customer
+                {
+                    CustomerName = "Acme Corporation",
+                    Phone = "(555) 123-4567",
+                    Email = "info@acmecorp.com",
+                    Address = "123 Main St, New York, NY 10001",
+                    LoyaltyPoints = 250,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now.AddMonths(-6),
+                    ModifiedDate = DateTime.Now.AddDays(-15)
+                },
+                new Customer
+                {
+                    CustomerName = "TechSolutions Inc.",
+                    Phone = "(555) 987-6543",
+                    Email = "contact@techsolutions.com",
+                    Address = "456 Innovation Ave, San Francisco, CA 94105",
+                    LoyaltyPoints = 120,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now.AddMonths(-3),
+                    ModifiedDate = DateTime.Now.AddDays(-5)
+                },
+                new Customer
+                {
+                    CustomerName = "Global Enterprises",
+                    Phone = "(555) 456-7890",
+                    Email = "sales@globalent.com",
+                    Address = "789 Business Blvd, Chicago, IL 60601",
+                    LoyaltyPoints = 350,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now.AddMonths(-8),
+                    ModifiedDate = DateTime.Now.AddDays(-30)
+                },
+                new Customer
+                {
+                    CustomerName = "Local Shop",
+                    Phone = "(555) 222-3333",
+                    Email = "shop@local.com",
+                    Address = "321 Small St, Portland, OR 97205",
+                    LoyaltyPoints = 75,
+                    IsActive = false,
+                    CreatedDate = DateTime.Now.AddMonths(-12),
+                    ModifiedDate = DateTime.Now.AddDays(-2)
+                },
+                new Customer
+                {
+                    CustomerName = "Big Retail Chain",
+                    Phone = "(555) 777-8888",
+                    Email = "orders@bigretail.com",
+                    Address = "555 Commerce Way, Dallas, TX 75201",
+                    LoyaltyPoints = 500,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now.AddMonths(-9),
+                    ModifiedDate = DateTime.Now.AddDays(-1)
+                }
+            };
+        }
+
+        private void LoadCustomerData()
+        {
+            try
+            {
+                // Filter to active customers initially
+                if (_viewmodel.Customers != null)
+                {
+                    _filteredCustomers = _viewmodel.Customers.Where(c => c.IsActive).ToList();
+                }
+                else
+                {
+                    _filteredCustomers = new List<Customer>();
+                }
+
+                // Update grid
+                RefreshGrid();
+
+                // Configure search options
+                SetupSearchOptions();
+            }
+            catch (Exception ex)
+            {
+                _filteredCustomers = new List<Customer>();
+                dgvCustomers.DataSource = _filteredCustomers;
+                MessageBox.Show($"Error loading customer data: {ex.Message}",
+                    "Data Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SetupSearchOptions()
+        {
+            cboSearchBy.Items.Clear();
+            cboSearchBy.Items.AddRange(new string[] {
+                "All Fields",
+                "Customer Name",
+                "Phone",
+                "Email",
+                "Address"
+            });
+            cboSearchBy.SelectedIndex = 0;
+        }
+        #endregion
+
+        #region UI State Management
         private void SetDetailsEditMode(bool editMode)
         {
             _isEditing = editMode;
 
-            // Enable/disable input fields based on edit mode
+            // Enable/disable input fields
             txtCustomerName.ReadOnly = !editMode;
             txtContactName.ReadOnly = !editMode;
             txtPhone.ReadOnly = !editMode;
@@ -157,14 +387,14 @@ namespace FantasticStock.Views.Sales
             chkOptInMarketing.Enabled = editMode;
             chkVIP.Enabled = editMode;
 
-            // Show/hide appropriate buttons
+            // Adjust button states
             btnSave.Enabled = editMode;
             btnCancel.Enabled = editMode;
             btnEdit.Enabled = !editMode && _selectedCustomer != null;
             btnDelete.Enabled = !editMode && _selectedCustomer != null;
             btnAdd.Enabled = !editMode;
 
-            // Disable grid selection during edit
+            // Disable grid during edit
             dgvCustomers.Enabled = !editMode;
             grpSearch.Enabled = !editMode;
         }
@@ -199,29 +429,71 @@ namespace FantasticStock.Views.Sales
                 return;
             }
 
-            // Map the model fields to UI elements with null checks for safety
+            // Map data to UI with null checks
             txtCustomerId.Text = customer.CustomerID.ToString();
             txtCustomerName.Text = customer.CustomerName ?? string.Empty;
-
-            // Using empty strings for fields not in the simpler Customer model
-            txtContactName.Text = string.Empty;
             txtPhone.Text = customer.Phone ?? string.Empty;
             txtEmail.Text = customer.Email ?? string.Empty;
             txtAddress.Text = customer.Address ?? string.Empty;
+
+            // Clear fields we don't have data for
+            txtContactName.Text = string.Empty;
             txtCity.Text = string.Empty;
             txtState.Text = string.Empty;
             txtZip.Text = string.Empty;
             txtCountry.Text = string.Empty;
+            txtNotes.Text = string.Empty;
 
-            numLoyaltyPoints.Value = customer.LoyaltyPoints;
+            // Set numeric value safely
+            try
+            {
+                numLoyaltyPoints.Value = Math.Min(numLoyaltyPoints.Maximum,
+                    Math.Max(numLoyaltyPoints.Minimum, customer.LoyaltyPoints));
+            }
+            catch
+            {
+                numLoyaltyPoints.Value = 0;
+            }
 
-            // Set checkboxes based on loyalty points since CustomerTypeID may not be available
+            // Set status checkboxes
             chkVIP.Checked = customer.LoyaltyPoints >= 200;
             chkOptInMarketing.Checked = customer.LoyaltyPoints > 0;
 
-            txtNotes.Text = string.Empty; // Notes field not available in simple model
+            // Format dates safely
             txtCreatedDate.Text = customer.CreatedDate.ToString("yyyy-MM-dd HH:mm");
             txtModifiedDate.Text = customer.ModifiedDate.ToString("yyyy-MM-dd HH:mm");
+        }
+
+        private void RefreshGrid()
+        {
+            try
+            {
+                // Temporarily disable data binding to avoid flickering
+                dgvCustomers.SuspendLayout();
+
+                // Create defensive copy to avoid reference issues
+                var dataSource = _filteredCustomers?.ToList() ?? new List<Customer>();
+                dgvCustomers.DataSource = null;
+                dgvCustomers.DataSource = dataSource;
+
+                // Restore layout updates
+                dgvCustomers.ResumeLayout();
+
+                // Update results count
+                lblResults.Text = $"{dataSource.Count} customer(s) found";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error refreshing grid: {ex.Message}");
+
+                // Emergency recovery - ensure grid has at least an empty list
+                try
+                {
+                    dgvCustomers.DataSource = new List<Customer>();
+                    lblResults.Text = "0 customers found";
+                }
+                catch { /* Last resort failed - nothing more we can do */ }
+            }
         }
         #endregion
 
@@ -230,10 +502,24 @@ namespace FantasticStock.Views.Sales
         {
             if (dgvCustomers.SelectedRows.Count > 0 && !_isEditing)
             {
-                _selectedCustomer = dgvCustomers.SelectedRows[0].DataBoundItem as Customer;
-                DisplayCustomerDetails(_selectedCustomer);
-                btnEdit.Enabled = true;
-                btnDelete.Enabled = true;
+                try
+                {
+                    _selectedCustomer = dgvCustomers.SelectedRows[0].DataBoundItem as Customer;
+                    if (_selectedCustomer != null)
+                    {
+                        DisplayCustomerDetails(_selectedCustomer);
+                        btnEdit.Enabled = true;
+                        btnDelete.Enabled = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Error selecting customer: {ex.Message}");
+                    _selectedCustomer = null;
+                    ClearCustomerDetails();
+                    btnEdit.Enabled = false;
+                    btnDelete.Enabled = false;
+                }
             }
             else if (!_isEditing)
             {
@@ -293,10 +579,19 @@ namespace FantasticStock.Views.Sales
         {
             try
             {
+                // Handle case where Customers collection might be null
+                if (_viewmodel.Customers == null)
+                {
+                    _filteredCustomers = new List<Customer>();
+                    RefreshGrid();
+                    return;
+                }
+
                 string searchText = txtSearch.Text.Trim();
                 bool showInactive = chkShowInactive.Checked;
                 string searchBy = cboSearchBy.SelectedItem?.ToString() ?? "All Fields";
 
+                // Apply filters based on search criteria
                 if (string.IsNullOrEmpty(searchText) && !showInactive)
                 {
                     // Show all active customers
@@ -309,30 +604,26 @@ namespace FantasticStock.Views.Sales
                 }
                 else
                 {
-                    // Search by text and status
+                    // Search with multiple criteria
                     _filteredCustomers = _viewmodel.Customers.Where(c =>
                         (showInactive || c.IsActive) &&
                         (
                             searchBy == "All Fields" ? (
-                                (c.CustomerName != null && c.CustomerName.Contains(searchText)) ||
-                                (c.Phone != null && c.Phone.Contains(searchText)) ||
-                                (c.Email != null && c.Email.Contains(searchText)) ||
-                                (c.Address != null && c.Address.Contains(searchText))
+                                (c.CustomerName != null && c.CustomerName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                                (c.Phone != null && c.Phone.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                                (c.Email != null && c.Email.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                                (c.Address != null && c.Address.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
                             ) :
-                            searchBy == "Customer Name" ? (c.CustomerName != null && c.CustomerName.Contains(searchText)) :
-                            searchBy == "Phone" ? (c.Phone != null && c.Phone.Contains(searchText)) :
-                            searchBy == "Email" ? (c.Email != null && c.Email.Contains(searchText)) :
-                            searchBy == "Address" ? (c.Address != null && c.Address.Contains(searchText)) :
+                            searchBy == "Customer Name" ? (c.CustomerName != null && c.CustomerName.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) :
+                            searchBy == "Phone" ? (c.Phone != null && c.Phone.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) :
+                            searchBy == "Email" ? (c.Email != null && c.Email.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) :
+                            searchBy == "Address" ? (c.Address != null && c.Address.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0) :
                             false
                         )
                     ).ToList();
                 }
 
-                // Update DataGridView
                 RefreshGrid();
-
-                // Update status
-                lblResults.Text = $"{_filteredCustomers.Count} customer(s) found";
             }
             catch (Exception ex)
             {
@@ -351,14 +642,13 @@ namespace FantasticStock.Views.Sales
 
         private void CreateNewCustomer()
         {
-            // Clear details and enter edit mode
+            // Create a new customer instance
             _selectedCustomer = new Customer
             {
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
                 IsActive = true,
                 LoyaltyPoints = 0
-                // CustomerTypeID property might not exist in the simple model
             };
 
             ClearCustomerDetails();
@@ -380,48 +670,144 @@ namespace FantasticStock.Views.Sales
         {
             try
             {
+                // Validate all child controls
                 if (!ValidateChildren())
                     return;
 
+                // Validate customer-specific data
                 if (!ValidateCustomerData())
                     return;
 
-                // Create or update customer object
-                if (_selectedCustomer.CustomerID == 0) // New customer
+                // Update customer from form fields
+                UpdateCustomerFromFields(_selectedCustomer);
+
+                try
                 {
-                    UpdateCustomerFromFields(_selectedCustomer);
-
-                    // Add to repository
-                    var addedCustomer = _viewmodel.AddCustomer(_selectedCustomer);
-                    _selectedCustomer = addedCustomer; // Update to get the assigned ID
-
-                    // Add to grid if we're showing the right filter
-                    if (_selectedCustomer.IsActive || chkShowInactive.Checked)
+                    // Handle new vs. existing customer
+                    if (_selectedCustomer.CustomerID == 0) // New customer
                     {
-                        _filteredCustomers.Add(_selectedCustomer);
+                        var addedCustomer = _viewmodel.AddCustomer(_selectedCustomer);
+                        if (addedCustomer == null)
+                        {
+                            MessageBox.Show("Failed to add the customer to the database.", "Add Customer Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        _selectedCustomer = addedCustomer; // Update with DB-assigned ID
+
+                        // Add to filtered list if it should be visible
+                        if (_selectedCustomer.IsActive || chkShowInactive.Checked)
+                        {
+                            _filteredCustomers.Add(_selectedCustomer);
+                        }
+                    }
+                    else // Existing customer
+                    {
+                        bool success = _viewmodel.UpdateCustomer(_selectedCustomer);
+                        if (!success)
+                        {
+                            MessageBox.Show("Failed to update the customer in the database.", "Update Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        // Update the filtered list with the updated customer
+                        var existingCustomer = _filteredCustomers.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        if (existingCustomer != null)
+                        {
+                            existingCustomer.CustomerName = _selectedCustomer.CustomerName;
+                            existingCustomer.Phone = _selectedCustomer.Phone;
+                            existingCustomer.Email = _selectedCustomer.Email;
+                            existingCustomer.Address = _selectedCustomer.Address;
+                            existingCustomer.LoyaltyPoints = _selectedCustomer.LoyaltyPoints;
+                            existingCustomer.IsActive = _selectedCustomer.IsActive;
+                            existingCustomer.ModifiedDate = _selectedCustomer.ModifiedDate;
+                        }
                     }
                 }
-                else // Existing customer
+                catch (NotImplementedException)
                 {
-                    UpdateCustomerFromFields(_selectedCustomer);
+                    // Handle the case where the repository methods are not implemented
+                    // Create a fallback implementation for demo/testing purposes
 
-                    // Update in repository
-                    bool success = _viewmodel.UpdateCustomer(_selectedCustomer);
-                    if (!success)
+                    if (_selectedCustomer.CustomerID == 0) // New customer
                     {
-                        MessageBox.Show("Failed to update the customer in the database.", "Update Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        // Assign a new ID (this would normally be done by the database)
+                        int maxId = _viewmodel.Customers?.Any() == true ?
+                            _viewmodel.Customers.Max(c => c.CustomerID) : 0;
+                        _selectedCustomer.CustomerID = maxId + 1;
+
+                        // Add to the collection
+                        if (_viewmodel.Customers == null)
+                        {
+                            try
+                            {
+                                // Try to create a new list using reflection
+                                var prop = _viewmodel.GetType().GetProperty("Customers");
+                                if (prop != null && prop.CanWrite)
+                                {
+                                    prop.SetValue(_viewmodel, new List<Customer>());
+                                }
+                            }
+                            catch
+                            {
+                                // If we can't set it, create a local list for now
+                                _filteredCustomers = new List<Customer>();
+                                _filteredCustomers.Add(_selectedCustomer);
+                                RefreshGrid();
+                                MessageBox.Show("Added customer to local cache only. Repository not available.",
+                                    "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
+
+                        // Add to the ViewModel's collection if available
+                        if (_viewmodel.Customers is List<Customer> customersList)
+                        {
+                            customersList.Add(_selectedCustomer);
+                        }
+                        else if (_viewmodel.Customers is ICollection<Customer> customersCollection)
+                        {
+                            customersCollection.Add(_selectedCustomer);
+                        }
+
+                        // Add to filtered list if it should be visible
+                        if (_selectedCustomer.IsActive || chkShowInactive.Checked)
+                        {
+                            _filteredCustomers.Add(_selectedCustomer);
+                        }
                     }
+                    else
+                    {
+                        // For editing existing customers, the changes are already in the _selectedCustomer
+                        // which is a reference to the object in the collection, so no need to update the collection
+
+                        // Update the filtered list with the updated customer
+                        var existingCustomer = _filteredCustomers.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        if (existingCustomer != null)
+                        {
+                            existingCustomer.CustomerName = _selectedCustomer.CustomerName;
+                            existingCustomer.Phone = _selectedCustomer.Phone;
+                            existingCustomer.Email = _selectedCustomer.Email;
+                            existingCustomer.Address = _selectedCustomer.Address;
+                            existingCustomer.LoyaltyPoints = _selectedCustomer.LoyaltyPoints;
+                            existingCustomer.IsActive = _selectedCustomer.IsActive;
+                            existingCustomer.ModifiedDate = _selectedCustomer.ModifiedDate;
+                        }
+                    }
+
+                    MessageBox.Show("Repository methods not implemented. Using local data only.",
+                        "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 // Exit edit mode
                 SetDetailsEditMode(false);
 
-                // Refresh grid to show changes and sort
+                // Refresh grid to show changes
                 RefreshGrid();
 
-                // Select the current customer in the grid
+                // Select the customer in the grid
                 SelectCustomerInGrid(_selectedCustomer.CustomerID);
 
                 MessageBox.Show("Customer saved successfully.", "Save Successful",
@@ -434,9 +820,9 @@ namespace FantasticStock.Views.Sales
             }
         }
 
+
         private void UpdateCustomerFromFields(Customer customer)
         {
-            // Map only the fields that exist in the simple Customer model
             customer.CustomerName = txtCustomerName.Text.Trim();
             customer.Phone = txtPhone.Text.Trim();
             customer.Email = txtEmail.Text.Trim();
@@ -444,18 +830,10 @@ namespace FantasticStock.Views.Sales
             customer.LoyaltyPoints = (int)numLoyaltyPoints.Value;
             customer.ModifiedDate = DateTime.Now;
 
-            // Handle loyalty program and VIP status via checkbox states
-            // Since we can't access CustomerTypeID directly, we'll use the loyalty points
-            // to indicate marketing preferences and VIP status
+            // Ensure VIP customers have sufficient points
             if (chkVIP.Checked)
             {
-                // Ensure VIP customers have at least 200 loyalty points 
                 customer.LoyaltyPoints = Math.Max(customer.LoyaltyPoints, 200);
-            }
-            else if (!chkOptInMarketing.Checked && customer.LoyaltyPoints > 0)
-            {
-                // If they opted out of marketing but had loyalty points,
-                // keep their points but mark them as not interested in marketing
             }
         }
 
@@ -467,32 +845,44 @@ namespace FantasticStock.Views.Sales
             try
             {
                 if (MessageBox.Show("Are you sure you want to deactivate this customer?",
-                                  "Confirm Deactivation",
-                                  MessageBoxButtons.YesNo,
-                                  MessageBoxIcon.Question) == DialogResult.Yes)
+                                "Confirm Deactivation",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    // Deactivate in repository
-                    bool success = _viewmodel.DeactivateCustomer(_selectedCustomer.CustomerID);
-
-                    if (!success)
+                    try
                     {
-                        MessageBox.Show("Failed to deactivate the customer.", "Deactivation Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        // Try to use the repository method
+                        bool success = _viewmodel.DeactivateCustomer(_selectedCustomer.CustomerID);
+                        if (!success)
+                        {
+                            MessageBox.Show("Failed to deactivate the customer.", "Deactivation Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                    catch (NotImplementedException)
+                    {
+                        // If the repository method is not implemented, update locally
+                        _selectedCustomer.IsActive = false;
+
+                        // Attempt to update the customer in the main collection if possible
+                        var mainListCustomer = _viewmodel.Customers?.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        if (mainListCustomer != null)
+                        {
+                            mainListCustomer.IsActive = false;
+                        }
+
+                        MessageBox.Show("Repository method not implemented. Customer deactivated in local data only.",
+                            "Limited Functionality", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
-                    // Remove from filtered list if it doesn't show inactive
+                    // Remove from filtered list if not showing inactive
                     if (!chkShowInactive.Checked)
                     {
                         _filteredCustomers.Remove(_selectedCustomer);
-                        RefreshGrid();
                     }
-                    else
-                    {
-                        // Just update the customer status in the grid
-                        _selectedCustomer.IsActive = false;
-                        RefreshGrid();
-                    }
+
+                    RefreshGrid();
 
                     // Clear selection
                     _selectedCustomer = null;
@@ -515,16 +905,39 @@ namespace FantasticStock.Views.Sales
         {
             try
             {
-                if (_selectedCustomer?.CustomerID == 0) // New customer
+                try
                 {
-                    _selectedCustomer = null;
-                    ClearCustomerDetails();
+                    if (_selectedCustomer?.CustomerID == 0) // New unsaved customer
+                    {
+                        _selectedCustomer = null;
+                        ClearCustomerDetails();
+                    }
+                    else if (_selectedCustomer != null) // Existing customer - reload
+                    {
+                        Customer refreshedCustomer = null;
+
+                        try
+                        {
+                            refreshedCustomer = _viewmodel.GetCustomer(_selectedCustomer.CustomerID);
+                        }
+                        catch (NotImplementedException)
+                        {
+                            // If GetCustomer is not implemented, just use the customer from the filtered list
+                            refreshedCustomer = _filteredCustomers.FirstOrDefault(c => c.CustomerID == _selectedCustomer.CustomerID);
+                        }
+
+                        if (refreshedCustomer != null)
+                        {
+                            _selectedCustomer = refreshedCustomer;
+                        }
+
+                        DisplayCustomerDetails(_selectedCustomer);
+                    }
                 }
-                else if (_selectedCustomer != null) // Existing customer
+                catch (Exception ex)
                 {
-                    // Reload customer details from repository to discard changes
-                    _selectedCustomer = _viewmodel.GetCustomer(_selectedCustomer.CustomerID);
-                    DisplayCustomerDetails(_selectedCustomer);
+                    System.Diagnostics.Debug.WriteLine($"Error refreshing customer data: {ex.Message}");
+                    // Even if refresh fails, still exit edit mode
                 }
 
                 SetDetailsEditMode(false);
@@ -538,44 +951,44 @@ namespace FantasticStock.Views.Sales
 
         private bool ValidateCustomerData()
         {
-            // Basic validation
+            // Customer name is required
             if (string.IsNullOrWhiteSpace(txtCustomerName.Text))
             {
                 MessageBox.Show("Customer name is required.", "Validation Error",
-                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtCustomerName.Focus();
                 return false;
             }
 
-            // Check if phone or email is provided
+            // Either phone or email is required
             if (string.IsNullOrWhiteSpace(txtPhone.Text) && string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                MessageBox.Show("At least one contact method (phone or email) must be provided.", "Validation Error",
-                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("At least one contact method (phone or email) must be provided.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtPhone.Focus();
                 return false;
             }
 
-            // Validate email format if provided
+            // Email format validation
             if (!string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 if (!txtEmail.Text.Contains("@") || !txtEmail.Text.Contains("."))
                 {
                     MessageBox.Show("Please enter a valid email address.", "Validation Error",
-                                   MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtEmail.Focus();
                     return false;
                 }
             }
 
-            // Validate phone format if provided
+            // Phone number validation
             if (!string.IsNullOrWhiteSpace(txtPhone.Text))
             {
                 string digitsOnly = new string(txtPhone.Text.Where(c => char.IsDigit(c)).ToArray());
                 if (digitsOnly.Length < 10)
                 {
                     MessageBox.Show("Phone number must have at least 10 digits.", "Validation Error",
-                                   MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtPhone.Focus();
                     return false;
                 }
@@ -586,98 +999,60 @@ namespace FantasticStock.Views.Sales
         #endregion
 
         #region Helper Methods
-        private void RefreshGrid()
-        {
-            // Temporarily disable data binding to avoid flickering
-            dgvCustomers.SuspendLayout();
-
-            // Update DataGridView
-            dgvCustomers.DataSource = null;
-            dgvCustomers.DataSource = _filteredCustomers;
-
-            // Restore layout updates
-            dgvCustomers.ResumeLayout();
-
-            // Update the results count
-            lblResults.Text = $"{_filteredCustomers.Count} customer(s) found";
-        }
-
         private void SelectCustomerInGrid(int customerId)
-        {
-            // Find and select the customer in the grid
-            foreach (DataGridViewRow row in dgvCustomers.Rows)
-            {
-                var customer = row.DataBoundItem as Customer;
-                if (customer != null && customer.CustomerID == customerId)
-                {
-                    row.Selected = true;
-                    dgvCustomers.FirstDisplayedScrollingRowIndex = row.Index;
-                    return;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Adjust loyalty points for a customer
-        /// </summary>
-        /// <param name="customerId">The ID of the customer</param>
-        /// <param name="points">Points to add (positive) or deduct (negative)</param>
-        public void AdjustLoyaltyPoints(int customerId, int points)
         {
             try
             {
-                var customer = _viewmodel.GetCustomer(customerId);
-                if (customer != null)
+                foreach (DataGridViewRow row in dgvCustomers.Rows)
                 {
-                    // Make sure we don't go below zero points
-                    if (customer.LoyaltyPoints + points < 0)
+                    var customer = row.DataBoundItem as Customer;
+                    if (customer != null && customer.CustomerID == customerId)
                     {
-                        points = -customer.LoyaltyPoints;
+                        dgvCustomers.ClearSelection();
+                        row.Selected = true;
+                        dgvCustomers.FirstDisplayedScrollingRowIndex = row.Index;
+                        return;
                     }
-
-                    customer.LoyaltyPoints += points;
-                    customer.ModifiedDate = DateTime.Now;
-                    _viewmodel.UpdateCustomer(customer);
-
-                    // Update UI if this is the selected customer
-                    if (_selectedCustomer != null && _selectedCustomer.CustomerID == customerId)
-                    {
-                        _selectedCustomer = customer;
-                        numLoyaltyPoints.Value = customer.LoyaltyPoints;
-                        txtModifiedDate.Text = customer.ModifiedDate.ToString("yyyy-MM-dd HH:mm");
-
-                        // Update UI to reflect VIP status based on points
-                        chkVIP.Checked = customer.LoyaltyPoints >= 200;
-                        chkOptInMarketing.Checked = customer.LoyaltyPoints > 0;
-
-                        // Update grid if the customer is in the current view
-                        RefreshGrid();
-                    }
-
-                    MessageBox.Show($"Loyalty points {(points >= 0 ? "added" : "deducted")} successfully. " +
-                                  $"New balance: {customer.LoyaltyPoints} points.",
-                                  "Points Adjusted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show($"Customer with ID {customerId} not found.", "Customer Not Found",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error adjusting loyalty points: {ex.Message}", "Points Update Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Diagnostics.Debug.WriteLine($"Error selecting customer in grid: {ex.Message}");
             }
         }
 
-        /// <summary>
-        /// Export customers to CSV file
-        /// </summary>
+        public void ResetViewModel()
+        {
+            try
+            {
+                // Create a fresh instance of view model
+                _viewmodel = new CustomerManagementViewModel();
+
+                // Reload data
+                InitializeData();
+                InitializeDefaultState();
+
+                MessageBox.Show("Customer data has been reset successfully.",
+                    "Reset Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to reset view model: {ex.Message}",
+                    "Reset Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public void ExportCustomers()
         {
             try
             {
+                if (_filteredCustomers == null || _filteredCustomers.Count == 0)
+                {
+                    MessageBox.Show("There are no customers to export.", "Export",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 using (SaveFileDialog saveDialog = new SaveFileDialog())
                 {
                     saveDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
@@ -689,7 +1064,7 @@ namespace FantasticStock.Views.Sales
                     {
                         StringBuilder csv = new StringBuilder();
 
-                        // Add CSV header with only fields that are actually in our Customer model
+                        // Add CSV header with fields from our Customer model
                         csv.AppendLine("Customer ID,Customer Name,Phone,Email,Address,Loyalty Points,Is Active,Created Date,Modified Date");
 
                         // Add data rows for filtered customers
@@ -718,16 +1093,6 @@ namespace FantasticStock.Views.Sales
             }
         }
 
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            ExportCustomers();
-        }
-
-        private void btnImport_Click(object sender, EventArgs e)
-        {
-            ImportCustomers();
-        }
-
         private string EscapeCsvField(string field)
         {
             if (string.IsNullOrEmpty(field))
@@ -737,9 +1102,6 @@ namespace FantasticStock.Views.Sales
             return field.Replace("\"", "\"\"");
         }
 
-        /// <summary>
-        /// Import customers from CSV file
-        /// </summary>
         public void ImportCustomers()
         {
             try
@@ -753,7 +1115,7 @@ namespace FantasticStock.Views.Sales
                     {
                         List<Customer> importedCustomers = new List<Customer>();
                         int importCount = 0;
-                        int lineNumber = 0;
+                        int errorCount = 0;
 
                         // Read the CSV file
                         string[] lines = System.IO.File.ReadAllLines(openDialog.FileName);
@@ -768,53 +1130,88 @@ namespace FantasticStock.Views.Sales
                         // Skip header row
                         for (int i = 1; i < lines.Length; i++)
                         {
-                            lineNumber = i + 1; // For error reporting (1-based)
                             string line = lines[i];
-
                             if (string.IsNullOrWhiteSpace(line))
                                 continue;
 
-                            // Parse the CSV line manually to handle quoted fields correctly
-                            string[] fields = ParseCsvLine(line);
-
-                            if (fields.Length < 5) // Minimum required fields: Name, Phone, Email, Address, Active
+                            try
                             {
-                                MessageBox.Show($"Line {lineNumber} does not have enough fields. Skipping.",
-                                    "Import Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                continue;
-                            }
+                                // Parse CSV line with support for quoted fields
+                                string[] fields = ParseCsvLine(line);
 
-                            // Create new customer with basic required fields
-                            Customer customer = new Customer
-                            {
-                                CustomerName = fields[0],
-                                Phone = fields[1],
-                                Email = fields[2],
-                                Address = fields[3],
-                                IsActive = fields.Length >= 5 && fields[4].Trim().ToLower() == "yes",
-                                LoyaltyPoints = fields.Length >= 6 && int.TryParse(fields[5], out int points) ? points : 0,
-                                CreatedDate = DateTime.Now,
-                                ModifiedDate = DateTime.Now
-                            };
+                                if (fields.Length < 4) // Minimum required: Name, Phone, Email, Address
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"Line {i + 1} does not have enough fields. Skipping.");
+                                    errorCount++;
+                                    continue;
+                                }
 
-                            if (!string.IsNullOrWhiteSpace(customer.CustomerName))
-                            {
+                                // Create new customer - don't set ID as it's likely auto-assigned
+                                Customer customer = new Customer
+                                {
+                                    CustomerName = fields[0].Trim(),
+                                    Phone = fields.Length > 1 ? fields[1].Trim() : string.Empty,
+                                    Email = fields.Length > 2 ? fields[2].Trim() : string.Empty,
+                                    Address = fields.Length > 3 ? fields[3].Trim() : string.Empty,
+                                    IsActive = fields.Length > 4 ? fields[4].Trim().Equals("yes", StringComparison.OrdinalIgnoreCase) : true,
+                                    LoyaltyPoints = fields.Length > 5 && int.TryParse(fields[5], out int points) ? points : 0,
+                                    CreatedDate = DateTime.Now,
+                                    ModifiedDate = DateTime.Now
+                                };
+
+                                // Basic validation
+                                if (string.IsNullOrWhiteSpace(customer.CustomerName))
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"Line {i + 1}: Customer name is required. Skipping.");
+                                    errorCount++;
+                                    continue;
+                                }
+
+                                if (string.IsNullOrWhiteSpace(customer.Phone) && string.IsNullOrWhiteSpace(customer.Email))
+                                {
+                                    System.Diagnostics.Debug.WriteLine($"Line {i + 1}: Either phone or email is required. Skipping.");
+                                    errorCount++;
+                                    continue;
+                                }
+
                                 importedCustomers.Add(customer);
                                 importCount++;
                             }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Error processing line {i + 1}: {ex.Message}");
+                                errorCount++;
+                            }
                         }
 
-                        // Save imported customers to repository
+                        // Add imported customers to repository
+                        int addedCount = 0;
                         foreach (var customer in importedCustomers)
                         {
-                            _viewmodel.AddCustomer(customer);
+                            try
+                            {
+                                var result = _viewmodel.AddCustomer(customer);
+                                if (result != null)
+                                    addedCount++;
+                                else
+                                    errorCount++;
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine($"Error adding customer {customer.CustomerName}: {ex.Message}");
+                                errorCount++;
+                            }
                         }
 
                         // Refresh the grid
                         SearchCustomers();
 
-                        MessageBox.Show($"Successfully imported {importCount} customers.",
-                            "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string message = $"Successfully imported {addedCount} customers.";
+                        if (errorCount > 0)
+                            message += $"\n{errorCount} records had errors and were skipped.";
+
+                        MessageBox.Show(message, "Import Complete",
+                            MessageBoxButtons.OK, errorCount > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
                     }
                 }
             }
@@ -846,9 +1243,88 @@ namespace FantasticStock.Views.Sales
 
             // Add the last field
             result.Add(line.Substring(startIndex).Trim().Trim('"'));
-
             return result.ToArray();
         }
+
+        /// <summary>
+        /// Adjust loyalty points for a customer
+        /// </summary>
+        public void AdjustLoyaltyPoints(int customerId, int points)
+        {
+            try
+            {
+                // Get customer from repository
+                var customer = _viewmodel.GetCustomer(customerId);
+                if (customer == null)
+                {
+                    MessageBox.Show($"Customer with ID {customerId} not found.",
+                        "Customer Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Make sure points don't go negative
+                if (customer.LoyaltyPoints + points < 0)
+                {
+                    points = -customer.LoyaltyPoints;
+                }
+
+                // Update points
+                customer.LoyaltyPoints += points;
+                customer.ModifiedDate = DateTime.Now;
+
+                // Save to repository
+                bool success = _viewmodel.UpdateCustomer(customer);
+                if (!success)
+                {
+                    MessageBox.Show("Failed to update loyalty points in the database.",
+                        "Points Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Update UI if this is the currently selected customer
+                if (_selectedCustomer != null && _selectedCustomer.CustomerID == customerId)
+                {
+                    _selectedCustomer = customer;
+                    numLoyaltyPoints.Value = Math.Min(numLoyaltyPoints.Maximum,
+                        Math.Max(numLoyaltyPoints.Minimum, customer.LoyaltyPoints));
+                    txtModifiedDate.Text = customer.ModifiedDate.ToString("yyyy-MM-dd HH:mm");
+
+                    // Update checkboxes to reflect loyalty status
+                    chkVIP.Checked = customer.LoyaltyPoints >= 200;
+                    chkOptInMarketing.Checked = customer.LoyaltyPoints > 0;
+                }
+
+                // Update grid if the customer is in the current view
+                var gridCustomer = _filteredCustomers.FirstOrDefault(c => c.CustomerID == customerId);
+                if (gridCustomer != null)
+                {
+                    gridCustomer.LoyaltyPoints = customer.LoyaltyPoints;
+                    gridCustomer.ModifiedDate = customer.ModifiedDate;
+                    RefreshGrid();
+                }
+
+                MessageBox.Show($"Loyalty points {(points >= 0 ? "added" : "deducted")} successfully. " +
+                    $"New balance: {customer.LoyaltyPoints} points.",
+                    "Points Adjusted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error adjusting loyalty points: {ex.Message}",
+                    "Points Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         #endregion
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            // Call the existing ExportCustomers method
+            ExportCustomers();
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            // Call the existing ImportCustomers method
+            ImportCustomers();
+        }
     }
 }
