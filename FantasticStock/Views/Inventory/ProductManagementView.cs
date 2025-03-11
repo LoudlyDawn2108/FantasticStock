@@ -133,7 +133,7 @@ namespace FantasticStock.Views.Inventory
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
             ClearDetails();
-            //EnableDetailsEditing(true);
+            Khoa_Chinh_Sua(true);
         }
 
         private void btnBulkImport_Click(object sender, EventArgs e)
@@ -238,15 +238,15 @@ namespace FantasticStock.Views.Inventory
                 decimal CostP = Convert.ToDecimal(txtCostPrice.Text);
                 decimal Markup = ((SaleP - CostP) / CostP) * 100;
                 txtMarkup.Text = Markup.ToString();
-                //EnableDetailsEditing(false);
-                
+                Khoa_Chinh_Sua(false);
+
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             ClearDetails();
-            EnableDetailsEditing(false);
+            Khoa_Chinh_Sua(false);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -343,7 +343,7 @@ namespace FantasticStock.Views.Inventory
             pictureBoxProductImage.Image = null;
         }
 
-        private void EnableDetailsEditing(bool enable)
+        private void Khoa_Chinh_Sua(bool enable)
         {
             txtProductName.ReadOnly = !enable;
             txtSKU.ReadOnly = !enable;
@@ -419,55 +419,84 @@ namespace FantasticStock.Views.Inventory
         }
         private void Load_comboboxCategory()
         {
-            using(conn = new SqlConnection(chuoiketnoi))
+            try
             {
-                conn.Open();
-                string query = "select CategoryID, CategoryName from Category";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adp.Fill(dt);
-                cmbCategory.DataSource = dt;
-                cmbCategory.DisplayMember = "CategoryName";
-                cmbCategory.ValueMember = "CategoryID";
+                using (conn = new SqlConnection(chuoiketnoi))
+                {
+                    conn.Open();
+                    string query = "select CategoryID, CategoryName from Category";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adp.Fill(dt);
+                    cmbCategory.DataSource = dt;
+                    cmbCategory.DisplayMember = "CategoryName";
+                    cmbCategory.ValueMember = "CategoryID";
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Không kết nối được database");
+
             }
         }
         private void Load_cmbSupplier()
         {
-            using(conn = new SqlConnection(chuoiketnoi))
+
+            try
             {
-                conn.Open();
-                string query = "select SupplierID, ContactName from Supplier";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adp.Fill(dt);
-                cmbSupplier.DataSource = dt;
-                cmbSupplier.DisplayMember = "ContactName";
-                cmbSupplier.ValueMember = "SupplierID";
+                using (conn = new SqlConnection(chuoiketnoi))
+                {
+                    conn.Open();
+                    string query = "select SupplierID, ContactName from Supplier";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adp.Fill(dt);
+                    cmbSupplier.DataSource = dt;
+                    cmbSupplier.DisplayMember = "ContactName";
+                    cmbSupplier.ValueMember = "SupplierID";
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Không kết nối được database");
             }
         }
         private void Load_dvgProducts()
         {
-            using(conn = new SqlConnection(chuoiketnoi))
+            try
             {
-                conn.Open();
-                string query = "select * from Product p join Category c on p.CategoryID = c.CategoryID join Supplier s on p.SupplierID = s.SupplierID";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                SqlDataAdapter adp = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adp.Fill(dt);
-                //dgvProducts.DataSource = dt;
-                dgvProducts.Columns["dgvProductID"].DataPropertyName = "ProductID";
-                dgvProducts.Columns["dgvName"].DataPropertyName = "ProductName";
-                dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryID";
-                dgvProducts.Columns["dgvSupp"].DataPropertyName = "SupplierID";
-                dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
-                dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
-                dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
-                dgvProducts.DataSource = dt;
+                using (conn = new SqlConnection(chuoiketnoi))
+                {
+                    conn.Open();
+                    string query = "select * from Product p join Category c on p.CategoryID = c.CategoryID join Supplier s on p.SupplierID = s.SupplierID";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    adp.Fill(dt);
+                    //dgvProducts.DataSource = dt;
+                    dgvProducts.Columns["dgvProductID"].DataPropertyName = "ProductID";
+                    dgvProducts.Columns["dgvName"].DataPropertyName = "ProductName";
+                    dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryID";
+                    dgvProducts.Columns["dgvSupp"].DataPropertyName = "SupplierID";
+                    dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
+                    dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
+                    dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
+                    dgvProducts.DataSource = dt;
+                    DataGridViewButtonColumn actionsColumn = dgvProducts.Columns["Actions"] as DataGridViewButtonColumn;
+                    if (actionsColumn != null)
+                    {
+                        actionsColumn.UseColumnTextForButtonValue = true;
+                        actionsColumn.Text = "✏️";
+                    }
 
+                }
             }
+            catch
+            {
+                MessageBox.Show("Không kết nối được database");
+            }
+            
         }
         private byte[] ImageToByteArray(Image imageIn)
         {
@@ -495,7 +524,9 @@ namespace FantasticStock.Views.Inventory
                 cmd.Parameters.AddWithValue("@SellingPrice", txtSalePrice.Text);
                 cmd.Parameters.AddWithValue("@StockQuantity", txtQuantityInStock.Text);            
                 cmd.Parameters.AddWithValue("@ReorderLevel", txtReorderLevel.Text);
-                cmd.Parameters.AddWithValue("@ProductImage", ImageToByteArray(pictureBoxProductImage.Image));
+                if (pictureBoxProductImage.Image == null) 
+                    cmd.Parameters.Add("@ProductImage", SqlDbType.VarBinary).Value = DBNull.Value;
+                else cmd.Parameters.AddWithValue("@ProductImage", ImageToByteArray(pictureBoxProductImage.Image));
                 cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@CreatedBy", 1);
                 cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);

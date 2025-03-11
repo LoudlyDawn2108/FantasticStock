@@ -106,6 +106,7 @@ namespace FantasticStock.Views.Inventory
             this.dgvPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvQtt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dgvRL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Actions = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -290,6 +291,7 @@ namespace FantasticStock.Views.Inventory
             // 
             // panelProductsContainer
             // 
+            this.panelProductsContainer.AutoScroll = true;
             this.panelProductsContainer.Controls.Add(this.dgvProducts);
             this.panelProductsContainer.Controls.Add(this.panel1);
             this.panelProductsContainer.Controls.Add(this.paginationPanel);
@@ -313,7 +315,8 @@ namespace FantasticStock.Views.Inventory
             this.dgvSupp,
             this.dgvPrice,
             this.dgvQtt,
-            this.dgvRL});
+            this.dgvRL,
+            this.Actions});
             this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProducts.Location = new System.Drawing.Point(15, 57);
             this.dgvProducts.Name = "dgvProducts";
@@ -739,6 +742,13 @@ namespace FantasticStock.Views.Inventory
             this.dgvRL.Name = "dgvRL";
             this.dgvRL.ReadOnly = true;
             // 
+            // Actions
+            // 
+            this.Actions.HeaderText = "Actions";
+            this.Actions.Name = "Actions";
+            this.Actions.ReadOnly = true;
+            this.Actions.Text = "✏️";
+            // 
             // ProductManagementView
             // 
             this.Controls.Add(this.flowLayoutPanel1);
@@ -866,5 +876,6 @@ namespace FantasticStock.Views.Inventory
         private DataGridViewTextBoxColumn dgvPrice;
         private DataGridViewTextBoxColumn dgvQtt;
         private DataGridViewTextBoxColumn dgvRL;
+        private DataGridViewButtonColumn Actions;
     }
 }
