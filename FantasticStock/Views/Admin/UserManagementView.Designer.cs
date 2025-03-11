@@ -353,6 +353,9 @@
             // 
             // txtPhone
             // 
+            this.txtPhone.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPhone.Location = new System.Drawing.Point(120, 110);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(294, 20);
@@ -360,6 +363,9 @@
             // 
             // txtEmail
             // 
+            this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmail.Location = new System.Drawing.Point(120, 80);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(294, 20);
@@ -367,6 +373,9 @@
             // 
             // txtDisplayName
             // 
+            this.txtDisplayName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(120, 50);
             this.txtDisplayName.Name = "txtDisplayName";
             this.txtDisplayName.Size = new System.Drawing.Size(294, 20);
@@ -374,6 +383,9 @@
             // 
             // txtUsername
             // 
+            this.txtUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.Location = new System.Drawing.Point(120, 20);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(294, 20);
@@ -417,6 +429,7 @@
             // 
             // tabPageSecurity
             // 
+            this.tabPageSecurity.Controls.Add(this.chkTwoFactorEnabled);
             this.tabPageSecurity.Controls.Add(this.lblPasswordStrength);
             this.tabPageSecurity.Controls.Add(this.progressBarPasswordStrength);
             this.tabPageSecurity.Controls.Add(this.txtConfirmPassword);
@@ -655,7 +668,6 @@
             // 
             // panelDetailActions
             // 
-            this.panelDetailActions.Controls.Add(this.chkTwoFactorEnabled);
             this.panelDetailActions.Controls.Add(this.btnResetPassword);
             this.panelDetailActions.Controls.Add(this.btnCancel);
             this.panelDetailActions.Controls.Add(this.btnSave);
@@ -668,7 +680,7 @@
             // chkTwoFactorEnabled
             // 
             this.chkTwoFactorEnabled.AutoSize = true;
-            this.chkTwoFactorEnabled.Location = new System.Drawing.Point(15, 14);
+            this.chkTwoFactorEnabled.Location = new System.Drawing.Point(23, 176);
             this.chkTwoFactorEnabled.Name = "chkTwoFactorEnabled";
             this.chkTwoFactorEnabled.Size = new System.Drawing.Size(151, 17);
             this.chkTwoFactorEnabled.TabIndex = 3;
@@ -677,6 +689,7 @@
             // 
             // btnResetPassword
             // 
+            this.btnResetPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnResetPassword.Location = new System.Drawing.Point(199, 10);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(91, 23);
@@ -686,6 +699,7 @@
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.Location = new System.Drawing.Point(296, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(70, 23);
@@ -695,6 +709,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.Location = new System.Drawing.Point(372, 10);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(70, 23);
@@ -881,7 +896,6 @@
             this.tabPageRestrictions.ResumeLayout(false);
             this.tabPageRestrictions.PerformLayout();
             this.panelDetailActions.ResumeLayout(false);
-            this.panelDetailActions.PerformLayout();
             this.tabPageActivityLog.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvActivityLog)).EndInit();
             this.panelActivityControls.ResumeLayout(false);

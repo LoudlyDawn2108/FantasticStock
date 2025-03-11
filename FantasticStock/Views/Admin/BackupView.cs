@@ -23,47 +23,38 @@ namespace FantasticStock.Views
 
             _viewModel = new BackupViewModel();
 
-            // Initialize data bindings
             SetupBindings();
 
-            // Initialize event handlers
             SetupEventHandlers();
         }
 
         private void SetupBindings()
         {
-            // Backup panel bindings
             txtBackupLocation.DataBindings.Add("Text", _viewModel, "BackupLocation", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDescription.DataBindings.Add("Text", _viewModel, "BackupDescription", false, DataSourceUpdateMode.OnPropertyChanged);
             chkIncludeAttachments.DataBindings.Add("Checked", _viewModel, "IncludeAttachments", false, DataSourceUpdateMode.OnPropertyChanged);
             chkEncrypt.DataBindings.Add("Checked", _viewModel, "EncryptBackup", false, DataSourceUpdateMode.OnPropertyChanged);
             txtEncryptionPassword.DataBindings.Add("Text", _viewModel, "EncryptionPassword", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            // Compression level radio buttons
             rbCompressionNone.Checked = _viewModel.CompressionLevel == 0;
             rbCompressionNormal.Checked = _viewModel.CompressionLevel == 1;
             rbCompressionHigh.Checked = _viewModel.CompressionLevel == 2;
 
-            // History DataGrid binding
             dgvBackupHistory.DataSource = _viewModel.BackupHistory;
 
-            // Schedule DataGrid binding
             dgvScheduledBackups.DataSource = _viewModel.ScheduledBackups;
 
-            // Update UI based on encrypt checkbox state
             txtEncryptionPassword.Enabled = chkEncrypt.Checked;
         }
 
         private void SetupEventHandlers()
         {
-            // Backup panel events
             btnBackupNow.Click += (s, e) => _viewModel.BackupNowCommand.Execute(null);
             btnRestore.Click += (s, e) => _viewModel.RestoreBackupCommand.Execute(null);
             btnVerify.Click += (s, e) => _viewModel.VerifyBackupCommand.Execute(null);
             btnDelete.Click += (s, e) => _viewModel.DeleteBackupCommand.Execute(null);
             btnBrowseLocation.Click += (s, e) => _viewModel.BrowseLocationCommand.Execute(null);
 
-            // Selection change events
             dgvBackupHistory.SelectionChanged += (s, e) =>
             {
                 if (dgvBackupHistory.SelectedRows.Count > 0)
@@ -72,13 +63,11 @@ namespace FantasticStock.Views
                 }
             };
 
-            // Encryption password field enabled state
             chkEncrypt.CheckedChanged += (s, e) =>
             {
                 txtEncryptionPassword.Enabled = chkEncrypt.Checked;
             };
 
-            // Compression level radio buttons
             rbCompressionNone.CheckedChanged += (s, e) =>
             {
                 if (rbCompressionNone.Checked)
@@ -97,12 +86,10 @@ namespace FantasticStock.Views
                     _viewModel.CompressionLevel = 2;
             };
 
-            // Restore tab events
             btnBrowseRestoreFile.Click += (s, e) => BrowseRestoreFile();
             dateRestorePoint.ValueChanged += (s, e) => UpdateRestorePoint();
             btnRestoreExecute.Click += (s, e) => ExecuteRestore();
 
-            // Schedule dialog button
             btnSchedule.Click += (s, e) => ShowScheduleDialog();
         }
 

@@ -42,56 +42,45 @@ namespace FantasticStock.Views
         {
             try
             {
-                // Bind users grid
                 dgvUsers.DataSource = _viewModel.Users;
                 dgvUsers.DataBindings.Add("DataSource", _viewModel, "Users", true, DataSourceUpdateMode.OnPropertyChanged);
 
 
-                // Bind user detail fields
                 txtUsername.DataBindings.Add("Text", _viewModel, "SelectedUser.Username", true, DataSourceUpdateMode.OnPropertyChanged);
                 txtDisplayName.DataBindings.Add("Text", _viewModel, "SelectedUser.DisplayName", true, DataSourceUpdateMode.OnPropertyChanged);
                 txtEmail.DataBindings.Add("Text", _viewModel, "SelectedUser.Email", true, DataSourceUpdateMode.OnPropertyChanged);
                 txtPhone.DataBindings.Add("Text", _viewModel, "SelectedUser.Phone", true, DataSourceUpdateMode.OnPropertyChanged);
                 chkTwoFactorEnabled.DataBindings.Add("Checked", _viewModel, "SelectedUser.TwoFactorEnabled", true, DataSourceUpdateMode.OnPropertyChanged);
 
-                // Bind account expiry date
                 dateTimePickerExpiration.DataBindings.Add("Value", _viewModel, "SelectedUser.AccountExpiry", true, DataSourceUpdateMode.OnPropertyChanged);
                 dateTimePickerExpiration.Checked = _viewModel.SelectedUser?.AccountExpiry != null;
 
-                // Bind role dropdown
                 cmbRoles.DataSource = _viewModel.Roles;
                 cmbRoles.DisplayMember = "RoleName";
                 cmbRoles.ValueMember = "RoleID";
                 cmbRoles.DataBindings.Add("SelectedValue", _viewModel, "SelectedUser.RoleID", true, DataSourceUpdateMode.OnPropertyChanged);
 
-                // Bind search and filter controls
                 txtSearch.DataBindings.Add("Text", _viewModel, "SearchText", true, DataSourceUpdateMode.OnPropertyChanged);
 
-                // Status filter setup
-                cmbStatusFilter.Items.Add(""); // Empty option for "Any status"
+                cmbStatusFilter.Items.Add("");
                 cmbStatusFilter.Items.Add("Active");
                 cmbStatusFilter.Items.Add("Inactive");
                 cmbStatusFilter.Items.Add("Locked");
                 cmbStatusFilter.DataBindings.Add("SelectedItem", _viewModel, "StatusFilter", true, DataSourceUpdateMode.OnPropertyChanged);
 
-                // Role filter setup
                 cmbRoleFilter.DataSource = new BindingSource(_viewModel.Roles, null);
                 cmbRoleFilter.DisplayMember = "RoleName";
                 cmbRoleFilter.ValueMember = "RoleID";
                 cmbRoleFilter.DataBindings.Add("SelectedValue", _viewModel, "RoleFilter", true, DataSourceUpdateMode.OnPropertyChanged);
 
-                // Insert a blank item at the beginning of the role filter
                 ((BindingSource)cmbRoleFilter.DataSource).Insert(0, new Role { RoleID = 0, RoleName = "All Roles" });
 
-                // Bind activity log grid
                 dgvActivityLog.DataSource = _viewModel.ActivityLogs;
 
-                // Activity log filters
                 dtpStartDate.DataBindings.Add("Value", _viewModel, "ActivityStartDate", true, DataSourceUpdateMode.OnPropertyChanged);
                 dtpEndDate.DataBindings.Add("Value", _viewModel, "ActivityEndDate", true, DataSourceUpdateMode.OnPropertyChanged);
                 cmbActionType.DataBindings.Add("SelectedItem", _viewModel, "ActivityTypeFilter", true, DataSourceUpdateMode.OnPropertyChanged);
 
-                // Bind commands to buttons
                 btnAddUser.Click += (s, e) => _viewModel.AddUserCommand.Execute(null);
                 btnEdit.Click += (s, e) => _viewModel.EditUserCommand.Execute(null);
                 btnDeactivate.Click += (s, e) => _viewModel.DeactivateUserCommand.Execute(null);
@@ -102,11 +91,9 @@ namespace FantasticStock.Views
                 btnExport.Click += (s, e) => _viewModel.ExportActivityCommand.Execute(null);
                 btnFilter.Click += (s, e) => _viewModel.FilterActivityCommand.Execute(null);
 
-                // Set up selection change events
                 dgvUsers.SelectionChanged += DgvUsers_SelectionChanged;
                 txtPassword.TextChanged += TxtPassword_TextChanged;
 
-                // Update UI based on edit mode
                 UpdateUIEditState(_viewModel.IsEditMode);
                 btnEdit.Enabled = true;
                 _viewModel.PropertyChanged += ViewModel_PropertyChanged;
@@ -122,7 +109,6 @@ namespace FantasticStock.Views
             dgvUsers.AutoGenerateColumns = false;
             dgvUsers.Columns.Clear();
 
-            // Add columns
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "UserID",
@@ -179,7 +165,6 @@ namespace FantasticStock.Views
             dgvActivityLog.AutoGenerateColumns = false;
             dgvActivityLog.Columns.Clear();
 
-            // Add columns
             dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "Timestamp",
@@ -239,7 +224,6 @@ namespace FantasticStock.Views
         {
             treeViewPermissions.Nodes.Clear();
 
-            // Group permissions by category/module
             var permissionGroups = _viewModel.Permissions
                 .GroupBy(p => p.Category ?? "General")
                 .OrderBy(g => g.Key);
@@ -263,7 +247,6 @@ namespace FantasticStock.Views
                 treeViewPermissions.Nodes.Add(categoryNode);
             }
 
-            // Expand all nodes for better visibility
             treeViewPermissions.ExpandAll();
         }
 
@@ -278,14 +261,11 @@ namespace FantasticStock.Views
 
         private void TxtPassword_TextChanged(object sender, EventArgs e)
         {
-            // Calculate password strength
             string password = txtPassword.Text;
             int strength = CalculatePasswordStrength(password);
 
-            // Update progress bar
             progressBarPasswordStrength.Value = strength;
 
-            // Update strength label text and color
             if (strength < 40)
             {
                 lblPasswordStrength.Text = "Weak";
@@ -313,7 +293,6 @@ namespace FantasticStock.Views
 
         private void UpdateUIEditState(bool isEditMode)
         {
-            // Update control states based on edit mode
             txtUsername.ReadOnly = !isEditMode || (_viewModel.SelectedUser?.UserID > 0);
             txtDisplayName.ReadOnly = !isEditMode;
             txtEmail.ReadOnly = !isEditMode;
@@ -323,11 +302,9 @@ namespace FantasticStock.Views
             dateTimePickerExpiration.Enabled = isEditMode;
             treeViewPermissions.Enabled = _viewModel.IsEditMode;
 
-            // Security tab controls
             txtPassword.Enabled = isEditMode;
             txtConfirmPassword.Enabled = isEditMode;
 
-            // Day restriction checkboxes
             chkSunday.Enabled = isEditMode;
             chkMonday.Enabled = isEditMode;
             chkTuesday.Enabled = isEditMode;
@@ -336,12 +313,10 @@ namespace FantasticStock.Views
             chkFriday.Enabled = isEditMode;
             chkSaturday.Enabled = isEditMode;
 
-            // Button states
             btnSave.Enabled = isEditMode;
             btnCancel.Enabled = isEditMode;
             btnResetPassword.Enabled = !isEditMode && _viewModel.SelectedUser?.UserID > 0;
 
-            // The following controls should be disabled in edit mode
             btnAddUser.Enabled = !isEditMode;
             btnEdit.Enabled = !isEditMode && _viewModel.SelectedUser != null;
             btnDeactivate.Enabled = !isEditMode && _viewModel.SelectedUser != null;
@@ -360,8 +335,6 @@ namespace FantasticStock.Views
         {
             if (_viewModel.SelectedUser != null && treeViewPermissions.Nodes.Count > 0)
             {
-                // Disable or enable nodes based on edit mode
-                
                 SetTreeNodesEnabled(treeViewPermissions.Nodes, _viewModel.IsEditMode);
             }
         }
@@ -387,13 +360,11 @@ namespace FantasticStock.Views
 
             int score = 0;
 
-            // Length check
             if (password.Length >= 8)
                 score += 20;
             else if (password.Length >= 6)
                 score += 10;
 
-            // Complexity checks
             if (password.Any(char.IsUpper))
                 score += 20;
 
