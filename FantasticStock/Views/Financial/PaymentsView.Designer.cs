@@ -44,11 +44,11 @@
             this.cboPaymentType = new System.Windows.Forms.ComboBox();
             this.lblPaymentType = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnAddPayment = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvPayments = new System.Windows.Forms.DataGridView();
-            this.btnAddPayment = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panelFilter.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -216,6 +216,16 @@
             this.panel3.Size = new System.Drawing.Size(900, 40);
             this.panel3.TabIndex = 2;
             // 
+            // btnAddPayment
+            // 
+            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPayment.Location = new System.Drawing.Point(797, 8);
+            this.btnAddPayment.Name = "btnAddPayment";
+            this.btnAddPayment.Size = new System.Drawing.Size(82, 23);
+            this.btnAddPayment.TabIndex = 3;
+            this.btnAddPayment.Text = "Add Payment";
+            this.btnAddPayment.UseVisualStyleBackColor = true;
+            // 
             // btnExport
             // 
             this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -247,7 +257,7 @@
             this.dgvPayments.AllowUserToAddRows = false;
             this.dgvPayments.AllowUserToDeleteRows = false;
             this.dgvPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.ControlDark;
             this.dgvPayments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPayments.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -259,16 +269,6 @@
             this.dgvPayments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPayments.Size = new System.Drawing.Size(900, 380);
             this.dgvPayments.TabIndex = 3;
-            // 
-            // btnAddPayment
-            // 
-            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddPayment.Location = new System.Drawing.Point(797, 8);
-            this.btnAddPayment.Name = "btnAddPayment";
-            this.btnAddPayment.Size = new System.Drawing.Size(82, 23);
-            this.btnAddPayment.TabIndex = 3;
-            this.btnAddPayment.Text = "Add Payment";
-            this.btnAddPayment.UseVisualStyleBackColor = true;
             // 
             // PaymentsView
             // 

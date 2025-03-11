@@ -182,8 +182,10 @@ namespace FantasticStock.Views
                 case ModuleType.StockLevels:
                 case ModuleType.InventoryReports:
                 case ModuleType.SalesReports:
-                case ModuleType.FinancialReports:
                     moduleControl = CreatePlaceholderModule(moduleType.ToString());
+                    break;
+                case ModuleType.FinancialReports:
+                    moduleControl = new FinancialReportsView();
                     break;
             }
 

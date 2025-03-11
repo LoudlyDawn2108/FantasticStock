@@ -28,16 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // ExpensesView
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "ExpensesView";
-            this.Size = new System.Drawing.Size(885, 602);
-            this.ResumeLayout(false);
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExpensesView));
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelFilter = new System.Windows.Forms.Panel();
@@ -81,7 +71,7 @@
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.Location = new System.Drawing.Point(12, 13);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(205, 24);
+            this.lblTitle.Size = new System.Drawing.Size(220, 24);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Expense Management";
             // 
@@ -109,23 +99,23 @@
             // 
             // btnReset
             // 
+            this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnReset.Location = new System.Drawing.Point(769, 82);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
             this.btnReset.TabIndex = 11;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
-            //this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnSearch
             // 
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSearch.Location = new System.Drawing.Point(850, 82);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 10;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
-            //this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // cboTaxStatus
             // 
@@ -141,7 +131,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(496, 50);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(62, 13);
+            this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 8;
             this.label6.Text = "Tax Status:";
             // 
@@ -194,7 +184,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(15, 50);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "To Date:";
             // 
@@ -211,7 +201,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(15, 17);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 13);
+            this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "From Date:";
             // 
@@ -237,7 +227,6 @@
             this.btnExport.TabIndex = 3;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
-            //this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // txtSearch
             // 
@@ -264,16 +253,16 @@
             this.btnAddExpense.TabIndex = 0;
             this.btnAddExpense.Text = "Add Expense";
             this.btnAddExpense.UseVisualStyleBackColor = true;
-            //this.btnAddExpense.Click += new System.EventHandler(this.btnAddExpense_Click);
             // 
             // dgvExpenses
             // 
             this.dgvExpenses.AllowUserToAddRows = false;
             this.dgvExpenses.AllowUserToDeleteRows = false;
-            this.dgvExpenses.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvExpenses.BackgroundColor = System.Drawing.SystemColors.ControlDark;
             this.dgvExpenses.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvExpenses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvExpenses.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvExpenses.GridColor = System.Drawing.SystemColors.ControlDarkDark;
             this.dgvExpenses.Location = new System.Drawing.Point(0, 210);
             this.dgvExpenses.MultiSelect = false;
             this.dgvExpenses.Name = "dgvExpenses";
@@ -282,9 +271,8 @@
             this.dgvExpenses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvExpenses.Size = new System.Drawing.Size(950, 390);
             this.dgvExpenses.TabIndex = 3;
-            //this.dgvExpenses.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExpenses_CellClick);
             // 
-            // ExpenseManagementControl
+            // ExpensesView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -292,7 +280,7 @@
             this.Controls.Add(this.panelToolbar);
             this.Controls.Add(this.panelFilter);
             this.Controls.Add(this.panelHeader);
-            this.Name = "ExpenseManagementControl";
+            this.Name = "ExpensesView";
             this.Size = new System.Drawing.Size(950, 600);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
