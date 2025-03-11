@@ -16,52 +16,14 @@ namespace FantasticStock.Views.Inventory
         private System.Windows.Forms.DataGridViewTextBoxColumn colReorderLevel;
         private System.Windows.Forms.DataGridViewButtonColumn colEdit;
         private System.Windows.Forms.DataGridViewButtonColumn colDelete;
-        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnAddProduct;
         private System.Windows.Forms.Button btnBulkImport;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnPrintList;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Panel panelDetails;
-        private System.Windows.Forms.TextBox txtProductName;
-        private System.Windows.Forms.TextBox txtSKU;
-        private System.Windows.Forms.TextBox txtBarcode;
-        private System.Windows.Forms.ComboBox cmbCategory;
-        private System.Windows.Forms.ComboBox cmbSupplier;
-        private System.Windows.Forms.TextBox txtSalePrice;
-        private System.Windows.Forms.TextBox txtCostPrice;
-        private System.Windows.Forms.TextBox txtMarkup;
-        private System.Windows.Forms.TextBox txtQuantityInStock;
-        private System.Windows.Forms.TextBox txtReorderLevel;
-        private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.PictureBox pictureBoxProductImage;
-        private System.Windows.Forms.Button btnUploadImage;
-        private System.Windows.Forms.Button btnRemoveImage;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Label lblProductName;
-        private System.Windows.Forms.Label lblSKU;
-        private System.Windows.Forms.Label lblBarcode;
-        private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.Label lblSupplier;
-        private System.Windows.Forms.Label lblSalePrice;
-        private System.Windows.Forms.Label lblCostPrice;
-        private System.Windows.Forms.Label lblMarkup;
-        private System.Windows.Forms.Label lblQuantityInStock;
-        private System.Windows.Forms.Label lblReorderLevel;
-        private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.Label lblProductImage;
         private System.Windows.Forms.Label lblHeader;
-        private System.Windows.Forms.Label lblDetailsHeader;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Panel panelActions;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutMain;
-        private System.Windows.Forms.Panel panelProductsContainer;
-        private System.Windows.Forms.Panel paginationPanel;
-        private System.Windows.Forms.Button btnPrevious;
-        private System.Windows.Forms.Label lblPageInfo;
-        private System.Windows.Forms.Button btnNext;
 
         protected override void Dispose(bool disposing)
         {
@@ -85,7 +47,6 @@ namespace FantasticStock.Views.Inventory
             this.colReorderLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnAddProduct = new System.Windows.Forms.Button();
             this.btnBulkImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
@@ -95,10 +56,13 @@ namespace FantasticStock.Views.Inventory
             this.lblHeader = new System.Windows.Forms.Label();
             this.panelActions = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutMain = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelProductsContainer = new System.Windows.Forms.Panel();
             this.dgvProducts = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.paginationPanel = new System.Windows.Forms.Panel();
             this.btnPrevious = new System.Windows.Forms.Button();
@@ -135,13 +99,22 @@ namespace FantasticStock.Views.Inventory
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.dgvProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSupp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvQtt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutMain.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
             this.panelProductsContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.paginationPanel.SuspendLayout();
             this.panelDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProductImage)).BeginInit();
@@ -200,17 +173,6 @@ namespace FantasticStock.Views.Inventory
             this.colDelete.MinimumWidth = 8;
             this.colDelete.Name = "colDelete";
             this.colDelete.Width = 150;
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.BackColor = System.Drawing.Color.White;
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.Location = new System.Drawing.Point(644, 6);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(200, 20);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // btnAddProduct
             // 
@@ -277,6 +239,7 @@ namespace FantasticStock.Views.Inventory
             // lblHeader
             // 
             this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeader.ForeColor = System.Drawing.Color.RoyalBlue;
             this.lblHeader.Location = new System.Drawing.Point(15, 15);
             this.lblHeader.Name = "lblHeader";
             this.lblHeader.Size = new System.Drawing.Size(352, 32);
@@ -310,35 +273,32 @@ namespace FantasticStock.Views.Inventory
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 50);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
-            // tableLayoutMain
+            // flowLayoutPanel1
             // 
-            this.tableLayoutMain.ColumnCount = 2;
-            this.tableLayoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableLayoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
-            this.tableLayoutMain.Controls.Add(this.panelProductsContainer, 0, 0);
-            this.tableLayoutMain.Controls.Add(this.panelDetails, 1, 0);
-            this.tableLayoutMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutMain.Location = new System.Drawing.Point(0, 100);
-            this.tableLayoutMain.Name = "tableLayoutMain";
-            this.tableLayoutMain.RowCount = 1;
-            this.tableLayoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutMain.Size = new System.Drawing.Size(1507, 700);
-            this.tableLayoutMain.TabIndex = 0;
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.Controls.Add(this.panelProductsContainer);
+            this.flowLayoutPanel1.Controls.Add(this.panelDetails);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 100);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1507, 700);
+            this.flowLayoutPanel1.TabIndex = 3;
             // 
             // panelProductsContainer
             // 
             this.panelProductsContainer.Controls.Add(this.dgvProducts);
             this.panelProductsContainer.Controls.Add(this.panel1);
             this.panelProductsContainer.Controls.Add(this.paginationPanel);
-            this.panelProductsContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelProductsContainer.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelProductsContainer.Location = new System.Drawing.Point(3, 3);
             this.panelProductsContainer.Name = "panelProductsContainer";
             this.panelProductsContainer.Padding = new System.Windows.Forms.Padding(15);
-            this.panelProductsContainer.Size = new System.Drawing.Size(898, 694);
-            this.panelProductsContainer.TabIndex = 0;
+            this.panelProductsContainer.Size = new System.Drawing.Size(809, 693);
+            this.panelProductsContainer.TabIndex = 5;
             // 
             // dgvProducts
             // 
@@ -346,24 +306,64 @@ namespace FantasticStock.Views.Inventory
             this.dgvProducts.AllowUserToDeleteRows = false;
             this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProducts.ColumnHeadersHeight = 34;
+            this.dgvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvProductID,
+            this.dgvName,
+            this.dgvCg,
+            this.dgvSupp,
+            this.dgvPrice,
+            this.dgvQtt,
+            this.dgvRL});
             this.dgvProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProducts.Location = new System.Drawing.Point(15, 57);
             this.dgvProducts.Name = "dgvProducts";
             this.dgvProducts.ReadOnly = true;
             this.dgvProducts.RowHeadersWidth = 62;
             this.dgvProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProducts.Size = new System.Drawing.Size(868, 582);
+            this.dgvProducts.Size = new System.Drawing.Size(779, 581);
             this.dgvProducts.TabIndex = 8;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.txtSearch);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(15, 15);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(868, 42);
+            this.panel1.Size = new System.Drawing.Size(779, 42);
             this.panel1.TabIndex = 3;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.txtSearch);
+            this.panel2.Location = new System.Drawing.Point(579, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(179, 27);
+            this.panel2.TabIndex = 2;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::FantasticStock.Properties.Resources.search_interface_symbol;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 7);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(27, 14);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Location = new System.Drawing.Point(34, 3);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(103, 13);
+            this.txtSearch.TabIndex = 0;
             // 
             // label1
             // 
@@ -380,9 +380,9 @@ namespace FantasticStock.Views.Inventory
             this.paginationPanel.Controls.Add(this.lblPageInfo);
             this.paginationPanel.Controls.Add(this.btnNext);
             this.paginationPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.paginationPanel.Location = new System.Drawing.Point(15, 639);
+            this.paginationPanel.Location = new System.Drawing.Point(15, 638);
             this.paginationPanel.Name = "paginationPanel";
-            this.paginationPanel.Size = new System.Drawing.Size(868, 40);
+            this.paginationPanel.Size = new System.Drawing.Size(779, 40);
             this.paginationPanel.TabIndex = 2;
             // 
             // btnPrevious
@@ -392,7 +392,6 @@ namespace FantasticStock.Views.Inventory
             this.btnPrevious.Size = new System.Drawing.Size(80, 23);
             this.btnPrevious.TabIndex = 0;
             this.btnPrevious.Text = "Previous";
-            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // lblPageInfo
             // 
@@ -410,7 +409,6 @@ namespace FantasticStock.Views.Inventory
             this.btnNext.Size = new System.Drawing.Size(80, 23);
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = "Next";
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // panelDetails
             // 
@@ -446,12 +444,11 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.Controls.Add(this.btnSave);
             this.panelDetails.Controls.Add(this.btnCancel);
             this.panelDetails.Controls.Add(this.btnDelete);
-            this.panelDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDetails.Location = new System.Drawing.Point(907, 3);
+            this.panelDetails.Location = new System.Drawing.Point(818, 3);
             this.panelDetails.Name = "panelDetails";
             this.panelDetails.Padding = new System.Windows.Forms.Padding(15);
-            this.panelDetails.Size = new System.Drawing.Size(597, 694);
-            this.panelDetails.TabIndex = 1;
+            this.panelDetails.Size = new System.Drawing.Size(665, 694);
+            this.panelDetails.TabIndex = 10;
             // 
             // lblDetailsHeader
             // 
@@ -553,7 +550,6 @@ namespace FantasticStock.Views.Inventory
             this.txtSalePrice.Name = "txtSalePrice";
             this.txtSalePrice.Size = new System.Drawing.Size(170, 20);
             this.txtSalePrice.TabIndex = 12;
-            this.txtSalePrice.TextChanged += new System.EventHandler(this.txtSalePrice_TextChanged);
             // 
             // lblCostPrice
             // 
@@ -569,7 +565,6 @@ namespace FantasticStock.Views.Inventory
             this.txtCostPrice.Name = "txtCostPrice";
             this.txtCostPrice.Size = new System.Drawing.Size(170, 20);
             this.txtCostPrice.TabIndex = 14;
-            this.txtCostPrice.TextChanged += new System.EventHandler(this.txtCostPrice_TextChanged);
             // 
             // lblMarkup
             // 
@@ -702,21 +697,67 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // dgvProductID
+            // 
+            this.dgvProductID.HeaderText = "Product ID";
+            this.dgvProductID.Name = "dgvProductID";
+            this.dgvProductID.ReadOnly = true;
+            // 
+            // dgvName
+            // 
+            this.dgvName.HeaderText = "Name";
+            this.dgvName.Name = "dgvName";
+            this.dgvName.ReadOnly = true;
+            // 
+            // dgvCg
+            // 
+            this.dgvCg.HeaderText = "Category";
+            this.dgvCg.Name = "dgvCg";
+            this.dgvCg.ReadOnly = true;
+            // 
+            // dgvSupp
+            // 
+            this.dgvSupp.HeaderText = "Supplier";
+            this.dgvSupp.Name = "dgvSupp";
+            this.dgvSupp.ReadOnly = true;
+            // 
+            // dgvPrice
+            // 
+            this.dgvPrice.HeaderText = "Price";
+            this.dgvPrice.Name = "dgvPrice";
+            this.dgvPrice.ReadOnly = true;
+            // 
+            // dgvQtt
+            // 
+            this.dgvQtt.HeaderText = "Quantity";
+            this.dgvQtt.Name = "dgvQtt";
+            this.dgvQtt.ReadOnly = true;
+            // 
+            // dgvRL
+            // 
+            this.dgvRL.HeaderText = "Reorder Level\t";
+            this.dgvRL.Name = "dgvRL";
+            this.dgvRL.ReadOnly = true;
+            // 
             // ProductManagementView
             // 
-            this.Controls.Add(this.tableLayoutMain);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.panelActions);
             this.Controls.Add(this.panelHeader);
             this.Name = "ProductManagementView";
             this.Size = new System.Drawing.Size(1507, 800);
+            this.Load += new System.EventHandler(this.ProductManagementView_Load);
             this.panelHeader.ResumeLayout(false);
             this.panelActions.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutMain.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
             this.panelProductsContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvProducts)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.paginationPanel.ResumeLayout(false);
             this.paginationPanel.PerformLayout();
             this.panelDetails.ResumeLayout(false);
@@ -728,343 +769,7 @@ namespace FantasticStock.Views.Inventory
 
         #endregion
 
-        #region Event Handlers
-
-        private void btnAddProduct_Click(object sender, EventArgs e)
-        {
-            ClearDetails();
-            EnableDetailsEditing(true);
-        }
-
-        private void btnBulkImport_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement bulk import functionality
-            MessageBox.Show("Bulk import functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement export functionality
-            MessageBox.Show("Export functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnPrintList_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement print functionality
-            MessageBox.Show("Print functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            LoadProducts();
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            FilterProducts(txtSearch.Text);
-        }
-
-        private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0) return;
-
-            if (e.ColumnIndex == dgvProducts.Columns["colEdit"].Index)
-            {
-                LoadProductDetails(dgvProducts.Rows[e.RowIndex].Cells["colProductID"].Value.ToString());
-                EnableDetailsEditing(true);
-            }
-            else if (e.ColumnIndex == dgvProducts.Columns["colDelete"].Index)
-            {
-                string productId = dgvProducts.Rows[e.RowIndex].Cells["colProductID"].Value.ToString();
-                DeleteProduct(productId);
-            }
-            else
-            {
-                LoadProductDetails(dgvProducts.Rows[e.RowIndex].Cells["colProductID"].Value.ToString());
-                EnableDetailsEditing(false);
-            }
-        }
-
-        private void btnPrevious_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement pagination
-            MessageBox.Show("Previous page functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement pagination
-            MessageBox.Show("Next page functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnUploadImage_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
-                openFileDialog.Title = "Select Product Image";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        pictureBoxProductImage.Image = Image.FromFile(openFileDialog.FileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error loading image: " + ex.Message, "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-        }
-
-        private void btnRemoveImage_Click(object sender, EventArgs e)
-        {
-            pictureBoxProductImage.Image = null;
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (ValidateProductDetails())
-            {
-                SaveProduct();
-                EnableDetailsEditing(false);
-                LoadProducts();
-            }
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            ClearDetails();
-            EnableDetailsEditing(false);
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtSKU.Text))
-            {
-                DialogResult result = MessageBox.Show("Are you sure you want to delete this product?",
-                    "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
-                {
-                    DeleteProduct(txtSKU.Text);
-                    ClearDetails();
-                    EnableDetailsEditing(false);
-                    LoadProducts();
-                }
-            }
-        }
-
-        private void txtCostPrice_TextChanged(object sender, EventArgs e)
-        {
-            CalculateMarkup();
-        }
-
-        private void txtSalePrice_TextChanged(object sender, EventArgs e)
-        {
-            CalculateMarkup();
-        }
-
-        #endregion
-
-        #region Helper Methods
-
-        private void LoadProducts()
-        {
-            // TODO: Replace with actual data loading from database
-            dgvProducts.Rows.Clear();
-
-            // Sample data
-            dgvProducts.Rows.Add("P001", "Laptop Pro 15\"", "Electronics", "TechSuppliers Inc.", "$1,299.99", "24", "10");
-            dgvProducts.Rows.Add("P002", "Wireless Mouse", "Accessories", "TechSuppliers Inc.", "$29.99", "45", "15");
-            dgvProducts.Rows.Add("P003", "Bluetooth Headphones", "Audio", "AudioTech Ltd.", "$89.99", "18", "20");
-            dgvProducts.Rows.Add("P004", "4K Monitor 27\"", "Electronics", "VisualTech Corp", "$349.99", "5", "8");
-            dgvProducts.Rows.Add("P005", "USB-C Hub", "Accessories", "ConnectAll Inc.", "$49.99", "30", "10");
-            dgvProducts.Rows.Add("P006", "Wireless Keyboard", "Accessories", "TechSuppliers Inc.", "$59.99", "7", "15");
-        }
-
-        private void FilterProducts(string searchTerm)
-        {
-            // TODO: Implement filtering logic
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                LoadProducts();
-                return;
-            }
-
-            // For now, just reload all products
-            // In a real implementation, this would filter based on the search term
-            LoadProducts();
-        }
-
-        private void LoadProductDetails(string productId)
-        {
-            // TODO: Replace with actual data loading from database
-            // For now, just load sample data
-            if (productId == "P001")
-            {
-                txtProductName.Text = "Laptop Pro 15\"";
-                txtSKU.Text = "LAP-PRO-15";
-                txtBarcode.Text = "7891234567890";
-                cmbCategory.Text = "Electronics";
-                cmbSupplier.Text = "TechSuppliers Inc.";
-                txtSalePrice.Text = "1299.99";
-                txtCostPrice.Text = "950.00";
-                txtQuantityInStock.Text = "24";
-                txtReorderLevel.Text = "10";
-                txtDescription.Text = "15-inch professional laptop with Intel Core i7, 16GB RAM, 512GB SSD, and NVIDIA GeForce RTX 2050 graphics.";
-            }
-        }
-
-        private void ClearDetails()
-        {
-            txtProductName.Text = string.Empty;
-            txtSKU.Text = string.Empty;
-            txtBarcode.Text = string.Empty;
-            cmbCategory.SelectedIndex = -1;
-            cmbSupplier.SelectedIndex = -1;
-            txtSalePrice.Text = "0.00";
-            txtCostPrice.Text = "0.00";
-            txtMarkup.Text = "0.00";
-            txtQuantityInStock.Text = "0";
-            txtReorderLevel.Text = "0";
-            txtDescription.Text = string.Empty;
-            pictureBoxProductImage.Image = null;
-        }
-
-        private void EnableDetailsEditing(bool enable)
-        {
-            txtProductName.ReadOnly = !enable;
-            txtSKU.ReadOnly = !enable;
-            txtBarcode.ReadOnly = !enable;
-            cmbCategory.Enabled = enable;
-            cmbSupplier.Enabled = enable;
-            txtSalePrice.ReadOnly = !enable;
-            txtCostPrice.ReadOnly = !enable;
-            txtQuantityInStock.ReadOnly = !enable;
-            txtReorderLevel.ReadOnly = !enable;
-            txtDescription.ReadOnly = !enable;
-            btnUploadImage.Enabled = enable;
-            btnRemoveImage.Enabled = enable;
-            btnSave.Enabled = enable;
-            btnCancel.Enabled = enable;
-            btnDelete.Enabled = enable;
-        }
-
-        private bool ValidateProductDetails()
-        {
-            if (string.IsNullOrEmpty(txtProductName.Text))
-            {
-                MessageBox.Show("Product name is required.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(txtSKU.Text))
-            {
-                MessageBox.Show("SKU is required.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(txtSalePrice.Text) || !decimal.TryParse(txtSalePrice.Text, out _))
-            {
-                MessageBox.Show("Sale price must be a valid number.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(txtCostPrice.Text) || !decimal.TryParse(txtCostPrice.Text, out _))
-            {
-                MessageBox.Show("Cost price must be a valid number.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(txtQuantityInStock.Text) || !int.TryParse(txtQuantityInStock.Text, out _))
-            {
-                MessageBox.Show("Quantity must be a valid number.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(txtReorderLevel.Text) || !int.TryParse(txtReorderLevel.Text, out _))
-            {
-                MessageBox.Show("Reorder level must be a valid number.", "Validation Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            return true;
-        }
-
-        private void SaveProduct()
-        {
-            // TODO: Implement actual save functionality to database
-            MessageBox.Show("Product saved successfully.", "Success",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void DeleteProduct(string productId)
-        {
-            // TODO: Implement actual delete functionality from database
-            DialogResult result = MessageBox.Show($"Are you sure you want to delete product {productId}?",
-                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                MessageBox.Show("Product deleted successfully.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadProducts();
-            }
-        }
-
-        private void CalculateMarkup()
-        {
-            if (decimal.TryParse(txtSalePrice.Text, out decimal salePrice) &&
-                decimal.TryParse(txtCostPrice.Text, out decimal costPrice) &&
-                costPrice > 0)
-            {
-                decimal markup = ((salePrice - costPrice) / costPrice) * 100;
-                txtMarkup.Text = markup.ToString("F2");
-            }
-            else
-            {
-                txtMarkup.Text = "0.00";
-            }
-        }
-
-        private void LoadCategories()
-        {
-            // TODO: Replace with actual data loading from database
-            cmbCategory.Items.Clear();
-            cmbCategory.Items.Add("Electronics");
-            cmbCategory.Items.Add("Accessories");
-            cmbCategory.Items.Add("Audio");
-            cmbCategory.Items.Add("Peripherals");
-            cmbCategory.Items.Add("Storage");
-            cmbCategory.Items.Add("Networking");
-        }
-
-        private void LoadSuppliers()
-        {
-            // TODO: Replace with actual data loading from database
-            cmbSupplier.Items.Clear();
-            cmbSupplier.Items.Add("TechSuppliers Inc.");
-            cmbSupplier.Items.Add("AudioTech Ltd.");
-            cmbSupplier.Items.Add("VisualTech Corp");
-            cmbSupplier.Items.Add("ConnectAll Inc.");
-            cmbSupplier.Items.Add("StorageTech Inc.");
-        }
-
-        #endregion
+        
 
         // Constructor
         public ProductManagementView()
@@ -1072,48 +777,94 @@ namespace FantasticStock.Views.Inventory
             InitializeComponent();
 
             // Set up DataGridView columns
-            dgvProducts.ColumnCount = 7;
-            dgvProducts.Columns[0].Name = "colProductID";
-            dgvProducts.Columns[0].HeaderText = "Product ID";
-            dgvProducts.Columns[1].Name = "colName";
-            dgvProducts.Columns[1].HeaderText = "Name";
-            dgvProducts.Columns[2].Name = "colCategory";
-            dgvProducts.Columns[2].HeaderText = "Category";
-            dgvProducts.Columns[3].Name = "colSupplier";
-            dgvProducts.Columns[3].HeaderText = "Supplier";
-            dgvProducts.Columns[4].Name = "colPrice";
-            dgvProducts.Columns[4].HeaderText = "Price";
-            dgvProducts.Columns[5].Name = "colQuantity";
-            dgvProducts.Columns[5].HeaderText = "Quantity";
-            dgvProducts.Columns[6].Name = "colReorderLevel";
-            dgvProducts.Columns[6].HeaderText = "Reorder Level";
+            //dgvProducts.ColumnCount = 7;
+            //dgvProducts.Columns[0].Name = "colProductID";
+            //dgvProducts.Columns[0].HeaderText = "Product ID";
+            //dgvProducts.Columns[1].Name = "colName";
+            //dgvProducts.Columns[1].HeaderText = "Name";
+            //dgvProducts.Columns[2].Name = "colCategory";
+            //dgvProducts.Columns[2].HeaderText = "Category";
+            //dgvProducts.Columns[3].Name = "colSupplier";
+            //dgvProducts.Columns[3].HeaderText = "Supplier";
+            //dgvProducts.Columns[4].Name = "colPrice";
+            //dgvProducts.Columns[4].HeaderText = "Price";
+            //dgvProducts.Columns[5].Name = "colQuantity";
+            //dgvProducts.Columns[5].HeaderText = "Quantity";
+            //dgvProducts.Columns[6].Name = "colReorderLevel";
+            //dgvProducts.Columns[6].HeaderText = "Reorder Level";
 
             // Add edit and delete button columns
-            DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
-            editButtonColumn.Name = "colEdit";
-            editButtonColumn.HeaderText = "Actions";
-            editButtonColumn.Text = "✏️";
-            editButtonColumn.UseColumnTextForButtonValue = true;
-            editButtonColumn.Width = 50;
-            dgvProducts.Columns.Add(editButtonColumn);
+            //DataGridViewButtonColumn editButtonColumn = new DataGridViewButtonColumn();
+            //editButtonColumn.Name = "colEdit";
+            //editButtonColumn.HeaderText = "Actions";
+            //editButtonColumn.Text = "✏️";
+            //editButtonColumn.UseColumnTextForButtonValue = true;
+            //editButtonColumn.Width = 50;
+            //dgvProducts.Columns.Add(editButtonColumn);
 
-            DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
-            deleteButtonColumn.Name = "colDelete";
-            deleteButtonColumn.HeaderText = "";
-            deleteButtonColumn.Text = "🗑️";
-            deleteButtonColumn.UseColumnTextForButtonValue = true;
-            deleteButtonColumn.Width = 50;
-            dgvProducts.Columns.Add(deleteButtonColumn);
+            //DataGridViewButtonColumn deleteButtonColumn = new DataGridViewButtonColumn();
+            //deleteButtonColumn.Name = "colDelete";
+            //deleteButtonColumn.HeaderText = "";
+            //deleteButtonColumn.Text = "🗑️";
+            //deleteButtonColumn.UseColumnTextForButtonValue = true;
+            //deleteButtonColumn.Width = 50;
+            //dgvProducts.Columns.Add(deleteButtonColumn);
 
             // Load initial data
             //LoadCategories();
             //LoadSuppliers();
             //LoadProducts();
         }
-
+        private TableLayoutPanel tableLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panelProductsContainer;
+        private DataGridView dgvProducts;
         private Panel panel1;
         private Label label1;
-        private DataGridView dgvProducts;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TextBox txtSearch;
+        private Panel paginationPanel;
+        private Button btnPrevious;
+        private Label lblPageInfo;
+        private Button btnNext;
+        private Panel panelDetails;
+        private Label lblDetailsHeader;
+        private Label lblProductName;
+        private TextBox txtProductName;
+        private Label lblSKU;
+        private TextBox txtSKU;
+        private Label lblBarcode;
+        private TextBox txtBarcode;
+        private Label lblCategory;
+        private ComboBox cmbCategory;
+        private Label lblSupplier;
+        private ComboBox cmbSupplier;
+        private Label lblSalePrice;
+        private TextBox txtSalePrice;
+        private Label lblCostPrice;
+        private TextBox txtCostPrice;
+        private Label lblMarkup;
+        private TextBox txtMarkup;
+        private Label lblQuantityInStock;
+        private TextBox txtQuantityInStock;
+        private Label lblReorderLevel;
+        private TextBox txtReorderLevel;
+        private Label lblDescription;
+        private TextBox txtDescription;
+        private Label lblProductImage;
+        private PictureBox pictureBoxProductImage;
+        private Button btnUploadImage;
+        private Button btnRemoveImage;
+        private Button btnSave;
+        private Button btnCancel;
+        private Button btnDelete;
+        private Panel panel2;
+        private PictureBox pictureBox1;
+        private DataGridViewTextBoxColumn dgvProductID;
+        private DataGridViewTextBoxColumn dgvName;
+        private DataGridViewTextBoxColumn dgvCg;
+        private DataGridViewTextBoxColumn dgvSupp;
+        private DataGridViewTextBoxColumn dgvPrice;
+        private DataGridViewTextBoxColumn dgvQtt;
+        private DataGridViewTextBoxColumn dgvRL;
     }
 }
