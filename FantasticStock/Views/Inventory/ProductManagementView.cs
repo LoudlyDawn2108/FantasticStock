@@ -13,11 +13,11 @@ using System.Windows.Forms;
 
 namespace FantasticStock.Views.Inventory
 {
-    
+
     public partial class ProductManagementView : UserControl
     {
         private ProductViewModel _viewModel;
-        
+
         string chuoiketnoi = "Data Source=TUNGCORN\\SQLEXPRESS;" +
                              "Initial Catalog = Product;" +
                              "Integrated Security = true";
@@ -32,7 +32,7 @@ namespace FantasticStock.Views.Inventory
         //    // Set up data bindings
         //    SetupBindings();
         //}
-        
+
         private void SetupBindings()
         {/*
             // Bind products grid
@@ -128,7 +128,8 @@ namespace FantasticStock.Views.Inventory
                     //btnDeleteProduct.Enabled = !_viewModel.IsEditing;
                 }
             };
-        */}
+        */
+        }
         #region Event Handlers
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
@@ -159,12 +160,12 @@ namespace FantasticStock.Views.Inventory
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         //private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -251,21 +252,33 @@ namespace FantasticStock.Views.Inventory
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtSKU.Text))
+            if(ProductID > 0)
             {
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this product?",
                     "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    DeleteProduct(txtSKU.Text);
+                    DeleteProduct(ProductID);
                     ClearDetails();
-                    //EnableDetailsEditing(false);
-                    
+                    Khoa_Chinh_Sua(false);
+                    Load_dvgProducts();
                 }
             }
         }
-
+        private void DeleteProduct(int ProductID)
+        {
+            using(conn = new SqlConnection(chuoiketnoi))
+            {
+                conn.Open();
+                string query = "Delete from Product where ProductID = @ProductID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@ProductID", ProductID);
+                cmd.ExecuteNonQuery();
+            }
+            MessageBox.Show("Product deleted successfully.", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
         private void txtCostPrice_TextChanged(object sender, EventArgs e)
         {
             CalculateMarkup();
@@ -280,55 +293,9 @@ namespace FantasticStock.Views.Inventory
 
         #region Helper Methods
 
-        //private void LoadProducts()
-        //{
-        //    // TODO: Replace with actual data loading from database
-        //    dgvProducts.Rows.Clear();
-
-        //    // Sample data
-        //    dgvProducts.Rows.Add("P001", "Laptop Pro 15\"", "Electronics", "TechSuppliers Inc.", "$1,299.99", "24", "10");
-        //    dgvProducts.Rows.Add("P002", "Wireless Mouse", "Accessories", "TechSuppliers Inc.", "$29.99", "45", "15");
-        //    dgvProducts.Rows.Add("P003", "Bluetooth Headphones", "Audio", "AudioTech Ltd.", "$89.99", "18", "20");
-        //    dgvProducts.Rows.Add("P004", "4K Monitor 27\"", "Electronics", "VisualTech Corp", "$349.99", "5", "8");
-        //    dgvProducts.Rows.Add("P005", "USB-C Hub", "Accessories", "ConnectAll Inc.", "$49.99", "30", "10");
-        //    dgvProducts.Rows.Add("P006", "Wireless Keyboard", "Accessories", "TechSuppliers Inc.", "$59.99", "7", "15");
-        //}
-
-        //private void FilterProducts(string searchTerm)
-        //{
-        //    // TODO: Implement filtering logic
-        //    if (string.IsNullOrEmpty(searchTerm))
-        //    {
-        //        LoadProducts();
-        //        return;
-        //    }
-
-        //    // For now, just reload all products
-        //    // In a real implementation, this would filter based on the search term
-        //    LoadProducts();
-        //}
-
-        //private void LoadProductDetails(string productId)
-        //{
-        //    // TODO: Replace with actual data loading from database
-        //    // For now, just load sample data
-        //    if (productId == "P001")
-        //    {
-        //        txtProductName.Text = "Laptop Pro 15\"";
-        //        txtSKU.Text = "LAP-PRO-15";
-        //        txtBarcode.Text = "7891234567890";
-        //        cmbCategory.Text = "Electronics";
-        //        cmbSupplier.Text = "TechSuppliers Inc.";
-        //        txtSalePrice.Text = "1299.99";
-        //        txtCostPrice.Text = "950.00";
-        //        txtQuantityInStock.Text = "24";
-        //        txtReorderLevel.Text = "10";
-        //        txtDescription.Text = "15-inch professional laptop with Intel Core i7, 16GB RAM, 512GB SSD, and NVIDIA GeForce RTX 2050 graphics.";
-        //    }
-        //}
-
         private void ClearDetails()
         {
+            ProductID = 0;
             txtProductName.Text = string.Empty;
             txtSKU.Text = string.Empty;
             txtBarcode.Text = string.Empty;
@@ -434,7 +401,8 @@ namespace FantasticStock.Views.Inventory
                     cmbCategory.ValueMember = "CategoryID";
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show("Không kết nối được database");
 
             }
@@ -474,7 +442,7 @@ namespace FantasticStock.Views.Inventory
                     SqlDataAdapter adp = new SqlDataAdapter(cmd);
                     DataTable dt = new DataTable();
                     adp.Fill(dt);
-                    //dgvProducts.DataSource = dt;
+                    dgvProducts.DataSource = dt;
                     dgvProducts.Columns["dgvProductID"].DataPropertyName = "ProductID";
                     dgvProducts.Columns["dgvName"].DataPropertyName = "ProductName";
                     dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryID";
@@ -482,7 +450,7 @@ namespace FantasticStock.Views.Inventory
                     dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
                     dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
                     dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
-                    dgvProducts.DataSource = dt;
+                    //dgvProducts.DataSource = dt;
                     DataGridViewButtonColumn actionsColumn = dgvProducts.Columns["Actions"] as DataGridViewButtonColumn;
                     if (actionsColumn != null)
                     {
@@ -496,7 +464,7 @@ namespace FantasticStock.Views.Inventory
             {
                 MessageBox.Show("Không kết nối được database");
             }
-            
+
         }
         private byte[] ImageToByteArray(Image imageIn)
         {
@@ -509,11 +477,26 @@ namespace FantasticStock.Views.Inventory
 
         private void SaveProduct()
         {
-            using(conn = new SqlConnection(chuoiketnoi))
+            using (conn = new SqlConnection(chuoiketnoi))
             {
                 conn.Open();
-                string query = "insert into Product (SKU, Barcode, ProductName, Description, CategoryID, SupplierID, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate, ModifiedDate) values(@SKU, @Barcode, @ProductName, @Description, @CategoryID, @SupplierID, @CostPrice, @SellingPrice, @StockQuantity, @ReorderLevel, @ProductImage, @CreatedDate, @ModifiedDate)";
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd;
+                string query;
+                if (ProductID > 0)
+                {
+                    query = "update Product set SKU = @SKU, Barcode = @Barcode, ProductName = @ProductName, Description = @Description, CategoryID = @CategoryID,SupplierID = @SupplierID, CostPrice = @CostPrice, SellingPrice = @SellingPrice, StockQuantity = @StockQuantity, ReorderLevel = @ReorderLevel, ProductImage = @ProductImage, ModifiedDate = @ModifiedDate where ProductID = @ProductID";
+
+
+                    cmd = new SqlCommand(query, conn);
+                }
+                else
+                {
+                    query = "insert into Product (SKU, Barcode, ProductName, Description, CategoryID, SupplierID, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate, ModifiedDate) values(@SKU, @Barcode, @ProductName, @Description, @CategoryID, @SupplierID, @CostPrice, @SellingPrice, @StockQuantity, @ReorderLevel, @ProductImage, @CreatedDate, @ModifiedDate)";
+                    cmd = new SqlCommand(query, conn);
+                    cmd = new SqlCommand(query, conn);
+                }
+
+                cmd.Parameters.AddWithValue("@ProductID", ProductID);
                 cmd.Parameters.AddWithValue("@SKU", txtSKU.Text);
                 cmd.Parameters.AddWithValue("@Barcode", txtBarcode.Text);
                 cmd.Parameters.AddWithValue("@ProductName", txtProductName.Text);
@@ -522,36 +505,25 @@ namespace FantasticStock.Views.Inventory
                 cmd.Parameters.AddWithValue("@SupplierID", cmbSupplier.SelectedValue);
                 cmd.Parameters.AddWithValue("@CostPrice", txtCostPrice.Text);
                 cmd.Parameters.AddWithValue("@SellingPrice", txtSalePrice.Text);
-                cmd.Parameters.AddWithValue("@StockQuantity", txtQuantityInStock.Text);            
+                cmd.Parameters.AddWithValue("@StockQuantity", txtQuantityInStock.Text);
                 cmd.Parameters.AddWithValue("@ReorderLevel", txtReorderLevel.Text);
-                if (pictureBoxProductImage.Image == null) 
+                if (pictureBoxProductImage.Image == null)
                     cmd.Parameters.Add("@ProductImage", SqlDbType.VarBinary).Value = DBNull.Value;
                 else cmd.Parameters.AddWithValue("@ProductImage", ImageToByteArray(pictureBoxProductImage.Image));
-                cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
-                cmd.Parameters.AddWithValue("@CreatedBy", 1);
-                cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
-                cmd.Parameters.AddWithValue("@ModifiedBy", 1);
+                if(ProductID == 0) cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                else cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
                 cmd.ExecuteNonQuery();
                 Load_dvgProducts();
-            }
-            
-            MessageBox.Show("Product saved successfully.", "Success",
+                string mes = ProductID > 0 ? "Updated successfully" : "Product saved successfully";
+                MessageBox.Show(mes, "Success",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
-        private void DeleteProduct(string productId)
-        {
-            // TODO: Implement actual delete functionality from database
-            DialogResult result = MessageBox.Show($"Are you sure you want to delete product {productId}?",
-                "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                MessageBox.Show("Product deleted successfully.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-              
             }
+            ProductID = 0;
+            
         }
+
+        
 
         private void CalculateMarkup()
         {
@@ -580,7 +552,7 @@ namespace FantasticStock.Views.Inventory
         //    cmbCategory.Items.Add("Networking");
         //}
 
-        
+
 
         #endregion
         private void lblDescription_Click(object sender, EventArgs e)
@@ -620,7 +592,7 @@ namespace FantasticStock.Views.Inventory
 
         private void textBox1_SizeChanged(object sender, EventArgs e)
         {
-            if(sender is TextBox textbox)
+            if (sender is TextBox textbox)
             {
                 textbox.Width = 40;
             }
@@ -650,7 +622,78 @@ namespace FantasticStock.Views.Inventory
         {
 
         }
+        private int ProductID = 0;
+        private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            else
+            {
+                DataRowView drv = dgvProducts.Rows[e.RowIndex].DataBoundItem as DataRowView;
+                if (drv != null)
+                {
+                    ProductID = Convert.ToInt32(drv["ProductID"]);
+                    txtProductName.Text = drv["ProductName"].ToString();
+                    txtSKU.Text = drv["SKU"].ToString();
+                    txtBarcode.Text = drv["Barcode"].ToString();
+                    cmbCategory.SelectedValue = drv["CategoryID"];
+                    cmbSupplier.SelectedValue = drv["SupplierID"];
+                    txtSalePrice.Text = drv["SellingPrice"].ToString();
+                    txtCostPrice.Text = drv["CostPrice"].ToString();
+                    txtMarkup.Text = ((Convert.ToDecimal(drv["SellingPrice"]) - Convert.ToDecimal(drv["CostPrice"])) / Convert.ToDecimal(drv["CostPrice"]) * 100).ToString();
+                    txtQuantityInStock.Text = drv["StockQuantity"].ToString();
+                    txtReorderLevel.Text = drv["ReorderLevel"].ToString();
+                    txtDescription.Text = drv["Description"].ToString();
+                    if (drv["ProductImage"] != DBNull.Value)
+                    {
+                        byte[] img = (byte[])drv["ProductImage"];
+                        MemoryStream ms = new MemoryStream(img);
+                        pictureBoxProductImage.Image = Image.FromStream(ms);
+                    }
+                    else
+                    {
+                        pictureBoxProductImage.Image = null;
+                    }
+                }
+                if (e.ColumnIndex == dgvProducts.Columns["Actions"].Index)
+                {
+                    Khoa_Chinh_Sua(true);
+                }
+                else
+                {
+                    Khoa_Chinh_Sua(false);
+                }
 
-        
+            }
+        }
+
+        private void txtSearch_TextChanged_1(object sender, EventArgs e)
+        {
+            string textsearch = txtSearch.Text.Trim();
+            using(conn = new SqlConnection(chuoiketnoi))
+            {
+                conn.Open();
+                string query = "select * from Product p join Category c on p.CategoryID = c.CategoryID join Supplier s on p.SupplierID = s.SupplierID where ProductName like @textsearch";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@textsearch","%"+ textsearch + "%");
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adp.Fill(dt);
+                dgvProducts.DataSource = dt;
+                dgvProducts.Columns["dgvProductID"].DataPropertyName = "ProductID";
+                dgvProducts.Columns["dgvName"].DataPropertyName = "ProductName";
+                dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryID";
+                dgvProducts.Columns["dgvSupp"].DataPropertyName = "SupplierID";
+                dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
+                dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
+                dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
+                //dgvProducts.DataSource = dt;
+                DataGridViewButtonColumn actionsColumn = dgvProducts.Columns["Actions"] as DataGridViewButtonColumn;
+                if (actionsColumn != null)
+                {
+                    actionsColumn.UseColumnTextForButtonValue = true;
+                    actionsColumn.Text = "✏️";
+                }
+            }
+        }
     }
 }

@@ -34,10 +34,10 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lstSuppliers = new System.Windows.Forms.ListView();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSuppliers = new System.Windows.Forms.Label();
             this.pnlSupplierDetails = new System.Windows.Forms.Panel();
             this.lblSupplierDetails = new System.Windows.Forms.Label();
@@ -74,18 +74,20 @@
             this.colLastOrderDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
-            this.pnlSupplierDetails.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvProductsSupplied)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.pnlSupplierDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProductsSupplied)).BeginInit();
+            this.panel4.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -118,7 +120,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblTitle.Location = new System.Drawing.Point(32, 15);
+            this.lblTitle.Location = new System.Drawing.Point(15, 19);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(180, 21);
             this.lblTitle.TabIndex = 1;
@@ -138,79 +140,79 @@
             // panel3
             // 
             this.panel3.AutoScroll = true;
-            this.panel3.Controls.Add(this.lstSuppliers);
+            this.panel3.BackColor = System.Drawing.SystemColors.Window;
             this.panel3.Controls.Add(this.panel4);
+            this.panel3.Controls.Add(this.lstSuppliers);
             this.panel3.Controls.Add(this.panel5);
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(269, 608);
+            this.panel3.Size = new System.Drawing.Size(369, 803);
             this.panel3.TabIndex = 0;
             // 
             // lstSuppliers
             // 
+            this.lstSuppliers.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.lstSuppliers.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lstSuppliers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSuppliers.Dock = System.Windows.Forms.DockStyle.Top;
             this.lstSuppliers.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstSuppliers.FullRowSelect = true;
             this.lstSuppliers.HideSelection = false;
-            this.lstSuppliers.Location = new System.Drawing.Point(0, 100);
+            this.lstSuppliers.HoverSelection = true;
+            this.lstSuppliers.Location = new System.Drawing.Point(0, 47);
             this.lstSuppliers.Name = "lstSuppliers";
-            this.lstSuppliers.Size = new System.Drawing.Size(269, 456);
+            this.lstSuppliers.Size = new System.Drawing.Size(369, 395);
             this.lstSuppliers.TabIndex = 5;
             this.lstSuppliers.UseCompatibleStateImageBehavior = false;
             this.lstSuppliers.View = System.Windows.Forms.View.Details;
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.btnDelete);
-            this.panel4.Controls.Add(this.btnEdit);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 556);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(269, 52);
-            this.panel4.TabIndex = 1;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.BackColor = System.Drawing.Color.Crimson;
-            this.btnDelete.FlatAppearance.BorderSize = 0;
-            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(120, 14);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(64, 25);
-            this.btnDelete.TabIndex = 9;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.BackColor = System.Drawing.Color.White;
-            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEdit.Location = new System.Drawing.Point(84, 14);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(30, 25);
-            this.btnEdit.TabIndex = 8;
-            this.btnEdit.Text = "✏️";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            // 
             // panel5
             // 
+            this.panel5.BackColor = System.Drawing.SystemColors.Window;
             this.panel5.Controls.Add(this.panel2);
             this.panel5.Controls.Add(this.lblSuppliers);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(269, 100);
+            this.panel5.Size = new System.Drawing.Size(369, 47);
             this.panel5.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.txtSearch);
+            this.panel2.Location = new System.Drawing.Point(187, 9);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(179, 27);
+            this.panel2.TabIndex = 6;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::FantasticStock.Properties.Resources.search_interface_symbol;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 7);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(27, 14);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.BackColor = System.Drawing.Color.White;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Location = new System.Drawing.Point(34, 3);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(103, 16);
+            this.txtSearch.TabIndex = 0;
             // 
             // lblSuppliers
             // 
             this.lblSuppliers.AutoSize = true;
             this.lblSuppliers.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSuppliers.Location = new System.Drawing.Point(3, 34);
+            this.lblSuppliers.Location = new System.Drawing.Point(12, 11);
             this.lblSuppliers.Name = "lblSuppliers";
             this.lblSuppliers.Size = new System.Drawing.Size(71, 19);
             this.lblSuppliers.TabIndex = 4;
@@ -219,6 +221,8 @@
             // pnlSupplierDetails
             // 
             this.pnlSupplierDetails.AutoScroll = true;
+            this.pnlSupplierDetails.BackColor = System.Drawing.SystemColors.Window;
+            this.pnlSupplierDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlSupplierDetails.Controls.Add(this.lblSupplierDetails);
             this.pnlSupplierDetails.Controls.Add(this.lblCompanyName);
             this.pnlSupplierDetails.Controls.Add(this.txtCompanyName);
@@ -249,9 +253,9 @@
             this.pnlSupplierDetails.Controls.Add(this.dgvProductsSupplied);
             this.pnlSupplierDetails.Controls.Add(this.btnSave);
             this.pnlSupplierDetails.Controls.Add(this.btnCancel);
-            this.pnlSupplierDetails.Location = new System.Drawing.Point(278, 3);
+            this.pnlSupplierDetails.Location = new System.Drawing.Point(378, 3);
             this.pnlSupplierDetails.Name = "pnlSupplierDetails";
-            this.pnlSupplierDetails.Size = new System.Drawing.Size(810, 608);
+            this.pnlSupplierDetails.Size = new System.Drawing.Size(1054, 803);
             this.pnlSupplierDetails.TabIndex = 6;
             // 
             // lblSupplierDetails
@@ -532,7 +536,8 @@
             // 
             this.dgvProductsSupplied.AllowUserToAddRows = false;
             this.dgvProductsSupplied.AllowUserToDeleteRows = false;
-            this.dgvProductsSupplied.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvProductsSupplied.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvProductsSupplied.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvProductsSupplied.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvProductsSupplied.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProductsSupplied.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -543,6 +548,7 @@
             this.dgvProductsSupplied.Location = new System.Drawing.Point(17, 599);
             this.dgvProductsSupplied.Name = "dgvProductsSupplied";
             this.dgvProductsSupplied.ReadOnly = true;
+            this.dgvProductsSupplied.RowHeadersVisible = false;
             this.dgvProductsSupplied.RowHeadersWidth = 62;
             this.dgvProductsSupplied.Size = new System.Drawing.Size(770, 140);
             this.dgvProductsSupplied.TabIndex = 33;
@@ -553,7 +559,6 @@
             this.colProductId.MinimumWidth = 8;
             this.colProductId.Name = "colProductId";
             this.colProductId.ReadOnly = true;
-            this.colProductId.Width = 150;
             // 
             // colProductName
             // 
@@ -561,7 +566,6 @@
             this.colProductName.MinimumWidth = 8;
             this.colProductName.Name = "colProductName";
             this.colProductName.ReadOnly = true;
-            this.colProductName.Width = 250;
             // 
             // colLeadTime
             // 
@@ -569,7 +573,6 @@
             this.colLeadTime.MinimumWidth = 8;
             this.colLeadTime.Name = "colLeadTime";
             this.colLeadTime.ReadOnly = true;
-            this.colLeadTime.Width = 150;
             // 
             // colLastOrderDate
             // 
@@ -577,7 +580,6 @@
             this.colLastOrderDate.MinimumWidth = 8;
             this.colLastOrderDate.Name = "colLastOrderDate";
             this.colLastOrderDate.ReadOnly = true;
-            this.colLastOrderDate.Width = 150;
             // 
             // btnSave
             // 
@@ -605,37 +607,59 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // panel2
+            // panel4
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Controls.Add(this.txtSearch);
-            this.panel2.Location = new System.Drawing.Point(84, 67);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(179, 27);
-            this.panel2.TabIndex = 6;
+            this.panel4.BackColor = System.Drawing.SystemColors.Window;
+            this.panel4.Controls.Add(this.tableLayoutPanel1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(0, 442);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(369, 52);
+            this.panel4.TabIndex = 9;
             // 
-            // pictureBox1
+            // tableLayoutPanel1
             // 
-            this.pictureBox1.Image = global::FantasticStock.Properties.Resources.search_interface_symbol;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 7);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(27, 14);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.btnEdit, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnDelete, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(234, 20);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(135, 29);
+            this.tableLayoutPanel1.TabIndex = 7;
             // 
-            // txtSearch
+            // btnEdit
             // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.BackColor = System.Drawing.Color.White;
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Location = new System.Drawing.Point(34, 3);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(103, 16);
-            this.txtSearch.TabIndex = 0;
+            this.btnEdit.BackColor = System.Drawing.Color.White;
+            this.btnEdit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEdit.Location = new System.Drawing.Point(3, 3);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(61, 23);
+            this.btnEdit.TabIndex = 8;
+            this.btnEdit.Text = "✏️";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.Color.Crimson;
+            this.btnDelete.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.ForeColor = System.Drawing.Color.White;
+            this.btnDelete.Location = new System.Drawing.Point(70, 3);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(62, 23);
+            this.btnDelete.TabIndex = 9;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = false;
             // 
             // SupplierManagementView
             // 
@@ -653,15 +677,16 @@
             this.panel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            this.pnlSupplierDetails.ResumeLayout(false);
-            this.pnlSupplierDetails.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvProductsSupplied)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.pnlSupplierDetails.ResumeLayout(false);
+            this.pnlSupplierDetails.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProductsSupplied)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

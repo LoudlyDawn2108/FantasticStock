@@ -38,6 +38,7 @@ namespace FantasticStock.Views.Inventory
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.colProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +60,14 @@ namespace FantasticStock.Views.Inventory
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelProductsContainer = new System.Windows.Forms.Panel();
             this.dgvProducts = new System.Windows.Forms.DataGridView();
+            this.dgvProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvCg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSupp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvQtt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvRL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Actions = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -99,14 +108,6 @@ namespace FantasticStock.Views.Inventory
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.dgvProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvCg = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvSupp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvQtt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvRL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Actions = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -306,7 +307,18 @@ namespace FantasticStock.Views.Inventory
             // 
             this.dgvProducts.AllowUserToAddRows = false;
             this.dgvProducts.AllowUserToDeleteRows = false;
+            this.dgvProducts.AllowUserToResizeColumns = false;
+            this.dgvProducts.AllowUserToResizeRows = false;
             this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvProducts.BackgroundColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvProducts.ColumnHeadersHeight = 34;
             this.dgvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvProductID,
@@ -321,10 +333,61 @@ namespace FantasticStock.Views.Inventory
             this.dgvProducts.Location = new System.Drawing.Point(15, 57);
             this.dgvProducts.Name = "dgvProducts";
             this.dgvProducts.ReadOnly = true;
+            this.dgvProducts.RowHeadersVisible = false;
             this.dgvProducts.RowHeadersWidth = 62;
             this.dgvProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvProducts.Size = new System.Drawing.Size(779, 581);
             this.dgvProducts.TabIndex = 8;
+            this.dgvProducts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProducts_CellClick);
+            // 
+            // dgvProductID
+            // 
+            this.dgvProductID.HeaderText = "Product ID";
+            this.dgvProductID.Name = "dgvProductID";
+            this.dgvProductID.ReadOnly = true;
+            // 
+            // dgvName
+            // 
+            this.dgvName.HeaderText = "Name";
+            this.dgvName.Name = "dgvName";
+            this.dgvName.ReadOnly = true;
+            // 
+            // dgvCg
+            // 
+            this.dgvCg.HeaderText = "Category";
+            this.dgvCg.Name = "dgvCg";
+            this.dgvCg.ReadOnly = true;
+            // 
+            // dgvSupp
+            // 
+            this.dgvSupp.HeaderText = "Supplier";
+            this.dgvSupp.Name = "dgvSupp";
+            this.dgvSupp.ReadOnly = true;
+            // 
+            // dgvPrice
+            // 
+            this.dgvPrice.HeaderText = "Price";
+            this.dgvPrice.Name = "dgvPrice";
+            this.dgvPrice.ReadOnly = true;
+            // 
+            // dgvQtt
+            // 
+            this.dgvQtt.HeaderText = "Quantity";
+            this.dgvQtt.Name = "dgvQtt";
+            this.dgvQtt.ReadOnly = true;
+            // 
+            // dgvRL
+            // 
+            this.dgvRL.HeaderText = "Reorder Level\t";
+            this.dgvRL.Name = "dgvRL";
+            this.dgvRL.ReadOnly = true;
+            // 
+            // Actions
+            // 
+            this.Actions.HeaderText = "Actions";
+            this.Actions.Name = "Actions";
+            this.Actions.ReadOnly = true;
+            this.Actions.Text = "✏️";
             // 
             // panel1
             // 
@@ -363,10 +426,11 @@ namespace FantasticStock.Views.Inventory
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.BackColor = System.Drawing.Color.White;
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Location = new System.Drawing.Point(34, 3);
+            this.txtSearch.Location = new System.Drawing.Point(36, 7);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(103, 13);
+            this.txtSearch.Size = new System.Drawing.Size(106, 13);
             this.txtSearch.TabIndex = 0;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged_1);
             // 
             // label1
             // 
@@ -450,7 +514,7 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.Location = new System.Drawing.Point(818, 3);
             this.panelDetails.Name = "panelDetails";
             this.panelDetails.Padding = new System.Windows.Forms.Padding(15);
-            this.panelDetails.Size = new System.Drawing.Size(665, 694);
+            this.panelDetails.Size = new System.Drawing.Size(665, 833);
             this.panelDetails.TabIndex = 10;
             // 
             // lblDetailsHeader
@@ -699,55 +763,6 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // dgvProductID
-            // 
-            this.dgvProductID.HeaderText = "Product ID";
-            this.dgvProductID.Name = "dgvProductID";
-            this.dgvProductID.ReadOnly = true;
-            // 
-            // dgvName
-            // 
-            this.dgvName.HeaderText = "Name";
-            this.dgvName.Name = "dgvName";
-            this.dgvName.ReadOnly = true;
-            // 
-            // dgvCg
-            // 
-            this.dgvCg.HeaderText = "Category";
-            this.dgvCg.Name = "dgvCg";
-            this.dgvCg.ReadOnly = true;
-            // 
-            // dgvSupp
-            // 
-            this.dgvSupp.HeaderText = "Supplier";
-            this.dgvSupp.Name = "dgvSupp";
-            this.dgvSupp.ReadOnly = true;
-            // 
-            // dgvPrice
-            // 
-            this.dgvPrice.HeaderText = "Price";
-            this.dgvPrice.Name = "dgvPrice";
-            this.dgvPrice.ReadOnly = true;
-            // 
-            // dgvQtt
-            // 
-            this.dgvQtt.HeaderText = "Quantity";
-            this.dgvQtt.Name = "dgvQtt";
-            this.dgvQtt.ReadOnly = true;
-            // 
-            // dgvRL
-            // 
-            this.dgvRL.HeaderText = "Reorder Level\t";
-            this.dgvRL.Name = "dgvRL";
-            this.dgvRL.ReadOnly = true;
-            // 
-            // Actions
-            // 
-            this.Actions.HeaderText = "Actions";
-            this.Actions.Name = "Actions";
-            this.Actions.ReadOnly = true;
-            this.Actions.Text = "✏️";
             // 
             // ProductManagementView
             // 

@@ -34,16 +34,16 @@ namespace FantasticStock.Views.Inventory
             lstSuppliers.GridLines = true;
 
             // Add columns to the ListView
-            lstSuppliers.Columns.Add("Supplier", 200);
-            lstSuppliers.Columns.Add("Contact", 0); // Hidden column
+            //lstSuppliers.Columns.Add("Supplier", 200);
+            //lstSuppliers.Columns.Add("Contact", 0); // Hidden column
 
-            // Add sample data
-            AddSupplier("TechSuppliers Inc.", "John Williams\n(555) 123-4567");
-            AddSupplier("AudioTech Ltd.", "Sarah Johnson\n(555) 234-5678");
-            AddSupplier("VisualTech Corp", "Michael Chen\n(555) 345-6789");
-            AddSupplier("ConnectAll Inc.", "Lisa Rodriguez\n(555) 456-7890");
-            AddSupplier("GlobalComputers Ltd.", "David Smith\n(555) 567-8901");
-            AddSupplier("NetworkPro Solutions", "");
+            //// Add sample data
+            //AddSupplier("TechSuppliers Inc.", "John Williams\n(555) 123-4567");
+            //AddSupplier("AudioTech Ltd.", "Sarah Johnson\n(555) 234-5678");
+            //AddSupplier("VisualTech Corp", "Michael Chen\n(555) 345-6789");
+            //AddSupplier("ConnectAll Inc.", "Lisa Rodriguez\n(555) 456-7890");
+            //AddSupplier("GlobalComputers Ltd.", "David Smith\n(555) 567-8901");
+            //AddSupplier("NetworkPro Solutions", "");
 
             // Select the first item by default
             if (lstSuppliers.Items.Count > 0)
@@ -67,43 +67,7 @@ namespace FantasticStock.Views.Inventory
             }
         }
 
-        //private void UpdateSupplierDetails(string supplierName)
-        //{
-        //    // In a real application, you would fetch this data from a database
-        //    // Here we just set the fields based on the selected supplier
-        //    txtCompanyName.Text = supplierName;
-
-        //    // This would normally come from a database
-        //    if (supplierName == "TechSuppliers Inc.")
-        //    {
-        //        txtContactPerson.Text = "John Williams";
-        //        txtPhone.Text = "(555) 123-4567";
-        //        txtEmail.Text = "john.williams@techsuppliers.com";
-        //        txtWebsite.Text = "https://www.techsuppliers.com";
-        //        cmbPaymentTerms.Text = "Net 45";
-        //        txtStreetAddress.Text = "123 Tech Boulevard";
-        //        txtCity.Text = "Silicon Valley";
-        //        txtStateProvince.Text = "CA";
-        //        txtPostalCode.Text = "94025";
-        //        txtCountry.Text = "United States";
-        //        txtNotes.Text = "Preferred supplier for laptop and desktop computers. Offers special discount for bulk orders over $10,000.";
-        //    }
-        //    else if (supplierName == "AudioTech Ltd.")
-        //    {
-        //        txtContactPerson.Text = "Sarah Johnson";
-        //        txtPhone.Text = "(555) 234-5678";
-        //        txtEmail.Text = "sarah.j@audiotech.com";
-        //        txtWebsite.Text = "https://www.audiotech.com";
-        //        cmbPaymentTerms.Text = "Net 30";
-        //        txtStreetAddress.Text = "456 Sound Avenue";
-        //        txtCity.Text = "Los Angeles";
-        //        txtStateProvince.Text = "CA";
-        //        txtPostalCode.Text = "90001";
-        //        txtCountry.Text = "United States";
-        //        txtNotes.Text = "Specializes in audio equipment. Reliable delivery, occasional quality issues.";
-        //    }
-        //    // Add similar logic for other suppliers
-        //}
+  
 
         private void AddSupplier(string name, string contact)
         {
@@ -169,10 +133,6 @@ namespace FantasticStock.Views.Inventory
         private Label lblTitle;
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel3;
-        private ListView lstSuppliers;
-        private Panel panel4;
-        private Button btnDelete;
-        private Button btnEdit;
         private Panel panel5;
         private Label lblSuppliers;
         private Panel pnlSupplierDetails;
@@ -213,5 +173,10 @@ namespace FantasticStock.Views.Inventory
         private Panel panel2;
         private PictureBox pictureBox1;
         private TextBox txtSearch;
+        private ListView lstSuppliers;
+        private Panel panel4;
+        private TableLayoutPanel tableLayoutPanel1;
+        private Button btnEdit;
+        private Button btnDelete;
     }
 }
