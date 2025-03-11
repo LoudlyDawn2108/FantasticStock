@@ -48,11 +48,6 @@ namespace FantasticStock.Views.Sales
             this.tabControlDetails = new System.Windows.Forms.TabControl();
             this.tabPersonalInfo = new System.Windows.Forms.TabPage();
             this.grpPersonalInfo = new System.Windows.Forms.GroupBox();
-            this.btnNewCustomer = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.lblAddress = new System.Windows.Forms.Label();
             this.txtModifiedDate = new System.Windows.Forms.TextBox();
@@ -77,6 +72,11 @@ namespace FantasticStock.Views.Sales
             this.colOrderStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabNotes = new System.Windows.Forms.TabPage();
             this.pnlButtons = new System.Windows.Forms.Panel();
+            this.btnNewCustomer = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.txtNotes = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -111,7 +111,7 @@ namespace FantasticStock.Views.Sales
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvCustomers);
-            this.splitContainer1.Size = new System.Drawing.Size(500, 671);
+            this.splitContainer1.Size = new System.Drawing.Size(495, 671);
             this.splitContainer1.SplitterDistance = 223;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 0;
@@ -129,7 +129,7 @@ namespace FantasticStock.Views.Sales
             this.grpSearch.Margin = new System.Windows.Forms.Padding(2);
             this.grpSearch.Name = "grpSearch";
             this.grpSearch.Padding = new System.Windows.Forms.Padding(2);
-            this.grpSearch.Size = new System.Drawing.Size(500, 223);
+            this.grpSearch.Size = new System.Drawing.Size(495, 223);
             this.grpSearch.TabIndex = 0;
             this.grpSearch.TabStop = false;
             this.grpSearch.Text = "Search";
@@ -209,7 +209,7 @@ namespace FantasticStock.Views.Sales
             this.dgvCustomers.RowHeadersWidth = 51;
             this.dgvCustomers.RowTemplate.Height = 24;
             this.dgvCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCustomers.Size = new System.Drawing.Size(500, 445);
+            this.dgvCustomers.Size = new System.Drawing.Size(495, 445);
             this.dgvCustomers.TabIndex = 0;
             // 
             // colCustomerId
@@ -249,7 +249,7 @@ namespace FantasticStock.Views.Sales
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(500, 0);
+            this.splitContainer2.Location = new System.Drawing.Point(495, 0);
             this.splitContainer2.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -262,7 +262,7 @@ namespace FantasticStock.Views.Sales
             // 
             this.splitContainer2.Panel2.Controls.Add(this.pnlButtons);
             this.splitContainer2.Panel2.Controls.Add(this.txtNotes);
-            this.splitContainer2.Size = new System.Drawing.Size(694, 671);
+            this.splitContainer2.Size = new System.Drawing.Size(699, 671);
             this.splitContainer2.SplitterDistance = 559;
             this.splitContainer2.SplitterWidth = 3;
             this.splitContainer2.TabIndex = 1;
@@ -277,7 +277,7 @@ namespace FantasticStock.Views.Sales
             this.tabControlDetails.Margin = new System.Windows.Forms.Padding(2);
             this.tabControlDetails.Name = "tabControlDetails";
             this.tabControlDetails.SelectedIndex = 0;
-            this.tabControlDetails.Size = new System.Drawing.Size(694, 559);
+            this.tabControlDetails.Size = new System.Drawing.Size(699, 559);
             this.tabControlDetails.TabIndex = 0;
             // 
             // tabPersonalInfo
@@ -287,7 +287,7 @@ namespace FantasticStock.Views.Sales
             this.tabPersonalInfo.Margin = new System.Windows.Forms.Padding(2);
             this.tabPersonalInfo.Name = "tabPersonalInfo";
             this.tabPersonalInfo.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPersonalInfo.Size = new System.Drawing.Size(686, 533);
+            this.tabPersonalInfo.Size = new System.Drawing.Size(691, 533);
             this.tabPersonalInfo.TabIndex = 0;
             this.tabPersonalInfo.Text = "Personal Info";
             this.tabPersonalInfo.UseVisualStyleBackColor = true;
@@ -315,60 +315,10 @@ namespace FantasticStock.Views.Sales
             this.grpPersonalInfo.Margin = new System.Windows.Forms.Padding(2);
             this.grpPersonalInfo.Name = "grpPersonalInfo";
             this.grpPersonalInfo.Padding = new System.Windows.Forms.Padding(2);
-            this.grpPersonalInfo.Size = new System.Drawing.Size(682, 529);
+            this.grpPersonalInfo.Size = new System.Drawing.Size(687, 529);
             this.grpPersonalInfo.TabIndex = 0;
             this.grpPersonalInfo.TabStop = false;
             this.grpPersonalInfo.Text = "Personal Info";
-            // 
-            // btnNewCustomer
-            // 
-            this.btnNewCustomer.Location = new System.Drawing.Point(11, 220);
-            this.btnNewCustomer.Margin = new System.Windows.Forms.Padding(2);
-            this.btnNewCustomer.Name = "btnNewCustomer";
-            this.btnNewCustomer.Size = new System.Drawing.Size(75, 23);
-            this.btnNewCustomer.TabIndex = 20;
-            this.btnNewCustomer.Text = "New";
-            this.btnNewCustomer.UseVisualStyleBackColor = true;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(90, 220);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(2);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(75, 23);
-            this.btnEdit.TabIndex = 19;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(169, 220);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 18;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(248, 220);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 17;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(327, 220);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 16;
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
             // 
             // txtAddress
             // 
@@ -592,8 +542,58 @@ namespace FantasticStock.Views.Sales
             this.pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlButtons.Location = new System.Drawing.Point(0, 2);
             this.pnlButtons.Name = "pnlButtons";
-            this.pnlButtons.Size = new System.Drawing.Size(694, 107);
+            this.pnlButtons.Size = new System.Drawing.Size(699, 107);
             this.pnlButtons.TabIndex = 1;
+            // 
+            // btnNewCustomer
+            // 
+            this.btnNewCustomer.Location = new System.Drawing.Point(11, 220);
+            this.btnNewCustomer.Margin = new System.Windows.Forms.Padding(2);
+            this.btnNewCustomer.Name = "btnNewCustomer";
+            this.btnNewCustomer.Size = new System.Drawing.Size(75, 23);
+            this.btnNewCustomer.TabIndex = 20;
+            this.btnNewCustomer.Text = "New";
+            this.btnNewCustomer.UseVisualStyleBackColor = true;
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Location = new System.Drawing.Point(90, 220);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit.TabIndex = 19;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(169, 220);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 18;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(248, 220);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 17;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(327, 220);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 16;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
             // 
             // txtNotes
             // 
@@ -602,7 +602,7 @@ namespace FantasticStock.Views.Sales
             this.txtNotes.Margin = new System.Windows.Forms.Padding(2);
             this.txtNotes.Multiline = true;
             this.txtNotes.Name = "txtNotes";
-            this.txtNotes.Size = new System.Drawing.Size(694, 109);
+            this.txtNotes.Size = new System.Drawing.Size(699, 109);
             this.txtNotes.TabIndex = 0;
             // 
             // CMView

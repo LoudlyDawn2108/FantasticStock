@@ -174,7 +174,6 @@ namespace FantasticStock.Views.Inventory
         private Button btnDelete;
         private Button btnEdit;
         private Panel panel5;
-        private TextBox txtSearchSuppliers;
         private Label lblSuppliers;
         private Panel pnlSupplierDetails;
         private Label lblSupplierDetails;
@@ -211,5 +210,8 @@ namespace FantasticStock.Views.Inventory
         private DataGridViewTextBoxColumn colLastOrderDate;
         private Button btnSave;
         private Button btnCancel;
+        private Panel panel2;
+        private PictureBox pictureBox1;
+        private TextBox txtSearch;
     }
 }
