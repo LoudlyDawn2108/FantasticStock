@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 using System.Windows.Input;
 using FantasticStock.Common;
 using FantasticStock.Models;
@@ -19,6 +20,7 @@ namespace FantasticStock.ViewModels
         private BindingList<Permission> _permissions;
         private BindingList<AuditLogEntry> _activityLogs;
         private User _selectedUser;
+        private Permission _selectedUserPermission;
         private Role _selectedRole;
         private string _searchText;
         private string _statusFilter;
@@ -26,9 +28,7 @@ namespace FantasticStock.ViewModels
         private DateTime? _activityStartDate;
         private DateTime? _activityEndDate;
         private string _activityTypeFilter;
-
-        private int _currentUserPage;
-        private const int PageSize = 10;
+        private bool _isEditMode;
 
         public UserManagementViewModel()
         {
@@ -47,8 +47,6 @@ namespace FantasticStock.ViewModels
             ExportActivityCommand = new RelayCommand(ExportActivity);
             FilterActivityCommand = new RelayCommand(FilterActivity);
 
-            _currentUserPage = 0;
-
             // Initialize data
             LoadData();
         }
@@ -57,7 +55,7 @@ namespace FantasticStock.ViewModels
 
         public BindingList<User> Users
         {
-            get => new BindingList<User>(_users.Skip(_currentUserPage * PageSize).Take(PageSize).ToList());
+            get => _users;
         
             private set => SetProperty(ref _users, value);
         }
@@ -267,7 +265,9 @@ namespace FantasticStock.ViewModels
         }
 
         private User OriginalUser { get; set; }
-        public bool IsEditMode { get; set; }
+
+        
+        public bool IsEditMode { get => _isEditMode; set => SetProperty(ref _isEditMode, value); }
 
         private void SaveUser(object parameter)
         {
@@ -336,12 +336,6 @@ namespace FantasticStock.ViewModels
             LoadActivityLogs();
         }
 
-        public void NextPage()
-        {
-            _currentUserPage++;
-            OnPropertyChanged(nameof(Users));
-        }
-
         #endregion
 
         #region Helper Methods
@@ -364,19 +358,15 @@ namespace FantasticStock.ViewModels
         {
             try
             {
-                // Load users
-                var userList = _userService.GetAllUsers();
-                Users = new BindingList<User>(userList);
+                var allUsers = _userService.GetAllUsers();
+                Users = new BindingList<User>(allUsers);
                 
-                // Load roles
                 var roleList = _userService.GetAllRoles();
                 Roles = new BindingList<Role>(roleList);
                 
-                // Load permissions
                 var permissionList = _userService.GetAllPermissions();
                 Permissions = new BindingList<Permission>(permissionList);
                 
-                // Load activity logs
                 LoadActivityLogs();
                 
                 // Reset filters
@@ -511,17 +501,20 @@ namespace FantasticStock.ViewModels
         public static bool ShowConfirmation(string message, string title)
         {
             // In a real app, this would show a dialog and return the result
-            return true;
+            var result = MessageBox.Show(message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return result == DialogResult.Yes;
         }
         
         public static void ShowInformation(string message, string title)
         {
             // In a real app, this would show a dialog
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         public static void ShowError(string message, string title)
         {
             // In a real app, this would show a dialog
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 

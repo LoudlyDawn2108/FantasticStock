@@ -1,4 +1,5 @@
-SELECT COUNT(*) FROM sys.databases WHERE name = 'FantasticStock'
+SELECT COUNT(*) FROM sys.databases WHERE name = 'BusTicketDB';
+SELECT * FROM sys.databases WHERE name = 'BusTicketDB';
 
 -- Create the Administrative Domain Database
 CREATE DATABASE FantasticStock;
@@ -265,3 +266,14 @@ VALUES
 ('Sales', 'ReceiptFooter', 'Please come again!', 'String', 'Text to display at bottom of receipts'),
 ('Inventory', 'LowStockThreshold', '10', 'Int', 'Default low stock alert threshold');
 GO
+
+IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = 'BusTicketDB') CREATE DATABASE BusTicketDB
+
+CREATE TABLE TicketSales (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    CustomerName VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    SeatId VARCHAR(10) NOT NULL,
+    TicketPrice DECIMAL(10, 2) NOT NULL,
+    SaleDate DATETIME NOT NULL
+);

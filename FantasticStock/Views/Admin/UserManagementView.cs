@@ -44,6 +44,8 @@ namespace FantasticStock.Views
             {
                 // Bind users grid
                 dgvUsers.DataSource = _viewModel.Users;
+                dgvUsers.DataBindings.Add("DataSource", _viewModel, "Users", true, DataSourceUpdateMode.OnPropertyChanged);
+
 
                 // Bind user detail fields
                 txtUsername.DataBindings.Add("Text", _viewModel, "SelectedUser.Username", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -97,7 +99,6 @@ namespace FantasticStock.Views
                 btnResetPassword.Click += (s, e) => _viewModel.ResetPasswordCommand.Execute(null);
                 btnSave.Click += (s, e) => _viewModel.SaveUserCommand.Execute(null);
                 btnCancel.Click += (s, e) => _viewModel.CancelEditCommand.Execute(null);
-                btnNextPage.Click += (s, e) => _viewModel.NextPage();
                 btnExport.Click += (s, e) => _viewModel.ExportActivityCommand.Execute(null);
                 btnFilter.Click += (s, e) => _viewModel.FilterActivityCommand.Execute(null);
 
@@ -106,7 +107,8 @@ namespace FantasticStock.Views
                 txtPassword.TextChanged += TxtPassword_TextChanged;
 
                 // Update UI based on edit mode
-                UpdateUIState(_viewModel.IsEditMode);
+                UpdateUIEditState(_viewModel.IsEditMode);
+                btnEdit.Enabled = true;
                 _viewModel.PropertyChanged += ViewModel_PropertyChanged;
             }
             catch (Exception ex)
@@ -141,13 +143,6 @@ namespace FantasticStock.Views
                 DataPropertyName = "DisplayName",
                 HeaderText = "Name",
                 Width = 150
-            });
-
-            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "Email",
-                HeaderText = "Email",
-                Width = 200
             });
 
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
@@ -312,11 +307,11 @@ namespace FantasticStock.Views
         {
             if (e.PropertyName == "IsEditMode")
             {
-                UpdateUIState(_viewModel.IsEditMode);
+                UpdateUIEditState(_viewModel.IsEditMode);
             }
         }
 
-        private void UpdateUIState(bool isEditMode)
+        private void UpdateUIEditState(bool isEditMode)
         {
             // Update control states based on edit mode
             txtUsername.ReadOnly = !isEditMode || (_viewModel.SelectedUser?.UserID > 0);
@@ -326,6 +321,7 @@ namespace FantasticStock.Views
             cmbRoles.Enabled = isEditMode;
             chkTwoFactorEnabled.Enabled = isEditMode;
             dateTimePickerExpiration.Enabled = isEditMode;
+            treeViewPermissions.Enabled = _viewModel.IsEditMode;
 
             // Security tab controls
             txtPassword.Enabled = isEditMode;
@@ -351,11 +347,13 @@ namespace FantasticStock.Views
             btnDeactivate.Enabled = !isEditMode && _viewModel.SelectedUser != null;
             btnDelete.Enabled = !isEditMode && _viewModel.SelectedUser != null;
 
+            dgvUsers.Enabled = !isEditMode;
+
             // Update permissions tree based on role selection
-            if (_viewModel.SelectedUser != null)
-            {
-                UpdatePermissionsTree();
-            }
+            //if (_viewModel.SelectedUser != null)
+            //{
+            //    UpdatePermissionsTree();
+            //}
         }
 
         private void UpdatePermissionsTree()
@@ -363,7 +361,8 @@ namespace FantasticStock.Views
             if (_viewModel.SelectedUser != null && treeViewPermissions.Nodes.Count > 0)
             {
                 // Disable or enable nodes based on edit mode
-                SetTreeNodesEnabled(treeViewPermissions.Nodes, false);
+                
+                SetTreeNodesEnabled(treeViewPermissions.Nodes, _viewModel.IsEditMode);
             }
         }
 
@@ -372,6 +371,7 @@ namespace FantasticStock.Views
             foreach (TreeNode node in nodes)
             {
                 node.ForeColor = enabled ? SystemColors.ControlText : SystemColors.GrayText;
+                
 
                 if (node.Nodes.Count > 0)
                 {

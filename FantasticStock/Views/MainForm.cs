@@ -58,6 +58,7 @@ namespace FantasticStock.Views
             button14.Tag = ModuleType.Expenses;
             button15.Tag = ModuleType.FinancialReports;
 
+            // Admin module
             button17.Tag = ModuleType.UserManagement;
             button18.Tag = ModuleType.SystemConfiguration;
             button19.Tag = ModuleType.BackupRestore;
@@ -135,16 +136,9 @@ namespace FantasticStock.Views
                     moduleControl = new UserManagementView();
                     break;
 
-                case ModuleType.SystemConfiguration: 
-                    moduleControl = new SystemConfigurationView(); 
-                    break;
 
                 case ModuleType.BackupRestore:
-                    moduleControl = new SystemConfigurationView();
-                    break;
-
-                case ModuleType.SystemMonitoring:
-                    moduleControl = new MonitoringView();
+                    moduleControl = new BackupView();
                     break;
 
                 // Inventory modules
@@ -158,9 +152,11 @@ namespace FantasticStock.Views
                 case ModuleType.SalesOrders:
                     moduleControl = new SalesOrderView();
                     break;
+
                 case ModuleType.PointOfSale:
                     moduleControl = new POSView();
                     break;
+
                 case ModuleType.Customers:
                     moduleControl = new CustomerManagementView();
                     break;
@@ -170,18 +166,22 @@ namespace FantasticStock.Views
                     moduleControl = new FinancialDashboardView();
                     break;
 
-                // Future modules - stubs for now
-                //case ModuleType.Categories:
-                //case ModuleType.Suppliers:
-                case ModuleType.StockLevels:
-                case ModuleType.InventoryReports:
-                case ModuleType.SalesReports:
                 case ModuleType.Payments:
                     moduleControl = new PaymentsView();
                     break;
+
                 case ModuleType.Expenses:
                     moduleControl = new ExpensesView();
                     break;
+
+                // Future modules - stubs for now
+                //case ModuleType.Categories:
+                //case ModuleType.Suppliers:
+                case ModuleType.SystemConfiguration: 
+                case ModuleType.SystemMonitoring:
+                case ModuleType.StockLevels:
+                case ModuleType.InventoryReports:
+                case ModuleType.SalesReports:
                 case ModuleType.FinancialReports:
                     moduleControl = CreatePlaceholderModule(moduleType.ToString());
                     break;

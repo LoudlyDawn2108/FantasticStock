@@ -41,7 +41,6 @@
             this.lblStatusFilter = new System.Windows.Forms.Label();
             this.lblSearch = new System.Windows.Forms.Label();
             this.panelListActions = new System.Windows.Forms.Panel();
-            this.btnNextPage = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnDeactivate = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -96,8 +95,8 @@
             this.lblEndDate = new System.Windows.Forms.Label();
             this.lblStartDate = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.tabControlMain.SuspendLayout();
             this.tabPageUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -181,8 +180,10 @@
             this.dgvUsers.AllowUserToAddRows = false;
             this.dgvUsers.AllowUserToDeleteRows = false;
             this.dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvUsers.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvUsers.GridColor = System.Drawing.Color.Cyan;
             this.dgvUsers.Location = new System.Drawing.Point(5, 5);
             this.dgvUsers.MultiSelect = false;
             this.dgvUsers.Name = "dgvUsers";
@@ -259,7 +260,6 @@
             // 
             // panelListActions
             // 
-            this.panelListActions.Controls.Add(this.btnNextPage);
             this.panelListActions.Controls.Add(this.btnDelete);
             this.panelListActions.Controls.Add(this.btnDeactivate);
             this.panelListActions.Controls.Add(this.btnEdit);
@@ -270,17 +270,9 @@
             this.panelListActions.Size = new System.Drawing.Size(430, 43);
             this.panelListActions.TabIndex = 0;
             // 
-            // btnNextPage
-            // 
-            this.btnNextPage.Location = new System.Drawing.Point(15, 10);
-            this.btnNextPage.Name = "btnNextPage";
-            this.btnNextPage.Size = new System.Drawing.Size(75, 23);
-            this.btnNextPage.TabIndex = 4;
-            this.btnNextPage.Text = "Next Page";
-            this.btnNextPage.UseVisualStyleBackColor = true;
-            // 
             // btnDelete
             // 
+            this.btnDelete.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnDelete.Location = new System.Drawing.Point(342, 10);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
@@ -290,7 +282,8 @@
             // 
             // btnDeactivate
             // 
-            this.btnDeactivate.Location = new System.Drawing.Point(261, 10);
+            this.btnDeactivate.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnDeactivate.Location = new System.Drawing.Point(239, 10);
             this.btnDeactivate.Name = "btnDeactivate";
             this.btnDeactivate.Size = new System.Drawing.Size(75, 23);
             this.btnDeactivate.TabIndex = 2;
@@ -299,7 +292,8 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(180, 10);
+            this.btnEdit.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnEdit.Location = new System.Drawing.Point(123, 10);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 1;
@@ -308,7 +302,8 @@
             // 
             // btnAddUser
             // 
-            this.btnAddUser.Location = new System.Drawing.Point(99, 10);
+            this.btnAddUser.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAddUser.Location = new System.Drawing.Point(11, 10);
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(75, 23);
             this.btnAddUser.TabIndex = 0;
@@ -837,15 +832,6 @@
             this.panel1.Size = new System.Drawing.Size(900, 43);
             this.panel1.TabIndex = 1;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.tabControlMain);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 43);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(900, 557);
-            this.panel2.TabIndex = 2;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -855,6 +841,15 @@
             this.label1.Size = new System.Drawing.Size(169, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "User Mangement";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.tabControlMain);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 43);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(900, 557);
+            this.panel2.TabIndex = 2;
             // 
             // UserManagementView
             // 
@@ -916,7 +911,6 @@
         private System.Windows.Forms.Label lblRoleFilter;
         private System.Windows.Forms.Label lblStatusFilter;
         private System.Windows.Forms.Label lblSearch;
-        private System.Windows.Forms.Button btnNextPage;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnDeactivate;
         private System.Windows.Forms.Button btnEdit;
