@@ -134,9 +134,6 @@ ALTER TABLE Product
 ALTER COLUMN CreatedBy INT NULL;
 
 ALTER TABLE Product
-ALTER COLUMN ReorderLevel INT ;
-
-ALTER TABLE Product
 ADD CONSTRAINT FK_Product_CreatedBy 
 FOREIGN KEY (CreatedBy) REFERENCES [User](UserID);
 
@@ -146,6 +143,11 @@ DROP CONSTRAINT FK_Product_ModifiedBy;
 
 ALTER TABLE Product
 ALTER COLUMN ModifiedBy INT NULL;
+
+ALTER TABLE Product
+ALTER COLUMN ReorderLevel INT ;
+
+
 
 ALTER TABLE Product
 ADD CONSTRAINT FK_Product_ModifiedBy 
