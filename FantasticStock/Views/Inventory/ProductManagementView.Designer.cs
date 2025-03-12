@@ -48,7 +48,6 @@ namespace FantasticStock.Views.Inventory
             this.colReorderLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEdit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btnAddProduct = new System.Windows.Forms.Button();
             this.btnBulkImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnPrintList = new System.Windows.Forms.Button();
@@ -57,6 +56,7 @@ namespace FantasticStock.Views.Inventory
             this.lblHeader = new System.Windows.Forms.Label();
             this.panelActions = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnAddProduct = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panelProductsContainer = new System.Windows.Forms.Panel();
             this.dgvProducts = new System.Windows.Forms.DataGridView();
@@ -176,19 +176,6 @@ namespace FantasticStock.Views.Inventory
             this.colDelete.Name = "colDelete";
             this.colDelete.Width = 150;
             // 
-            // btnAddProduct
-            // 
-            this.btnAddProduct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
-            this.btnAddProduct.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnAddProduct.ForeColor = System.Drawing.Color.White;
-            this.btnAddProduct.Location = new System.Drawing.Point(3, 3);
-            this.btnAddProduct.Name = "btnAddProduct";
-            this.btnAddProduct.Size = new System.Drawing.Size(109, 44);
-            this.btnAddProduct.TabIndex = 0;
-            this.btnAddProduct.Text = "New Product";
-            this.btnAddProduct.UseVisualStyleBackColor = false;
-            this.btnAddProduct.Click += new System.EventHandler(this.btnAddProduct_Click);
-            // 
             // btnBulkImport
             // 
             this.btnBulkImport.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -279,6 +266,21 @@ namespace FantasticStock.Views.Inventory
             this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 50);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
+            // btnAddProduct
+            // 
+            this.btnAddProduct.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(123)))), ((int)(((byte)(255)))));
+            this.btnAddProduct.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddProduct.ForeColor = System.Drawing.Color.White;
+            this.btnAddProduct.Image = global::FantasticStock.Properties.Resources.plus_small;
+            this.btnAddProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAddProduct.Location = new System.Drawing.Point(3, 3);
+            this.btnAddProduct.Name = "btnAddProduct";
+            this.btnAddProduct.Size = new System.Drawing.Size(109, 44);
+            this.btnAddProduct.TabIndex = 0;
+            this.btnAddProduct.Text = "     New Product";
+            this.btnAddProduct.UseVisualStyleBackColor = false;
+            this.btnAddProduct.Click += new System.EventHandler(this.btnAddProduct_Click);
+            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoScroll = true;
@@ -293,6 +295,7 @@ namespace FantasticStock.Views.Inventory
             // panelProductsContainer
             // 
             this.panelProductsContainer.AutoScroll = true;
+            this.panelProductsContainer.BackColor = System.Drawing.SystemColors.Window;
             this.panelProductsContainer.Controls.Add(this.dgvProducts);
             this.panelProductsContainer.Controls.Add(this.panel1);
             this.panelProductsContainer.Controls.Add(this.paginationPanel);
@@ -300,7 +303,7 @@ namespace FantasticStock.Views.Inventory
             this.panelProductsContainer.Location = new System.Drawing.Point(3, 3);
             this.panelProductsContainer.Name = "panelProductsContainer";
             this.panelProductsContainer.Padding = new System.Windows.Forms.Padding(15);
-            this.panelProductsContainer.Size = new System.Drawing.Size(809, 693);
+            this.panelProductsContainer.Size = new System.Drawing.Size(809, 833);
             this.panelProductsContainer.TabIndex = 5;
             // 
             // dgvProducts
@@ -336,9 +339,10 @@ namespace FantasticStock.Views.Inventory
             this.dgvProducts.RowHeadersVisible = false;
             this.dgvProducts.RowHeadersWidth = 62;
             this.dgvProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvProducts.Size = new System.Drawing.Size(779, 581);
+            this.dgvProducts.Size = new System.Drawing.Size(779, 721);
             this.dgvProducts.TabIndex = 8;
             this.dgvProducts.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvProducts_CellClick);
+            this.dgvProducts.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvProducts_RowPrePaint);
             // 
             // dgvProductID
             // 
@@ -428,7 +432,7 @@ namespace FantasticStock.Views.Inventory
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtSearch.Location = new System.Drawing.Point(36, 7);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(106, 13);
+            this.txtSearch.Size = new System.Drawing.Size(138, 13);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged_1);
             // 
@@ -447,7 +451,7 @@ namespace FantasticStock.Views.Inventory
             this.paginationPanel.Controls.Add(this.lblPageInfo);
             this.paginationPanel.Controls.Add(this.btnNext);
             this.paginationPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.paginationPanel.Location = new System.Drawing.Point(15, 638);
+            this.paginationPanel.Location = new System.Drawing.Point(15, 778);
             this.paginationPanel.Name = "paginationPanel";
             this.paginationPanel.Size = new System.Drawing.Size(779, 40);
             this.paginationPanel.TabIndex = 2;
@@ -480,6 +484,7 @@ namespace FantasticStock.Views.Inventory
             // panelDetails
             // 
             this.panelDetails.AutoScroll = true;
+            this.panelDetails.BackColor = System.Drawing.Color.White;
             this.panelDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDetails.Controls.Add(this.lblDetailsHeader);
             this.panelDetails.Controls.Add(this.lblProductName);
@@ -511,10 +516,10 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.Controls.Add(this.btnSave);
             this.panelDetails.Controls.Add(this.btnCancel);
             this.panelDetails.Controls.Add(this.btnDelete);
-            this.panelDetails.Location = new System.Drawing.Point(818, 3);
+            this.panelDetails.Location = new System.Drawing.Point(3, 842);
             this.panelDetails.Name = "panelDetails";
             this.panelDetails.Padding = new System.Windows.Forms.Padding(15);
-            this.panelDetails.Size = new System.Drawing.Size(665, 833);
+            this.panelDetails.Size = new System.Drawing.Size(809, 833);
             this.panelDetails.TabIndex = 10;
             // 
             // lblDetailsHeader

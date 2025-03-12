@@ -10,12 +10,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Runtime.InteropServices;
 namespace FantasticStock.Views.Inventory
 {
 
     public partial class ProductManagementView : UserControl
     {
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+        private const int EM_SETCUEBANNER = 0x1501;
         private ProductViewModel _viewModel;
 
         string chuoiketnoi = "Data Source=TUNGCORN\\SQLEXPRESS;" +
@@ -383,6 +386,11 @@ namespace FantasticStock.Views.Inventory
             Load_dvgProducts();
             Load_comboboxCategory();
             Load_cmbSupplier();
+            SetCueText(txtSearch, "Search by product name");
+        }
+        private void SetCueText(TextBox textBox, string cueText)
+        {
+            SendMessage(textBox.Handle, EM_SETCUEBANNER, 1, cueText);
         }
         private void Load_comboboxCategory()
         {
@@ -491,7 +499,7 @@ namespace FantasticStock.Views.Inventory
                 }
                 else
                 {
-                    query = "insert into Product (SKU, Barcode, ProductName, Description, CategoryID, SupplierID, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate, ModifiedDate) values(@SKU, @Barcode, @ProductName, @Description, @CategoryID, @SupplierID, @CostPrice, @SellingPrice, @StockQuantity, @ReorderLevel, @ProductImage, @CreatedDate, @ModifiedDate)";
+                    query = "insert into Product (SKU, Barcode, ProductName, Description, CategoryID, SupplierID, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate) values(@SKU, @Barcode, @ProductName, @Description, @CategoryID, @SupplierID, @CostPrice, @SellingPrice, @StockQuantity, @ReorderLevel, @ProductImage, @CreatedDate)";
                     cmd = new SqlCommand(query, conn);
                     cmd = new SqlCommand(query, conn);
                 }
@@ -540,17 +548,7 @@ namespace FantasticStock.Views.Inventory
             }
         }
 
-        //private void LoadCategories()
-        //{
-        //    // TODO: Replace with actual data loading from database
-        //    cmbCategory.Items.Clear();
-        //    cmbCategory.Items.Add("Electronics");
-        //    cmbCategory.Items.Add("Accessories");
-        //    cmbCategory.Items.Add("Audio");
-        //    cmbCategory.Items.Add("Peripherals");
-        //    cmbCategory.Items.Add("Storage");
-        //    cmbCategory.Items.Add("Networking");
-        //}
+
 
 
 
@@ -694,6 +692,22 @@ namespace FantasticStock.Views.Inventory
                     actionsColumn.Text = "✏️";
                 }
             }
+        }
+
+        private void dgvProducts_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            using (var row = dgvProducts.Rows[e.RowIndex])
+            {
+                
+                var stockQuantity = Convert.ToInt32(row.Cells["dgvQtt"].Value);
+                var reorderLevel = Convert.ToInt32(row.Cells["dgvRL"].Value);
+
+                if (stockQuantity < reorderLevel)
+                {
+                    row.Cells["dgvQtt"].Style.BackColor = Color.Orange; // Đổi màu nền thành màu vàng
+                }
+            }
+            
         }
     }
 }
