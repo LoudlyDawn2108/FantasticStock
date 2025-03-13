@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 namespace FantasticStock.Views.Inventory
 {
-
     public partial class ProductManagementView : UserControl
     {
         [DllImport("user32.dll")]
@@ -25,114 +24,11 @@ namespace FantasticStock.Views.Inventory
                              "Initial Catalog = Product;" +
                              "Integrated Security = true";
         SqlConnection conn;
-        //public ProductManagementView()
-        //{
-        //    InitializeComponent();
-
-        //    // Initialize view model
-        //    _viewModel = new ProductViewModel();
-
-        //    // Set up data bindings
-        //    SetupBindings();
-        //}
 
         private void SetupBindings()
-        {/*
-            // Bind products grid
-            dgvProducts.DataSource = _viewModel.Products;
-
-            // Bind categories
-            cmbCategory.DataSource = _viewModel.Categories;
-            cmbCategory.DisplayMember = "CategoryName";
-            cmbCategory.ValueMember = "CategoryID";
-            cmbCategoryFilter.DataSource = _viewModel.Categories;
-            cmbCategoryFilter.DisplayMember = "CategoryName";
-            cmbCategoryFilter.ValueMember = "CategoryID";
-
-            // Bind suppliers
-            cmbSupplier.DataSource = _viewModel.Suppliers;
-            cmbSupplier.DisplayMember = "CompanyName";
-            cmbSupplier.ValueMember = "SupplierID";
-            cmbSupplierFilter.DataSource = _viewModel.Suppliers;
-            cmbSupplierFilter.DisplayMember = "CompanyName";
-            cmbSupplierFilter.ValueMember = "SupplierID";
-
-            // Bind inventory grid
-            dgvInventory.DataSource = _viewModel.InventoryItems;
-
-            // Bind filter controls
-            txtSearch.DataBindings.Add("Text", _viewModel, "SearchText", true, DataSourceUpdateMode.OnPropertyChanged);
-            cmbCategoryFilter.DataBindings.Add("SelectedValue", _viewModel, "CategoryFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-            cmbSupplierFilter.DataBindings.Add("SelectedValue", _viewModel, "SupplierFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // Setup active filter
-            cmbActiveFilter.Items.Add(new { Text = "All", Value = (bool?)null });
-            cmbActiveFilter.Items.Add(new { Text = "Active Only", Value = (bool?)true });
-            cmbActiveFilter.Items.Add(new { Text = "Inactive Only", Value = (bool?)false });
-            cmbActiveFilter.DisplayMember = "Text";
-            cmbActiveFilter.ValueMember = "Value";
-            cmbActiveFilter.SelectedIndex = 0;
-            cmbActiveFilter.DataBindings.Add("SelectedValue", _viewModel, "ActiveFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // Bind product details fields
-            txtSKU.DataBindings.Add("Text", _viewModel, "SelectedProduct.SKU", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtBarcode.DataBindings.Add("Text", _viewModel, "SelectedProduct.Barcode", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtProductName.DataBindings.Add("Text", _viewModel, "SelectedProduct.ProductName", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtDescription.DataBindings.Add("Text", _viewModel, "SelectedProduct.Description", true, DataSourceUpdateMode.OnPropertyChanged);
-            cmbCategory.DataBindings.Add("SelectedValue", _viewModel, "SelectedProduct.CategoryID", true, DataSourceUpdateMode.OnPropertyChanged);
-            cmbSupplier.DataBindings.Add("SelectedValue", _viewModel, "SelectedProduct.SupplierID", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtCostPrice.DataBindings.Add("Text", _viewModel, "SelectedProduct.CostPrice", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtSellingPrice.DataBindings.Add("Text", _viewModel, "SelectedProduct.SellingPrice", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtWholesalePrice.DataBindings.Add("Text", _viewModel, "SelectedProduct.WholesalePrice", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtReorderLevel.DataBindings.Add("Text", _viewModel, "SelectedProduct.ReorderLevel", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtTargetStockLevel.DataBindings.Add("Text", _viewModel, "SelectedProduct.TargetStockLevel", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtUnitOfMeasure.DataBindings.Add("Text", _viewModel, "SelectedProduct.UnitOfMeasure", true, DataSourceUpdateMode.OnPropertyChanged);
-            chkManageStock.DataBindings.Add("Checked", _viewModel, "SelectedProduct.ManageStock", true, DataSourceUpdateMode.OnPropertyChanged);
-            chkAllowFractional.DataBindings.Add("Checked", _viewModel, "SelectedProduct.AllowFractionalQuantity", true, DataSourceUpdateMode.OnPropertyChanged);
-            chkActive.DataBindings.Add("Checked", _viewModel, "SelectedProduct.IsActive", true, DataSourceUpdateMode.OnPropertyChanged);
-
-            // Bind commands to buttons
-            btnAddProduct.Click += (s, e) => _viewModel.AddProductCommand.Execute(null);
-            btnEditProduct.Click += (s, e) => _viewModel.EditProductCommand.Execute(null);
-            btnSaveProduct.Click += (s, e) => _viewModel.SaveProductCommand.Execute(null);
-            btnDeleteProduct.Click += (s, e) => _viewModel.DeleteProductCommand.Execute(null);
-            btnRefresh.Click += (s, e) => _viewModel.RefreshDataCommand.Execute(null);
-            btnFilter.Click += (s, e) => _viewModel.FilterProductsCommand.Execute(null);
-            btnBrowseImage.Click += (s, e) => _viewModel.BrowseImageCommand.Execute(null);
-            btnUpdateStock.Click += (s, e) => _viewModel.UpdateStockCommand.Execute(null);
-            btnTransactionHistory.Click += (s, e) => _viewModel.ViewTransactionHistoryCommand.Execute(null);
-
-            // Selection change events
-            dgvProducts.SelectionChanged += (s, e) =>
-            {
-                if (dgvProducts.SelectedRows.Count > 0)
-                {
-                    _viewModel.SelectedProduct = dgvProducts.SelectedRows[0].DataBoundItem as FantasticStock.Models.Inventory.Product;
-                }
-            };
-
-            dgvInventory.SelectionChanged += (s, e) =>
-            {
-                if (dgvInventory.SelectedRows.Count > 0)
-                {
-                    _viewModel.SelectedInventoryItem = dgvInventory.SelectedRows[0].DataBoundItem as FantasticStock.Models.Inventory.ProductInventory;
-                }
-            };
-
-            // Handle editing mode changes
-            _viewModel.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == "IsEditing")
-                {
-                    //pnlProductDetails.Enabled = _viewModel.IsEditing;
-                    //btnSaveProduct.Enabled = _viewModel.IsEditing;
-                    //btnAddProduct.Enabled = !_viewModel.IsEditing;
-                    //btnEditProduct.Enabled = !_viewModel.IsEditing;
-                    //btnDeleteProduct.Enabled = !_viewModel.IsEditing;
-                }
-            };
-        */
+        {
         }
+
         #region Event Handlers
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
@@ -142,66 +38,38 @@ namespace FantasticStock.Views.Inventory
 
         private void btnBulkImport_Click(object sender, EventArgs e)
         {
-            // TODO: Implement bulk import functionality
             MessageBox.Show("Bulk import functionality not yet implemented.", "Information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            // TODO: Implement export functionality
             MessageBox.Show("Export functionality not yet implemented.", "Information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnPrintList_Click(object sender, EventArgs e)
         {
-            // TODO: Implement print functionality
             MessageBox.Show("Print functionality not yet implemented.", "Information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-
         }
-
-        //private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.RowIndex < 0) return;
-
-        //    if (e.ColumnIndex == dgvProducts.Columns["colEdit"].Index)
-        //    {
-        //        LoadProductDetails(dgvProducts.Rows[e.RowIndex].Cells["colProductID"].Value.ToString());
-        //        EnableDetailsEditing(true);
-        //    }
-        //    else if (e.ColumnIndex == dgvProducts.Columns["colDelete"].Index)
-        //    {
-        //        string productId = dgvProducts.Rows[e.RowIndex].Cells["colProductID"].Value.ToString();
-        //        DeleteProduct(productId);
-        //    }
-        //    else
-        //    {
-        //        LoadProductDetails(dgvProducts.Rows[e.RowIndex].Cells["colProductID"].Value.ToString());
-        //        EnableDetailsEditing(false);
-        //    }
-        //}
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            // TODO: Implement pagination
             MessageBox.Show("Previous page functionality not yet implemented.", "Information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            // TODO: Implement pagination
             MessageBox.Show("Next page functionality not yet implemented.", "Information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -243,7 +111,6 @@ namespace FantasticStock.Views.Inventory
                 decimal Markup = ((SaleP - CostP) / CostP) * 100;
                 txtMarkup.Text = Markup.ToString();
                 Khoa_Chinh_Sua(false);
-
             }
         }
 
@@ -255,7 +122,7 @@ namespace FantasticStock.Views.Inventory
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(ProductID > 0)
+            if (ProductID > 0)
             {
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this product?",
                     "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -269,9 +136,10 @@ namespace FantasticStock.Views.Inventory
                 }
             }
         }
+
         private void DeleteProduct(int ProductID)
         {
-            using(conn = new SqlConnection(chuoiketnoi))
+            using (conn = new SqlConnection(chuoiketnoi))
             {
                 conn.Open();
                 string query = "Delete from Product where ProductID = @ProductID";
@@ -282,6 +150,7 @@ namespace FantasticStock.Views.Inventory
             MessageBox.Show("Product deleted successfully.", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void txtCostPrice_TextChanged(object sender, EventArgs e)
         {
             CalculateMarkup();
@@ -388,10 +257,12 @@ namespace FantasticStock.Views.Inventory
             Load_cmbSupplier();
             SetCueText(txtSearch, "Search by product name");
         }
+
         private void SetCueText(TextBox textBox, string cueText)
         {
             SendMessage(textBox.Handle, EM_SETCUEBANNER, 1, cueText);
         }
+
         private void Load_comboboxCategory()
         {
             try
@@ -412,12 +283,11 @@ namespace FantasticStock.Views.Inventory
             catch (Exception ex)
             {
                 MessageBox.Show("Không kết nối được database");
-
             }
         }
+
         private void Load_cmbSupplier()
         {
-
             try
             {
                 using (conn = new SqlConnection(chuoiketnoi))
@@ -438,6 +308,7 @@ namespace FantasticStock.Views.Inventory
                 MessageBox.Show("Không kết nối được database");
             }
         }
+
         private void Load_dvgProducts()
         {
             try
@@ -458,22 +329,20 @@ namespace FantasticStock.Views.Inventory
                     dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
                     dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
                     dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
-                    //dgvProducts.DataSource = dt;
                     DataGridViewButtonColumn actionsColumn = dgvProducts.Columns["Actions"] as DataGridViewButtonColumn;
                     if (actionsColumn != null)
                     {
                         actionsColumn.UseColumnTextForButtonValue = true;
                         actionsColumn.Text = "✏️";
                     }
-
                 }
             }
             catch
             {
-                MessageBox.Show("Không kết nối được database");
+                MessageBox.Show("Cannot connect to database");
             }
-
         }
+
         private byte[] ImageToByteArray(Image imageIn)
         {
             using (var ms = new MemoryStream())
@@ -493,14 +362,11 @@ namespace FantasticStock.Views.Inventory
                 if (ProductID > 0)
                 {
                     query = "update Product set SKU = @SKU, Barcode = @Barcode, ProductName = @ProductName, Description = @Description, CategoryID = @CategoryID,SupplierID = @SupplierID, CostPrice = @CostPrice, SellingPrice = @SellingPrice, StockQuantity = @StockQuantity, ReorderLevel = @ReorderLevel, ProductImage = @ProductImage, ModifiedDate = @ModifiedDate where ProductID = @ProductID";
-
-
                     cmd = new SqlCommand(query, conn);
                 }
                 else
                 {
                     query = "insert into Product (SKU, Barcode, ProductName, Description, CategoryID, SupplierID, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate) values(@SKU, @Barcode, @ProductName, @Description, @CategoryID, @SupplierID, @CostPrice, @SellingPrice, @StockQuantity, @ReorderLevel, @ProductImage, @CreatedDate)";
-                    cmd = new SqlCommand(query, conn);
                     cmd = new SqlCommand(query, conn);
                 }
 
@@ -518,20 +384,16 @@ namespace FantasticStock.Views.Inventory
                 if (pictureBoxProductImage.Image == null)
                     cmd.Parameters.Add("@ProductImage", SqlDbType.VarBinary).Value = DBNull.Value;
                 else cmd.Parameters.AddWithValue("@ProductImage", ImageToByteArray(pictureBoxProductImage.Image));
-                if(ProductID == 0) cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                if (ProductID == 0) cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
                 else cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
                 cmd.ExecuteNonQuery();
                 Load_dvgProducts();
                 string mes = ProductID > 0 ? "Updated successfully" : "Product saved successfully";
                 MessageBox.Show(mes, "Success",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
             ProductID = 0;
-            
         }
-
-        
 
         private void CalculateMarkup()
         {
@@ -548,44 +410,34 @@ namespace FantasticStock.Views.Inventory
             }
         }
 
-
-
-
-
         #endregion
+
         private void lblDescription_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txtProductName_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void lblProductName_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txtBarcode_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void lblBarcode_Click(object sender, EventArgs e)
         {
-
         }
 
         private void txtSKU_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void lblSKU_Click(object sender, EventArgs e)
         {
-
         }
 
         private void textBox1_SizeChanged(object sender, EventArgs e)
@@ -598,29 +450,26 @@ namespace FantasticStock.Views.Inventory
 
         private void flowLayoutPanel4_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void flowLayoutPanel3_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btnSave_Click_1(object sender, EventArgs e)
         {
-
         }
+
         private int ProductID = 0;
+
         private void dgvProducts_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -660,19 +509,18 @@ namespace FantasticStock.Views.Inventory
                 {
                     Khoa_Chinh_Sua(false);
                 }
-
             }
         }
 
         private void txtSearch_TextChanged_1(object sender, EventArgs e)
         {
             string textsearch = txtSearch.Text.Trim();
-            using(conn = new SqlConnection(chuoiketnoi))
+            using (conn = new SqlConnection(chuoiketnoi))
             {
                 conn.Open();
                 string query = "select * from Product p join Category c on p.CategoryID = c.CategoryID join Supplier s on p.SupplierID = s.SupplierID where ProductName like @textsearch";
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@textsearch","%"+ textsearch + "%");
+                cmd.Parameters.AddWithValue("@textsearch", "%" + textsearch + "%");
                 SqlDataAdapter adp = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 adp.Fill(dt);
@@ -684,7 +532,6 @@ namespace FantasticStock.Views.Inventory
                 dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
                 dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
                 dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
-                //dgvProducts.DataSource = dt;
                 DataGridViewButtonColumn actionsColumn = dgvProducts.Columns["Actions"] as DataGridViewButtonColumn;
                 if (actionsColumn != null)
                 {
@@ -698,16 +545,14 @@ namespace FantasticStock.Views.Inventory
         {
             using (var row = dgvProducts.Rows[e.RowIndex])
             {
-                
                 var stockQuantity = Convert.ToInt32(row.Cells["dgvQtt"].Value);
                 var reorderLevel = Convert.ToInt32(row.Cells["dgvRL"].Value);
 
                 if (stockQuantity < reorderLevel)
                 {
-                    row.Cells["dgvQtt"].Style.BackColor = Color.Orange; // Đổi màu nền thành màu vàng
+                    row.Cells["dgvQtt"].Style.BackColor = Color.Orange;
                 }
             }
-            
         }
     }
 }
