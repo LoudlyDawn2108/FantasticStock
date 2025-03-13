@@ -26,60 +26,10 @@ namespace FantasticStock.Views.Inventory
             base.Dispose(disposing);
         }
 
-
-        //private void InitializeSuppliersGrid()
-        //{
-        //    // Configure the DataGridView
-        //    dgvSuppliers.AutoGenerateColumns = false;
-        //    dgvSuppliers.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-        //    dgvSuppliers.AllowUserToAddRows = false;
-        //    dgvSuppliers.RowHeadersVisible = false;
-
-        //    // Add columns to the DataGridView
-        //    dgvSuppliers.Columns.Add(new DataGridViewTextBoxColumn { Name = "Supplier", HeaderText = "Supplier", Width = 200 });
-        //    dgvSuppliers.Columns.Add(new DataGridViewTextBoxColumn { Name = "Contact", HeaderText = "Contact", Visible = false });
-
-        //    // Add sample data
-        //    AddSupplierToGrid("TechSuppliers Inc.", "John Williams\n(555) 123-4567");
-        //    AddSupplierToGrid("AudioTech Ltd.", "Sarah Johnson\n(555) 234-5678");
-        //    AddSupplierToGrid("VisualTech Corp", "Michael Chen\n(555) 345-6789");
-        //    AddSupplierToGrid("ConnectAll Inc.", "Lisa Rodriguez\n(555) 456-7890");
-        //    AddSupplierToGrid("GlobalComputers Ltd.", "David Smith\n(555) 567-8901");
-        //    AddSupplierToGrid("NetworkPro Solutions", "");
-
-        //    // Hook up cell painting event
-        //    dgvSuppliers.CellPainting += DgvSuppliers_CellPainting;
-        //}
-
-        //private void AddSupplierToGrid(string name, string contact)
-        //{
-        //    dgvSuppliers.Rows.Add(name, contact);
-        //}
-
-        //private void DgvSuppliers_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        //{
-        //    if (e.ColumnIndex == 0 && e.RowIndex >= 0)
-        //    {
-        //        e.PaintBackground(e.ClipBounds, true);
-
-        //        var contact = dgvSuppliers.Rows[e.RowIndex].Cells["Contact"].Value.ToString();
-        //        var lines = contact.Split('\n');
-        //        var lineHeight = e.CellStyle.Font.Height;
-        //        var y = e.CellBounds.Top + (e.CellBounds.Height - lineHeight * lines.Length) / 2;
-
-        //        foreach (var line in lines)
-        //        {
-        //            e.Graphics.DrawString(line, e.CellStyle.Font, Brushes.Gray, e.CellBounds.Left + 5, y);
-        //            y += lineHeight;
-        //        }
-
-        //        e.Handled = true;
-        //    }
-        //}
-
         private void SupplierManagementView_Load(object sender, EventArgs e)
         {
             dgvSuppliers.AutoGenerateColumns = false;
+            dgvProductsSupplied.AutoGenerateColumns = false;
             KhoaChinhSua(false);
             Load_dgvSuppiler();
             SetCueText(txtSearch, "Search suppliers...");
@@ -106,10 +56,27 @@ namespace FantasticStock.Views.Inventory
 
             }
         }
+        private void Load_dgvProductsSupplied()
+        {
+            using (conn = new SqlConnection(chuoiketnoi))
+            {
+                conn.Open();
+                string query = "Select * from Product where SupplierID = @supplierID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@supplierID", supplierID);
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adp.Fill(dt);
+                dgvProductsSupplied.DataSource = dt;
+                dgvProductsSupplied.Columns["ProductID"].DataPropertyName = "ProductID";
+                dgvProductsSupplied.Columns["ProductName"].DataPropertyName = "ProductName";
+                dgvProductsSupplied.Columns["LastOrderDate"].DataPropertyName = "CreatedDate";
+            }
+        }
 
 
 
-      
+
 
         private void btnAddNewSupplier_Click(object sender, EventArgs e)
         {
@@ -379,6 +346,7 @@ namespace FantasticStock.Views.Inventory
                     txtCountry.Text = dataRowView.Row["Country"].ToString();
                     txtNotes.Text = dataRowView.Row["Notes"].ToString();
                     cmbPaymentTerms.Text = dataRowView.Row["PaymentTerms"].ToString();
+                    Load_dgvProductsSupplied();
                 }
             }
         }
