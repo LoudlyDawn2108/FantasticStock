@@ -31,6 +31,8 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelFilter = new System.Windows.Forms.Panel();
+            this.cboSupplier = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.cboTaxStatus = new System.Windows.Forms.ComboBox();
@@ -79,6 +81,8 @@
             // 
             this.panelFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelFilter.Controls.Add(this.cboSupplier);
+            this.panelFilter.Controls.Add(this.label7);
             this.panelFilter.Controls.Add(this.btnReset);
             this.panelFilter.Controls.Add(this.btnSearch);
             this.panelFilter.Controls.Add(this.cboTaxStatus);
@@ -96,6 +100,24 @@
             this.panelFilter.Name = "panelFilter";
             this.panelFilter.Size = new System.Drawing.Size(950, 120);
             this.panelFilter.TabIndex = 1;
+            // 
+            // cboSupplier
+            // 
+            this.cboSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSupplier.FormattingEnabled = true;
+            this.cboSupplier.Location = new System.Drawing.Point(344, 49);
+            this.cboSupplier.Name = "cboSupplier";
+            this.cboSupplier.Size = new System.Drawing.Size(137, 21);
+            this.cboSupplier.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(286, 52);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Supplier:";
             // 
             // btnReset
             // 
@@ -121,15 +143,17 @@
             // 
             this.cboTaxStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTaxStatus.FormattingEnabled = true;
-            this.cboTaxStatus.Location = new System.Drawing.Point(586, 47);
+            this.cboTaxStatus.Location = new System.Drawing.Point(586, 50);
             this.cboTaxStatus.Name = "cboTaxStatus";
-            this.cboTaxStatus.Size = new System.Drawing.Size(162, 21);
+            this.cboTaxStatus.Size = new System.Drawing.Size(161, 21);
             this.cboTaxStatus.TabIndex = 9;
             // 
             // label6
             // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(496, 50);
+            this.label6.Location = new System.Drawing.Point(496, 54);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 13);
             this.label6.TabIndex = 8;
@@ -139,15 +163,17 @@
             // 
             this.cboPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPaymentMethod.FormattingEnabled = true;
-            this.cboPaymentMethod.Location = new System.Drawing.Point(586, 13);
+            this.cboPaymentMethod.Location = new System.Drawing.Point(586, 16);
             this.cboPaymentMethod.Name = "cboPaymentMethod";
-            this.cboPaymentMethod.Size = new System.Drawing.Size(162, 21);
+            this.cboPaymentMethod.Size = new System.Drawing.Size(161, 21);
             this.cboPaymentMethod.TabIndex = 7;
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(496, 16);
+            this.label5.Location = new System.Drawing.Point(496, 20);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 13);
             this.label5.TabIndex = 6;
@@ -159,7 +185,7 @@
             this.cboCategory.FormattingEnabled = true;
             this.cboCategory.Location = new System.Drawing.Point(343, 16);
             this.cboCategory.Name = "cboCategory";
-            this.cboCategory.Size = new System.Drawing.Size(138, 21);
+            this.cboCategory.Size = new System.Drawing.Size(137, 21);
             this.cboCategory.TabIndex = 5;
             // 
             // label4
@@ -258,6 +284,7 @@
             // 
             this.dgvExpenses.AllowUserToAddRows = false;
             this.dgvExpenses.AllowUserToDeleteRows = false;
+            this.dgvExpenses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvExpenses.BackgroundColor = System.Drawing.SystemColors.ControlDark;
             this.dgvExpenses.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvExpenses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -316,5 +343,7 @@
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.ComboBox cboSupplier;
+        private System.Windows.Forms.Label label7;
     }
 }

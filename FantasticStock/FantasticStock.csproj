@@ -155,12 +155,6 @@
     <Compile Include="Views\Financial\FinancialDashboardView.Designer.cs">
       <DependentUpon>FinancialDashboardView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Financial\FinancialReportsView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Views\Financial\FinancialReportsView.Designer.cs">
-      <DependentUpon>FinancialReportsView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\Financial\PaymentsView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -248,9 +242,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Financial\FinancialDashboardView.resx">
       <DependentUpon>FinancialDashboardView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\Financial\FinancialReportsView.resx">
-      <DependentUpon>FinancialReportsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Financial\PaymentsView.resx">
       <DependentUpon>PaymentsView.cs</DependentUpon>
