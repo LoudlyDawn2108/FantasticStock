@@ -17,10 +17,8 @@ namespace FantasticStock.ViewModels
 
         private BindingList<User> _users;
         private BindingList<Role> _roles;
-        private BindingList<Permission> _permissions;
         private BindingList<AuditLogEntry> _activityLogs;
         private User _selectedUser;
-        private Permission _selectedUserPermission;
         private Role _selectedRole;
         private string _searchText;
         private string _statusFilter;
@@ -68,12 +66,6 @@ namespace FantasticStock.ViewModels
             private set => SetProperty(ref _roles, value);
         }
 
-        public BindingList<Permission> Permissions
-        {
-            get => _permissions;
-            private set => SetProperty(ref _permissions, value);
-        }
-
         public BindingList<AuditLogEntry> ActivityLogs
         {
             get => _activityLogs;
@@ -87,8 +79,6 @@ namespace FantasticStock.ViewModels
             {
                 if (SetProperty(ref _selectedUser, value) && value != null)
                 {
-                    LoadUserPermissions();
-                    
                     // Update commands can execute status
                     CommandManager.InvalidateRequerySuggested();
                 }
@@ -102,7 +92,6 @@ namespace FantasticStock.ViewModels
             {
                 if (SetProperty(ref _selectedRole, value) && value != null)
                 {
-                    LoadRolePermissions();
                 }
             }
         }
@@ -365,9 +354,6 @@ namespace FantasticStock.ViewModels
                 var roleList = _userService.GetAllRoles();
                 Roles = new BindingList<Role>(roleList);
                 
-                var permissionList = _userService.GetAllPermissions();
-                Permissions = new BindingList<Permission>(permissionList);
-                
                 LoadActivityLogs();
                 
                 _searchText = null;
@@ -388,10 +374,10 @@ namespace FantasticStock.ViewModels
             try
             {
                 if (!ActivityStartDate.HasValue)
-                    ActivityStartDate = DateTime.Parse("2025-03-02 16:08:31").AddDays(-7);
+                    ActivityStartDate = DateTime.Now.AddDays(-7);
                 
                 if (!ActivityEndDate.HasValue)
-                    ActivityEndDate = DateTime.Parse("2025-03-02 16:08:31");
+                    ActivityEndDate = DateTime.Now;
 
                 var userId = SelectedUser?.UserID;
                 var logs = _auditService.GetAuditLogs(
@@ -405,52 +391,6 @@ namespace FantasticStock.ViewModels
             catch (Exception ex)
             {
                 MessageService.ShowError($"Failed to load activity logs: {ex.Message}", "Error");
-            }
-        }
-
-        private void LoadUserPermissions()
-        {
-            if (SelectedUser == null)
-                return;
-                
-            try
-            {
-                // Get the user's role with its permissions
-                var role = _userService.GetRoleById(SelectedUser.RoleID);
-                if (role != null)
-                {
-                    // Update the permissions collection to show which ones are assigned
-                    foreach (var permission in Permissions)
-                    {
-                        permission.IsAssigned = role.Permissions.Any(p => p.PermissionID == permission.PermissionID && p.IsAssigned);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageService.ShowError($"Failed to load user permissions: {ex.Message}", "Error");
-            }
-        }
-
-        private void LoadRolePermissions()
-        {
-            if (SelectedRole == null)
-                return;
-                
-            try
-            {
-                // Get the role's permissions
-                var permissions = _userService.GetPermissionsByRoleId(SelectedRole.RoleID);
-                
-                // Update the permissions collection
-                foreach (var permission in Permissions)
-                {
-                    permission.IsAssigned = permissions.Any(p => p.PermissionID == permission.PermissionID && p.IsAssigned);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageService.ShowError($"Failed to load role permissions: {ex.Message}", "Error");
             }
         }
 

@@ -33,7 +33,6 @@ namespace FantasticStock.Views
             // Initialize UI elements
             InitializeStatusFilter();
 
-            _isInitialized = true;
         }
 
         private void SetupBindings()

@@ -11,7 +11,5 @@ namespace FantasticStock.Models
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
-        
-        public List<Permission> Permissions { get; set; } = new List<Permission>();
     }
 }

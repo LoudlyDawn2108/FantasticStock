@@ -15,93 +15,9 @@ namespace FantasticStock.Services
             _connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;";
             _masterConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=master;Integrated Security=True;";
 
-            //EnsureDatabaseExists();
         }
 
         public string ConnectionString => _connectionString;
-
-        public void EnsureDatabaseExists()
-        {
-            // Check if database exists
-            bool dbExists = false;
-            
-            using (var connection = new SqlConnection(_masterConnectionString))
-            {
-                connection.Open();
-                using (var command = new SqlCommand("SELECT COUNT(*) FROM sys.databases WHERE name = 'FantasticStock'", connection))
-                {
-                    dbExists = (int)command.ExecuteScalar() > 0;
-                }
-            }
-
-            if (!dbExists)
-            {
-                // Create database and schema
-                using (var connection = new SqlConnection(_masterConnectionString))
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand("CREATE DATABASE FantasticStock", connection))
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                }
-
-                // Execute database schema script
-                ExecuteSchemaScript();
-            }
-        }
-
-        private void ExecuteSchemaScript()
-        {
-            // In a real application, you would load this from a file
-            // For this example, we'll use a hardcoded simplified schema
-            string schemaScript = @"
-USE FantasticStock;
-
--- User Management Tables
-CREATE TABLE Roles (
-    RoleID INT PRIMARY KEY IDENTITY(1,1),
-    RoleName NVARCHAR(50) NOT NULL UNIQUE,
-    Description NVARCHAR(255),
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    ModifiedDate DATETIME DEFAULT GETDATE()
-);
-
-CREATE TABLE Users (
-    UserID INT PRIMARY KEY IDENTITY(1,1),
-    Username NVARCHAR(50) NOT NULL UNIQUE,
-    PasswordHash NVARCHAR(256) NOT NULL,
-    Salt NVARCHAR(128) NOT NULL,
-    DisplayName NVARCHAR(100) NOT NULL,
-    Email NVARCHAR(100) NOT NULL,
-    Phone NVARCHAR(20),
-    RoleID INT NOT NULL,
-    Status NVARCHAR(20) NOT NULL DEFAULT 'Active',
-    TwoFactorEnabled BIT NOT NULL DEFAULT 0,
-    AccountExpiry DATETIME NULL,
-    LastLogin DATETIME NULL,
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    ModifiedDate DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_Users_Role FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
-);
-
--- Insert default admin role and user
-INSERT INTO Roles (RoleName, Description)
-VALUES ('Admin', 'System Administrator with full access');
-
-INSERT INTO Users (Username, PasswordHash, Salt, DisplayName, Email, RoleID)
-VALUES ('admin', 'f07a147a4e14f6027c9d248a379c2212d7cd4fb5e34908de6c732978de4e239c', 'adminSalt123', 'System Administrator', 'admin@example.com', 1);
-";
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                using (var command = new SqlCommand(schemaScript, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
 
         public SqlConnection CreateConnection()
         {

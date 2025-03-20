@@ -7,7 +7,6 @@ namespace FantasticStock.Services
     public interface IDatabaseService
     {
         string ConnectionString { get; }
-        void EnsureDatabaseExists();
         SqlConnection CreateConnection();
         DataTable ExecuteQuery(string query, params SqlParameter[] parameters);
         object ExecuteScalar(string query, params SqlParameter[] parameters);

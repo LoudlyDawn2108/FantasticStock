@@ -16,8 +16,5 @@ namespace FantasticStock.Services
         bool ValidateUser(string username, string password);
         List<Role> GetAllRoles();
         Role GetRoleById(int roleId);
-        List<Permission> GetPermissionsByRoleId(int roleId);
-        bool UpdateRolePermissions(int roleId, List<int> permissionIds);
-        List<Permission> GetAllPermissions();
     }
 }
