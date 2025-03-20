@@ -35,20 +35,20 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.cboPaymentMethod = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cboStatus = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.dtpToDate = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.dtpFromDate = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
-            this.cboPaymentType = new System.Windows.Forms.ComboBox();
-            this.lblPaymentType = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnAddPayment = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvPayments = new System.Windows.Forms.DataGridView();
-            this.btnAddPayment = new System.Windows.Forms.Button();
+            this.cboCustomer = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cboInvoice = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelFilter.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -79,18 +79,18 @@
             // 
             this.panelFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
             this.panelFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelFilter.Controls.Add(this.cboInvoice);
+            this.panelFilter.Controls.Add(this.label8);
+            this.panelFilter.Controls.Add(this.cboCustomer);
+            this.panelFilter.Controls.Add(this.label7);
             this.panelFilter.Controls.Add(this.btnReset);
             this.panelFilter.Controls.Add(this.btnSearch);
             this.panelFilter.Controls.Add(this.cboPaymentMethod);
             this.panelFilter.Controls.Add(this.label5);
-            this.panelFilter.Controls.Add(this.cboStatus);
-            this.panelFilter.Controls.Add(this.label4);
             this.panelFilter.Controls.Add(this.dtpToDate);
             this.panelFilter.Controls.Add(this.label3);
             this.panelFilter.Controls.Add(this.dtpFromDate);
             this.panelFilter.Controls.Add(this.label2);
-            this.panelFilter.Controls.Add(this.cboPaymentType);
-            this.panelFilter.Controls.Add(this.lblPaymentType);
             this.panelFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilter.Location = new System.Drawing.Point(0, 50);
             this.panelFilter.Name = "panelFilter";
@@ -119,7 +119,7 @@
             // 
             this.cboPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPaymentMethod.FormattingEnabled = true;
-            this.cboPaymentMethod.Location = new System.Drawing.Point(586, 54);
+            this.cboPaymentMethod.Location = new System.Drawing.Point(572, 21);
             this.cboPaymentMethod.Name = "cboPaymentMethod";
             this.cboPaymentMethod.Size = new System.Drawing.Size(162, 21);
             this.cboPaymentMethod.TabIndex = 9;
@@ -127,29 +127,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(496, 57);
+            this.label5.Location = new System.Drawing.Point(482, 24);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(87, 13);
             this.label5.TabIndex = 8;
             this.label5.Text = "Payment Method";
-            // 
-            // cboStatus
-            // 
-            this.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboStatus.FormattingEnabled = true;
-            this.cboStatus.Location = new System.Drawing.Point(586, 20);
-            this.cboStatus.Name = "cboStatus";
-            this.cboStatus.Size = new System.Drawing.Size(162, 21);
-            this.cboStatus.TabIndex = 7;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(496, 23);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Status";
             // 
             // dtpToDate
             // 
@@ -185,24 +167,6 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "From Date";
             // 
-            // cboPaymentType
-            // 
-            this.cboPaymentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboPaymentType.FormattingEnabled = true;
-            this.cboPaymentType.Location = new System.Drawing.Point(85, 20);
-            this.cboPaymentType.Name = "cboPaymentType";
-            this.cboPaymentType.Size = new System.Drawing.Size(150, 21);
-            this.cboPaymentType.TabIndex = 1;
-            // 
-            // lblPaymentType
-            // 
-            this.lblPaymentType.AutoSize = true;
-            this.lblPaymentType.Location = new System.Drawing.Point(12, 23);
-            this.lblPaymentType.Name = "lblPaymentType";
-            this.lblPaymentType.Size = new System.Drawing.Size(75, 13);
-            this.lblPaymentType.TabIndex = 0;
-            this.lblPaymentType.Text = "Payment Type";
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(245)))), ((int)(((byte)(245)))));
@@ -215,6 +179,16 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(900, 40);
             this.panel3.TabIndex = 2;
+            // 
+            // btnAddPayment
+            // 
+            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPayment.Location = new System.Drawing.Point(797, 8);
+            this.btnAddPayment.Name = "btnAddPayment";
+            this.btnAddPayment.Size = new System.Drawing.Size(82, 23);
+            this.btnAddPayment.TabIndex = 3;
+            this.btnAddPayment.Text = "Add Payment";
+            this.btnAddPayment.UseVisualStyleBackColor = true;
             // 
             // btnExport
             // 
@@ -247,7 +221,7 @@
             this.dgvPayments.AllowUserToAddRows = false;
             this.dgvPayments.AllowUserToDeleteRows = false;
             this.dgvPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.ControlDark;
             this.dgvPayments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPayments.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -260,15 +234,41 @@
             this.dgvPayments.Size = new System.Drawing.Size(900, 380);
             this.dgvPayments.TabIndex = 3;
             // 
-            // btnAddPayment
+            // cboCustomer
             // 
-            this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAddPayment.Location = new System.Drawing.Point(797, 8);
-            this.btnAddPayment.Name = "btnAddPayment";
-            this.btnAddPayment.Size = new System.Drawing.Size(82, 23);
-            this.btnAddPayment.TabIndex = 3;
-            this.btnAddPayment.Text = "Add Payment";
-            this.btnAddPayment.UseVisualStyleBackColor = true;
+            this.cboCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCustomer.FormattingEnabled = true;
+            this.cboCustomer.Location = new System.Drawing.Point(85, 19);
+            this.cboCustomer.Name = "cboCustomer";
+            this.cboCustomer.Size = new System.Drawing.Size(150, 21);
+            this.cboCustomer.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 22);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(51, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Customer";
+            // 
+            // cboInvoice
+            // 
+            this.cboInvoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboInvoice.FormattingEnabled = true;
+            this.cboInvoice.Location = new System.Drawing.Point(85, 52);
+            this.cboInvoice.Name = "cboInvoice";
+            this.cboInvoice.Size = new System.Drawing.Size(150, 21);
+            this.cboInvoice.TabIndex = 15;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 55);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 13);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Invoice";
             // 
             // PaymentsView
             // 
@@ -296,14 +296,10 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelFilter;
-        private System.Windows.Forms.ComboBox cboPaymentType;
-        private System.Windows.Forms.Label lblPaymentType;
         private System.Windows.Forms.DateTimePicker dtpFromDate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpToDate;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cboStatus;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cboPaymentMethod;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnReset;
@@ -314,5 +310,9 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.DataGridView dgvPayments;
         private System.Windows.Forms.Button btnAddPayment;
+        private System.Windows.Forms.ComboBox cboCustomer;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cboInvoice;
+        private System.Windows.Forms.Label label8;
     }
 }
