@@ -15,7 +15,6 @@ namespace FantasticStock.Views
     public partial class UserManagementView : UserControl
     {
         private UserManagementViewModel _viewModel;
-        private bool _isInitialized = false;
 
         public UserManagementView()
         {
@@ -33,7 +32,6 @@ namespace FantasticStock.Views
 
             // Initialize UI elements
             InitializeStatusFilter();
-            InitializePermissionsTreeView();
 
             _isInitialized = true;
         }
@@ -221,36 +219,6 @@ namespace FantasticStock.Views
             // Already implemented in SetupBindings
         }
 
-        private void InitializePermissionsTreeView()
-        {
-            treeViewPermissions.Nodes.Clear();
-
-            var permissionGroups = _viewModel.Permissions
-                .GroupBy(p => p.Category ?? "General")
-                .OrderBy(g => g.Key);
-
-            foreach (var group in permissionGroups)
-            {
-                var categoryNode = new TreeNode(group.Key);
-
-                foreach (var permission in group.OrderBy(p => p.PermissionName))
-                {
-                    var permissionNode = new TreeNode(permission.PermissionName)
-                    {
-                        Tag = permission.PermissionID,
-                        ToolTipText = permission.Description,
-                        Checked = permission.IsAssigned
-                    };
-
-                    categoryNode.Nodes.Add(permissionNode);
-                }
-
-                treeViewPermissions.Nodes.Add(categoryNode);
-            }
-
-            treeViewPermissions.ExpandAll();
-        }
-
         private void DgvUsers_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvUsers.SelectedRows.Count > 0 && !_viewModel.IsEditMode)
@@ -301,7 +269,6 @@ namespace FantasticStock.Views
             cmbRoles.Enabled = isEditMode;
             chkTwoFactorEnabled.Enabled = isEditMode;
             dateTimePickerExpiration.Enabled = isEditMode;
-            treeViewPermissions.Enabled = _viewModel.IsEditMode;
 
             txtPassword.Enabled = isEditMode;
             txtConfirmPassword.Enabled = isEditMode;
@@ -324,34 +291,6 @@ namespace FantasticStock.Views
             btnDelete.Enabled = !isEditMode && _viewModel.SelectedUser != null;
 
             dgvUsers.Enabled = !isEditMode;
-
-            // Update permissions tree based on role selection
-            if (_viewModel.SelectedUser != null)
-            {
-                UpdatePermissionsTree();
-            }
-        }
-
-        private void UpdatePermissionsTree()
-        {
-            if (_viewModel.SelectedUser != null && treeViewPermissions.Nodes.Count > 0)
-            {
-                SetTreeNodesEnabled(treeViewPermissions.Nodes, _viewModel.IsEditMode);
-            }
-        }
-
-        private void SetTreeNodesEnabled(TreeNodeCollection nodes, bool enabled)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                node.ForeColor = enabled ? SystemColors.ControlText : SystemColors.GrayText;
-                
-
-                if (node.Nodes.Count > 0)
-                {
-                    SetTreeNodesEnabled(node.Nodes, enabled);
-                }
-            }
         }
 
         private int CalculatePasswordStrength(string password)

@@ -42,6 +42,7 @@
             this.LastLogin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilters = new System.Windows.Forms.Panel();
             this.cmbRoleFilter = new System.Windows.Forms.ComboBox();
+            this.userManagementViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbStatusFilter = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblRoleFilter = new System.Windows.Forms.Label();
@@ -64,6 +65,8 @@
             this.lblDisplayName = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
+            this.cmbRoles = new System.Windows.Forms.ComboBox();
+            this.lblRole = new System.Windows.Forms.Label();
             this.chkTwoFactorEnabled = new System.Windows.Forms.CheckBox();
             this.lblPasswordStrength = new System.Windows.Forms.Label();
             this.progressBarPasswordStrength = new System.Windows.Forms.ProgressBar();
@@ -71,10 +74,6 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.lblConfirmPassword = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
-            this.tabPagePermissions = new System.Windows.Forms.TabPage();
-            this.treeViewPermissions = new System.Windows.Forms.TreeView();
-            this.cmbRoles = new System.Windows.Forms.ComboBox();
-            this.lblRole = new System.Windows.Forms.Label();
             this.tabPageRestrictions = new System.Windows.Forms.TabPage();
             this.dateTimePickerExpiration = new System.Windows.Forms.DateTimePicker();
             this.chkSaturday = new System.Windows.Forms.CheckBox();
@@ -104,7 +103,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.userManagementViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControlMain.SuspendLayout();
             this.tabPageUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -114,12 +112,12 @@
             this.panelUserList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.panelFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).BeginInit();
             this.panelListActions.SuspendLayout();
             this.panelUserDetail.SuspendLayout();
             this.tabControlUserDetail.SuspendLayout();
             this.tabPageBasicInfo.SuspendLayout();
             this.tabPageSecurity.SuspendLayout();
-            this.tabPagePermissions.SuspendLayout();
             this.tabPageRestrictions.SuspendLayout();
             this.panelDetailActions.SuspendLayout();
             this.tabPageActivityLog.SuspendLayout();
@@ -127,7 +125,6 @@
             this.panelActivityControls.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -283,6 +280,10 @@
             this.cmbRoleFilter.Size = new System.Drawing.Size(120, 21);
             this.cmbRoleFilter.TabIndex = 5;
             // 
+            // userManagementViewModelBindingSource
+            // 
+            this.userManagementViewModelBindingSource.DataSource = typeof(FantasticStock.ViewModels.UserManagementViewModel);
+            // 
             // cmbStatusFilter
             // 
             this.cmbStatusFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -294,6 +295,8 @@
             // 
             // txtSearch
             // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(92, 15);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(318, 20);
@@ -392,7 +395,6 @@
             // 
             this.tabControlUserDetail.Controls.Add(this.tabPageBasicInfo);
             this.tabControlUserDetail.Controls.Add(this.tabPageSecurity);
-            this.tabControlUserDetail.Controls.Add(this.tabPagePermissions);
             this.tabControlUserDetail.Controls.Add(this.tabPageRestrictions);
             this.tabControlUserDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlUserDetail.Location = new System.Drawing.Point(5, 5);
@@ -414,7 +416,7 @@
             this.tabPageBasicInfo.Location = new System.Drawing.Point(4, 22);
             this.tabPageBasicInfo.Name = "tabPageBasicInfo";
             this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageBasicInfo.Size = new System.Drawing.Size(420, 446);
+            this.tabPageBasicInfo.Size = new System.Drawing.Size(465, 446);
             this.tabPageBasicInfo.TabIndex = 0;
             this.tabPageBasicInfo.Text = "Basic Info";
             this.tabPageBasicInfo.UseVisualStyleBackColor = true;
@@ -426,7 +428,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPhone.Location = new System.Drawing.Point(120, 110);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(280, 20);
+            this.txtPhone.Size = new System.Drawing.Size(325, 20);
             this.txtPhone.TabIndex = 7;
             // 
             // txtEmail
@@ -436,7 +438,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmail.Location = new System.Drawing.Point(120, 80);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(280, 20);
+            this.txtEmail.Size = new System.Drawing.Size(325, 20);
             this.txtEmail.TabIndex = 6;
             // 
             // txtDisplayName
@@ -446,7 +448,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(120, 50);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(280, 20);
+            this.txtDisplayName.Size = new System.Drawing.Size(325, 20);
             this.txtDisplayName.TabIndex = 5;
             // 
             // txtUsername
@@ -456,7 +458,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.Location = new System.Drawing.Point(120, 20);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(280, 20);
+            this.txtUsername.Size = new System.Drawing.Size(325, 20);
             this.txtUsername.TabIndex = 4;
             // 
             // lblPhone
@@ -497,6 +499,8 @@
             // 
             // tabPageSecurity
             // 
+            this.tabPageSecurity.Controls.Add(this.cmbRoles);
+            this.tabPageSecurity.Controls.Add(this.lblRole);
             this.tabPageSecurity.Controls.Add(this.chkTwoFactorEnabled);
             this.tabPageSecurity.Controls.Add(this.lblPasswordStrength);
             this.tabPageSecurity.Controls.Add(this.progressBarPasswordStrength);
@@ -507,15 +511,34 @@
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
             this.tabPageSecurity.Name = "tabPageSecurity";
             this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageSecurity.Size = new System.Drawing.Size(420, 446);
+            this.tabPageSecurity.Size = new System.Drawing.Size(465, 446);
             this.tabPageSecurity.TabIndex = 1;
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
             // 
+            // cmbRoles
+            // 
+            this.cmbRoles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRoles.FormattingEnabled = true;
+            this.cmbRoles.Location = new System.Drawing.Point(120, 218);
+            this.cmbRoles.Name = "cmbRoles";
+            this.cmbRoles.Size = new System.Drawing.Size(294, 21);
+            this.cmbRoles.TabIndex = 7;
+            // 
+            // lblRole
+            // 
+            this.lblRole.AutoSize = true;
+            this.lblRole.Location = new System.Drawing.Point(20, 221);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(32, 13);
+            this.lblRole.TabIndex = 6;
+            this.lblRole.Text = "Role:";
+            // 
             // chkTwoFactorEnabled
             // 
             this.chkTwoFactorEnabled.AutoSize = true;
-            this.chkTwoFactorEnabled.Location = new System.Drawing.Point(23, 176);
+            this.chkTwoFactorEnabled.Location = new System.Drawing.Point(23, 171);
             this.chkTwoFactorEnabled.Name = "chkTwoFactorEnabled";
             this.chkTwoFactorEnabled.Size = new System.Drawing.Size(151, 17);
             this.chkTwoFactorEnabled.TabIndex = 3;
@@ -533,6 +556,7 @@
             // 
             // progressBarPasswordStrength
             // 
+            this.progressBarPasswordStrength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarPasswordStrength.Location = new System.Drawing.Point(120, 85);
             this.progressBarPasswordStrength.Name = "progressBarPasswordStrength";
             this.progressBarPasswordStrength.Size = new System.Drawing.Size(294, 10);
@@ -541,6 +565,7 @@
             // 
             // txtConfirmPassword
             // 
+            this.txtConfirmPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtConfirmPassword.Location = new System.Drawing.Point(120, 110);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.PasswordChar = '•';
@@ -549,6 +574,7 @@
             // 
             // txtPassword
             // 
+            this.txtPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPassword.Location = new System.Drawing.Point(120, 40);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '•';
@@ -573,45 +599,6 @@
             this.lblPassword.TabIndex = 0;
             this.lblPassword.Text = "Password:";
             // 
-            // tabPagePermissions
-            // 
-            this.tabPagePermissions.Controls.Add(this.treeViewPermissions);
-            this.tabPagePermissions.Controls.Add(this.cmbRoles);
-            this.tabPagePermissions.Controls.Add(this.lblRole);
-            this.tabPagePermissions.Location = new System.Drawing.Point(4, 22);
-            this.tabPagePermissions.Name = "tabPagePermissions";
-            this.tabPagePermissions.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPagePermissions.Size = new System.Drawing.Size(465, 446);
-            this.tabPagePermissions.TabIndex = 2;
-            this.tabPagePermissions.Text = "Permissions";
-            this.tabPagePermissions.UseVisualStyleBackColor = true;
-            // 
-            // treeViewPermissions
-            // 
-            this.treeViewPermissions.CheckBoxes = true;
-            this.treeViewPermissions.Location = new System.Drawing.Point(13, 53);
-            this.treeViewPermissions.Name = "treeViewPermissions";
-            this.treeViewPermissions.Size = new System.Drawing.Size(408, 423);
-            this.treeViewPermissions.TabIndex = 2;
-            // 
-            // cmbRoles
-            // 
-            this.cmbRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRoles.FormattingEnabled = true;
-            this.cmbRoles.Location = new System.Drawing.Point(120, 20);
-            this.cmbRoles.Name = "cmbRoles";
-            this.cmbRoles.Size = new System.Drawing.Size(294, 21);
-            this.cmbRoles.TabIndex = 1;
-            // 
-            // lblRole
-            // 
-            this.lblRole.AutoSize = true;
-            this.lblRole.Location = new System.Drawing.Point(20, 23);
-            this.lblRole.Name = "lblRole";
-            this.lblRole.Size = new System.Drawing.Size(32, 13);
-            this.lblRole.TabIndex = 0;
-            this.lblRole.Text = "Role:";
-            // 
             // tabPageRestrictions
             // 
             this.tabPageRestrictions.Controls.Add(this.dateTimePickerExpiration);
@@ -627,7 +614,7 @@
             this.tabPageRestrictions.Location = new System.Drawing.Point(4, 22);
             this.tabPageRestrictions.Name = "tabPageRestrictions";
             this.tabPageRestrictions.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageRestrictions.Size = new System.Drawing.Size(420, 446);
+            this.tabPageRestrictions.Size = new System.Drawing.Size(465, 446);
             this.tabPageRestrictions.TabIndex = 3;
             this.tabPageRestrictions.Text = "Restrictions";
             this.tabPageRestrictions.UseVisualStyleBackColor = true;
@@ -792,7 +779,7 @@
             this.tabPageActivityLog.Location = new System.Drawing.Point(4, 22);
             this.tabPageActivityLog.Name = "tabPageActivityLog";
             this.tabPageActivityLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageActivityLog.Size = new System.Drawing.Size(892, 531);
+            this.tabPageActivityLog.Size = new System.Drawing.Size(982, 531);
             this.tabPageActivityLog.TabIndex = 1;
             this.tabPageActivityLog.Text = "Activity Log";
             this.tabPageActivityLog.UseVisualStyleBackColor = true;
@@ -807,7 +794,7 @@
             this.dgvActivityLog.Location = new System.Drawing.Point(3, 83);
             this.dgvActivityLog.Name = "dgvActivityLog";
             this.dgvActivityLog.ReadOnly = true;
-            this.dgvActivityLog.Size = new System.Drawing.Size(886, 445);
+            this.dgvActivityLog.Size = new System.Drawing.Size(976, 445);
             this.dgvActivityLog.TabIndex = 1;
             // 
             // panelActivityControls
@@ -823,7 +810,7 @@
             this.panelActivityControls.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelActivityControls.Location = new System.Drawing.Point(3, 3);
             this.panelActivityControls.Name = "panelActivityControls";
-            this.panelActivityControls.Size = new System.Drawing.Size(886, 80);
+            this.panelActivityControls.Size = new System.Drawing.Size(976, 80);
             this.panelActivityControls.TabIndex = 0;
             // 
             // btnExport
@@ -934,10 +921,6 @@
             this.panel2.Size = new System.Drawing.Size(990, 557);
             this.panel2.TabIndex = 2;
             // 
-            // userManagementViewModelBindingSource
-            // 
-            this.userManagementViewModelBindingSource.DataSource = typeof(FantasticStock.ViewModels.UserManagementViewModel);
-            // 
             // UserManagementView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -956,6 +939,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
             this.panelFilters.ResumeLayout(false);
             this.panelFilters.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).EndInit();
             this.panelListActions.ResumeLayout(false);
             this.panelUserDetail.ResumeLayout(false);
             this.tabControlUserDetail.ResumeLayout(false);
@@ -963,8 +947,6 @@
             this.tabPageBasicInfo.PerformLayout();
             this.tabPageSecurity.ResumeLayout(false);
             this.tabPageSecurity.PerformLayout();
-            this.tabPagePermissions.ResumeLayout(false);
-            this.tabPagePermissions.PerformLayout();
             this.tabPageRestrictions.ResumeLayout(false);
             this.tabPageRestrictions.PerformLayout();
             this.panelDetailActions.ResumeLayout(false);
@@ -975,7 +957,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1005,7 +986,6 @@
         private System.Windows.Forms.TabControl tabControlUserDetail;
         private System.Windows.Forms.TabPage tabPageBasicInfo;
         private System.Windows.Forms.TabPage tabPageSecurity;
-        private System.Windows.Forms.TabPage tabPagePermissions;
         private System.Windows.Forms.TabPage tabPageRestrictions;
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.TextBox txtEmail;
@@ -1021,9 +1001,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label lblConfirmPassword;
         private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TreeView treeViewPermissions;
-        private System.Windows.Forms.ComboBox cmbRoles;
-        private System.Windows.Forms.Label lblRole;
         private System.Windows.Forms.DateTimePicker dateTimePickerExpiration;
         private System.Windows.Forms.CheckBox chkSaturday;
         private System.Windows.Forms.CheckBox chkFriday;
@@ -1058,5 +1035,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn TwoFactor;
         private System.Windows.Forms.DataGridViewTextBoxColumn LastLogin;
         private System.Windows.Forms.BindingSource userManagementViewModelBindingSource;
+        private System.Windows.Forms.ComboBox cmbRoles;
+        private System.Windows.Forms.Label lblRole;
     }
 }
