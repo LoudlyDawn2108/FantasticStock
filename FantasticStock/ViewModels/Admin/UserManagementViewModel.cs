@@ -157,6 +157,7 @@ namespace FantasticStock.ViewModels
         public ICommand AddUserCommand { get; }
         public ICommand EditUserCommand { get; }
         public ICommand DeactivateUserCommand { get; }
+        public ICommand ActivateUserCommand { get; }
         public ICommand DeleteUserCommand { get; }
         public ICommand ResetPasswordCommand { get; }
         public ICommand SaveUserCommand { get; }
@@ -198,19 +199,39 @@ namespace FantasticStock.ViewModels
         {
             if (SelectedUser == null) 
                 return;
-                
-            // Confirm deactivation
-            if (MessageService.ShowConfirmation($"Are you sure you want to deactivate user '{SelectedUser.Username}'?", "Confirm Deactivation"))
+            
+            // Check if user is active or inactive to determine the action
+            bool isActive = SelectedUser.Status == "Active";
+            string action = isActive ? "deactivate" : "activate";
+            string confirmTitle = isActive ? "Confirm Deactivation" : "Confirm Activation";
+            
+            // Show confirmation with appropriate text
+            if (MessageService.ShowConfirmation($"Are you sure you want to {action} user '{SelectedUser.Username}'?", confirmTitle))
             {
                 try
                 {
-                    _userService.DeactivateUser(SelectedUser.UserID);
-                    MessageService.ShowInformation("User deactivated successfully.", "Success");
+                    bool success;
+                    if (isActive)
+                    {
+                        // Deactivate active user
+                        success = _userService.DeactivateUser(SelectedUser.UserID);
+                        if (success)
+                            MessageService.ShowInformation("User deactivated successfully.", "Success");
+                    }
+                    else
+                    {
+                        // Activate inactive user
+                        success = _userService.ActivateUser(SelectedUser.UserID);
+                        if (success)
+                            MessageService.ShowInformation("User activated successfully.", "Success");
+                    }
+                    
+                    // Refresh data to show updated status
                     RefreshData(null);
                 }
                 catch (Exception ex)
                 {
-                    MessageService.ShowError($"Failed to deactivate user: {ex.Message}", "Error");
+                    MessageService.ShowError($"Failed to {action} user: {ex.Message}", "Error");
                 }
             }
         }
@@ -374,10 +395,12 @@ namespace FantasticStock.ViewModels
             try
             {
                 if (!ActivityStartDate.HasValue)
-                    ActivityStartDate = DateTime.Now.AddDays(-7);
+                    ActivityStartDate = DateTime.Parse("2025-03-02 16:08:31").AddDays(-7);
                 
                 if (!ActivityEndDate.HasValue)
                     ActivityEndDate = DateTime.Now;
+
+                Console.WriteLine($"Filtering activity logs from {ActivityStartDate} to {ActivityEndDate}");
 
                 var userId = SelectedUser?.UserID;
                 var logs = _auditService.GetAuditLogs(

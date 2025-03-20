@@ -13,6 +13,7 @@ namespace FantasticStock.Services
         bool UpdateUserPassword(int userId, string newPassword);
         bool DeleteUser(int userId);
         bool DeactivateUser(int userId);
+        bool ActivateUser(int userId);
         bool ValidateUser(string username, string password);
         List<Role> GetAllRoles();
         Role GetRoleById(int roleId);

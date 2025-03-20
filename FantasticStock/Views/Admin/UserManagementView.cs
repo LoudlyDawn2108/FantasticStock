@@ -82,6 +82,7 @@ namespace FantasticStock.Views
 
 
                 dgvActivityLog.DataSource = _viewModel.ActivityLogs;
+                dgvActivityLog.DataBindings.Add("DataSource", _viewModel, "ActivityLogs", true, DataSourceUpdateMode.OnPropertyChanged);
 
                 dtpStartDate.DataBindings.Add("Value", _viewModel, "ActivityStartDate", true, DataSourceUpdateMode.OnPropertyChanged);
                 dtpEndDate.DataBindings.Add("Value", _viewModel, "ActivityEndDate", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -102,6 +103,8 @@ namespace FantasticStock.Views
 
                 UpdateUIEditState(_viewModel.IsEditMode);
                 btnEdit.Enabled = true;
+                btnDeactivate.Enabled = true;
+                btnDelete.Enabled = true;
                 _viewModel.PropertyChanged += ViewModel_PropertyChanged;
             }
             catch (Exception ex)
@@ -224,6 +227,14 @@ namespace FantasticStock.Views
             {
                 User selectedUser = dgvUsers.SelectedRows[0].DataBoundItem as User;
                 _viewModel.SelectedUser = selectedUser;
+                if (selectedUser.Status == "Active")
+                {
+                    btnDeactivate.Text = "Deactivate";
+                }
+                else
+                {
+                    btnDeactivate.Text = "Activate";
+                }
             }
         }
 

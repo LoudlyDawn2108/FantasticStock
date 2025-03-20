@@ -41,12 +41,15 @@
             this.TwoFactor = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.LastLogin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilters = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lblStatusFilter = new System.Windows.Forms.Label();
+            this.cmbStatusFilter = new System.Windows.Forms.ComboBox();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.cmbRoleFilter = new System.Windows.Forms.ComboBox();
             this.userManagementViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cmbStatusFilter = new System.Windows.Forms.ComboBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblRoleFilter = new System.Windows.Forms.Label();
-            this.lblStatusFilter = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.panelListActions = new System.Windows.Forms.Panel();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -112,6 +115,9 @@
             this.panelUserList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.panelFilters.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).BeginInit();
             this.panelListActions.SuspendLayout();
             this.panelUserDetail.SuspendLayout();
@@ -168,7 +174,7 @@
             this.splitContainerMain.Panel2.Controls.Add(this.panelDetailActions);
             this.splitContainerMain.Panel2MinSize = 350;
             this.splitContainerMain.Size = new System.Drawing.Size(976, 525);
-            this.splitContainerMain.SplitterDistance = 489;
+            this.splitContainerMain.SplitterDistance = 476;
             this.splitContainerMain.TabIndex = 0;
             // 
             // panelUserList
@@ -178,7 +184,7 @@
             this.panelUserList.Location = new System.Drawing.Point(0, 80);
             this.panelUserList.Name = "panelUserList";
             this.panelUserList.Padding = new System.Windows.Forms.Padding(5);
-            this.panelUserList.Size = new System.Drawing.Size(489, 402);
+            this.panelUserList.Size = new System.Drawing.Size(476, 402);
             this.panelUserList.TabIndex = 2;
             // 
             // dgvUsers
@@ -187,6 +193,7 @@
             this.dgvUsers.AllowUserToDeleteRows = false;
             this.dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvUsers.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvUsers.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Username,
@@ -203,7 +210,7 @@
             this.dgvUsers.ReadOnly = true;
             this.dgvUsers.RowHeadersWidth = 30;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(479, 392);
+            this.dgvUsers.Size = new System.Drawing.Size(466, 392);
             this.dgvUsers.TabIndex = 0;
             // 
             // Username
@@ -258,40 +265,96 @@
             // 
             // panelFilters
             // 
-            this.panelFilters.Controls.Add(this.cmbRoleFilter);
-            this.panelFilters.Controls.Add(this.cmbStatusFilter);
+            this.panelFilters.Controls.Add(this.tableLayoutPanel1);
             this.panelFilters.Controls.Add(this.txtSearch);
-            this.panelFilters.Controls.Add(this.lblRoleFilter);
-            this.panelFilters.Controls.Add(this.lblStatusFilter);
             this.panelFilters.Controls.Add(this.lblSearch);
             this.panelFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilters.Location = new System.Drawing.Point(0, 0);
             this.panelFilters.Name = "panelFilters";
-            this.panelFilters.Size = new System.Drawing.Size(489, 80);
+            this.panelFilters.Size = new System.Drawing.Size(476, 80);
             this.panelFilters.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel4, 1, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 41);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(417, 32);
+            this.tableLayoutPanel1.TabIndex = 8;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.lblStatusFilter);
+            this.panel3.Controls.Add(this.cmbStatusFilter);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(202, 26);
+            this.panel3.TabIndex = 0;
+            // 
+            // lblStatusFilter
+            // 
+            this.lblStatusFilter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblStatusFilter.AutoSize = true;
+            this.lblStatusFilter.Location = new System.Drawing.Point(3, 7);
+            this.lblStatusFilter.Name = "lblStatusFilter";
+            this.lblStatusFilter.Size = new System.Drawing.Size(65, 13);
+            this.lblStatusFilter.TabIndex = 1;
+            this.lblStatusFilter.Text = "Status Filter:";
+            // 
+            // cmbStatusFilter
+            // 
+            this.cmbStatusFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbStatusFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStatusFilter.FormattingEnabled = true;
+            this.cmbStatusFilter.Location = new System.Drawing.Point(80, 4);
+            this.cmbStatusFilter.Name = "cmbStatusFilter";
+            this.cmbStatusFilter.Size = new System.Drawing.Size(114, 21);
+            this.cmbStatusFilter.TabIndex = 4;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.cmbRoleFilter);
+            this.panel4.Controls.Add(this.lblRoleFilter);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(211, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(203, 26);
+            this.panel4.TabIndex = 1;
             // 
             // cmbRoleFilter
             // 
+            this.cmbRoleFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbRoleFilter.DataSource = this.userManagementViewModelBindingSource;
             this.cmbRoleFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRoleFilter.FormattingEnabled = true;
-            this.cmbRoleFilter.Location = new System.Drawing.Point(290, 45);
+            this.cmbRoleFilter.Location = new System.Drawing.Point(80, 3);
             this.cmbRoleFilter.Name = "cmbRoleFilter";
-            this.cmbRoleFilter.Size = new System.Drawing.Size(120, 21);
+            this.cmbRoleFilter.Size = new System.Drawing.Size(113, 21);
             this.cmbRoleFilter.TabIndex = 5;
             // 
             // userManagementViewModelBindingSource
             // 
             this.userManagementViewModelBindingSource.DataSource = typeof(FantasticStock.ViewModels.UserManagementViewModel);
             // 
-            // cmbStatusFilter
+            // lblRoleFilter
             // 
-            this.cmbStatusFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStatusFilter.FormattingEnabled = true;
-            this.cmbStatusFilter.Location = new System.Drawing.Point(92, 45);
-            this.cmbStatusFilter.Name = "cmbStatusFilter";
-            this.cmbStatusFilter.Size = new System.Drawing.Size(121, 21);
-            this.cmbStatusFilter.TabIndex = 4;
+            this.lblRoleFilter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lblRoleFilter.AutoSize = true;
+            this.lblRoleFilter.Location = new System.Drawing.Point(14, 7);
+            this.lblRoleFilter.Name = "lblRoleFilter";
+            this.lblRoleFilter.Size = new System.Drawing.Size(57, 13);
+            this.lblRoleFilter.TabIndex = 2;
+            this.lblRoleFilter.Text = "Role Filter:";
             // 
             // txtSearch
             // 
@@ -299,26 +362,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(92, 15);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(318, 20);
+            this.txtSearch.Size = new System.Drawing.Size(330, 20);
             this.txtSearch.TabIndex = 3;
-            // 
-            // lblRoleFilter
-            // 
-            this.lblRoleFilter.AutoSize = true;
-            this.lblRoleFilter.Location = new System.Drawing.Point(224, 48);
-            this.lblRoleFilter.Name = "lblRoleFilter";
-            this.lblRoleFilter.Size = new System.Drawing.Size(57, 13);
-            this.lblRoleFilter.TabIndex = 2;
-            this.lblRoleFilter.Text = "Role Filter:";
-            // 
-            // lblStatusFilter
-            // 
-            this.lblStatusFilter.AutoSize = true;
-            this.lblStatusFilter.Location = new System.Drawing.Point(15, 48);
-            this.lblStatusFilter.Name = "lblStatusFilter";
-            this.lblStatusFilter.Size = new System.Drawing.Size(65, 13);
-            this.lblStatusFilter.TabIndex = 1;
-            this.lblStatusFilter.Text = "Status Filter:";
             // 
             // lblSearch
             // 
@@ -338,13 +383,14 @@
             this.panelListActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelListActions.Location = new System.Drawing.Point(0, 482);
             this.panelListActions.Name = "panelListActions";
-            this.panelListActions.Size = new System.Drawing.Size(489, 43);
+            this.panelListActions.Size = new System.Drawing.Size(476, 43);
             this.panelListActions.TabIndex = 0;
             // 
             // btnDelete
             // 
             this.btnDelete.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnDelete.Location = new System.Drawing.Point(371, 10);
+            this.btnDelete.ForeColor = System.Drawing.Color.Red;
+            this.btnDelete.Location = new System.Drawing.Point(365, 10);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 3;
@@ -354,7 +400,8 @@
             // btnDeactivate
             // 
             this.btnDeactivate.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnDeactivate.Location = new System.Drawing.Point(268, 10);
+            this.btnDeactivate.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnDeactivate.Location = new System.Drawing.Point(262, 10);
             this.btnDeactivate.Name = "btnDeactivate";
             this.btnDeactivate.Size = new System.Drawing.Size(75, 23);
             this.btnDeactivate.TabIndex = 2;
@@ -364,7 +411,8 @@
             // btnEdit
             // 
             this.btnEdit.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnEdit.Location = new System.Drawing.Point(152, 10);
+            this.btnEdit.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.btnEdit.Location = new System.Drawing.Point(146, 10);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 1;
@@ -374,12 +422,14 @@
             // btnAddUser
             // 
             this.btnAddUser.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnAddUser.Location = new System.Drawing.Point(40, 10);
+            this.btnAddUser.BackColor = System.Drawing.SystemColors.Highlight;
+            this.btnAddUser.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.btnAddUser.Location = new System.Drawing.Point(34, 10);
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(75, 23);
             this.btnAddUser.TabIndex = 0;
             this.btnAddUser.Text = "Add User";
-            this.btnAddUser.UseVisualStyleBackColor = true;
+            this.btnAddUser.UseVisualStyleBackColor = false;
             // 
             // panelUserDetail
             // 
@@ -388,7 +438,7 @@
             this.panelUserDetail.Location = new System.Drawing.Point(0, 0);
             this.panelUserDetail.Name = "panelUserDetail";
             this.panelUserDetail.Padding = new System.Windows.Forms.Padding(5);
-            this.panelUserDetail.Size = new System.Drawing.Size(483, 482);
+            this.panelUserDetail.Size = new System.Drawing.Size(496, 482);
             this.panelUserDetail.TabIndex = 1;
             // 
             // tabControlUserDetail
@@ -400,7 +450,7 @@
             this.tabControlUserDetail.Location = new System.Drawing.Point(5, 5);
             this.tabControlUserDetail.Name = "tabControlUserDetail";
             this.tabControlUserDetail.SelectedIndex = 0;
-            this.tabControlUserDetail.Size = new System.Drawing.Size(473, 472);
+            this.tabControlUserDetail.Size = new System.Drawing.Size(486, 472);
             this.tabControlUserDetail.TabIndex = 0;
             // 
             // tabPageBasicInfo
@@ -416,7 +466,7 @@
             this.tabPageBasicInfo.Location = new System.Drawing.Point(4, 22);
             this.tabPageBasicInfo.Name = "tabPageBasicInfo";
             this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageBasicInfo.Size = new System.Drawing.Size(465, 446);
+            this.tabPageBasicInfo.Size = new System.Drawing.Size(478, 446);
             this.tabPageBasicInfo.TabIndex = 0;
             this.tabPageBasicInfo.Text = "Basic Info";
             this.tabPageBasicInfo.UseVisualStyleBackColor = true;
@@ -428,7 +478,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPhone.Location = new System.Drawing.Point(120, 110);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(325, 20);
+            this.txtPhone.Size = new System.Drawing.Size(338, 20);
             this.txtPhone.TabIndex = 7;
             // 
             // txtEmail
@@ -438,7 +488,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmail.Location = new System.Drawing.Point(120, 80);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(325, 20);
+            this.txtEmail.Size = new System.Drawing.Size(338, 20);
             this.txtEmail.TabIndex = 6;
             // 
             // txtDisplayName
@@ -448,7 +498,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(120, 50);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(325, 20);
+            this.txtDisplayName.Size = new System.Drawing.Size(338, 20);
             this.txtDisplayName.TabIndex = 5;
             // 
             // txtUsername
@@ -458,7 +508,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.Location = new System.Drawing.Point(120, 20);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(325, 20);
+            this.txtUsername.Size = new System.Drawing.Size(338, 20);
             this.txtUsername.TabIndex = 4;
             // 
             // lblPhone
@@ -511,7 +561,7 @@
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
             this.tabPageSecurity.Name = "tabPageSecurity";
             this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageSecurity.Size = new System.Drawing.Size(465, 446);
+            this.tabPageSecurity.Size = new System.Drawing.Size(478, 446);
             this.tabPageSecurity.TabIndex = 1;
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
@@ -523,7 +573,7 @@
             this.cmbRoles.FormattingEnabled = true;
             this.cmbRoles.Location = new System.Drawing.Point(120, 218);
             this.cmbRoles.Name = "cmbRoles";
-            this.cmbRoles.Size = new System.Drawing.Size(294, 21);
+            this.cmbRoles.Size = new System.Drawing.Size(307, 21);
             this.cmbRoles.TabIndex = 7;
             // 
             // lblRole
@@ -559,7 +609,7 @@
             this.progressBarPasswordStrength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarPasswordStrength.Location = new System.Drawing.Point(120, 85);
             this.progressBarPasswordStrength.Name = "progressBarPasswordStrength";
-            this.progressBarPasswordStrength.Size = new System.Drawing.Size(294, 10);
+            this.progressBarPasswordStrength.Size = new System.Drawing.Size(307, 10);
             this.progressBarPasswordStrength.TabIndex = 4;
             this.progressBarPasswordStrength.Value = 50;
             // 
@@ -569,7 +619,7 @@
             this.txtConfirmPassword.Location = new System.Drawing.Point(120, 110);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.PasswordChar = '•';
-            this.txtConfirmPassword.Size = new System.Drawing.Size(294, 20);
+            this.txtConfirmPassword.Size = new System.Drawing.Size(307, 20);
             this.txtConfirmPassword.TabIndex = 3;
             // 
             // txtPassword
@@ -578,7 +628,7 @@
             this.txtPassword.Location = new System.Drawing.Point(120, 40);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '•';
-            this.txtPassword.Size = new System.Drawing.Size(294, 20);
+            this.txtPassword.Size = new System.Drawing.Size(307, 20);
             this.txtPassword.TabIndex = 2;
             // 
             // lblConfirmPassword
@@ -614,7 +664,7 @@
             this.tabPageRestrictions.Location = new System.Drawing.Point(4, 22);
             this.tabPageRestrictions.Name = "tabPageRestrictions";
             this.tabPageRestrictions.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageRestrictions.Size = new System.Drawing.Size(465, 446);
+            this.tabPageRestrictions.Size = new System.Drawing.Size(478, 446);
             this.tabPageRestrictions.TabIndex = 3;
             this.tabPageRestrictions.Text = "Restrictions";
             this.tabPageRestrictions.UseVisualStyleBackColor = true;
@@ -739,13 +789,13 @@
             this.panelDetailActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelDetailActions.Location = new System.Drawing.Point(0, 482);
             this.panelDetailActions.Name = "panelDetailActions";
-            this.panelDetailActions.Size = new System.Drawing.Size(483, 43);
+            this.panelDetailActions.Size = new System.Drawing.Size(496, 43);
             this.panelDetailActions.TabIndex = 0;
             // 
             // btnResetPassword
             // 
             this.btnResetPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnResetPassword.Location = new System.Drawing.Point(230, 10);
+            this.btnResetPassword.Location = new System.Drawing.Point(243, 10);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(91, 23);
             this.btnResetPassword.TabIndex = 2;
@@ -755,7 +805,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(327, 10);
+            this.btnCancel.Location = new System.Drawing.Point(340, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(70, 23);
             this.btnCancel.TabIndex = 1;
@@ -765,12 +815,14 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(403, 10);
+            this.btnSave.BackColor = System.Drawing.SystemColors.Highlight;
+            this.btnSave.ForeColor = System.Drawing.SystemColors.Menu;
+            this.btnSave.Location = new System.Drawing.Point(416, 10);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(70, 23);
             this.btnSave.TabIndex = 0;
             this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
             // 
             // tabPageActivityLog
             // 
@@ -789,8 +841,10 @@
             this.dgvActivityLog.AllowUserToAddRows = false;
             this.dgvActivityLog.AllowUserToDeleteRows = false;
             this.dgvActivityLog.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvActivityLog.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvActivityLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvActivityLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvActivityLog.GridColor = System.Drawing.Color.Cyan;
             this.dgvActivityLog.Location = new System.Drawing.Point(3, 83);
             this.dgvActivityLog.Name = "dgvActivityLog";
             this.dgvActivityLog.ReadOnly = true;
@@ -906,6 +960,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Location = new System.Drawing.Point(18, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(169, 24);
@@ -939,6 +994,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).EndInit();
             this.panelFilters.ResumeLayout(false);
             this.panelFilters.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).EndInit();
             this.panelListActions.ResumeLayout(false);
             this.panelUserDetail.ResumeLayout(false);
@@ -1037,5 +1097,8 @@
         private System.Windows.Forms.BindingSource userManagementViewModelBindingSource;
         private System.Windows.Forms.ComboBox cmbRoles;
         private System.Windows.Forms.Label lblRole;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
     }
 }

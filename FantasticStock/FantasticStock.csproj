@@ -70,7 +70,6 @@
     <Compile Include="Models\Admin\BackupHistory.cs" />
     <Compile Include="Models\Admin\CompanyInformation.cs" />
     <Compile Include="Models\Admin\ErrorLogEntry.cs" />
-    <Compile Include="Models\Admin\Permission.cs" />
     <Compile Include="Models\Admin\Role.cs" />
     <Compile Include="Models\Admin\ScheduledBackup.cs" />
     <Compile Include="Models\Admin\SystemResources.cs" />

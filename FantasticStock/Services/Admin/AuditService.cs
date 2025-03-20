@@ -71,8 +71,10 @@ namespace FantasticStock.Services
             
             DataTable dataTable = _databaseService.ExecuteQuery(query, parameters.ToArray());
             
+
             foreach (DataRow row in dataTable.Rows)
             {
+                Console.WriteLine(row["AuditID"]);
                 logs.Add(MapAuditLogEntry(row));
             }
             

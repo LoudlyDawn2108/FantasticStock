@@ -66,7 +66,7 @@ namespace FantasticStock.Services
                 INNER JOIN Roles r ON u.RoleID = r.RoleID
                 WHERE u.Username = @Username";
 
-                        var parameter = new SqlParameter("@Username", username);
+            var parameter = new SqlParameter("@Username", username);
             DataTable dataTable = _databaseService.ExecuteQuery(query, parameter);
             
             if (dataTable.Rows.Count == 0)
@@ -255,6 +255,41 @@ namespace FantasticStock.Services
                 _auditService.LogEvent(
                     CurrentUser.UserID,
                     "UserDeactivate",
+                    "Users",
+                    userId.ToString(),
+                    Newtonsoft.Json.JsonConvert.SerializeObject(existingUser),
+                    Newtonsoft.Json.JsonConvert.SerializeObject(updatedUser)
+                );
+            }
+
+            return rowsAffected > 0;
+        }
+
+        public bool ActivateUser(int userId)
+        {
+            // Get existing user data for auditing
+            User existingUser = GetUserById(userId);
+            if (existingUser == null)
+                return false;
+
+            string query = @"
+                UPDATE Users
+                SET Status = 'Active',
+                    ModifiedDate = GETDATE()
+                WHERE UserID = @UserID";
+
+            var parameter = new SqlParameter("@UserID", userId);
+
+            int rowsAffected = _databaseService.ExecuteNonQuery(query, parameter);
+            
+            if (rowsAffected > 0)
+            {
+                User updatedUser = existingUser.Clone();
+                updatedUser.Status = "Active";
+                
+                _auditService.LogEvent(
+                    CurrentUser.UserID,
+                    "UserActivate",
                     "Users",
                     userId.ToString(),
                     Newtonsoft.Json.JsonConvert.SerializeObject(existingUser),
