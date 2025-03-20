@@ -28,11 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageUsers = new System.Windows.Forms.TabPage();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
             this.panelUserList = new System.Windows.Forms.Panel();
             this.dgvUsers = new System.Windows.Forms.DataGridView();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DisplayName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RoleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TwoFactor = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.LastLogin = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelFilters = new System.Windows.Forms.Panel();
             this.cmbRoleFilter = new System.Windows.Forms.ComboBox();
             this.cmbStatusFilter = new System.Windows.Forms.ComboBox();
@@ -57,6 +64,7 @@
             this.lblDisplayName = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
+            this.chkTwoFactorEnabled = new System.Windows.Forms.CheckBox();
             this.lblPasswordStrength = new System.Windows.Forms.Label();
             this.progressBarPasswordStrength = new System.Windows.Forms.ProgressBar();
             this.txtConfirmPassword = new System.Windows.Forms.TextBox();
@@ -79,7 +87,6 @@
             this.lblAllowedDays = new System.Windows.Forms.Label();
             this.lblExpirationDate = new System.Windows.Forms.Label();
             this.panelDetailActions = new System.Windows.Forms.Panel();
-            this.chkTwoFactorEnabled = new System.Windows.Forms.CheckBox();
             this.btnResetPassword = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -97,6 +104,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.userManagementViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControlMain.SuspendLayout();
             this.tabPageUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -119,6 +127,7 @@
             this.panelActivityControls.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -129,7 +138,7 @@
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(900, 557);
+            this.tabControlMain.Size = new System.Drawing.Size(990, 557);
             this.tabControlMain.TabIndex = 0;
             // 
             // tabPageUsers
@@ -138,7 +147,7 @@
             this.tabPageUsers.Location = new System.Drawing.Point(4, 22);
             this.tabPageUsers.Name = "tabPageUsers";
             this.tabPageUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageUsers.Size = new System.Drawing.Size(892, 531);
+            this.tabPageUsers.Size = new System.Drawing.Size(982, 531);
             this.tabPageUsers.TabIndex = 0;
             this.tabPageUsers.Text = "Users";
             this.tabPageUsers.UseVisualStyleBackColor = true;
@@ -161,8 +170,8 @@
             this.splitContainerMain.Panel2.Controls.Add(this.panelUserDetail);
             this.splitContainerMain.Panel2.Controls.Add(this.panelDetailActions);
             this.splitContainerMain.Panel2MinSize = 350;
-            this.splitContainerMain.Size = new System.Drawing.Size(886, 525);
-            this.splitContainerMain.SplitterDistance = 430;
+            this.splitContainerMain.Size = new System.Drawing.Size(976, 525);
+            this.splitContainerMain.SplitterDistance = 489;
             this.splitContainerMain.TabIndex = 0;
             // 
             // panelUserList
@@ -172,7 +181,7 @@
             this.panelUserList.Location = new System.Drawing.Point(0, 80);
             this.panelUserList.Name = "panelUserList";
             this.panelUserList.Padding = new System.Windows.Forms.Padding(5);
-            this.panelUserList.Size = new System.Drawing.Size(430, 402);
+            this.panelUserList.Size = new System.Drawing.Size(489, 402);
             this.panelUserList.TabIndex = 2;
             // 
             // dgvUsers
@@ -182,15 +191,73 @@
             this.dgvUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvUsers.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Username,
+            this.DisplayName,
+            this.RoleName,
+            this.Status,
+            this.TwoFactor,
+            this.LastLogin});
             this.dgvUsers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvUsers.GridColor = System.Drawing.Color.Cyan;
             this.dgvUsers.Location = new System.Drawing.Point(5, 5);
             this.dgvUsers.MultiSelect = false;
             this.dgvUsers.Name = "dgvUsers";
             this.dgvUsers.ReadOnly = true;
+            this.dgvUsers.RowHeadersWidth = 30;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(420, 392);
+            this.dgvUsers.Size = new System.Drawing.Size(479, 392);
             this.dgvUsers.TabIndex = 0;
+            // 
+            // Username
+            // 
+            this.Username.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Username.HeaderText = "Username";
+            this.Username.Name = "Username";
+            this.Username.ReadOnly = true;
+            this.Username.Width = 60;
+            // 
+            // DisplayName
+            // 
+            this.DisplayName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DisplayName.HeaderText = "Display Name";
+            this.DisplayName.Name = "DisplayName";
+            this.DisplayName.ReadOnly = true;
+            this.DisplayName.Width = 97;
+            // 
+            // RoleName
+            // 
+            this.RoleName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.RoleName.HeaderText = "Role Name";
+            this.RoleName.Name = "RoleName";
+            this.RoleName.ReadOnly = true;
+            this.RoleName.Width = 85;
+            // 
+            // Status
+            // 
+            this.Status.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Status.HeaderText = "Status";
+            this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
+            this.Status.Width = 62;
+            // 
+            // TwoFactor
+            // 
+            this.TwoFactor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.TwoFactor.HeaderText = "2FA";
+            this.TwoFactor.Name = "TwoFactor";
+            this.TwoFactor.ReadOnly = true;
+            this.TwoFactor.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.TwoFactor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.TwoFactor.Width = 30;
+            // 
+            // LastLogin
+            // 
+            this.LastLogin.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.LastLogin.HeaderText = "Last Login";
+            this.LastLogin.Name = "LastLogin";
+            this.LastLogin.ReadOnly = true;
+            this.LastLogin.Width = 81;
             // 
             // panelFilters
             // 
@@ -203,11 +270,12 @@
             this.panelFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilters.Location = new System.Drawing.Point(0, 0);
             this.panelFilters.Name = "panelFilters";
-            this.panelFilters.Size = new System.Drawing.Size(430, 80);
+            this.panelFilters.Size = new System.Drawing.Size(489, 80);
             this.panelFilters.TabIndex = 1;
             // 
             // cmbRoleFilter
             // 
+            this.cmbRoleFilter.DataSource = this.userManagementViewModelBindingSource;
             this.cmbRoleFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRoleFilter.FormattingEnabled = true;
             this.cmbRoleFilter.Location = new System.Drawing.Point(290, 45);
@@ -267,13 +335,13 @@
             this.panelListActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelListActions.Location = new System.Drawing.Point(0, 482);
             this.panelListActions.Name = "panelListActions";
-            this.panelListActions.Size = new System.Drawing.Size(430, 43);
+            this.panelListActions.Size = new System.Drawing.Size(489, 43);
             this.panelListActions.TabIndex = 0;
             // 
             // btnDelete
             // 
             this.btnDelete.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnDelete.Location = new System.Drawing.Point(342, 10);
+            this.btnDelete.Location = new System.Drawing.Point(371, 10);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 3;
@@ -283,7 +351,7 @@
             // btnDeactivate
             // 
             this.btnDeactivate.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnDeactivate.Location = new System.Drawing.Point(239, 10);
+            this.btnDeactivate.Location = new System.Drawing.Point(268, 10);
             this.btnDeactivate.Name = "btnDeactivate";
             this.btnDeactivate.Size = new System.Drawing.Size(75, 23);
             this.btnDeactivate.TabIndex = 2;
@@ -293,7 +361,7 @@
             // btnEdit
             // 
             this.btnEdit.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnEdit.Location = new System.Drawing.Point(123, 10);
+            this.btnEdit.Location = new System.Drawing.Point(152, 10);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 1;
@@ -303,7 +371,7 @@
             // btnAddUser
             // 
             this.btnAddUser.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnAddUser.Location = new System.Drawing.Point(11, 10);
+            this.btnAddUser.Location = new System.Drawing.Point(40, 10);
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(75, 23);
             this.btnAddUser.TabIndex = 0;
@@ -317,7 +385,7 @@
             this.panelUserDetail.Location = new System.Drawing.Point(0, 0);
             this.panelUserDetail.Name = "panelUserDetail";
             this.panelUserDetail.Padding = new System.Windows.Forms.Padding(5);
-            this.panelUserDetail.Size = new System.Drawing.Size(452, 482);
+            this.panelUserDetail.Size = new System.Drawing.Size(483, 482);
             this.panelUserDetail.TabIndex = 1;
             // 
             // tabControlUserDetail
@@ -330,7 +398,7 @@
             this.tabControlUserDetail.Location = new System.Drawing.Point(5, 5);
             this.tabControlUserDetail.Name = "tabControlUserDetail";
             this.tabControlUserDetail.SelectedIndex = 0;
-            this.tabControlUserDetail.Size = new System.Drawing.Size(442, 472);
+            this.tabControlUserDetail.Size = new System.Drawing.Size(473, 472);
             this.tabControlUserDetail.TabIndex = 0;
             // 
             // tabPageBasicInfo
@@ -346,7 +414,7 @@
             this.tabPageBasicInfo.Location = new System.Drawing.Point(4, 22);
             this.tabPageBasicInfo.Name = "tabPageBasicInfo";
             this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageBasicInfo.Size = new System.Drawing.Size(434, 446);
+            this.tabPageBasicInfo.Size = new System.Drawing.Size(420, 446);
             this.tabPageBasicInfo.TabIndex = 0;
             this.tabPageBasicInfo.Text = "Basic Info";
             this.tabPageBasicInfo.UseVisualStyleBackColor = true;
@@ -358,7 +426,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPhone.Location = new System.Drawing.Point(120, 110);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(294, 20);
+            this.txtPhone.Size = new System.Drawing.Size(280, 20);
             this.txtPhone.TabIndex = 7;
             // 
             // txtEmail
@@ -368,7 +436,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmail.Location = new System.Drawing.Point(120, 80);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(294, 20);
+            this.txtEmail.Size = new System.Drawing.Size(280, 20);
             this.txtEmail.TabIndex = 6;
             // 
             // txtDisplayName
@@ -378,7 +446,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(120, 50);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(294, 20);
+            this.txtDisplayName.Size = new System.Drawing.Size(280, 20);
             this.txtDisplayName.TabIndex = 5;
             // 
             // txtUsername
@@ -388,7 +456,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.Location = new System.Drawing.Point(120, 20);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(294, 20);
+            this.txtUsername.Size = new System.Drawing.Size(280, 20);
             this.txtUsername.TabIndex = 4;
             // 
             // lblPhone
@@ -439,10 +507,20 @@
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
             this.tabPageSecurity.Name = "tabPageSecurity";
             this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageSecurity.Size = new System.Drawing.Size(434, 446);
+            this.tabPageSecurity.Size = new System.Drawing.Size(420, 446);
             this.tabPageSecurity.TabIndex = 1;
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
+            // 
+            // chkTwoFactorEnabled
+            // 
+            this.chkTwoFactorEnabled.AutoSize = true;
+            this.chkTwoFactorEnabled.Location = new System.Drawing.Point(23, 176);
+            this.chkTwoFactorEnabled.Name = "chkTwoFactorEnabled";
+            this.chkTwoFactorEnabled.Size = new System.Drawing.Size(151, 17);
+            this.chkTwoFactorEnabled.TabIndex = 3;
+            this.chkTwoFactorEnabled.Text = "Two-Factor Authentication";
+            this.chkTwoFactorEnabled.UseVisualStyleBackColor = true;
             // 
             // lblPasswordStrength
             // 
@@ -503,7 +581,7 @@
             this.tabPagePermissions.Location = new System.Drawing.Point(4, 22);
             this.tabPagePermissions.Name = "tabPagePermissions";
             this.tabPagePermissions.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPagePermissions.Size = new System.Drawing.Size(434, 446);
+            this.tabPagePermissions.Size = new System.Drawing.Size(465, 446);
             this.tabPagePermissions.TabIndex = 2;
             this.tabPagePermissions.Text = "Permissions";
             this.tabPagePermissions.UseVisualStyleBackColor = true;
@@ -549,7 +627,7 @@
             this.tabPageRestrictions.Location = new System.Drawing.Point(4, 22);
             this.tabPageRestrictions.Name = "tabPageRestrictions";
             this.tabPageRestrictions.Padding = new System.Windows.Forms.Padding(10);
-            this.tabPageRestrictions.Size = new System.Drawing.Size(434, 446);
+            this.tabPageRestrictions.Size = new System.Drawing.Size(420, 446);
             this.tabPageRestrictions.TabIndex = 3;
             this.tabPageRestrictions.Text = "Restrictions";
             this.tabPageRestrictions.UseVisualStyleBackColor = true;
@@ -674,23 +752,13 @@
             this.panelDetailActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelDetailActions.Location = new System.Drawing.Point(0, 482);
             this.panelDetailActions.Name = "panelDetailActions";
-            this.panelDetailActions.Size = new System.Drawing.Size(452, 43);
+            this.panelDetailActions.Size = new System.Drawing.Size(483, 43);
             this.panelDetailActions.TabIndex = 0;
-            // 
-            // chkTwoFactorEnabled
-            // 
-            this.chkTwoFactorEnabled.AutoSize = true;
-            this.chkTwoFactorEnabled.Location = new System.Drawing.Point(23, 176);
-            this.chkTwoFactorEnabled.Name = "chkTwoFactorEnabled";
-            this.chkTwoFactorEnabled.Size = new System.Drawing.Size(151, 17);
-            this.chkTwoFactorEnabled.TabIndex = 3;
-            this.chkTwoFactorEnabled.Text = "Two-Factor Authentication";
-            this.chkTwoFactorEnabled.UseVisualStyleBackColor = true;
             // 
             // btnResetPassword
             // 
             this.btnResetPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnResetPassword.Location = new System.Drawing.Point(199, 10);
+            this.btnResetPassword.Location = new System.Drawing.Point(230, 10);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(91, 23);
             this.btnResetPassword.TabIndex = 2;
@@ -700,7 +768,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(296, 10);
+            this.btnCancel.Location = new System.Drawing.Point(327, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(70, 23);
             this.btnCancel.TabIndex = 1;
@@ -710,7 +778,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(372, 10);
+            this.btnSave.Location = new System.Drawing.Point(403, 10);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(70, 23);
             this.btnSave.TabIndex = 0;
@@ -844,7 +912,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(900, 43);
+            this.panel1.Size = new System.Drawing.Size(990, 43);
             this.panel1.TabIndex = 1;
             // 
             // label1
@@ -863,8 +931,12 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 43);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(900, 557);
+            this.panel2.Size = new System.Drawing.Size(990, 557);
             this.panel2.TabIndex = 2;
+            // 
+            // userManagementViewModelBindingSource
+            // 
+            this.userManagementViewModelBindingSource.DataSource = typeof(FantasticStock.ViewModels.UserManagementViewModel);
             // 
             // UserManagementView
             // 
@@ -873,7 +945,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "UserManagementView";
-            this.Size = new System.Drawing.Size(900, 600);
+            this.Size = new System.Drawing.Size(990, 600);
             this.tabControlMain.ResumeLayout(false);
             this.tabPageUsers.ResumeLayout(false);
             this.splitContainerMain.Panel1.ResumeLayout(false);
@@ -903,6 +975,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.userManagementViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -978,5 +1051,12 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Username;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DisplayName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RoleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn TwoFactor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LastLogin;
+        private System.Windows.Forms.BindingSource userManagementViewModelBindingSource;
     }
 }

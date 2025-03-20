@@ -49,6 +49,8 @@ namespace FantasticStock.ViewModels
 
             // Initialize data
             LoadData();
+
+            RoleFilter = 0;
         }
 
         #region Properties
@@ -327,7 +329,6 @@ namespace FantasticStock.ViewModels
 
         private void ExportActivity(object parameter)
         {
-            // In a real application, implement export functionality
             MessageService.ShowInformation("Export functionality would be implemented here.", "Export");
         }
 
@@ -369,7 +370,6 @@ namespace FantasticStock.ViewModels
                 
                 LoadActivityLogs();
                 
-                // Reset filters
                 _searchText = null;
                 _statusFilter = null;
                 _roleFilter = null;
@@ -387,14 +387,12 @@ namespace FantasticStock.ViewModels
         {
             try
             {
-                // Default to last 7 days if dates not specified
                 if (!ActivityStartDate.HasValue)
                     ActivityStartDate = DateTime.Parse("2025-03-02 16:08:31").AddDays(-7);
                 
                 if (!ActivityEndDate.HasValue)
                     ActivityEndDate = DateTime.Parse("2025-03-02 16:08:31");
 
-                // Get filtered activity logs
                 var userId = SelectedUser?.UserID;
                 var logs = _auditService.GetAuditLogs(
                     ActivityStartDate, 
@@ -478,7 +476,7 @@ namespace FantasticStock.ViewModels
             }
             
             // Apply status filter
-            if (!string.IsNullOrWhiteSpace(StatusFilter))
+            if (!string.IsNullOrWhiteSpace(StatusFilter) && StatusFilter != "All status")
             {
                 filteredUsers = filteredUsers.Where(u => u.Status == StatusFilter);
             }

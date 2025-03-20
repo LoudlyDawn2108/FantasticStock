@@ -42,6 +42,7 @@ namespace FantasticStock.Views
         {
             try
             {
+                dgvUsers.Columns.Clear();
                 dgvUsers.DataSource = _viewModel.Users;
                 dgvUsers.DataBindings.Add("DataSource", _viewModel, "Users", true, DataSourceUpdateMode.OnPropertyChanged);
 
@@ -59,14 +60,21 @@ namespace FantasticStock.Views
                 cmbRoles.DisplayMember = "RoleName";
                 cmbRoles.ValueMember = "RoleID";
                 cmbRoles.DataBindings.Add("SelectedValue", _viewModel, "SelectedUser.RoleID", true, DataSourceUpdateMode.OnPropertyChanged);
+                
 
                 txtSearch.DataBindings.Add("Text", _viewModel, "SearchText", true, DataSourceUpdateMode.OnPropertyChanged);
 
-                cmbStatusFilter.Items.Add("");
+                cmbStatusFilter.Items.Add("All status");
                 cmbStatusFilter.Items.Add("Active");
                 cmbStatusFilter.Items.Add("Inactive");
                 cmbStatusFilter.Items.Add("Locked");
+                cmbStatusFilter.SelectedItem = "All status";
                 cmbStatusFilter.DataBindings.Add("SelectedItem", _viewModel, "StatusFilter", true, DataSourceUpdateMode.OnPropertyChanged);
+                cmbStatusFilter.SelectedIndexChanged += (s, e) =>
+                {
+                    _viewModel.StatusFilter = cmbStatusFilter.SelectedItem?.ToString();
+                };
+
 
                 cmbRoleFilter.DataSource = new BindingSource(_viewModel.Roles, null);
                 cmbRoleFilter.DisplayMember = "RoleName";
@@ -74,6 +82,7 @@ namespace FantasticStock.Views
                 cmbRoleFilter.DataBindings.Add("SelectedValue", _viewModel, "RoleFilter", true, DataSourceUpdateMode.OnPropertyChanged);
 
                 ((BindingSource)cmbRoleFilter.DataSource).Insert(0, new Role { RoleID = 0, RoleName = "All Roles" });
+
 
                 dgvActivityLog.DataSource = _viewModel.ActivityLogs;
 
@@ -108,14 +117,6 @@ namespace FantasticStock.Views
         {
             dgvUsers.AutoGenerateColumns = false;
             dgvUsers.Columns.Clear();
-
-            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "UserID",
-                HeaderText = "ID",
-                Width = 50,
-                Visible = false
-            });
 
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
@@ -325,10 +326,10 @@ namespace FantasticStock.Views
             dgvUsers.Enabled = !isEditMode;
 
             // Update permissions tree based on role selection
-            //if (_viewModel.SelectedUser != null)
-            //{
-            //    UpdatePermissionsTree();
-            //}
+            if (_viewModel.SelectedUser != null)
+            {
+                UpdatePermissionsTree();
+            }
         }
 
         private void UpdatePermissionsTree()
