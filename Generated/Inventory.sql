@@ -1,4 +1,5 @@
-﻿CREATE TABLE Category (
+﻿CREATE database Product
+CREATE TABLE Category (
     CategoryID INT PRIMARY KEY IDENTITY(1,1),
     CategoryName NVARCHAR(100) NOT NULL,
     Description NVARCHAR(500) NULL,
@@ -205,3 +206,30 @@ VALUES (
     1,
     'Specializes in smartphone and tablet components. Requires minimum order quantity of 1000 units.'
 );
+
+
+
+-- Thêm bảng InventoryTransaction vào file inventory.sql
+CREATE TABLE InventoryTransaction (
+    TransactionID INT PRIMARY KEY IDENTITY(1,1),
+    ProductID INT NOT NULL,
+    LocationID INT NOT NULL DEFAULT 1, -- Mặc định nếu bạn chỉ có một vị trí
+    TransactionType NVARCHAR(50) NOT NULL, -- Purchase, Sale, Adjustment, Transfer, Stock Take
+    Quantity DECIMAL(18, 2) NOT NULL,
+    PreviousQuantity DECIMAL(18, 2) NOT NULL,
+    NewQuantity DECIMAL(18, 2) NOT NULL,
+    ReferenceID INT NULL,
+    ReferenceType NVARCHAR(50) NULL, -- PO, SO, StockAdjustment, Transfer, etc.
+    ReferenceNumber NVARCHAR(50) NULL,
+    Notes NVARCHAR(500) NULL,
+  --  AdjustmentReason NVARCHAR(200) NULL, -- Trường mới để lưu lý do thay đổi số lượng
+    CreatedBy INT NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT FK_InventoryTransaction_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+    CONSTRAINT FK_InventoryTransaction_User FOREIGN KEY (CreatedBy) REFERENCES [User](UserID)
+);
+
+-- Tạo index để tăng hiệu suất truy vấn
+CREATE INDEX IX_InventoryTransaction_ProductID ON InventoryTransaction(ProductID);
+CREATE INDEX IX_InventoryTransaction_CreatedDate ON InventoryTransaction(CreatedDate);
+CREATE INDEX IX_InventoryTransaction_TransactionType ON InventoryTransaction(TransactionType);

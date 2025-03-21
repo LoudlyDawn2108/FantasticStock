@@ -11,7 +11,7 @@ namespace FantasticStock.Views.Inventory
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
         private const int EM_SETCUEBANNER = 0x1501;
-        string chuoiketnoi = "Data Source=TUNGCORN\\SQLEXPRESS; Initial Catalog=Product; Integrated Security=true";
+        string chuoiketnoi = "Server=TUNGCORN\\SQLEXPRESS; Database=Product; Integrated Security=true";
         SqlConnection conn;
 
         private System.ComponentModel.IContainer components = null;
@@ -80,8 +80,10 @@ namespace FantasticStock.Views.Inventory
 
         private void btnAddNewSupplier_Click(object sender, EventArgs e)
         {
+            supplierID = 0;
             XoaDuLieu();
             KhoaChinhSua(true);
+
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -99,7 +101,20 @@ namespace FantasticStock.Views.Inventory
                 string query = "Delete from Supplier where SupplierID = @SupplierID";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@SupplierID", supplierID);
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Supplier information deleted successfully.", "Delete Successful",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Load_dgvSuppiler();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Please delete the product related to the supplier before deleting.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+
             }
 
         }
@@ -124,12 +139,15 @@ namespace FantasticStock.Views.Inventory
                 SqlCommand cmd = new SqlCommand();
                 if (supplierID > 0)
                 {
-                    string query = "Update Supplier set (CompanyName, ContactName, Address, City, State, PostalCode, Country, Phone, Email, Website, PaymentTerms, Notes , ModifiedDate) values (@CompanyName, @ContactName, @Address, @City, @State, @PostalCode, @Country, @Phone, @Email, @Website, @PaymentTerms, @Notes , @ModifiedDate)";
+                    string query = "UPDATE Supplier SET CompanyName = @CompanyName, ContactName = @ContactName, Email = @Email, Phone = @Phone, Website = @Website, PaymentTerms = @PaymentTerms, Address = @Address, City = @City, State = @State, PostalCode = @PostalCode, Country = @Country, Notes = @Notes, ModifiedDate = @ModifiedDate WHERE SupplierID = @SupplierID";
+                    cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@SupplierID", supplierID);
                 }
                 else
                 {
                     string query = "Insert into Supplier (CompanyName, ContactName, Address, City, State, PostalCode, Country, Phone, Email, Website, PaymentTerms, Notes ,CreatedDate, ModifiedDate) values (@CompanyName, @ContactName, @Address, @City, @State, @PostalCode, @Country, @Phone, @Email, @Website, @PaymentTerms, @Notes ,@CreatedDate, @ModifiedDate)";
                     cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
                 }
                 
                 cmd.Parameters.AddWithValue("@CompanyName", txtCompanyName.Text);
@@ -144,7 +162,6 @@ namespace FantasticStock.Views.Inventory
                 cmd.Parameters.AddWithValue("@Website", txtWebsite.Text);
                 cmd.Parameters.AddWithValue("@PaymentTerms", cmbPaymentTerms.Text);
                 cmd.Parameters.AddWithValue("@Notes", txtNotes.Text);
-                if(supplierID == 0) cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
                 cmd.Parameters.AddWithValue("@ModifiedDate", DateTime.Now);
                 cmd.ExecuteNonQuery();
                 supplierID = 0;
