@@ -44,8 +44,105 @@ namespace FantasticStock.Views.Inventory
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Export functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Export functionality not yet implemented.", "Information",
+            //    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                DataTable productData = dgvProducts.DataSource as DataTable;
+
+                if (productData == null || productData.Rows.Count == 0)
+                {
+                    MessageBox.Show("No product data to export.", "Information",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                using (SaveFileDialog saveDialog = new SaveFileDialog())
+                {
+                    saveDialog.Filter = "CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+                    saveDialog.Title = "Export Products";
+                    saveDialog.DefaultExt = "csv";
+                    saveDialog.FileName = $"Products_Export_{DateTime.Now:yyyyMMdd}";
+
+                    if (saveDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string filePath = saveDialog.FileName;
+
+                        if (Path.GetExtension(filePath).ToLower() == ".csv")
+                        {
+                            StringBuilder csv = new StringBuilder();
+                            List<string> headers = new List<string>();
+                            List<string> propertyNames = new List<string>();
+
+                            foreach (DataGridViewColumn column in dgvProducts.Columns)
+                            {
+                                if (column.Visible && !(column is DataGridViewButtonColumn))
+                                {
+                                    headers.Add(column.HeaderText);
+                                    propertyNames.Add(column.DataPropertyName);
+                                }
+                            }
+
+                            headers.AddRange(new[] { "Product Name", "SKU", "Barcode", "Category", "Supplier",
+                                "Cost Price", "Selling Price", "Stock Quantity",
+                                "Reorder Level", "Description" });
+
+                            csv.AppendLine(string.Join(",", headers.Select(h => $"\"{h}\"")));
+
+                            foreach (DataRow row in productData.Rows)
+                            {
+                                List<string> fields = new List<string>();
+
+                                foreach (string property in propertyNames)
+                                {
+                                    if (!string.IsNullOrEmpty(property) && productData.Columns.Contains(property))
+                                    {
+                                        fields.Add($"\"{EscapeCsvField(row[property].ToString())}\"");
+                                    }
+                                }
+
+                                fields.AddRange(new[] {
+                            $"\"{EscapeCsvField(row["ProductName"].ToString())}\"",
+                            $"\"{EscapeCsvField(row["SKU"].ToString())}\"",
+                            $"\"{EscapeCsvField(row["Barcode"].ToString())}\"",
+                            $"\"{EscapeCsvField(row["CategoryName"].ToString())}\"",
+                            $"\"{EscapeCsvField(row["ContactName"].ToString())}\"",
+                            $"\"{row["CostPrice"]}\"",
+                            $"\"{row["SellingPrice"]}\"",
+                            $"\"{row["StockQuantity"]}\"",
+                            $"\"{row["ReorderLevel"]}\"",
+                            $"\"{EscapeCsvField(row["Description"].ToString())}\""
+                        });
+
+                                csv.AppendLine(string.Join(",", fields));
+                            }
+
+                            File.WriteAllText(filePath, csv.ToString());
+
+                            MessageBox.Show($"Successfully exported {productData.Rows.Count} products to {filePath}",
+                                "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else if (Path.GetExtension(filePath).ToLower() == ".xlsx")
+                        {
+                            MessageBox.Show("Excel export functionality not yet implemented.", "Information",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error exporting products: {ex.Message}", "Export Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private string EscapeCsvField(string field)
+        {
+            if (string.IsNullOrEmpty(field))
+                return string.Empty;
+
+       
+            return field.Replace("\"", "\"\"");
         }
 
         private void btnPrintList_Click(object sender, EventArgs e)
@@ -106,10 +203,10 @@ namespace FantasticStock.Views.Inventory
             if (KiemTraGiaTri())
             {
                 SaveProduct();
-                decimal SaleP = Convert.ToDecimal(txtSalePrice.Text);
-                decimal CostP = Convert.ToDecimal(txtCostPrice.Text);
-                decimal Markup = ((SaleP - CostP) / CostP) * 100;
-                txtMarkup.Text = Markup.ToString();
+                //decimal SaleP = Convert.ToDecimal(txtSalePrice.Text);
+                //decimal CostP = Convert.ToDecimal(txtCostPrice.Text);
+                //decimal Markup = ((SaleP - CostP) / CostP) * 100;
+                //txtMarkup.Text = Markup.ToString();
                 Khoa_Chinh_Sua(false);
             }
         }
@@ -153,12 +250,12 @@ namespace FantasticStock.Views.Inventory
 
         private void txtCostPrice_TextChanged(object sender, EventArgs e)
         {
-            CalculateMarkup();
+            TinhMarkup();
         }
 
         private void txtSalePrice_TextChanged(object sender, EventArgs e)
         {
-            CalculateMarkup();
+            TinhMarkup();
         }
 
         #endregion
@@ -265,8 +362,7 @@ namespace FantasticStock.Views.Inventory
 
         private void Load_comboboxCategory()
         {
-            try
-            {
+            
                 using (conn = new SqlConnection(chuoiketnoi))
                 {
                     conn.Open();
@@ -279,17 +375,12 @@ namespace FantasticStock.Views.Inventory
                     cmbCategory.DisplayMember = "CategoryName";
                     cmbCategory.ValueMember = "CategoryID";
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Không kết nối được database");
-            }
+            
         }
 
         private void Load_cmbSupplier()
         {
-            try
-            {
+           
                 using (conn = new SqlConnection(chuoiketnoi))
                 {
                     conn.Open();
@@ -303,11 +394,8 @@ namespace FantasticStock.Views.Inventory
                     cmbSupplier.ValueMember = "SupplierID";
                 }
             }
-            catch
-            {
-                MessageBox.Show("Không kết nối được database");
-            }
-        }
+
+        
 
         private void Load_dvgProducts()
         {
@@ -395,14 +483,14 @@ namespace FantasticStock.Views.Inventory
             ProductID = 0;
         }
 
-        private void CalculateMarkup()
+        private void TinhMarkup()
         {
             if (decimal.TryParse(txtSalePrice.Text, out decimal salePrice) &&
                 decimal.TryParse(txtCostPrice.Text, out decimal costPrice) &&
                 costPrice > 0)
             {
-                decimal markup = ((salePrice - costPrice) / costPrice) * 100;
-                txtMarkup.Text = markup.ToString("F2");
+                decimal markup = Math.Round(((salePrice - costPrice) / costPrice) * 100, 4);
+                txtMarkup.Text = markup.ToString();
             }
             else
             {
@@ -486,7 +574,7 @@ namespace FantasticStock.Views.Inventory
                     cmbSupplier.SelectedValue = drv["SupplierID"];
                     txtSalePrice.Text = drv["SellingPrice"].ToString();
                     txtCostPrice.Text = drv["CostPrice"].ToString();
-                    txtMarkup.Text = ((Convert.ToDecimal(drv["SellingPrice"]) - Convert.ToDecimal(drv["CostPrice"])) / Convert.ToDecimal(drv["CostPrice"]) * 100).ToString();
+                    txtMarkup.Text = Math.Round(((Convert.ToDecimal(drv["SellingPrice"]) - Convert.ToDecimal(drv["CostPrice"])) / Convert.ToDecimal(drv["CostPrice"]) * 100), 4).ToString();
                     txtQuantityInStock.Text = drv["StockQuantity"].ToString();
                     txtReorderLevel.Text = drv["ReorderLevel"].ToString();
                     txtDescription.Text = drv["Description"].ToString();
@@ -550,9 +638,14 @@ namespace FantasticStock.Views.Inventory
 
                 if (stockQuantity < reorderLevel)
                 {
-                    row.Cells["dgvQtt"].Style.BackColor = Color.Orange;
+                    row.Cells["dgvQtt"].Style.BackColor = Color.Red;
                 }
             }
+        }
+
+        private void btnNext_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
