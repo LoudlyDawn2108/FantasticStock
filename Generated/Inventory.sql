@@ -53,6 +53,7 @@ CREATE TABLE [User] (
 );
 
 -- Create Product table with foreign key references
+/*
 CREATE TABLE Product (
     ProductID INT PRIMARY KEY IDENTITY(1,1),
     SKU NVARCHAR(50) NOT NULL,
@@ -83,6 +84,7 @@ CREATE TABLE Product (
     CONSTRAINT FK_Product_ModifiedBy FOREIGN KEY (ModifiedBy) REFERENCES [User](UserID),
     CONSTRAINT UQ_Product_SKU UNIQUE (SKU)
 );
+*/
 
 -- Create indexes for better performance
 CREATE INDEX IX_Product_CategoryID ON Product(CategoryID);
