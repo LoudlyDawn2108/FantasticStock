@@ -31,6 +31,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelFilter = new System.Windows.Forms.Panel();
+            this.cboInvoice = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cboCustomer = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.cboPaymentMethod = new System.Windows.Forms.ComboBox();
@@ -45,10 +49,6 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dgvPayments = new System.Windows.Forms.DataGridView();
-            this.cboCustomer = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cboInvoice = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelFilter.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -97,9 +97,46 @@
             this.panelFilter.Size = new System.Drawing.Size(900, 130);
             this.panelFilter.TabIndex = 1;
             // 
+            // cboInvoice
+            // 
+            this.cboInvoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboInvoice.FormattingEnabled = true;
+            this.cboInvoice.Location = new System.Drawing.Point(85, 52);
+            this.cboInvoice.Name = "cboInvoice";
+            this.cboInvoice.Size = new System.Drawing.Size(150, 21);
+            this.cboInvoice.TabIndex = 15;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 55);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 13);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Invoice";
+            // 
+            // cboCustomer
+            // 
+            this.cboCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCustomer.FormattingEnabled = true;
+            this.cboCustomer.Location = new System.Drawing.Point(85, 19);
+            this.cboCustomer.Name = "cboCustomer";
+            this.cboCustomer.Size = new System.Drawing.Size(150, 21);
+            this.cboCustomer.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 22);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(51, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Customer";
+            // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(714, 88);
+            this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReset.Location = new System.Drawing.Point(715, 88);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(75, 23);
             this.btnReset.TabIndex = 11;
@@ -108,7 +145,8 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(795, 88);
+            this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSearch.Location = new System.Drawing.Point(803, 88);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
             this.btnSearch.TabIndex = 10;
@@ -233,42 +271,6 @@
             this.dgvPayments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPayments.Size = new System.Drawing.Size(900, 380);
             this.dgvPayments.TabIndex = 3;
-            // 
-            // cboCustomer
-            // 
-            this.cboCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCustomer.FormattingEnabled = true;
-            this.cboCustomer.Location = new System.Drawing.Point(85, 19);
-            this.cboCustomer.Name = "cboCustomer";
-            this.cboCustomer.Size = new System.Drawing.Size(150, 21);
-            this.cboCustomer.TabIndex = 13;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 22);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(51, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "Customer";
-            // 
-            // cboInvoice
-            // 
-            this.cboInvoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboInvoice.FormattingEnabled = true;
-            this.cboInvoice.Location = new System.Drawing.Point(85, 52);
-            this.cboInvoice.Name = "cboInvoice";
-            this.cboInvoice.Size = new System.Drawing.Size(150, 21);
-            this.cboInvoice.TabIndex = 15;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 55);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(42, 13);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "Invoice";
             // 
             // PaymentsView
             // 
