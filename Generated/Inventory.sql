@@ -210,6 +210,13 @@ VALUES (
 );
 
 
+INSERT INTO Product (SKU, Barcode, ProductName, Description, CategoryID, SupplierID, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate)
+VALUES 
+('SKU12345', '123456789012', 'Sample Product', 'This is a sample product description.', 1, 1, 100.00, 150.00, 50, 10, NULL, GETDATE()),
+('SKU67890', '987654321098', 'Another Product', 'This is another product description.', 2, 2, 200.00, 250.00, 4, 5, NULL, GETDATE());
+
+
+
 
 -- Thêm bảng InventoryTransaction vào file inventory.sql
 CREATE TABLE InventoryTransaction (

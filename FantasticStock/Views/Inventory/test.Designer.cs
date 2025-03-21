@@ -60,7 +60,7 @@
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "test";
-            this.Size = new System.Drawing.Size(1052, 495);
+            this.Size = new System.Drawing.Size(1210, 500);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
