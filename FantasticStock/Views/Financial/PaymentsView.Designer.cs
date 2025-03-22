@@ -69,6 +69,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.Highlight;
             this.label1.Location = new System.Drawing.Point(12, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(217, 24);
@@ -221,12 +222,13 @@
             // btnAddPayment
             // 
             this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddPayment.BackColor = System.Drawing.Color.Lime;
             this.btnAddPayment.Location = new System.Drawing.Point(797, 8);
             this.btnAddPayment.Name = "btnAddPayment";
             this.btnAddPayment.Size = new System.Drawing.Size(82, 23);
             this.btnAddPayment.TabIndex = 3;
             this.btnAddPayment.Text = "Add Payment";
-            this.btnAddPayment.UseVisualStyleBackColor = true;
+            this.btnAddPayment.UseVisualStyleBackColor = false;
             // 
             // btnExport
             // 
@@ -259,7 +261,7 @@
             this.dgvPayments.AllowUserToAddRows = false;
             this.dgvPayments.AllowUserToDeleteRows = false;
             this.dgvPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.ControlDark;
+            this.dgvPayments.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvPayments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPayments.Dock = System.Windows.Forms.DockStyle.Fill;

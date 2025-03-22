@@ -306,8 +306,8 @@ namespace FantasticStock.Views.Financial
                 if (dataTable.Rows.Count > 0)
                 {
                     // Debug information
-                    MessageBox.Show($"Query found {dataTable.Rows.Count} payments with joins",
-                        "Query Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show($"Query found {dataTable.Rows.Count} payments with joins",
+                        //"Query Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Display column names for debugging
                     StringBuilder columnInfo = new StringBuilder();
@@ -315,7 +315,7 @@ namespace FantasticStock.Views.Financial
                     {
                         columnInfo.AppendLine($"- {col.ColumnName}");
                     }
-                    MessageBox.Show($"DataTable columns:\n{columnInfo}", "Column Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show($"DataTable columns:\n{columnInfo}", "Column Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Bind directly to the DataGridView
                     dgvPayments.DataSource = dataTable;
@@ -328,8 +328,8 @@ namespace FantasticStock.Views.Financial
                     }
                     // lblTotalAmount.Text = $"Total: {dataTable.Rows.Count} payment(s), {totalAmount:C}";
 
-                    MessageBox.Show($"Successfully bound {dataTable.Rows.Count} payments to grid",
-                        "Binding Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show($"Successfully bound {dataTable.Rows.Count} payments to grid",
+                        //"Binding Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
