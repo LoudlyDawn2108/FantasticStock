@@ -83,9 +83,7 @@ namespace FantasticStock.Views.Inventory
             this.lblSupplier = new System.Windows.Forms.Label();
             this.cmbSupplier = new System.Windows.Forms.ComboBox();
             this.lblSalePrice = new System.Windows.Forms.Label();
-            this.txtSalePrice = new System.Windows.Forms.TextBox();
             this.lblCostPrice = new System.Windows.Forms.Label();
-            this.txtCostPrice = new System.Windows.Forms.TextBox();
             this.lblMarkup = new System.Windows.Forms.Label();
             this.txtMarkup = new System.Windows.Forms.TextBox();
             this.lblQuantityInStock = new System.Windows.Forms.Label();
@@ -101,6 +99,10 @@ namespace FantasticStock.Views.Inventory
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtSalePrice = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtCostPrice = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -445,6 +447,10 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.AutoScroll = true;
             this.panelDetails.BackColor = System.Drawing.Color.White;
             this.panelDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelDetails.Controls.Add(this.label2);
+            this.panelDetails.Controls.Add(this.label3);
+            this.panelDetails.Controls.Add(this.txtSalePrice);
+            this.panelDetails.Controls.Add(this.txtCostPrice);
             this.panelDetails.Controls.Add(this.lblDetailsHeader);
             this.panelDetails.Controls.Add(this.lblProductName);
             this.panelDetails.Controls.Add(this.txtProductName);
@@ -457,9 +463,7 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.Controls.Add(this.lblSupplier);
             this.panelDetails.Controls.Add(this.cmbSupplier);
             this.panelDetails.Controls.Add(this.lblSalePrice);
-            this.panelDetails.Controls.Add(this.txtSalePrice);
             this.panelDetails.Controls.Add(this.lblCostPrice);
-            this.panelDetails.Controls.Add(this.txtCostPrice);
             this.panelDetails.Controls.Add(this.lblMarkup);
             this.panelDetails.Controls.Add(this.txtMarkup);
             this.panelDetails.Controls.Add(this.lblQuantityInStock);
@@ -575,14 +579,6 @@ namespace FantasticStock.Views.Inventory
             this.lblSalePrice.TabIndex = 11;
             this.lblSalePrice.Text = "Sale Price";
             // 
-            // txtSalePrice
-            // 
-            this.txtSalePrice.Location = new System.Drawing.Point(15, 320);
-            this.txtSalePrice.Name = "txtSalePrice";
-            this.txtSalePrice.Size = new System.Drawing.Size(170, 20);
-            this.txtSalePrice.TabIndex = 12;
-            this.txtSalePrice.TextChanged += new System.EventHandler(this.txtSalePrice_TextChanged);
-            // 
             // lblCostPrice
             // 
             this.lblCostPrice.Location = new System.Drawing.Point(15, 350);
@@ -590,14 +586,6 @@ namespace FantasticStock.Views.Inventory
             this.lblCostPrice.Size = new System.Drawing.Size(100, 23);
             this.lblCostPrice.TabIndex = 13;
             this.lblCostPrice.Text = "Cost Price";
-            // 
-            // txtCostPrice
-            // 
-            this.txtCostPrice.Location = new System.Drawing.Point(15, 370);
-            this.txtCostPrice.Name = "txtCostPrice";
-            this.txtCostPrice.Size = new System.Drawing.Size(170, 20);
-            this.txtCostPrice.TabIndex = 14;
-            this.txtCostPrice.TextChanged += new System.EventHandler(this.txtCostPrice_TextChanged);
             // 
             // lblMarkup
             // 
@@ -625,9 +613,9 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtQuantityInStock
             // 
-            this.txtQuantityInStock.Location = new System.Drawing.Point(15, 420);
+            this.txtQuantityInStock.Location = new System.Drawing.Point(17, 419);
             this.txtQuantityInStock.Name = "txtQuantityInStock";
-            this.txtQuantityInStock.Size = new System.Drawing.Size(170, 20);
+            this.txtQuantityInStock.Size = new System.Drawing.Size(156, 20);
             this.txtQuantityInStock.TabIndex = 18;
             // 
             // lblReorderLevel
@@ -730,6 +718,40 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 326);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(19, 20);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "$";
+            // 
+            // txtSalePrice
+            // 
+            this.txtSalePrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSalePrice.Location = new System.Drawing.Point(29, 370);
+            this.txtSalePrice.Name = "txtSalePrice";
+            this.txtSalePrice.Size = new System.Drawing.Size(145, 20);
+            this.txtSalePrice.TabIndex = 33;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(10, 370);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(19, 20);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "$";
+            // 
+            // txtCostPrice
+            // 
+            this.txtCostPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCostPrice.Location = new System.Drawing.Point(29, 326);
+            this.txtCostPrice.Name = "txtCostPrice";
+            this.txtCostPrice.Size = new System.Drawing.Size(144, 20);
+            this.txtCostPrice.TabIndex = 34;
+            // 
             // ProductManagementView
             // 
             this.Controls.Add(this.flowLayoutPanel1);
@@ -789,9 +811,7 @@ namespace FantasticStock.Views.Inventory
         private Label lblSupplier;
         private ComboBox cmbSupplier;
         private Label lblSalePrice;
-        private TextBox txtSalePrice;
         private Label lblCostPrice;
-        private TextBox txtCostPrice;
         private Label lblMarkup;
         private TextBox txtMarkup;
         private Label lblQuantityInStock;
@@ -818,5 +838,9 @@ namespace FantasticStock.Views.Inventory
         private DataGridViewTextBoxColumn dgvRL;
         private DataGridViewButtonColumn Actions;
         private Button btnExport;
+        private Label label2;
+        private TextBox txtSalePrice;
+        private TextBox txtCostPrice;
+        private Label label3;
     }
 }
