@@ -541,6 +541,7 @@
             this.ClientSize = new System.Drawing.Size(883, 474);
             this.Controls.Add(this.moduleContentPanel);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Fantastic Stock";

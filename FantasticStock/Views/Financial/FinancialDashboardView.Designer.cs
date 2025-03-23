@@ -129,7 +129,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.dtpEndDate);
             this.panel1.Controls.Add(this.lblEndDate);
             this.panel1.Controls.Add(this.dtpStartDate);
@@ -142,11 +141,13 @@
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(414, 4);
+            this.btnRefresh.BackColor = System.Drawing.Color.Lime;
+            this.btnRefresh.Location = new System.Drawing.Point(267, 5);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnRefresh.TabIndex = 0;
             this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = false;
             // 
             // dtpEndDate
             // 
@@ -334,8 +335,11 @@
             this.dgvRecentPayments.AllowUserToAddRows = false;
             this.dgvRecentPayments.AllowUserToDeleteRows = false;
             this.dgvRecentPayments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvRecentPayments.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvRecentPayments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvRecentPayments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRecentPayments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvRecentPayments.GridColor = System.Drawing.Color.Cyan;
             this.dgvRecentPayments.Location = new System.Drawing.Point(3, 16);
             this.dgvRecentPayments.MultiSelect = false;
             this.dgvRecentPayments.Name = "dgvRecentPayments";
@@ -361,8 +365,11 @@
             this.dgvRecentExpenses.AllowUserToAddRows = false;
             this.dgvRecentExpenses.AllowUserToDeleteRows = false;
             this.dgvRecentExpenses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvRecentExpenses.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvRecentExpenses.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvRecentExpenses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvRecentExpenses.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvRecentExpenses.GridColor = System.Drawing.Color.Cyan;
             this.dgvRecentExpenses.Location = new System.Drawing.Point(3, 16);
             this.dgvRecentExpenses.MultiSelect = false;
             this.dgvRecentExpenses.Name = "dgvRecentExpenses";
@@ -389,8 +396,11 @@
             this.dgvOutstandingInvoices.AllowUserToAddRows = false;
             this.dgvOutstandingInvoices.AllowUserToDeleteRows = false;
             this.dgvOutstandingInvoices.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvOutstandingInvoices.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvOutstandingInvoices.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.dgvOutstandingInvoices.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOutstandingInvoices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvOutstandingInvoices.GridColor = System.Drawing.Color.Cyan;
             this.dgvOutstandingInvoices.Location = new System.Drawing.Point(3, 16);
             this.dgvOutstandingInvoices.MultiSelect = false;
             this.dgvOutstandingInvoices.Name = "dgvOutstandingInvoices";
@@ -402,6 +412,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnRefresh);
             this.panel2.Controls.Add(this.btnCashFlow);
             this.panel2.Controls.Add(this.btnBalanceSheet);
             this.panel2.Controls.Add(this.btnIncomeStatement);
