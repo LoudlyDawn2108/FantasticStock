@@ -209,6 +209,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // dgvSuppliers
             // 
+            this.dgvSuppliers.AllowUserToAddRows = false;
+            this.dgvSuppliers.AllowUserToDeleteRows = false;
+            this.dgvSuppliers.AllowUserToResizeColumns = false;
+            this.dgvSuppliers.AllowUserToResizeRows = false;
             this.dgvSuppliers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSuppliers.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvSuppliers.BackgroundColor = System.Drawing.SystemColors.Window;
@@ -221,6 +225,7 @@ namespace FantasticStock.Views.Inventory
             this.dgvSuppliers.Dock = System.Windows.Forms.DockStyle.Top;
             this.dgvSuppliers.Location = new System.Drawing.Point(0, 47);
             this.dgvSuppliers.Name = "dgvSuppliers";
+            this.dgvSuppliers.ReadOnly = true;
             this.dgvSuppliers.RowHeadersVisible = false;
             this.dgvSuppliers.Size = new System.Drawing.Size(472, 389);
             this.dgvSuppliers.TabIndex = 10;
@@ -230,22 +235,26 @@ namespace FantasticStock.Views.Inventory
             // 
             this.SupplierID.HeaderText = "Supplier ID";
             this.SupplierID.Name = "SupplierID";
+            this.SupplierID.ReadOnly = true;
             this.SupplierID.Visible = false;
             // 
             // CompanyName
             // 
             this.CompanyName.HeaderText = "Company Name";
             this.CompanyName.Name = "CompanyName";
+            this.CompanyName.ReadOnly = true;
             // 
             // ContactName
             // 
             this.ContactName.HeaderText = "Contact Person";
             this.ContactName.Name = "ContactName";
+            this.ContactName.ReadOnly = true;
             // 
             // Phone
             // 
             this.Phone.HeaderText = "Phone";
             this.Phone.Name = "Phone";
+            this.Phone.ReadOnly = true;
             // 
             // panel5
             // 

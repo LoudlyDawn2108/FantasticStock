@@ -21,7 +21,7 @@ namespace FantasticStock.Views.Inventory
         private ProductViewModel _viewModel;
 
         string chuoiketnoi = "Data Source=TUNGCORN\\SQLEXPRESS;" +
-                             "Initial Catalog = Product;" +
+                             "Initial Catalog = FantasticStock;" +
                              "Integrated Security = true";
         SqlConnection conn;
 

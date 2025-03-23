@@ -11,7 +11,7 @@ namespace FantasticStock.Views.Inventory
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
         private const int EM_SETCUEBANNER = 0x1501;
-        string chuoiketnoi = "Server=TUNGCORN\\SQLEXPRESS; Database=Product; Integrated Security=true";
+        string chuoiketnoi = "Server=TUNGCORN\\SQLEXPRESS; Database=FantasticStock; Integrated Security=true";
         SqlConnection conn;
 
         private System.ComponentModel.IContainer components = null;
@@ -106,6 +106,7 @@ namespace FantasticStock.Views.Inventory
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Supplier information deleted successfully.", "Delete Successful",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    XoaDuLieu();
                     Load_dgvSuppiler();
                 }
                 catch(Exception ex)
@@ -237,7 +238,7 @@ namespace FantasticStock.Views.Inventory
                 {
                     MessageBox.Show("Website should start with http://, https://, or www.", "Warning",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
+                    return false;
                     //https://www.youtube.com/watch?v=1yqv5R5WJGQ
                 }
             }
