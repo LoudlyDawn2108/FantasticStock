@@ -9,7 +9,7 @@ using System.Net;
 using FantasticStock.Common;
 using FantasticStock.Models;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class MonitoringService : IMonitoringService
     {

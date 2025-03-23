@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Input;
 using FantasticStock.Common;
 using FantasticStock.Models;
-using FantasticStock.Services;
+using FantasticStock.Services.Admin;
 
 namespace FantasticStock.ViewModels
 {

@@ -2,10 +2,12 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Windows.Forms;
 using System.Windows.Input;
 using FantasticStock.Common;
 using FantasticStock.Models;
-using FantasticStock.Services;
+using FantasticStock.Models.Admin;
+using FantasticStock.Services.Admin;
 
 namespace FantasticStock.ViewModels
 {
@@ -203,7 +205,8 @@ namespace FantasticStock.ViewModels
                     if (success)
                     {
                         MessageService.ShowInformation("Database restored successfully. The application will now restart.", "Restore Complete");
-                        // In a real application, you would restart the application here
+                        Application.Restart();
+                        Environment.Exit(0);
                     }
                     else
                     {
@@ -523,7 +526,7 @@ namespace FantasticStock.ViewModels
             }
         }
 
-                private void LoadScheduledBackups()
+        private void LoadScheduledBackups()
         {
             try
             {
@@ -543,7 +546,6 @@ namespace FantasticStock.ViewModels
             {
                 case "Daily":
                     schedule.DayOfWeek = null;
-                    schedule.DayOfMonth = null;
                     break;
                     
                 case "Weekly":
@@ -551,15 +553,6 @@ namespace FantasticStock.ViewModels
                     {
                         throw new ArgumentException("Please select a valid day of the week for the weekly schedule.");
                     }
-                    schedule.DayOfMonth = null;
-                    break;
-                    
-                case "Monthly":
-                    if (!schedule.DayOfMonth.HasValue || schedule.DayOfMonth.Value < 1 || schedule.DayOfMonth.Value > 31)
-                    {
-                        throw new ArgumentException("Please select a valid day of the month for the monthly schedule.");
-                    }
-                    schedule.DayOfWeek = null;
                     break;
                     
                 default:
@@ -581,7 +574,6 @@ namespace FantasticStock.ViewModels
                 ScheduleType = schedule.ScheduleType,
                 ScheduleTime = schedule.ScheduleTime,
                 DayOfWeek = schedule.DayOfWeek,
-                DayOfMonth = schedule.DayOfMonth,
                 IsActive = schedule.IsActive,
                 CreatedBy = schedule.CreatedBy,
                 CreatedByName = schedule.CreatedByName,

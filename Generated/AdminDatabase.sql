@@ -54,37 +54,8 @@ CREATE TABLE UserActivityLog (
     Timestamp DATETIME DEFAULT GETDATE(),
     CONSTRAINT FK_ActivityLog_User FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
--- System Configuration Tables
-CREATE TABLE CompanyInformation (
-    CompanyID INT PRIMARY KEY IDENTITY(1, 1),
-    CompanyName NVARCHAR(100) NOT NULL,
-    Address NVARCHAR(255),
-    City NVARCHAR(100),
-    State NVARCHAR(100),
-    ZipCode NVARCHAR(20),
-    Country NVARCHAR(100),
-    Phone NVARCHAR(20),
-    Email NVARCHAR(100),
-    Website NVARCHAR(255),
-    TaxID NVARCHAR(50),
-    LogoImage VARBINARY(MAX),
-    BusinessHours NVARCHAR(255),
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    ModifiedDate DATETIME DEFAULT GETDATE()
-);
-CREATE TABLE SystemSettings (
-    SettingID INT PRIMARY KEY IDENTITY(1, 1),
-    SettingCategory NVARCHAR(50) NOT NULL,
-    SettingName NVARCHAR(100) NOT NULL,
-    SettingValue NVARCHAR(MAX),
-    DataType NVARCHAR(50) NOT NULL,
-    -- String, Int, Boolean, DateTime, etc.
-    Description NVARCHAR(255),
-    ModifiedDate DATETIME DEFAULT GETDATE(),
-    ModifiedBy INT,
-    CONSTRAINT UK_SystemSettings UNIQUE (SettingCategory, SettingName),
-    CONSTRAINT FK_SystemSettings_User FOREIGN KEY (ModifiedBy) REFERENCES Users(UserID)
-);
+
+
 -- Backup Management Tables
 CREATE TABLE BackupHistory (
     BackupID INT PRIMARY KEY IDENTITY(1, 1),
@@ -151,14 +122,6 @@ CREATE TABLE AuditLog (
     Timestamp DATETIME DEFAULT GETDATE(),
     CONSTRAINT FK_AuditLog_User FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
-CREATE TABLE SystemResources (
-    ResourceID INT PRIMARY KEY IDENTITY(1, 1),
-    ResourceType NVARCHAR(50) NOT NULL,
-    -- CPU, Memory, Disk
-    ResourceValue FLOAT NOT NULL,
-    ServerName NVARCHAR(100) NOT NULL,
-    Timestamp DATETIME DEFAULT GETDATE()
-);
 -- Insert default roles
 INSERT INTO Roles (RoleName, Description)
 VALUES ('Admin', 'System Administrator with full access'),
@@ -166,7 +129,7 @@ VALUES ('Admin', 'System Administrator with full access'),
     ('Sales', 'Sales department user'),
     ('Inventory', 'Inventory management user'),
     ('Finance', 'Finance department user');
--- Insert default permissions
+
 
 -- Insert admin user (password is 'admin123' with salt)
 -- Script to generate 25 additional users with different roles
@@ -452,96 +415,3 @@ VALUES -- Admin users
         0
     );
 -- VALUES ('admin', 'f07a147a4e14f6027c9d248a379c2212d7cd4fb5e34908de6c732978de4e239c', 'adminSalt123', 'System Administrator', 'admin@example.com', 1);
--- Insert default company information
-INSERT INTO CompanyInformation (
-        CompanyName,
-        Address,
-        City,
-        State,
-        ZipCode,
-        Country,
-        Phone,
-        Email
-    )
-VALUES (
-        'My Company',
-        '123 Main St',
-        'Springfield',
-        'IL',
-        '12345',
-        'USA',
-        '555-123-4567',
-        'info@mycompany.com'
-    );
--- Insert default system settings
-INSERT INTO SystemSettings (
-        SettingCategory,
-        SettingName,
-        SettingValue,
-        DataType,
-        Description
-    )
-VALUES (
-        'General',
-        'CurrencyFormat',
-        '$#,##0.00',
-        'String',
-        'Default currency format'
-    ),
-    (
-        'General',
-        'DateFormat',
-        'MM/dd/yyyy',
-        'String',
-        'Default date format'
-    ),
-    (
-        'General',
-        'TimeFormat',
-        'HH:mm:ss',
-        'String',
-        'Default time format'
-    ),
-    (
-        'General',
-        'DefaultLanguage',
-        'en-US',
-        'String',
-        'Default system language'
-    ),
-    (
-        'Financial',
-        'FiscalYearStart',
-        '01/01',
-        'String',
-        'Start date of fiscal year (MM/dd)'
-    ),
-    (
-        'Financial',
-        'DefaultTaxRate',
-        '7.5',
-        'Decimal',
-        'Default tax rate percentage'
-    ),
-    (
-        'Sales',
-        'ReceiptHeader',
-        'Thank you for your purchase!',
-        'String',
-        'Text to display at top of receipts'
-    ),
-    (
-        'Sales',
-        'ReceiptFooter',
-        'Please come again!',
-        'String',
-        'Text to display at bottom of receipts'
-    ),
-    (
-        'Inventory',
-        'LowStockThreshold',
-        '10',
-        'Int',
-        'Default low stock alert threshold'
-    );
-GO
