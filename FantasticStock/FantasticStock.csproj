@@ -146,6 +146,24 @@
     <Compile Include="Views\Custom Components\TextBoxWithPlaceholder.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Views\Financial\AddExpenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\AddExpenseForm.Designer.cs">
+      <DependentUpon>AddExpenseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Financial\AddPaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\AddPaymentForm.Designer.cs">
+      <DependentUpon>AddPaymentForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Financial\EditPaymentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\EditPaymentForm.Designer.cs">
+      <DependentUpon>EditPaymentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Financial\ExpensesView.cs">
       <SubType>UserControl</SubType>
     </Compile>

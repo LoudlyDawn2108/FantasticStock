@@ -89,7 +89,9 @@ namespace FantasticStock.Views.Inventory
             this.panel7.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
-
+            // 
+            // panel1
+            // 
             this.panel1.Controls.Add(this.btnAddNewSupplier);
             this.panel1.Controls.Add(this.lblTitle);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -97,7 +99,9 @@ namespace FantasticStock.Views.Inventory
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1510, 62);
             this.panel1.TabIndex = 8;
-
+            // 
+            // btnAddNewSupplier
+            // 
             this.btnAddNewSupplier.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddNewSupplier.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnAddNewSupplier.FlatAppearance.BorderSize = 0;
@@ -111,7 +115,9 @@ namespace FantasticStock.Views.Inventory
             this.btnAddNewSupplier.Text = "+ Add New Supplier";
             this.btnAddNewSupplier.UseVisualStyleBackColor = false;
             this.btnAddNewSupplier.Click += new System.EventHandler(this.btnAddNewSupplier_Click);
-
+            // 
+            // lblTitle
+            // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.RoyalBlue;
@@ -120,7 +126,9 @@ namespace FantasticStock.Views.Inventory
             this.lblTitle.Size = new System.Drawing.Size(180, 21);
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "Supplier Management";
-
+            // 
+            // flowLayoutPanel1
+            // 
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Controls.Add(this.panel3);
             this.flowLayoutPanel1.Controls.Add(this.pnlSupplierDetails);
@@ -130,7 +138,9 @@ namespace FantasticStock.Views.Inventory
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1510, 828);
             this.flowLayoutPanel1.TabIndex = 1;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
-
+            // 
+            // panel3
+            // 
             this.panel3.AutoScroll = true;
             this.panel3.BackColor = System.Drawing.SystemColors.Window;
             this.panel3.Controls.Add(this.panel4);
@@ -140,7 +150,9 @@ namespace FantasticStock.Views.Inventory
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(472, 885);
             this.panel3.TabIndex = 0;
-
+            // 
+            // panel4
+            // 
             this.panel4.BackColor = System.Drawing.SystemColors.Window;
             this.panel4.Controls.Add(this.tableLayoutPanel1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
@@ -148,7 +160,9 @@ namespace FantasticStock.Views.Inventory
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(472, 52);
             this.panel4.TabIndex = 13;
-
+            // 
+            // tableLayoutPanel1
+            // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -162,7 +176,9 @@ namespace FantasticStock.Views.Inventory
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(135, 29);
             this.tableLayoutPanel1.TabIndex = 7;
-
+            // 
+            // btnEdit
+            // 
             this.btnEdit.BackColor = System.Drawing.Color.White;
             this.btnEdit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -174,7 +190,9 @@ namespace FantasticStock.Views.Inventory
             this.btnEdit.Text = "✏️";
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-
+            // 
+            // btnDelete
+            // 
             this.btnDelete.BackColor = System.Drawing.Color.Crimson;
             this.btnDelete.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDelete.FlatAppearance.BorderSize = 0;
@@ -188,7 +206,13 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-
+            // 
+            // dgvSuppliers
+            // 
+            this.dgvSuppliers.AllowUserToAddRows = false;
+            this.dgvSuppliers.AllowUserToDeleteRows = false;
+            this.dgvSuppliers.AllowUserToResizeColumns = false;
+            this.dgvSuppliers.AllowUserToResizeRows = false;
             this.dgvSuppliers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvSuppliers.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvSuppliers.BackgroundColor = System.Drawing.SystemColors.Window;
@@ -201,24 +225,39 @@ namespace FantasticStock.Views.Inventory
             this.dgvSuppliers.Dock = System.Windows.Forms.DockStyle.Top;
             this.dgvSuppliers.Location = new System.Drawing.Point(0, 47);
             this.dgvSuppliers.Name = "dgvSuppliers";
+            this.dgvSuppliers.ReadOnly = true;
             this.dgvSuppliers.RowHeadersVisible = false;
             this.dgvSuppliers.Size = new System.Drawing.Size(472, 389);
             this.dgvSuppliers.TabIndex = 10;
             this.dgvSuppliers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSuppliers_CellClick);
-
+            // 
+            // SupplierID
+            // 
             this.SupplierID.HeaderText = "Supplier ID";
             this.SupplierID.Name = "SupplierID";
+            this.SupplierID.ReadOnly = true;
             this.SupplierID.Visible = false;
-
+            // 
+            // CompanyName
+            // 
             this.CompanyName.HeaderText = "Company Name";
             this.CompanyName.Name = "CompanyName";
-
+            this.CompanyName.ReadOnly = true;
+            // 
+            // ContactName
+            // 
             this.ContactName.HeaderText = "Contact Person";
             this.ContactName.Name = "ContactName";
-
+            this.ContactName.ReadOnly = true;
+            // 
+            // Phone
+            // 
             this.Phone.HeaderText = "Phone";
             this.Phone.Name = "Phone";
-
+            this.Phone.ReadOnly = true;
+            // 
+            // panel5
+            // 
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
             this.panel5.Controls.Add(this.panel2);
             this.panel5.Controls.Add(this.lblSuppliers);
@@ -227,7 +266,9 @@ namespace FantasticStock.Views.Inventory
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(472, 47);
             this.panel5.TabIndex = 0;
-
+            // 
+            // panel2
+            // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -237,7 +278,9 @@ namespace FantasticStock.Views.Inventory
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(179, 27);
             this.panel2.TabIndex = 6;
-
+            // 
+            // pictureBox1
+            // 
             this.pictureBox1.Image = global::FantasticStock.Properties.Resources.search_interface_symbol;
             this.pictureBox1.Location = new System.Drawing.Point(3, 7);
             this.pictureBox1.Name = "pictureBox1";
@@ -245,7 +288,9 @@ namespace FantasticStock.Views.Inventory
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-
+            // 
+            // txtSearch
+            // 
             this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.BackColor = System.Drawing.Color.White;
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -254,7 +299,9 @@ namespace FantasticStock.Views.Inventory
             this.txtSearch.Size = new System.Drawing.Size(140, 16);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
-
+            // 
+            // lblSuppliers
+            // 
             this.lblSuppliers.AutoSize = true;
             this.lblSuppliers.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSuppliers.Location = new System.Drawing.Point(12, 11);
@@ -262,7 +309,9 @@ namespace FantasticStock.Views.Inventory
             this.lblSuppliers.Size = new System.Drawing.Size(71, 19);
             this.lblSuppliers.TabIndex = 4;
             this.lblSuppliers.Text = "Suppliers";
-
+            // 
+            // pnlSupplierDetails
+            // 
             this.pnlSupplierDetails.AutoScroll = true;
             this.pnlSupplierDetails.BackColor = System.Drawing.SystemColors.Window;
             this.pnlSupplierDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -297,7 +346,9 @@ namespace FantasticStock.Views.Inventory
             this.pnlSupplierDetails.Name = "pnlSupplierDetails";
             this.pnlSupplierDetails.Size = new System.Drawing.Size(1009, 885);
             this.pnlSupplierDetails.TabIndex = 6;
-
+            // 
+            // panel6
+            // 
             this.panel6.Controls.Add(this.dgvProductsSupplied);
             this.panel6.Controls.Add(this.panel7);
             this.panel6.Controls.Add(this.flowLayoutPanel2);
@@ -306,9 +357,12 @@ namespace FantasticStock.Views.Inventory
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(1007, 327);
             this.panel6.TabIndex = 36;
-
+            // 
+            // dgvProductsSupplied
+            // 
             this.dgvProductsSupplied.AllowUserToAddRows = false;
             this.dgvProductsSupplied.AllowUserToDeleteRows = false;
+            this.dgvProductsSupplied.AllowUserToResizeRows = false;
             this.dgvProductsSupplied.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProductsSupplied.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvProductsSupplied.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -325,28 +379,38 @@ namespace FantasticStock.Views.Inventory
             this.dgvProductsSupplied.RowHeadersWidth = 62;
             this.dgvProductsSupplied.Size = new System.Drawing.Size(1007, 269);
             this.dgvProductsSupplied.TabIndex = 33;
- 
+            // 
+            // ProductId
+            // 
             this.ProductId.HeaderText = "Product ID";
             this.ProductId.MinimumWidth = 8;
             this.ProductId.Name = "ProductId";
             this.ProductId.ReadOnly = true;
-  
+            // 
+            // ProductName
+            // 
             this.ProductName.HeaderText = "Product Name";
             this.ProductName.MinimumWidth = 8;
             this.ProductName.Name = "ProductName";
             this.ProductName.ReadOnly = true;
-
+            // 
+            // LastOrderDate
+            // 
             this.LastOrderDate.HeaderText = "Last Order Date";
             this.LastOrderDate.Name = "LastOrderDate";
             this.LastOrderDate.ReadOnly = true;
-
+            // 
+            // panel7
+            // 
             this.panel7.Controls.Add(this.lblProductsSupplied);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1007, 20);
             this.panel7.TabIndex = 37;
-
+            // 
+            // lblProductsSupplied
+            // 
             this.lblProductsSupplied.AutoSize = true;
             this.lblProductsSupplied.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblProductsSupplied.Location = new System.Drawing.Point(5, 2);
@@ -354,7 +418,9 @@ namespace FantasticStock.Views.Inventory
             this.lblProductsSupplied.Size = new System.Drawing.Size(107, 15);
             this.lblProductsSupplied.TabIndex = 32;
             this.lblProductsSupplied.Text = "Products Supplied";
-
+            // 
+            // flowLayoutPanel2
+            // 
             this.flowLayoutPanel2.Controls.Add(this.btnSave);
             this.flowLayoutPanel2.Controls.Add(this.btnCancel);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -362,7 +428,9 @@ namespace FantasticStock.Views.Inventory
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(1007, 38);
             this.flowLayoutPanel2.TabIndex = 38;
-
+            // 
+            // btnSave
+            // 
             this.btnSave.BackColor = System.Drawing.Color.DodgerBlue;
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -375,7 +443,9 @@ namespace FantasticStock.Views.Inventory
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-
+            // 
+            // btnCancel
+            // 
             this.btnCancel.BackColor = System.Drawing.Color.White;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -386,7 +456,9 @@ namespace FantasticStock.Views.Inventory
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-
+            // 
+            // lblSupplierDetails
+            // 
             this.lblSupplierDetails.AutoSize = true;
             this.lblSupplierDetails.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSupplierDetails.Location = new System.Drawing.Point(14, 16);
@@ -394,7 +466,9 @@ namespace FantasticStock.Views.Inventory
             this.lblSupplierDetails.Size = new System.Drawing.Size(114, 19);
             this.lblSupplierDetails.TabIndex = 6;
             this.lblSupplierDetails.Text = "Supplier Details";
-
+            // 
+            // lblCompanyName
+            // 
             this.lblCompanyName.AutoSize = true;
             this.lblCompanyName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCompanyName.Location = new System.Drawing.Point(14, 48);
@@ -402,14 +476,18 @@ namespace FantasticStock.Views.Inventory
             this.lblCompanyName.Size = new System.Drawing.Size(94, 15);
             this.lblCompanyName.TabIndex = 7;
             this.lblCompanyName.Text = "Company Name";
-
+            // 
+            // txtCompanyName
+            // 
             this.txtCompanyName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCompanyName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCompanyName.Location = new System.Drawing.Point(17, 73);
             this.txtCompanyName.Name = "txtCompanyName";
             this.txtCompanyName.Size = new System.Drawing.Size(394, 23);
             this.txtCompanyName.TabIndex = 8;
-
+            // 
+            // lblContactPerson
+            // 
             this.lblContactPerson.AutoSize = true;
             this.lblContactPerson.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblContactPerson.Location = new System.Drawing.Point(492, 48);
@@ -417,7 +495,9 @@ namespace FantasticStock.Views.Inventory
             this.lblContactPerson.Size = new System.Drawing.Size(88, 15);
             this.lblContactPerson.TabIndex = 9;
             this.lblContactPerson.Text = "Contact Person";
-
+            // 
+            // txtContactPerson
+            // 
             this.txtContactPerson.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtContactPerson.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtContactPerson.Location = new System.Drawing.Point(495, 73);
@@ -425,7 +505,9 @@ namespace FantasticStock.Views.Inventory
             this.txtContactPerson.Size = new System.Drawing.Size(353, 23);
             this.txtContactPerson.TabIndex = 10;
             this.txtContactPerson.Text = " ";
-
+            // 
+            // lblEmail
+            // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEmail.Location = new System.Drawing.Point(14, 112);
@@ -433,7 +515,9 @@ namespace FantasticStock.Views.Inventory
             this.lblEmail.Size = new System.Drawing.Size(36, 15);
             this.lblEmail.TabIndex = 11;
             this.lblEmail.Text = "Email";
-
+            // 
+            // txtEmail
+            // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEmail.Location = new System.Drawing.Point(17, 138);
@@ -441,7 +525,9 @@ namespace FantasticStock.Views.Inventory
             this.txtEmail.Size = new System.Drawing.Size(394, 23);
             this.txtEmail.TabIndex = 12;
             this.txtEmail.Text = " ";
-
+            // 
+            // lblPhone
+            // 
             this.lblPhone.AutoSize = true;
             this.lblPhone.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPhone.Location = new System.Drawing.Point(492, 112);
@@ -449,7 +535,9 @@ namespace FantasticStock.Views.Inventory
             this.lblPhone.Size = new System.Drawing.Size(41, 15);
             this.lblPhone.TabIndex = 13;
             this.lblPhone.Text = "Phone";
-
+            // 
+            // txtPhone
+            // 
             this.txtPhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPhone.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPhone.Location = new System.Drawing.Point(495, 138);
@@ -457,7 +545,9 @@ namespace FantasticStock.Views.Inventory
             this.txtPhone.Size = new System.Drawing.Size(353, 23);
             this.txtPhone.TabIndex = 14;
             this.txtPhone.Text = " ";
-
+            // 
+            // lblWebsite
+            // 
             this.lblWebsite.AutoSize = true;
             this.lblWebsite.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWebsite.Location = new System.Drawing.Point(14, 177);
@@ -465,7 +555,9 @@ namespace FantasticStock.Views.Inventory
             this.lblWebsite.Size = new System.Drawing.Size(49, 15);
             this.lblWebsite.TabIndex = 15;
             this.lblWebsite.Text = "Website";
-
+            // 
+            // txtWebsite
+            // 
             this.txtWebsite.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtWebsite.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtWebsite.Location = new System.Drawing.Point(17, 202);
@@ -473,7 +565,9 @@ namespace FantasticStock.Views.Inventory
             this.txtWebsite.Size = new System.Drawing.Size(394, 23);
             this.txtWebsite.TabIndex = 16;
             this.txtWebsite.Text = " ";
-
+            // 
+            // lblPaymentTerms
+            // 
             this.lblPaymentTerms.AutoSize = true;
             this.lblPaymentTerms.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPaymentTerms.Location = new System.Drawing.Point(492, 177);
@@ -481,7 +575,9 @@ namespace FantasticStock.Views.Inventory
             this.lblPaymentTerms.Size = new System.Drawing.Size(89, 15);
             this.lblPaymentTerms.TabIndex = 17;
             this.lblPaymentTerms.Text = "Payment Terms";
-
+            // 
+            // cmbPaymentTerms
+            // 
             this.cmbPaymentTerms.FormattingEnabled = true;
             this.cmbPaymentTerms.Items.AddRange(new object[] {
             "Net 15",
@@ -494,7 +590,9 @@ namespace FantasticStock.Views.Inventory
             this.cmbPaymentTerms.Name = "cmbPaymentTerms";
             this.cmbPaymentTerms.Size = new System.Drawing.Size(355, 23);
             this.cmbPaymentTerms.TabIndex = 18;
-
+            // 
+            // lblAddress
+            // 
             this.lblAddress.AutoSize = true;
             this.lblAddress.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAddress.Location = new System.Drawing.Point(14, 241);
@@ -502,7 +600,9 @@ namespace FantasticStock.Views.Inventory
             this.lblAddress.Size = new System.Drawing.Size(51, 15);
             this.lblAddress.TabIndex = 19;
             this.lblAddress.Text = "Address";
-
+            // 
+            // lblStreetAddress
+            // 
             this.lblStreetAddress.AutoSize = true;
             this.lblStreetAddress.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStreetAddress.Location = new System.Drawing.Point(14, 275);
@@ -510,7 +610,9 @@ namespace FantasticStock.Views.Inventory
             this.lblStreetAddress.Size = new System.Drawing.Size(82, 15);
             this.lblStreetAddress.TabIndex = 20;
             this.lblStreetAddress.Text = "Street Address";
- 
+            // 
+            // txtStreetAddress
+            // 
             this.txtStreetAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtStreetAddress.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtStreetAddress.Location = new System.Drawing.Point(17, 300);
@@ -518,7 +620,9 @@ namespace FantasticStock.Views.Inventory
             this.txtStreetAddress.Size = new System.Drawing.Size(394, 23);
             this.txtStreetAddress.TabIndex = 21;
             this.txtStreetAddress.Text = " ";
-
+            // 
+            // lblCity
+            // 
             this.lblCity.AutoSize = true;
             this.lblCity.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCity.Location = new System.Drawing.Point(14, 339);
@@ -526,7 +630,9 @@ namespace FantasticStock.Views.Inventory
             this.lblCity.Size = new System.Drawing.Size(28, 15);
             this.lblCity.TabIndex = 22;
             this.lblCity.Text = "City";
-
+            // 
+            // txtCity
+            // 
             this.txtCity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCity.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCity.Location = new System.Drawing.Point(17, 364);
@@ -534,7 +640,9 @@ namespace FantasticStock.Views.Inventory
             this.txtCity.Size = new System.Drawing.Size(394, 23);
             this.txtCity.TabIndex = 23;
             this.txtCity.Text = " ";
-
+            // 
+            // lblStateProvince
+            // 
             this.lblStateProvince.AutoSize = true;
             this.lblStateProvince.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStateProvince.Location = new System.Drawing.Point(492, 339);
@@ -542,7 +650,9 @@ namespace FantasticStock.Views.Inventory
             this.lblStateProvince.Size = new System.Drawing.Size(84, 15);
             this.lblStateProvince.TabIndex = 24;
             this.lblStateProvince.Text = "State/Province";
-
+            // 
+            // txtStateProvince
+            // 
             this.txtStateProvince.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtStateProvince.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtStateProvince.Location = new System.Drawing.Point(497, 364);
@@ -550,7 +660,9 @@ namespace FantasticStock.Views.Inventory
             this.txtStateProvince.Size = new System.Drawing.Size(353, 23);
             this.txtStateProvince.TabIndex = 25;
             this.txtStateProvince.Text = " ";
-
+            // 
+            // lblPostalCode
+            // 
             this.lblPostalCode.AutoSize = true;
             this.lblPostalCode.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPostalCode.Location = new System.Drawing.Point(14, 403);
@@ -558,7 +670,9 @@ namespace FantasticStock.Views.Inventory
             this.lblPostalCode.Size = new System.Drawing.Size(70, 15);
             this.lblPostalCode.TabIndex = 26;
             this.lblPostalCode.Text = "Postal Code";
-
+            // 
+            // txtPostalCode
+            // 
             this.txtPostalCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPostalCode.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPostalCode.Location = new System.Drawing.Point(17, 428);
@@ -566,7 +680,9 @@ namespace FantasticStock.Views.Inventory
             this.txtPostalCode.Size = new System.Drawing.Size(394, 23);
             this.txtPostalCode.TabIndex = 27;
             this.txtPostalCode.Text = " ";
-
+            // 
+            // lblCountry
+            // 
             this.lblCountry.AutoSize = true;
             this.lblCountry.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCountry.Location = new System.Drawing.Point(492, 403);
@@ -574,7 +690,9 @@ namespace FantasticStock.Views.Inventory
             this.lblCountry.Size = new System.Drawing.Size(50, 15);
             this.lblCountry.TabIndex = 28;
             this.lblCountry.Text = "Country";
-
+            // 
+            // txtCountry
+            // 
             this.txtCountry.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCountry.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCountry.Location = new System.Drawing.Point(495, 428);
@@ -582,7 +700,9 @@ namespace FantasticStock.Views.Inventory
             this.txtCountry.Size = new System.Drawing.Size(353, 23);
             this.txtCountry.TabIndex = 29;
             this.txtCountry.Text = " ";
-
+            // 
+            // lblNotes
+            // 
             this.lblNotes.AutoSize = true;
             this.lblNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblNotes.Location = new System.Drawing.Point(14, 458);
@@ -590,7 +710,9 @@ namespace FantasticStock.Views.Inventory
             this.lblNotes.Size = new System.Drawing.Size(38, 15);
             this.lblNotes.TabIndex = 30;
             this.lblNotes.Text = "Notes";
-
+            // 
+            // txtNotes
+            // 
             this.txtNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNotes.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtNotes.Location = new System.Drawing.Point(17, 476);
@@ -599,7 +721,9 @@ namespace FantasticStock.Views.Inventory
             this.txtNotes.Size = new System.Drawing.Size(574, 58);
             this.txtNotes.TabIndex = 31;
             this.txtNotes.Text = " ";
-
+            // 
+            // SupplierManagementView
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;

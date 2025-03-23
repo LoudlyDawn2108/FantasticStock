@@ -71,6 +71,7 @@
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.SystemColors.Highlight;
             this.lblTitle.Location = new System.Drawing.Point(12, 13);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(220, 24);
@@ -273,19 +274,20 @@
             // btnAddExpense
             // 
             this.btnAddExpense.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddExpense.BackColor = System.Drawing.Color.Lime;
             this.btnAddExpense.Location = new System.Drawing.Point(850, 8);
             this.btnAddExpense.Name = "btnAddExpense";
             this.btnAddExpense.Size = new System.Drawing.Size(90, 23);
             this.btnAddExpense.TabIndex = 0;
             this.btnAddExpense.Text = "Add Expense";
-            this.btnAddExpense.UseVisualStyleBackColor = true;
+            this.btnAddExpense.UseVisualStyleBackColor = false;
             // 
             // dgvExpenses
             // 
             this.dgvExpenses.AllowUserToAddRows = false;
             this.dgvExpenses.AllowUserToDeleteRows = false;
             this.dgvExpenses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvExpenses.BackgroundColor = System.Drawing.SystemColors.ControlDark;
+            this.dgvExpenses.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
             this.dgvExpenses.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvExpenses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvExpenses.Dock = System.Windows.Forms.DockStyle.Fill;

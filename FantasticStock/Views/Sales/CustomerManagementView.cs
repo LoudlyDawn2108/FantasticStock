@@ -21,7 +21,10 @@ namespace FantasticStock.Views.Sales
         private bool _isEditing = false;
 
         // Update connection string to your FantasticStock database
-        private string connectionString = @"Data Source=DESKTOP-DOEUG5N;Initial Catalog=FantasticStock;Integrated Security=True";
+    //    private string connectionString = @"Data Source=DESKTOP-DOEUG5N;Initial Catalog=FantasticStock;Integrated Security=True";
+
+        private string connectionString = @"Data Source=TUNGCORN\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True";
+
         private SqlConnection connection;
 
         public CustomerManagementView()
@@ -44,6 +47,9 @@ namespace FantasticStock.Views.Sales
 
                 // Initialize default state
                 InitializeDefaultState();
+
+                // Add this line to initialize search options
+                SetupSearchOptions();
             }
             catch (Exception ex)
             {
@@ -975,53 +981,7 @@ namespace FantasticStock.Views.Sales
 
         public void ExportCustomers()
         {
-            try
-            {
-                if (_filteredCustomers == null || _filteredCustomers.Count == 0)
-                {
-                    MessageBox.Show("There are no customers to export.", "Export",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-                using (SaveFileDialog saveDialog = new SaveFileDialog())
-                {
-                    saveDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
-                    saveDialog.Title = "Export Customers to CSV";
-                    saveDialog.DefaultExt = "csv";
-                    saveDialog.FileName = $"Customers_Export_{DateTime.Now:yyyyMMdd}";
-
-                    if (saveDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        StringBuilder csv = new StringBuilder();
-
-                        // Add CSV header with fields from our Customer model
-                        csv.AppendLine("Customer ID,Customer Name,Phone,Email,Address,Loyalty Points,Is Active,Created Date,Modified Date");
-
-                        // Add data rows for filtered customers
-                        foreach (var customer in _filteredCustomers)
-                        {
-                            csv.AppendLine(string.Format(
-                                $"{customer.CustomerID},\"{EscapeCsvField(customer.CustomerName)}\"," +
-                                $"\"{EscapeCsvField(customer.Phone)}\",\"{EscapeCsvField(customer.Email)}\",\"{EscapeCsvField(customer.Address)}\"," +
-                                $"{customer.LoyaltyPoints}," +
-                                $"{(customer.IsActive ? "Yes" : "No")},{customer.CreatedDate:yyyy-MM-dd},{customer.ModifiedDate:yyyy-MM-dd}"
-                            ));
-                        }
-
-                        // Write the CSV to file
-                        System.IO.File.WriteAllText(saveDialog.FileName, csv.ToString());
-
-                        MessageBox.Show($"Successfully exported {_filteredCustomers.Count} customers to {saveDialog.FileName}",
-                            "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error exporting customers: {ex.Message}", "Export Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
 
         private string EscapeCsvField(string field)
@@ -1035,123 +995,7 @@ namespace FantasticStock.Views.Sales
 
         public void ImportCustomers()
         {
-            try
-            {
-                using (OpenFileDialog openDialog = new OpenFileDialog())
-                {
-                    openDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
-                    openDialog.Title = "Import Customers from CSV";
-
-                    if (openDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        List<Customer> importedCustomers = new List<Customer>();
-                        int importCount = 0;
-                        int errorCount = 0;
-
-                        // Read the CSV file
-                        string[] lines = System.IO.File.ReadAllLines(openDialog.FileName);
-
-                        if (lines.Length <= 1)
-                        {
-                            MessageBox.Show("The CSV file appears to be empty or contains only headers.",
-                                "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-
-                        // Skip header row
-                        for (int i = 1; i < lines.Length; i++)
-                        {
-                            string line = lines[i];
-                            if (string.IsNullOrWhiteSpace(line))
-                                continue;
-
-                            try
-                            {
-                                // Parse CSV line with support for quoted fields
-                                string[] fields = ParseCsvLine(line);
-
-                                if (fields.Length < 3) // Minimum required: Name, Phone/Email, Address
-                                {
-                                    System.Diagnostics.Debug.WriteLine($"Line {i + 1} does not have enough fields. Skipping.");
-                                    errorCount++;
-                                    continue;
-                                }
-
-                                // Create new customer - don't set ID as it's auto-assigned
-                                Customer customer = new Customer
-                                {
-                                    CustomerName = fields[0].Trim(),
-                                    Phone = fields.Length > 1 ? fields[1].Trim() : string.Empty,
-                                    Email = fields.Length > 2 ? fields[2].Trim() : string.Empty,
-                                    Address = fields.Length > 3 ? fields[3].Trim() : string.Empty,
-                                    LoyaltyPoints = fields.Length > 4 && int.TryParse(fields[4], out int points) ? points : 0,
-                                    IsActive = true,
-                                    CreatedDate = DateTime.Now,
-                                    ModifiedDate = DateTime.Now
-                                };
-
-                                // Basic validation
-                                if (string.IsNullOrWhiteSpace(customer.CustomerName))
-                                {
-                                    System.Diagnostics.Debug.WriteLine($"Line {i + 1}: Customer name is required. Skipping.");
-                                    errorCount++;
-                                    continue;
-                                }
-
-                                importedCustomers.Add(customer);
-                                importCount++;
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Diagnostics.Debug.WriteLine($"Error processing line {i + 1}: {ex.Message}");
-                                errorCount++;
-                            }
-                        }
-
-                        // Add imported customers to database
-                        int addedCount = 0;
-                        foreach (var customer in importedCustomers)
-                        {
-                            try
-                            {
-                                if (AddCustomerToDatabase(customer))
-                                {
-                                    addedCount++;
-                                    // Add to our filtered list if it should be visible
-                                    if (customer.IsActive || chkShowInactive.Checked)
-                                    {
-                                        _filteredCustomers.Add(customer);
-                                    }
-                                }
-                                else
-                                {
-                                    errorCount++;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                System.Diagnostics.Debug.WriteLine($"Error adding customer {customer.CustomerName}: {ex.Message}");
-                                errorCount++;
-                            }
-                        }
-
-                        // Refresh the grid
-                        RefreshGrid();
-
-                        string message = $"Successfully imported {addedCount} customers.";
-                        if (errorCount > 0)
-                            message += $"\n{errorCount} records had errors and were skipped.";
-
-                        MessageBox.Show(message, "Import Complete",
-                            MessageBoxButtons.OK, errorCount > 0 ? MessageBoxIcon.Warning : MessageBoxIcon.Information);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error importing customers: {ex.Message}", "Import Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
 
         private string[] ParseCsvLine(string line)
@@ -1265,14 +1109,12 @@ namespace FantasticStock.Views.Sales
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            // Call the existing ExportCustomers method
-            ExportCustomers();
+            
         }
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-            // Call the existing ImportCustomers method
-            ImportCustomers();
+            
         }
     }
 }

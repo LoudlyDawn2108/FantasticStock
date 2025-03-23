@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 namespace FantasticStock.Views.Financial
 {
-    public partial class ExpensesView: UserControl
+    public partial class ExpensesView : UserControl
     {
         private List<Expense> _expenses;
         private Expense _selectedExpense;
@@ -32,13 +32,12 @@ namespace FantasticStock.Views.Financial
 
         private void ExpensesView_Load(object sender, EventArgs e)
         {
-            
+            ConfigureDataGridView();
             LoadCategories();
-            LoadExpenses();
+            LoadRecentExpenses(20);
             LoadPaymentMethods();
             LoadTaxStatuses();
             LoadSuppliers();
-            ConfigureDataGridView();
         }
 
         public class ComboboxItem
@@ -87,6 +86,85 @@ namespace FantasticStock.Views.Financial
 
                     return command.ExecuteNonQuery();
                 }
+            }
+        }
+
+        private void LoadRecentExpenses(int limit)
+        {
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+
+                string query = @"
+            SELECT TOP (@Limit)
+                e.ExpenseID,
+                e.ExpenseNumber,
+                e.ExpenseDate,
+                e.SupplierID,
+                s.SupplierName,
+                e.CategoryID,
+                c.CategoryName,
+                e.PaymentMethod,
+                e.ReferenceNumber,
+                e.Amount,
+                e.TaxAmount,
+                e.Amount + e.TaxAmount AS TotalAmount,
+                e.Notes,
+                e.IsTaxDeductible,
+                e.CreatedBy,
+                u.UserName AS CreatedByName,
+                e.CreatedDate,
+                FORMAT(e.ExpenseDate, 'yyyy-MM-dd') AS FormattedDate
+            FROM 
+                Expenses e
+            LEFT JOIN 
+                Suppliers s ON e.SupplierID = s.SupplierID
+            LEFT JOIN 
+                ExpenseCategories c ON e.CategoryID = c.CategoryID
+            LEFT JOIN 
+                Users u ON e.CreatedBy = u.UserID
+            ORDER BY 
+                e.ExpenseDate DESC, e.ExpenseID DESC";
+
+                SqlParameter[] parameters = { new SqlParameter("@Limit", limit) };
+                DataTable dataTable = ExecuteQuery(query, parameters);
+
+                // Convert DataTable to List<Expense>
+                _expenses = new List<Expense>();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    _expenses.Add(new Expense
+                    {
+                        ExpenseID = Convert.ToInt32(row["ExpenseID"]),
+                        ExpenseNumber = row["ExpenseNumber"].ToString(),
+                        ExpenseDate = Convert.ToDateTime(row["ExpenseDate"]),
+                        SupplierID = row["SupplierID"] == DBNull.Value ? (int?)null : Convert.ToInt32(row["SupplierID"]),
+                        SupplierName = row["SupplierName"].ToString(),
+                        CategoryID = Convert.ToInt32(row["CategoryID"]),
+                        CategoryName = row["CategoryName"].ToString(),
+                        PaymentMethod = row["PaymentMethod"].ToString(),
+                        ReferenceNumber = row["ReferenceNumber"].ToString(),
+                        Amount = Convert.ToDecimal(row["Amount"]),
+                        TaxAmount = Convert.ToDecimal(row["TaxAmount"]),
+                        Notes = row["Notes"].ToString(),
+                        IsTaxDeductible = Convert.ToBoolean(row["IsTaxDeductible"]),
+                        CreatedBy = Convert.ToInt32(row["CreatedBy"]),
+                        CreatedByName = row["CreatedByName"].ToString(),
+                        CreatedDate = Convert.ToDateTime(row["CreatedDate"])
+                    });
+                }
+
+                // Bind to grid
+                dgvExpenses.DataSource = null;
+                dgvExpenses.DataSource = _expenses;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading recent expenses: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
 
@@ -202,7 +280,7 @@ namespace FantasticStock.Views.Financial
                 ExecuteNonQuery(query, parameters);
 
                 // Refresh the list
-                LoadExpenses();
+                LoadRecentExpenses(20);
             }
         }
 
@@ -390,10 +468,36 @@ namespace FantasticStock.Views.Financial
                 return;
 
             _selectedExpense = _expenses[e.RowIndex];
+            // Edit button column
+            if (e.ColumnIndex == dgvExpenses.Columns.Count - 2)
+            {
+                EditExpense(_selectedExpense);
+            }
             // Delete button column
-            if (e.ColumnIndex == dgvExpenses.Columns.Count - 1)
+            else if (e.ColumnIndex == dgvExpenses.Columns.Count - 1)
             {
                 DeleteExpense(_selectedExpense);
+            }
+        }
+
+        private void EditExpense(Expense expense)
+        {
+            try
+            {
+                // Open the AddExpenseForm in edit mode
+                using (var editExpenseForm = new AddExpenseForm(expense))
+                {
+                    if (editExpenseForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Refresh the list
+                        LoadRecentExpenses(20);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error editing expense: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -433,9 +537,11 @@ namespace FantasticStock.Views.Financial
             LEFT JOIN 
                 Users u ON e.CreatedBy = u.UserID
             WHERE 
-                e.ExpenseDate BETWEEN @FromDate AND @ToDate";
+                1=1";
 
                 // Build parameter list
+
+                query += " AND e.ExpenseDate BETWEEN @FromDate AND @ToDate";
                 List<SqlParameter> parameters = new List<SqlParameter>
         {
             new SqlParameter("@FromDate", dtpFromDate.Value),
@@ -568,11 +674,23 @@ namespace FantasticStock.Views.Financial
 
         private void BtnAddExpense_Click(object sender, EventArgs e)
         {
-            // Open the AddExpenseForm
-            //AddExpenseForm form = new AddExpenseForm();
-            //form.ShowDialog();
-            // Refresh the list
-            LoadExpenses();
+            try
+            {
+                // Open the AddExpenseForm
+                using (var addExpenseForm = new AddExpenseForm())
+                {
+                    if (addExpenseForm.ShowDialog() == DialogResult.OK)
+                    {
+                        // Refresh the list
+                        LoadRecentExpenses(20);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening expense form: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnReset_Click(object sender, EventArgs e)
@@ -587,7 +705,7 @@ namespace FantasticStock.Views.Financial
             cboTaxStatus.SelectedIndex = 0;
 
             // Reload data
-            LoadExpenses();
+            LoadRecentExpenses(20);
         }
 
         private void BtnExport_Click(object sender, EventArgs e)
