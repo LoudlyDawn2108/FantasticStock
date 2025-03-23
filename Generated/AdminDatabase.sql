@@ -8,8 +8,7 @@ WHERE name = 'BusTicketDB';
 CREATE DATABASE FantasticStock;
 GO USE FantasticStock;
 GO
-SELECT *
-FROM Users;
+
 -- User Management Tables
 CREATE TABLE Roles (
     RoleID INT PRIMARY KEY IDENTITY(1, 1),
