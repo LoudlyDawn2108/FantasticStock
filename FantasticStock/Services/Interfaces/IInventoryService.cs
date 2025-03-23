@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FantasticStock.Models.Inventory;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public interface IInventoryService
     {

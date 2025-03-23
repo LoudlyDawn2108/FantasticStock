@@ -1,5 +1,5 @@
 ﻿using FantasticStock.Common;
-using FantasticStock.Services;
+using FantasticStock.Services.Admin;
 using FantasticStock.Views.Financial;
 using FantasticStock.Views.Inventory;
 using FantasticStock.Views.Sales;

@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using FantasticStock.Common;
 using FantasticStock.Models;
-using FantasticStock.Services;
+using FantasticStock.Services.Admin;
 using FantasticStock.Views;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 

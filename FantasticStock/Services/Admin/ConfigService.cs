@@ -6,7 +6,7 @@ using System.Linq;
 using FantasticStock.Common;
 using FantasticStock.Models;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class ConfigService : IConfigService
     {

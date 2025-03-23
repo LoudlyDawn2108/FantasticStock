@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using FantasticStock.Models.Financial;
 using FantasticStock.Models.Sales;
-using FantasticStock.Services;
+using FantasticStock.Services.Admin;
 using FantasticStock.Common;
 
 namespace FantasticStock.ViewModels.Financial

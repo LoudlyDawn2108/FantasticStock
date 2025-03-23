@@ -8,7 +8,7 @@ using FantasticStock.Common;
 using FantasticStock.Models;
 using FantasticStock.ViewModels;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class UserService : IUserService
     {
@@ -24,7 +24,7 @@ namespace FantasticStock.Services
         public List<User> GetAllUsers()
         {
             var users = new List<User>();
-            
+
             string query = @"
                 SELECT u.*, r.RoleName
                 FROM Users u
@@ -32,12 +32,14 @@ namespace FantasticStock.Services
                 ORDER BY u.Username";
 
             DataTable dataTable = _databaseService.ExecuteQuery(query);
-            
+
             foreach (DataRow row in dataTable.Rows)
             {
-                users.Add(MapUser(row));
+                User user = MapUser(row);
+                LoadUserAllowedDays(user);
+                users.Add(user);
             }
-            
+
             return users;
         }
 
@@ -51,11 +53,13 @@ namespace FantasticStock.Services
 
             var parameter = new SqlParameter("@UserID", userId);
             DataTable dataTable = _databaseService.ExecuteQuery(query, parameter);
-            
+
             if (dataTable.Rows.Count == 0)
                 return null;
-                
-            return MapUser(dataTable.Rows[0]);
+
+            User user = MapUser(dataTable.Rows[0]);
+            LoadUserAllowedDays(user);
+            return user;
         }
 
         public User GetUserByUsername(string username)
@@ -68,11 +72,13 @@ namespace FantasticStock.Services
 
             var parameter = new SqlParameter("@Username", username);
             DataTable dataTable = _databaseService.ExecuteQuery(query, parameter);
-            
+
             if (dataTable.Rows.Count == 0)
                 return null;
-                
-            return MapUser(dataTable.Rows[0]);
+
+            User user = MapUser(dataTable.Rows[0]);
+            LoadUserAllowedDays(user);
+            return user;
         }
 
         public int CreateUser(User user, string password)
@@ -83,9 +89,9 @@ namespace FantasticStock.Services
 
             string query = @"
                 INSERT INTO Users (Username, PasswordHash, Salt, DisplayName, Email, Phone, RoleID, 
-                                   Status, TwoFactorEnabled, AccountExpiry)
+                                   Status, TwoFactorEnabled)
                 VALUES (@Username, @PasswordHash, @Salt, @DisplayName, @Email, @Phone, @RoleID,
-                        @Status, @TwoFactorEnabled, @AccountExpiry);
+                        @Status, @TwoFactorEnabled);
                 SELECT SCOPE_IDENTITY();";
 
             var parameters = new SqlParameter[]
@@ -99,11 +105,16 @@ namespace FantasticStock.Services
                 new SqlParameter("@RoleID", user.RoleID),
                 new SqlParameter("@Status", user.Status),
                 new SqlParameter("@TwoFactorEnabled", user.TwoFactorEnabled),
-                new SqlParameter("@AccountExpiry", user.AccountExpiry ?? (object)DBNull.Value)
             };
 
-            var userId = Convert.ToInt32(_databaseService.ExecuteScalar(query, parameters));
-            
+            int userId = Convert.ToInt32(_databaseService.ExecuteScalar(query, parameters));
+
+            // Save user allowed days if provided
+            if (user.AllowedDays != null)
+            {
+                SaveUserAllowedDays(userId, user.AllowedDays);
+            }
+
             // Log the user creation
             _auditService.LogEvent(
                 CurrentUser.UserID,
@@ -132,7 +143,6 @@ namespace FantasticStock.Services
                     RoleID = @RoleID,
                     Status = @Status,
                     TwoFactorEnabled = @TwoFactorEnabled,
-                    AccountExpiry = @AccountExpiry,
                     ModifiedDate = GETDATE()
                 WHERE UserID = @UserID";
 
@@ -145,13 +155,18 @@ namespace FantasticStock.Services
                 new SqlParameter("@RoleID", user.RoleID),
                 new SqlParameter("@Status", user.Status),
                 new SqlParameter("@TwoFactorEnabled", user.TwoFactorEnabled),
-                new SqlParameter("@AccountExpiry", user.AccountExpiry ?? (object)DBNull.Value)
             };
 
             int rowsAffected = _databaseService.ExecuteNonQuery(query, parameters);
-            
+
             if (rowsAffected > 0)
             {
+                // Update user allowed days if provided
+                if (user.AllowedDays != null)
+                {
+                    SaveUserAllowedDays(user.UserID, user.AllowedDays);
+                }
+
                 // Log the user update
                 _auditService.LogEvent(
                     CurrentUser.UserID,
@@ -187,7 +202,7 @@ namespace FantasticStock.Services
             };
 
             int rowsAffected = _databaseService.ExecuteNonQuery(query, parameters);
-            
+
             if (rowsAffected > 0)
             {
                 _auditService.LogEvent(
@@ -205,16 +220,18 @@ namespace FantasticStock.Services
 
         public bool DeleteUser(int userId)
         {
-            // Get existing user data for auditing
             User existingUser = GetUserById(userId);
             if (existingUser == null)
                 return false;
+
+            string deleteRestrictionsQuery = "DELETE FROM UserScheduleRestrictions WHERE UserID = @UserID";
+            _databaseService.ExecuteNonQuery(deleteRestrictionsQuery, new SqlParameter("@UserID", userId));
 
             string query = "DELETE FROM Users WHERE UserID = @UserID";
             var parameter = new SqlParameter("@UserID", userId);
 
             int rowsAffected = _databaseService.ExecuteNonQuery(query, parameter);
-            
+
             if (rowsAffected > 0)
             {
                 _auditService.LogEvent(
@@ -232,7 +249,6 @@ namespace FantasticStock.Services
 
         public bool DeactivateUser(int userId)
         {
-            // Get existing user data for auditing
             User existingUser = GetUserById(userId);
             if (existingUser == null)
                 return false;
@@ -246,12 +262,12 @@ namespace FantasticStock.Services
             var parameter = new SqlParameter("@UserID", userId);
 
             int rowsAffected = _databaseService.ExecuteNonQuery(query, parameter);
-            
+
             if (rowsAffected > 0)
             {
                 User updatedUser = existingUser.Clone();
                 updatedUser.Status = "Inactive";
-                
+
                 _auditService.LogEvent(
                     CurrentUser.UserID,
                     "UserDeactivate",
@@ -267,7 +283,6 @@ namespace FantasticStock.Services
 
         public bool ActivateUser(int userId)
         {
-            // Get existing user data for auditing
             User existingUser = GetUserById(userId);
             if (existingUser == null)
                 return false;
@@ -281,12 +296,12 @@ namespace FantasticStock.Services
             var parameter = new SqlParameter("@UserID", userId);
 
             int rowsAffected = _databaseService.ExecuteNonQuery(query, parameter);
-            
+
             if (rowsAffected > 0)
             {
                 User updatedUser = existingUser.Clone();
                 updatedUser.Status = "Active";
-                
+
                 _auditService.LogEvent(
                     CurrentUser.UserID,
                     "UserActivate",
@@ -306,34 +321,33 @@ namespace FantasticStock.Services
             var parameter = new SqlParameter("@Username", username);
 
             DataTable dataTable = _databaseService.ExecuteQuery(query, parameter);
-            
+
             if (dataTable.Rows.Count == 0)
                 return false;
 
             string storedHash = dataTable.Rows[0]["PasswordHash"].ToString();
             string salt = dataTable.Rows[0]["Salt"].ToString();
-            
+
             string calculatedHash = HashPassword(password, salt);
-            
+
             if (storedHash == calculatedHash)
             {
-                // Update last login time
                 query = "UPDATE Users SET LastLogin = GETDATE() WHERE Username = @Username";
                 _databaseService.ExecuteNonQuery(query, parameter);
-                
+
                 return true;
             }
-            
+
             return false;
         }
 
         public List<Role> GetAllRoles()
         {
             var roles = new List<Role>();
-            
+
             string query = "SELECT * FROM Roles ORDER BY RoleName";
             DataTable dataTable = _databaseService.ExecuteQuery(query);
-            
+
             foreach (DataRow row in dataTable.Rows)
             {
                 roles.Add(new Role
@@ -345,7 +359,7 @@ namespace FantasticStock.Services
                     ModifiedDate = Convert.ToDateTime(row["ModifiedDate"])
                 });
             }
-            
+
             return roles;
         }
 
@@ -353,14 +367,14 @@ namespace FantasticStock.Services
         {
             string query = "SELECT * FROM Roles WHERE RoleID = @RoleID";
             var parameter = new SqlParameter("@RoleID", roleId);
-            
+
             DataTable dataTable = _databaseService.ExecuteQuery(query, parameter);
-            
+
             if (dataTable.Rows.Count == 0)
                 return null;
 
             DataRow row = dataTable.Rows[0];
-            
+
             var role = new Role
             {
                 RoleID = Convert.ToInt32(row["RoleID"]),
@@ -369,7 +383,7 @@ namespace FantasticStock.Services
                 CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
                 ModifiedDate = Convert.ToDateTime(row["ModifiedDate"]),
             };
-            
+
             return role;
         }
 
@@ -386,11 +400,69 @@ namespace FantasticStock.Services
                 RoleName = row["RoleName"].ToString(),
                 Status = row["Status"].ToString(),
                 TwoFactorEnabled = Convert.ToBoolean(row["TwoFactorEnabled"]),
-                AccountExpiry = row["AccountExpiry"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["AccountExpiry"]) : null,
                 LastLogin = row["LastLogin"] != DBNull.Value ? (DateTime?)Convert.ToDateTime(row["LastLogin"]) : null,
                 CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
-                ModifiedDate = Convert.ToDateTime(row["ModifiedDate"])
+                ModifiedDate = Convert.ToDateTime(row["ModifiedDate"]),
+                AllowedDays = new bool[7] { true, true, true, true, true, true, true }
             };
+        }
+
+        private void LoadUserAllowedDays(User user)
+        {
+            if (user == null)
+                return;
+
+            user.AllowedDays = new bool[7] { true, true, true, true, true, true, true };
+
+            string query = @"
+                SELECT DISTINCT DayOfWeek 
+                FROM UserScheduleRestrictions 
+                WHERE UserID = @UserID";
+
+            var parameter = new SqlParameter("@UserID", user.UserID);
+            DataTable dataTable = _databaseService.ExecuteQuery(query, parameter);
+
+            if (dataTable.Rows.Count == 0)
+                return;
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                int dayOfWeek = Convert.ToInt32(row["DayOfWeek"]);
+                int index = dayOfWeek - 1;
+                if (index >= 0 && index < 7)
+                {
+                    user.AllowedDays[index] = false;
+                }
+            }
+        }
+
+        private void SaveUserAllowedDays(int userId, bool[] allowedDays)
+        {
+            if (allowedDays == null || allowedDays.Length != 7)
+                return;
+
+            string deleteQuery = "DELETE FROM UserScheduleRestrictions WHERE UserID = @UserID";
+            _databaseService.ExecuteNonQuery(deleteQuery, new SqlParameter("@UserID", userId));
+
+            for (int i = 0; i < allowedDays.Length; i++)
+            {
+                if (!allowedDays[i])
+                {
+                    int dayOfWeek = i + 1;
+
+                    string insertQuery = @"
+                        INSERT INTO UserScheduleRestrictions (UserID, DayOfWeek, StartTime, EndTime)
+                        VALUES (@UserID, @DayOfWeek, '00:00:00', '23:59:59')";
+
+                    var parameters = new SqlParameter[]
+                    {
+                        new SqlParameter("@UserID", userId),
+                        new SqlParameter("@DayOfWeek", dayOfWeek)
+                    };
+
+                    _databaseService.ExecuteNonQuery(insertQuery, parameters);
+                }
+            }
         }
 
         private string GenerateSalt()

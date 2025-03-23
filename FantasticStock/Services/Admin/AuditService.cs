@@ -6,7 +6,7 @@ using System.Net;
 using FantasticStock.Common;
 using FantasticStock.Models;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class AuditService : IAuditService
     {
@@ -102,7 +102,7 @@ namespace FantasticStock.Services
                     new SqlParameter("@NewValues", newValues ?? (object)DBNull.Value),
                     new SqlParameter("@IPAddress", GetClientIPAddress() ?? (object)DBNull.Value),
                     new SqlParameter("@SeverityLevel", severityLevel),
-                    new SqlParameter("@Timestamp", DateTime.Parse("2025-03-02 16:05:52"))
+                    new SqlParameter("@Timestamp", DateTime.Now)
                 };
 
                 _databaseService.ExecuteNonQuery(query, parameters);
@@ -175,6 +175,41 @@ namespace FantasticStock.Services
             }
         }
 
+        public bool ExportActivities(List<AuditLogEntry> activities, string filePath)
+        {
+            try
+            {
+                using (var writer = new System.IO.StreamWriter(filePath))
+                {
+                    writer.WriteLine("AuditID,UserID,Username,EventType,TableName,RecordID,OldValues,NewValues,IPAddress,SeverityLevel,Timestamp");
+
+                    foreach (var activity in activities)
+                    {
+                        writer.WriteLine($"{activity.AuditID},{activity.UserID},{activity.Username},{activity.EventType},{activity.TableName},{activity.RecordID},{activity.OldValues},{activity.NewValues},{activity.IPAddress},{activity.SeverityLevel},{activity.Timestamp}");
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log to error log directly to avoid circular dependency
+                string errorQuery = @"
+                    INSERT INTO ErrorLog (ErrorModule, ErrorMessage, SeverityLevel, UserID, IPAddress, Timestamp)
+                    VALUES ('Audit', @Message, 3, @UserID, @IPAddress, @Timestamp)";
+                var errorParams = new SqlParameter[]
+                {
+                    new SqlParameter("@Message", $"Failed to export audit logs: {ex.Message}"),
+                    new SqlParameter("@UserID", CurrentUser.UserID),
+                    new SqlParameter("@IPAddress", GetClientIPAddress() ?? (object)DBNull.Value),
+                    new SqlParameter("@Timestamp", DateTime.Parse("2025-03-02 16:05:52"))
+                };
+                _databaseService.ExecuteNonQuery(errorQuery, errorParams);
+
+                return false;
+            }
+        }
+
         private AuditLogEntry MapAuditLogEntry(DataRow row)
         {
             return new AuditLogEntry
@@ -215,5 +250,7 @@ namespace FantasticStock.Services
                 return null;
             }
         }
+
+
     }
 }

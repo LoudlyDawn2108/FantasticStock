@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using FantasticStock.Models;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public interface IConfigService
     {

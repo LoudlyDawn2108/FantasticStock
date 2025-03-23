@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FantasticStock.Models.Sales;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public interface ISalesService
     {

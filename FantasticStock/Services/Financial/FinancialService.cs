@@ -5,7 +5,7 @@ using FantasticStock.Common;
 using FantasticStock.Models.Financial;
 using FantasticStock.Models.Sales;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class FinancialService : IFinancialService
     {

@@ -8,8 +8,9 @@ using System.Security.Cryptography;
 using System.IO.Compression;
 using FantasticStock.Common;
 using FantasticStock.Models;
+using FantasticStock.Models.Admin;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class BackupService : IBackupService
     {
@@ -103,7 +104,7 @@ namespace FantasticStock.Services
                            @IsEncrypted, @CreatedBy, @CreatedDate);
                     SELECT SCOPE_IDENTITY();";
 
-                var parameters = new SqlParameter[]
+                var parameters = new []
                 {
                                         new SqlParameter("@BackupName", backupName),
                     new SqlParameter("@BackupPath", backupFile),
@@ -140,7 +141,14 @@ namespace FantasticStock.Services
                 // Clean up if backup file was created
                 if (File.Exists(backupFile))
                 {
-                    try { File.Delete(backupFile); } catch { }
+                    try
+                    {
+                        File.Delete(backupFile);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error deleting backup file: " + e.Message);
+                    }
                 }
                 
                 throw;
@@ -351,9 +359,8 @@ namespace FantasticStock.Services
                     ScheduleType = row["ScheduleType"].ToString(),
                     ScheduleTime = TimeSpan.Parse(row["ScheduleTime"].ToString()),
                     DayOfWeek = row["DayOfWeek"] != DBNull.Value ? (int?)Convert.ToInt32(row["DayOfWeek"]) : null,
-                    DayOfMonth = row["DayOfMonth"] != DBNull.Value ? (int?)Convert.ToInt32(row["DayOfMonth"]) : null,
                     IsActive = Convert.ToBoolean(row["IsActive"]),
-                    CreatedBy = row["CreatedBy"] != DBNull.Value ? (int?)Convert.ToInt32(row["CreatedBy"]) : null,
+                    CreatedBy = Convert.ToInt32(row["CreatedBy"]),
                     CreatedByName = row["CreatedByName"] != DBNull.Value ? row["CreatedByName"].ToString() : null,
                     CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
                     ModifiedDate = Convert.ToDateTime(row["ModifiedDate"])
@@ -376,7 +383,7 @@ namespace FantasticStock.Services
                         @IsActive, @CreatedBy, @CreatedDate, @ModifiedDate);
                 SELECT SCOPE_IDENTITY();";
 
-            var parameters = new SqlParameter[]
+            var parameters = new[]
             {
                 new SqlParameter("@BackupPath", schedule.BackupPath),
                 new SqlParameter("@Description", schedule.Description ?? (object)DBNull.Value),
@@ -387,7 +394,6 @@ namespace FantasticStock.Services
                 new SqlParameter("@ScheduleType", schedule.ScheduleType),
                 new SqlParameter("@ScheduleTime", schedule.ScheduleTime.ToString()),
                 new SqlParameter("@DayOfWeek", schedule.DayOfWeek ?? (object)DBNull.Value),
-                new SqlParameter("@DayOfMonth", schedule.DayOfMonth ?? (object)DBNull.Value),
                 new SqlParameter("@IsActive", schedule.IsActive),
                 new SqlParameter("@CreatedBy", CurrentUser.UserID),
                 new SqlParameter("@CreatedDate", DateTime.Parse("2025-03-02 16:00:28")),
@@ -431,12 +437,11 @@ namespace FantasticStock.Services
                     ScheduleType = @ScheduleType,
                     ScheduleTime = @ScheduleTime,
                     DayOfWeek = @DayOfWeek,
-                    DayOfMonth = @DayOfMonth,
                     IsActive = @IsActive,
                     ModifiedDate = @ModifiedDate
                 WHERE ScheduleID = @ScheduleID";
 
-                        var parameters = new SqlParameter[]
+                        var parameters = new []
             {
                 new SqlParameter("@ScheduleID", schedule.ScheduleID),
                 new SqlParameter("@BackupPath", schedule.BackupPath),
@@ -448,7 +453,6 @@ namespace FantasticStock.Services
                 new SqlParameter("@ScheduleType", schedule.ScheduleType),
                 new SqlParameter("@ScheduleTime", schedule.ScheduleTime.ToString()),
                 new SqlParameter("@DayOfWeek", schedule.DayOfWeek ?? (object)DBNull.Value),
-                new SqlParameter("@DayOfMonth", schedule.DayOfMonth ?? (object)DBNull.Value),
                 new SqlParameter("@IsActive", schedule.IsActive),
                 new SqlParameter("@ModifiedDate", DateTime.Parse("2025-03-02 16:02:12"))
             };
@@ -512,7 +516,7 @@ namespace FantasticStock.Services
                     ModifiedDate = @ModifiedDate
                 WHERE ScheduleID = @ScheduleID";
 
-            var parameters = new SqlParameter[]
+            var parameters = new []
             {
                 new SqlParameter("@ScheduleID", scheduleId),
                 new SqlParameter("@IsActive", enable),
@@ -616,7 +620,14 @@ namespace FantasticStock.Services
             catch
             {
                 // Cleanup on failure
-                try { Directory.Delete(tempPath, true); } catch { }
+                try
+                {
+                    Directory.Delete(tempPath, true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error deleting temp directory: " + e.Message);
+                }
                 throw;
             }
         }
@@ -700,24 +711,4 @@ namespace FantasticStock.Services
             };
         }
     }
-}
-
-public class ScheduledBackup
-{
-    public int ScheduleID { get; set; }
-    public string BackupPath { get; set; }
-    public string Description { get; set; }
-    public bool IncludeAttachments { get; set; }
-    public int CompressionLevel { get; set; }
-    public bool IsEncrypted { get; set; }
-    public string EncryptionPassword { get; set; }
-    public string ScheduleType { get; set; }
-    public TimeSpan ScheduleTime { get; set; }
-    public int? DayOfWeek { get; set; }
-    public int? DayOfMonth { get; set; }
-    public bool IsActive { get; set; }
-    public int? CreatedBy { get; set; }
-    public string CreatedByName { get; set; }
-    public DateTime CreatedDate { get; set; }
-    public DateTime ModifiedDate { get; set; }
 }
