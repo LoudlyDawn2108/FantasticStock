@@ -16,6 +16,7 @@ namespace FantasticStock.Views.Financial
     {
         private List<Expense> _expenses;
         private Expense _selectedExpense;
+        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
 
         public ExpensesView()
         {
@@ -53,7 +54,7 @@ namespace FantasticStock.Views.Financial
 
         private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -74,7 +75,7 @@ namespace FantasticStock.Views.Financial
 
         private int ExecuteNonQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))

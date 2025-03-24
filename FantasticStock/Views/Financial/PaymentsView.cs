@@ -470,7 +470,7 @@ namespace FantasticStock.Views.Financial
             _selectedPayment = _payments[e.RowIndex];
 
             // Edit button column
-            if (e.ColumnIndex == dgvPayments.Columns.Count - 3)
+            if (e.ColumnIndex == dgvPayments.Columns.Count - 2)
             {
                 EditPayment(_selectedPayment);
             }
