@@ -133,7 +133,6 @@ namespace FantasticStock.Services.Admin
 
                 _databaseService.ExecuteNonQuery(query, parameters);
                 
-                // Log the action (directly to database to avoid recursion)
                 string auditQuery = @"
                     INSERT INTO AuditLog (UserID, EventType, TableName, RecordID, NewValues, IPAddress, SeverityLevel, Timestamp)
                     VALUES (@UserID, 'ClearAuditLogs', 'AuditLog', 'All', @Message, @IPAddress, 2, @Timestamp)";
@@ -193,7 +192,6 @@ namespace FantasticStock.Services.Admin
             }
             catch (Exception ex)
             {
-                // Log to error log directly to avoid circular dependency
                 string errorQuery = @"
                     INSERT INTO ErrorLog (ErrorModule, ErrorMessage, SeverityLevel, UserID, IPAddress, Timestamp)
                     VALUES ('Audit', @Message, 3, @UserID, @IPAddress, @Timestamp)";
