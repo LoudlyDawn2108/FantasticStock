@@ -404,8 +404,8 @@ namespace FantasticStock.Views.Inventory
                     dgvProducts.DataSource = dt;
                     dgvProducts.Columns["dgvProductID"].DataPropertyName = "ProductID";
                     dgvProducts.Columns["dgvName"].DataPropertyName = "ProductName";
-                    dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryID";
-                    dgvProducts.Columns["dgvSupp"].DataPropertyName = "SupplierID";
+                    dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryName";
+                    dgvProducts.Columns["dgvSupp"].DataPropertyName = "SupplierName";
                     dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
                     dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
                     dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
