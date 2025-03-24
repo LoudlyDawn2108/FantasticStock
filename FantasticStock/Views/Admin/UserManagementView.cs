@@ -21,25 +21,20 @@ namespace FantasticStock.Views
         private readonly UserManagementPresenter _presenter;
         private bool _isEdit = false;
 
-        // Constructors and initialization
         public UserManagementView()
         {
             InitializeComponent();
 
-            // Set up the DataGridViews
             SetupUsersDataGridView();
             SetupActivityLogDataGridView();
 
-            // Set up combo boxes
             PopulateRoleComboBoxes();
             PopulateStatusComboBoxes();
             PopulateActionTypeComboBox();
 
-            // Set up date pickers
             dtpStartDate.Value = DateTime.Now.AddDays(-7);
             dtpEndDate.Value = DateTime.Now;
 
-            // Register the event handlers
             RegisterEventHandlers();
 
             // Initialize the presenter
@@ -201,7 +196,7 @@ namespace FantasticStock.Views
                 RoleID = (int)cmbRoles.SelectedValue,
                 TwoFactorEnabled = chkTwoFactorEnabled.Checked,
                 AllowedDays = new bool[]
-                {
+                { 
                     chkSunday.Checked,
                     chkMonday.Checked,
                     chkTuesday.Checked,

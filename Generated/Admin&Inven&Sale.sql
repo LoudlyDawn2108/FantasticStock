@@ -1,7 +1,19 @@
-﻿
+﻿-- Force drop the database if it exists
+USE master;
+GO
+
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'FantasticStock1')
+BEGIN
+    ALTER DATABASE FantasticStock1 SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE FantasticStock1;
+END
+GO
+
 CREATE DATABASE FantasticStock1;
+GO
 USE FantasticStock1;
 GO
+
 
 -- =============================================
 -- USER MANAGEMENT TABLES
@@ -15,6 +27,7 @@ CREATE TABLE Roles (
     CreatedDate DATETIME DEFAULT GETDATE(),
     ModifiedDate DATETIME DEFAULT GETDATE()
 );
+
 
 -- Create Users table (combining both versions)
 CREATE TABLE Users (
@@ -35,6 +48,7 @@ CREATE TABLE Users (
     CONSTRAINT FK_Users_Role FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 );
 
+
 -- Create UserScheduleRestrictions table
 CREATE TABLE UserScheduleRestrictions (
     RestrictionID INT PRIMARY KEY IDENTITY(1, 1),
@@ -44,6 +58,7 @@ CREATE TABLE UserScheduleRestrictions (
     EndTime TIME NOT NULL,
     CONSTRAINT FK_UserSchedule_User FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
+
 
 -- Create UserActivityLog table
 CREATE TABLE UserActivityLog (
@@ -69,6 +84,8 @@ CREATE TABLE CustomerType (
     CreatedDate DATETIME DEFAULT GETDATE() NULL,
     ModifiedDate DATETIME DEFAULT GETDATE() NULL
 );
+
+
 
 -- Create Customer table
 CREATE TABLE Customer (
