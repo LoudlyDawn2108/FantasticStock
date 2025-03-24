@@ -14,7 +14,7 @@ namespace FantasticStock.Views.Financial
 {
     public partial class AddPaymentForm : Form
     {
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True";
         private Payment _payment;
         private bool _isEditMode;
 

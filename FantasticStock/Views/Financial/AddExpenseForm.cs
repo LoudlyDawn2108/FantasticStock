@@ -15,7 +15,7 @@ namespace FantasticStock.Views.Financial
     public partial class AddExpenseForm: Form
     {
 
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True";
         private List<ExpensesView.ComboboxItem> _categories;
         private List<ExpensesView.ComboboxItem> _suppliers;
         private bool _isEditMode;
