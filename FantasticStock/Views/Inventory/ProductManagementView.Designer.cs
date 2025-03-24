@@ -34,7 +34,7 @@ namespace FantasticStock.Views.Inventory
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.colProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -273,14 +273,14 @@ namespace FantasticStock.Views.Inventory
             this.dgvProducts.AllowUserToResizeRows = false;
             this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProducts.BackgroundColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvProducts.ColumnHeadersHeight = 34;
             this.dgvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvProductID,
@@ -444,7 +444,6 @@ namespace FantasticStock.Views.Inventory
             // 
             // panelDetails
             // 
-            this.panelDetails.AutoScroll = true;
             this.panelDetails.BackColor = System.Drawing.Color.White;
             this.panelDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDetails.Controls.Add(this.label2);
@@ -540,9 +539,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtProductName
             // 
+            this.txtProductName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtProductName.Location = new System.Drawing.Point(15, 70);
             this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(350, 20);
+            this.txtProductName.Size = new System.Drawing.Size(778, 20);
             this.txtProductName.TabIndex = 2;
             // 
             // lblSKU
@@ -555,9 +555,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtSKU
             // 
+            this.txtSKU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSKU.Location = new System.Drawing.Point(15, 120);
             this.txtSKU.Name = "txtSKU";
-            this.txtSKU.Size = new System.Drawing.Size(350, 20);
+            this.txtSKU.Size = new System.Drawing.Size(778, 20);
             this.txtSKU.TabIndex = 4;
             // 
             // lblBarcode
@@ -570,9 +571,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtBarcode
             // 
+            this.txtBarcode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBarcode.Location = new System.Drawing.Point(15, 170);
             this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.Size = new System.Drawing.Size(350, 20);
+            this.txtBarcode.Size = new System.Drawing.Size(778, 20);
             this.txtBarcode.TabIndex = 6;
             // 
             // lblCategory
@@ -585,10 +587,11 @@ namespace FantasticStock.Views.Inventory
             // 
             // cmbCategory
             // 
+            this.cmbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.Location = new System.Drawing.Point(15, 220);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(350, 21);
+            this.cmbCategory.Size = new System.Drawing.Size(778, 21);
             this.cmbCategory.TabIndex = 8;
             // 
             // lblSupplier
@@ -601,10 +604,11 @@ namespace FantasticStock.Views.Inventory
             // 
             // cmbSupplier
             // 
+            this.cmbSupplier.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSupplier.Location = new System.Drawing.Point(15, 270);
             this.cmbSupplier.Name = "cmbSupplier";
-            this.cmbSupplier.Size = new System.Drawing.Size(350, 21);
+            this.cmbSupplier.Size = new System.Drawing.Size(778, 21);
             this.cmbSupplier.TabIndex = 10;
             // 
             // lblSalePrice

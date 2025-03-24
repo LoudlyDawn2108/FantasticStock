@@ -210,8 +210,7 @@ namespace FantasticStock.Views.Inventory
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (ProductID > 0)
-            {
+            
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this product?",
                     "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -222,7 +221,7 @@ namespace FantasticStock.Views.Inventory
                     Khoa_Chinh_Sua(false);
                     Load_dvgProducts();
                 }
-            }
+            
         }
 
         private void DeleteProduct(int ProductID)
@@ -343,6 +342,9 @@ namespace FantasticStock.Views.Inventory
             Load_comboboxCategory();
             Load_cmbSupplier();
             SetCueText(txtSearch, "Search by product name");
+            Khoa_Chinh_Sua(false);
+            cmbCategory.SelectedIndex = -1;
+            cmbSupplier.SelectedIndex = -1;
         }
 
         private void SetCueText(TextBox textBox, string cueText)
