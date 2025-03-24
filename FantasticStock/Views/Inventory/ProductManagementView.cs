@@ -20,7 +20,7 @@ namespace FantasticStock.Views.Inventory
         private const int EM_SETCUEBANNER = 0x1501;
         private ProductViewModel _viewModel;
 
-        string chuoiketnoi = "Data Source=TUNGCORN\\SQLEXPRESS;" +
+        string chuoiketnoi = "Data Source=.\\SQLEXPRESS;" +
                              "Initial Catalog = FantasticStock1;" +
                              "Integrated Security = true";
         SqlConnection conn;
@@ -404,8 +404,8 @@ namespace FantasticStock.Views.Inventory
                     dgvProducts.DataSource = dt;
                     dgvProducts.Columns["dgvProductID"].DataPropertyName = "ProductID";
                     dgvProducts.Columns["dgvName"].DataPropertyName = "ProductName";
-                    dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryID";
-                    dgvProducts.Columns["dgvSupp"].DataPropertyName = "SupplierID";
+                    dgvProducts.Columns["dgvCg"].DataPropertyName = "CategoryName";
+                    dgvProducts.Columns["dgvSupp"].DataPropertyName = "SupplierName";
                     dgvProducts.Columns["dgvPrice"].DataPropertyName = "SellingPrice";
                     dgvProducts.Columns["dgvQtt"].DataPropertyName = "StockQuantity";
                     dgvProducts.Columns["dgvRL"].DataPropertyName = "ReorderLevel";
