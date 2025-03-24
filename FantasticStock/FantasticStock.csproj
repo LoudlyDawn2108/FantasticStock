@@ -76,6 +76,7 @@
     <Compile Include="Models\Admin\SystemSetting.cs" />
     <Compile Include="Models\Admin\User.cs" />
     <Compile Include="Models\Financial\Expense.cs" />
+    <Compile Include="Models\Financial\Invoice.cs" />
     <Compile Include="Models\Financial\Payment.cs" />
     <Compile Include="Models\Inventory\Category.cs" />
     <Compile Include="Models\Inventory\InventoryTransaction.cs" />
@@ -152,17 +153,23 @@
     <Compile Include="Views\Financial\AddExpenseForm.Designer.cs">
       <DependentUpon>AddExpenseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Financial\AddInvoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\AddInvoiceForm.Designer.cs">
+      <DependentUpon>AddInvoiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Financial\AddPaymentForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\Financial\AddPaymentForm.Designer.cs">
       <DependentUpon>AddPaymentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Financial\EditPaymentForm.cs">
+    <Compile Include="Views\Financial\AllocatePaymentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Financial\EditPaymentForm.Designer.cs">
-      <DependentUpon>EditPaymentForm.cs</DependentUpon>
+    <Compile Include="Views\Financial\AllocatePaymentForm.Designer.cs">
+      <DependentUpon>AllocatePaymentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Financial\ExpensesView.cs">
       <SubType>UserControl</SubType>
@@ -175,6 +182,12 @@
     </Compile>
     <Compile Include="Views\Financial\FinancialDashboardView.Designer.cs">
       <DependentUpon>FinancialDashboardView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Financial\InvoicesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Financial\InvoicesView.Designer.cs">
+      <DependentUpon>InvoicesView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Financial\PaymentsView.cs">
       <SubType>UserControl</SubType>
@@ -264,11 +277,23 @@
     <EmbeddedResource Include="Views\Admin\UserManagementView.resx">
       <DependentUpon>UserManagementView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Financial\AddExpenseForm.resx">
+      <DependentUpon>AddExpenseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Financial\AddPaymentForm.resx">
+      <DependentUpon>AddPaymentForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Financial\AllocatePaymentForm.resx">
+      <DependentUpon>AllocatePaymentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Financial\ExpensesView.resx">
       <DependentUpon>ExpensesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Financial\FinancialDashboardView.resx">
       <DependentUpon>FinancialDashboardView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Financial\InvoicesView.resx">
+      <DependentUpon>InvoicesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Financial\PaymentsView.resx">
       <DependentUpon>PaymentsView.cs</DependentUpon>

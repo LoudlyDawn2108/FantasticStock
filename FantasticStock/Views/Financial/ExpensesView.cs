@@ -53,7 +53,7 @@ namespace FantasticStock.Views.Financial
 
         private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True"))
+            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -74,7 +74,7 @@ namespace FantasticStock.Views.Financial
 
         private int ExecuteNonQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True"))
+            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -118,7 +118,7 @@ namespace FantasticStock.Views.Financial
             FROM 
                 Expenses e
             LEFT JOIN 
-                Suppliers s ON e.SupplierID = s.SupplierID
+                Supplier s ON e.SupplierID = s.SupplierID
             LEFT JOIN 
                 ExpenseCategories c ON e.CategoryID = c.CategoryID
             LEFT JOIN 
@@ -166,111 +166,11 @@ namespace FantasticStock.Views.Financial
             {
                 Cursor = Cursors.Default;
             }
-        }
-
-        private void LoadExpenses()
-        {
-            try
-            {
-                Cursor = Cursors.WaitCursor;
-
-                string query = @"
-                    SELECT 
-                        e.ExpenseID,
-                        e.ExpenseNumber,
-                        e.ExpenseDate,
-                        e.SupplierID,
-                        s.SupplierName,
-                        e.CategoryID,
-                        c.CategoryName,
-                        e.PaymentMethod,
-                        e.ReferenceNumber,
-                        e.Amount,
-                        e.TaxAmount,
-                        e.Amount + e.TaxAmount AS TotalAmount,
-                        e.Notes,
-                        e.IsTaxDeductible,
-                        e.CreatedBy,
-                        u.UserName AS CreatedByName,
-                        e.CreatedDate,
-                        FORMAT(e.ExpenseDate, 'yyyy-MM-dd') AS FormattedDate
-                    FROM 
-                        Expenses e
-                    LEFT JOIN 
-                        Suppliers s ON e.SupplierID = s.SupplierID
-                    LEFT JOIN 
-                        ExpenseCategories c ON e.CategoryID = c.CategoryID
-                    LEFT JOIN 
-                        Users u ON e.CreatedBy = u.UserID
-                    WHERE 
-                        e.ExpenseDate BETWEEN @FromDate AND @ToDate
-                        AND (@CategoryID = 0 OR e.CategoryID = @CategoryID)
-                        AND (@SupplierID = 0 OR e.SupplierID = @SupplierID)
-                        AND (@PaymentMethod = 'All' OR e.PaymentMethod = @PaymentMethod)
-                        AND (@TaxStatus = 'All' OR (@TaxStatus = 'Deductible' AND e.IsTaxDeductible = 1) OR (@TaxStatus = 'Non-Deductible' AND e.IsTaxDeductible = 0))
-                        AND (@SearchText = '' 
-                             OR e.ExpenseNumber LIKE '%' + @SearchText + '%'
-                             OR e.ReferenceNumber LIKE '%' + @SearchText + '%'
-                             OR s.SupplierName LIKE '%' + @SearchText + '%'
-                             OR e.Notes LIKE '%' + @SearchText + '%')
-                    ORDER BY 
-                        e.ExpenseDate DESC, e.ExpenseID DESC";
-
-                // Create parameters for the query
-                SqlParameter[] parameters = {
-    new SqlParameter("@FromDate", dtpFromDate.Value),
-    new SqlParameter("@ToDate", dtpToDate.Value.AddDays(1).AddSeconds(-1)),
-    new SqlParameter("@CategoryID", cboCategory.SelectedItem != null ? ((ComboboxItem)cboCategory.SelectedItem).Value : 0),
-    new SqlParameter("@SupplierID", cboSupplier.SelectedItem != null ? ((ComboboxItem)cboSupplier.SelectedItem).Value : 0),
-    new SqlParameter("@PaymentMethod", cboPaymentMethod.SelectedIndex == 0 ? "All" : cboPaymentMethod.SelectedItem != null ? ((ComboboxItem)cboPaymentMethod.SelectedItem).Value : "All"),
-    new SqlParameter("@TaxStatus", cboTaxStatus.SelectedIndex == 0 ? "All" : cboTaxStatus.SelectedItem != null ? ((ComboboxItem)cboTaxStatus.SelectedItem).Value : "All"),
-    new SqlParameter("@SearchText", txtSearch.Text?.Trim() ?? string.Empty)
-};
-
-                DataTable dataTable = ExecuteQuery(query, parameters);
-
-                // Convert DataTable to List<Expense>
-                _expenses = new List<Expense>();
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    _expenses.Add(new Expense
-                    {
-                        ExpenseID = Convert.ToInt32(row["ExpenseID"]),
-                        ExpenseNumber = row["ExpenseNumber"].ToString(),
-                        ExpenseDate = Convert.ToDateTime(row["ExpenseDate"]),
-                        SupplierID = row["SupplierID"] == DBNull.Value ? (int?)null : Convert.ToInt32(row["SupplierID"]),
-                        SupplierName = row["SupplierName"].ToString(),
-                        CategoryID = Convert.ToInt32(row["CategoryID"]),
-                        CategoryName = row["CategoryName"].ToString(),
-                        PaymentMethod = row["PaymentMethod"].ToString(),
-                        ReferenceNumber = row["ReferenceNumber"].ToString(),
-                        Amount = Convert.ToDecimal(row["Amount"]),
-                        TaxAmount = Convert.ToDecimal(row["TaxAmount"]),
-                        Notes = row["Notes"].ToString(),
-                        IsTaxDeductible = Convert.ToBoolean(row["IsTaxDeductible"]),
-                        CreatedBy = Convert.ToInt32(row["CreatedBy"]),
-                        CreatedByName = row["CreatedByName"].ToString(),
-                        CreatedDate = Convert.ToDateTime(row["CreatedDate"])
-                    });
-                }
-
-                // Bind to grid
-                dgvExpenses.DataSource = null;
-                dgvExpenses.DataSource = _expenses;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading expenses: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
-        }
+        }        
 
         private void DeleteExpense(Expense expense)
         {
-            // In a real app, this would delete the expense from the database
+            
             var result = MessageBox.Show($"Are you sure you want to delete expense {expense.ExpenseNumber}?", "Delete Expense", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
@@ -339,7 +239,7 @@ namespace FantasticStock.Views.Financial
                 cboSupplier.Items.Clear();
                 cboSupplier.Items.Add(new ComboboxItem { Text = "All Suppliers", Value = 0 });
 
-                string query = "SELECT SupplierID, SupplierName FROM Suppliers WHERE IsActive = 1 ORDER BY SupplierName";
+                string query = "SELECT SupplierID, SupplierName FROM Supplier WHERE IsActive = 1 ORDER BY SupplierName";
                 DataTable suppliers = ExecuteQuery(query);
 
                 foreach (DataRow row in suppliers.Rows)
@@ -531,7 +431,7 @@ namespace FantasticStock.Views.Financial
             FROM 
                 Expenses e
             LEFT JOIN 
-                Suppliers s ON e.SupplierID = s.SupplierID
+                Supplier s ON e.SupplierID = s.SupplierID
             LEFT JOIN 
                 ExpenseCategories c ON e.CategoryID = c.CategoryID
             LEFT JOIN 

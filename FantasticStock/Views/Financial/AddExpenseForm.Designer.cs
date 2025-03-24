@@ -32,8 +32,6 @@ namespace FantasticStock.Views.Financial
         /// </summary>
         private void InitializeComponent()
         {
-            // Initialize components
-            this.components = new System.ComponentModel.Container();
             this.txtExpenseNumber = new System.Windows.Forms.TextBox();
             this.txtAmount = new System.Windows.Forms.TextBox();
             this.txtTaxAmount = new System.Windows.Forms.TextBox();
@@ -59,125 +57,227 @@ namespace FantasticStock.Views.Financial
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddSupplier = new System.Windows.Forms.Button();
             this.btnAddCategory = new System.Windows.Forms.Button();
-
             this.SuspendLayout();
-
-            // Form setup
-            this.Text = "Add New Expense";
-            this.ClientSize = new Size(500, 500);
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.AutoScaleMode = AutoScaleMode.Font;
-            this.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-
-            // Configure Labels
-            this.lblExpenseNumber.Text = "Expense #:";
-            this.lblExpenseNumber.Location = new Point(20, 20);
-            this.lblExpenseNumber.Size = new Size(120, 23);
-
-            this.lblExpenseDate.Text = "Date:";
-            this.lblExpenseDate.Location = new Point(20, 50);
-            this.lblExpenseDate.Size = new Size(120, 23);
-
-            this.lblSupplier.Text = "Supplier:";
-            this.lblSupplier.Location = new Point(20, 80);
-            this.lblSupplier.Size = new Size(120, 23);
-
-            this.lblCategory.Text = "Category:";
-            this.lblCategory.Location = new Point(20, 110);
-            this.lblCategory.Size = new Size(120, 23);
-
-            this.lblPaymentMethod.Text = "Payment Method:";
-            this.lblPaymentMethod.Location = new Point(20, 140);
-            this.lblPaymentMethod.Size = new Size(120, 23);
-
-            this.lblReferenceNumber.Text = "Reference #:";
-            this.lblReferenceNumber.Location = new Point(20, 170);
-            this.lblReferenceNumber.Size = new Size(120, 23);
-
-            this.lblAmount.Text = "Amount:";
-            this.lblAmount.Location = new Point(20, 200);
-            this.lblAmount.Size = new Size(120, 23);
-
-            this.lblTaxAmount.Text = "Tax Amount:";
-            this.lblTaxAmount.Location = new Point(20, 230);
-            this.lblTaxAmount.Size = new Size(120, 23);
-
-            this.lblTotalAmount.Text = "Total:";
-            this.lblTotalAmount.Location = new Point(20, 260);
-            this.lblTotalAmount.Size = new Size(120, 23);
-
-            this.lblNotes.Text = "Notes:";
-            this.lblNotes.Location = new Point(20, 290);
-            this.lblNotes.Size = new Size(120, 23);
-
-            // Configure controls
-            this.txtExpenseNumber.Location = new Point(150, 20);
-            this.txtExpenseNumber.Size = new Size(300, 23);
+            // 
+            // txtExpenseNumber
+            // 
+            this.txtExpenseNumber.Location = new System.Drawing.Point(150, 20);
+            this.txtExpenseNumber.Name = "txtExpenseNumber";
             this.txtExpenseNumber.ReadOnly = true;
-
-            this.dtpExpenseDate.Location = new Point(150, 50);
-            this.dtpExpenseDate.Size = new Size(200, 23);
-            this.dtpExpenseDate.Format = DateTimePickerFormat.Short;
-
-            this.cboSupplier.Location = new Point(150, 80);
-            this.cboSupplier.Size = new Size(300, 23);
-            this.cboSupplier.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            this.btnAddSupplier.Text = "+";
-            this.btnAddSupplier.Location = new Point(460, 80);
-            this.btnAddSupplier.Size = new Size(25, 25);
-
-            this.cboCategory.Location = new Point(150, 110);
-            this.cboCategory.Size = new Size(300, 23);
-            this.cboCategory.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            this.btnAddCategory.Text = "+";
-            this.btnAddCategory.Location = new Point(460, 110);
-            this.btnAddCategory.Size = new Size(25, 25);
-
-            this.cboPaymentMethod.Location = new Point(150, 140);
-            this.cboPaymentMethod.Size = new Size(300, 23);
-            this.cboPaymentMethod.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            this.txtReferenceNumber.Location = new Point(150, 170);
-            this.txtReferenceNumber.Size = new Size(300, 23);
-
-            this.txtAmount.Location = new Point(150, 200);
-            this.txtAmount.Size = new Size(150, 23);
-            this.txtAmount.TextAlign = HorizontalAlignment.Right;
-
-            this.txtTaxAmount.Location = new Point(150, 230);
-            this.txtTaxAmount.Size = new Size(150, 23);
-            this.txtTaxAmount.TextAlign = HorizontalAlignment.Right;
-
-            this.lblTotal.Text = "$0.00";
-            this.lblTotal.Location = new Point(150, 260);
-            this.lblTotal.Size = new Size(150, 23);
-            this.lblTotal.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            this.lblTotal.TextAlign = ContentAlignment.MiddleRight;
-
-            this.txtNotes.Location = new Point(150, 290);
-            this.txtNotes.Size = new Size(300, 80);
+            this.txtExpenseNumber.Size = new System.Drawing.Size(300, 23);
+            this.txtExpenseNumber.TabIndex = 1;
+            // 
+            // txtAmount
+            // 
+            this.txtAmount.Location = new System.Drawing.Point(150, 200);
+            this.txtAmount.Name = "txtAmount";
+            this.txtAmount.Size = new System.Drawing.Size(150, 23);
+            this.txtAmount.TabIndex = 15;
+            this.txtAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtAmount.Leave += new System.EventHandler(this.TxtAmount_Leave);
+            // 
+            // txtTaxAmount
+            // 
+            this.txtTaxAmount.Location = new System.Drawing.Point(150, 230);
+            this.txtTaxAmount.Name = "txtTaxAmount";
+            this.txtTaxAmount.Size = new System.Drawing.Size(150, 23);
+            this.txtTaxAmount.TabIndex = 17;
+            this.txtTaxAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtTaxAmount.Leave += new System.EventHandler(this.TxtTaxAmount_Leave);
+            // 
+            // txtReferenceNumber
+            // 
+            this.txtReferenceNumber.Location = new System.Drawing.Point(150, 170);
+            this.txtReferenceNumber.Name = "txtReferenceNumber";
+            this.txtReferenceNumber.Size = new System.Drawing.Size(300, 23);
+            this.txtReferenceNumber.TabIndex = 13;
+            // 
+            // txtNotes
+            // 
+            this.txtNotes.Location = new System.Drawing.Point(150, 290);
             this.txtNotes.Multiline = true;
-
-            this.chkTaxDeductible.Text = "Tax Deductible";
-            this.chkTaxDeductible.Location = new Point(150, 380);
-            this.chkTaxDeductible.Size = new Size(150, 24);
+            this.txtNotes.Name = "txtNotes";
+            this.txtNotes.Size = new System.Drawing.Size(300, 80);
+            this.txtNotes.TabIndex = 21;
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblTotal.Location = new System.Drawing.Point(150, 260);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(150, 23);
+            this.lblTotal.TabIndex = 19;
+            this.lblTotal.Text = "$0.00";
+            this.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblExpenseNumber
+            // 
+            this.lblExpenseNumber.Location = new System.Drawing.Point(20, 20);
+            this.lblExpenseNumber.Name = "lblExpenseNumber";
+            this.lblExpenseNumber.Size = new System.Drawing.Size(120, 23);
+            this.lblExpenseNumber.TabIndex = 0;
+            this.lblExpenseNumber.Text = "Expense #:";
+            // 
+            // lblExpenseDate
+            // 
+            this.lblExpenseDate.Location = new System.Drawing.Point(20, 50);
+            this.lblExpenseDate.Name = "lblExpenseDate";
+            this.lblExpenseDate.Size = new System.Drawing.Size(120, 23);
+            this.lblExpenseDate.TabIndex = 2;
+            this.lblExpenseDate.Text = "Date:";
+            // 
+            // lblSupplier
+            // 
+            this.lblSupplier.Location = new System.Drawing.Point(20, 80);
+            this.lblSupplier.Name = "lblSupplier";
+            this.lblSupplier.Size = new System.Drawing.Size(120, 23);
+            this.lblSupplier.TabIndex = 4;
+            this.lblSupplier.Text = "Supplier:";
+            // 
+            // lblCategory
+            // 
+            this.lblCategory.Location = new System.Drawing.Point(20, 110);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(120, 23);
+            this.lblCategory.TabIndex = 7;
+            this.lblCategory.Text = "Category:";
+            // 
+            // lblPaymentMethod
+            // 
+            this.lblPaymentMethod.Location = new System.Drawing.Point(20, 140);
+            this.lblPaymentMethod.Name = "lblPaymentMethod";
+            this.lblPaymentMethod.Size = new System.Drawing.Size(120, 23);
+            this.lblPaymentMethod.TabIndex = 10;
+            this.lblPaymentMethod.Text = "Payment Method:";
+            // 
+            // lblReferenceNumber
+            // 
+            this.lblReferenceNumber.Location = new System.Drawing.Point(20, 170);
+            this.lblReferenceNumber.Name = "lblReferenceNumber";
+            this.lblReferenceNumber.Size = new System.Drawing.Size(120, 23);
+            this.lblReferenceNumber.TabIndex = 12;
+            this.lblReferenceNumber.Text = "Reference #:";
+            // 
+            // lblAmount
+            // 
+            this.lblAmount.Location = new System.Drawing.Point(20, 200);
+            this.lblAmount.Name = "lblAmount";
+            this.lblAmount.Size = new System.Drawing.Size(120, 23);
+            this.lblAmount.TabIndex = 14;
+            this.lblAmount.Text = "Amount:";
+            // 
+            // lblTaxAmount
+            // 
+            this.lblTaxAmount.Location = new System.Drawing.Point(20, 230);
+            this.lblTaxAmount.Name = "lblTaxAmount";
+            this.lblTaxAmount.Size = new System.Drawing.Size(120, 23);
+            this.lblTaxAmount.TabIndex = 16;
+            this.lblTaxAmount.Text = "Tax Amount:";
+            // 
+            // lblTotalAmount
+            // 
+            this.lblTotalAmount.Location = new System.Drawing.Point(20, 260);
+            this.lblTotalAmount.Name = "lblTotalAmount";
+            this.lblTotalAmount.Size = new System.Drawing.Size(120, 23);
+            this.lblTotalAmount.TabIndex = 18;
+            this.lblTotalAmount.Text = "Total:";
+            // 
+            // lblNotes
+            // 
+            this.lblNotes.Location = new System.Drawing.Point(20, 290);
+            this.lblNotes.Name = "lblNotes";
+            this.lblNotes.Size = new System.Drawing.Size(120, 23);
+            this.lblNotes.TabIndex = 20;
+            this.lblNotes.Text = "Notes:";
+            // 
+            // cboCategory
+            // 
+            this.cboCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCategory.Location = new System.Drawing.Point(150, 110);
+            this.cboCategory.Name = "cboCategory";
+            this.cboCategory.Size = new System.Drawing.Size(300, 23);
+            this.cboCategory.TabIndex = 8;
+            // 
+            // cboPaymentMethod
+            // 
+            this.cboPaymentMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPaymentMethod.Location = new System.Drawing.Point(150, 140);
+            this.cboPaymentMethod.Name = "cboPaymentMethod";
+            this.cboPaymentMethod.Size = new System.Drawing.Size(300, 23);
+            this.cboPaymentMethod.TabIndex = 11;
+            // 
+            // chkTaxDeductible
+            // 
             this.chkTaxDeductible.Checked = true;
-
+            this.chkTaxDeductible.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkTaxDeductible.Location = new System.Drawing.Point(150, 380);
+            this.chkTaxDeductible.Name = "chkTaxDeductible";
+            this.chkTaxDeductible.Size = new System.Drawing.Size(150, 24);
+            this.chkTaxDeductible.TabIndex = 22;
+            this.chkTaxDeductible.Text = "Tax Deductible";
+            // 
+            // dtpExpenseDate
+            // 
+            this.dtpExpenseDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpExpenseDate.Location = new System.Drawing.Point(150, 50);
+            this.dtpExpenseDate.Name = "dtpExpenseDate";
+            this.dtpExpenseDate.Size = new System.Drawing.Size(200, 23);
+            this.dtpExpenseDate.TabIndex = 3;
+            // 
+            // cboSupplier
+            // 
+            this.cboSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSupplier.Location = new System.Drawing.Point(150, 80);
+            this.cboSupplier.Name = "cboSupplier";
+            this.cboSupplier.Size = new System.Drawing.Size(300, 23);
+            this.cboSupplier.TabIndex = 5;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(230, 420);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 30);
+            this.btnSave.TabIndex = 23;
             this.btnSave.Text = "Save";
-            this.btnSave.Location = new Point(230, 420);
-            this.btnSave.Size = new Size(100, 30);
-
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.LightCoral;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.Location = new System.Drawing.Point(350, 420);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(100, 30);
+            this.btnCancel.TabIndex = 24;
             this.btnCancel.Text = "Cancel";
-            this.btnCancel.Location = new Point(350, 420);
-            this.btnCancel.Size = new Size(100, 30);
-            this.btnCancel.DialogResult = DialogResult.Cancel;
-
-            // Add controls to form
+            this.btnCancel.UseVisualStyleBackColor = false;
+            // 
+            // btnAddSupplier
+            // 
+            this.btnAddSupplier.Location = new System.Drawing.Point(460, 80);
+            this.btnAddSupplier.Name = "btnAddSupplier";
+            this.btnAddSupplier.Size = new System.Drawing.Size(25, 25);
+            this.btnAddSupplier.TabIndex = 6;
+            this.btnAddSupplier.Text = "+";
+            this.btnAddSupplier.Click += new System.EventHandler(this.BtnAddSupplier_Click);
+            // 
+            // btnAddCategory
+            // 
+            this.btnAddCategory.Location = new System.Drawing.Point(460, 110);
+            this.btnAddCategory.Name = "btnAddCategory";
+            this.btnAddCategory.Size = new System.Drawing.Size(25, 25);
+            this.btnAddCategory.TabIndex = 9;
+            this.btnAddCategory.Text = "+";
+            this.btnAddCategory.Click += new System.EventHandler(this.BtnAddCategory_Click);
+            // 
+            // AddExpenseForm
+            // 
+            this.AcceptButton = this.btnSave;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(500, 500);
             this.Controls.Add(this.lblExpenseNumber);
             this.Controls.Add(this.txtExpenseNumber);
             this.Controls.Add(this.lblExpenseDate);
@@ -203,19 +303,16 @@ namespace FantasticStock.Views.Financial
             this.Controls.Add(this.chkTaxDeductible);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
-
-            // Wire up events
-            this.txtAmount.Leave += new EventHandler(this.TxtAmount_Leave);
-            this.txtTaxAmount.Leave += new EventHandler(this.TxtTaxAmount_Leave);
-            this.btnSave.Click += new EventHandler(this.BtnSave_Click);
-            this.btnAddSupplier.Click += new EventHandler(this.BtnAddSupplier_Click);
-            this.btnAddCategory.Click += new EventHandler(this.BtnAddCategory_Click);
-
-            this.AcceptButton = this.btnSave;
-            this.CancelButton = this.btnCancel;
-
+            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "AddExpenseForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Add New Expense";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         // UI Controls

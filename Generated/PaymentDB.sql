@@ -47,7 +47,7 @@ CREATE TABLE Users (
     LastModifiedDate DATETIME DEFAULT GETDATE()
 );
 
--- Create Payments table based on the C# model
+-- Create Payments table
 CREATE TABLE Payments (
     PaymentID INT PRIMARY KEY IDENTITY(1,1),
     PaymentNumber NVARCHAR(20) NOT NULL,
@@ -115,7 +115,6 @@ BEGIN
     
     DECLARE @InvoiceTotal DECIMAL(18, 2);
     DECLARE @CurrentPaid DECIMAL(18, 2);
-    
     -- Get invoice amount and currently paid amount
     SELECT @InvoiceTotal = Amount, @CurrentPaid = PaidAmount
     FROM Invoices

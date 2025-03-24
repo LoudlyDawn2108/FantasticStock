@@ -71,6 +71,10 @@ namespace FantasticStock.Views.Inventory
             this.lblPageInfo = new System.Windows.Forms.Label();
             this.btnNext = new System.Windows.Forms.Button();
             this.panelDetails = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtSalePrice = new System.Windows.Forms.TextBox();
+            this.txtCostPrice = new System.Windows.Forms.TextBox();
             this.lblDetailsHeader = new System.Windows.Forms.Label();
             this.lblProductName = new System.Windows.Forms.Label();
             this.txtProductName = new System.Windows.Forms.TextBox();
@@ -99,10 +103,6 @@ namespace FantasticStock.Views.Inventory
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtSalePrice = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtCostPrice = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -444,7 +444,6 @@ namespace FantasticStock.Views.Inventory
             // 
             // panelDetails
             // 
-            this.panelDetails.AutoScroll = true;
             this.panelDetails.BackColor = System.Drawing.Color.White;
             this.panelDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelDetails.Controls.Add(this.label2);
@@ -485,6 +484,42 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.Size = new System.Drawing.Size(809, 833);
             this.panelDetails.TabIndex = 10;
             // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 326);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(19, 20);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "$";
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(10, 370);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(19, 20);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "$";
+            // 
+            // txtSalePrice
+            // 
+            this.txtSalePrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSalePrice.Location = new System.Drawing.Point(29, 370);
+            this.txtSalePrice.Name = "txtSalePrice";
+            this.txtSalePrice.Size = new System.Drawing.Size(145, 20);
+            this.txtSalePrice.TabIndex = 33;
+            this.txtSalePrice.TextChanged += new System.EventHandler(this.txtCostPrice_TextChanged);
+            // 
+            // txtCostPrice
+            // 
+            this.txtCostPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCostPrice.Location = new System.Drawing.Point(29, 329);
+            this.txtCostPrice.Name = "txtCostPrice";
+            this.txtCostPrice.Size = new System.Drawing.Size(144, 20);
+            this.txtCostPrice.TabIndex = 34;
+            this.txtCostPrice.TextChanged += new System.EventHandler(this.txtSalePrice_TextChanged);
+            // 
             // lblDetailsHeader
             // 
             this.lblDetailsHeader.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
@@ -504,9 +539,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtProductName
             // 
+            this.txtProductName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtProductName.Location = new System.Drawing.Point(15, 70);
             this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(350, 20);
+            this.txtProductName.Size = new System.Drawing.Size(778, 20);
             this.txtProductName.TabIndex = 2;
             // 
             // lblSKU
@@ -519,9 +555,10 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtSKU
             // 
+            this.txtSKU.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSKU.Location = new System.Drawing.Point(15, 120);
             this.txtSKU.Name = "txtSKU";
-            this.txtSKU.Size = new System.Drawing.Size(350, 20);
+            this.txtSKU.Size = new System.Drawing.Size(778, 20);
             this.txtSKU.TabIndex = 4;
             // 
             // lblBarcode
@@ -534,46 +571,49 @@ namespace FantasticStock.Views.Inventory
             // 
             // txtBarcode
             // 
+            this.txtBarcode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBarcode.Location = new System.Drawing.Point(15, 170);
             this.txtBarcode.Name = "txtBarcode";
-            this.txtBarcode.Size = new System.Drawing.Size(350, 20);
+            this.txtBarcode.Size = new System.Drawing.Size(778, 20);
             this.txtBarcode.TabIndex = 6;
             // 
             // lblCategory
             // 
             this.lblCategory.Location = new System.Drawing.Point(15, 200);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(100, 23);
+            this.lblCategory.Size = new System.Drawing.Size(100, 17);
             this.lblCategory.TabIndex = 7;
             this.lblCategory.Text = "Category";
             // 
             // cmbCategory
             // 
+            this.cmbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.Location = new System.Drawing.Point(15, 220);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(350, 21);
+            this.cmbCategory.Size = new System.Drawing.Size(778, 21);
             this.cmbCategory.TabIndex = 8;
             // 
             // lblSupplier
             // 
             this.lblSupplier.Location = new System.Drawing.Point(15, 250);
             this.lblSupplier.Name = "lblSupplier";
-            this.lblSupplier.Size = new System.Drawing.Size(100, 23);
+            this.lblSupplier.Size = new System.Drawing.Size(100, 17);
             this.lblSupplier.TabIndex = 9;
             this.lblSupplier.Text = "Supplier";
             // 
             // cmbSupplier
             // 
+            this.cmbSupplier.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbSupplier.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbSupplier.Location = new System.Drawing.Point(15, 270);
             this.cmbSupplier.Name = "cmbSupplier";
-            this.cmbSupplier.Size = new System.Drawing.Size(350, 21);
+            this.cmbSupplier.Size = new System.Drawing.Size(778, 21);
             this.cmbSupplier.TabIndex = 10;
             // 
             // lblSalePrice
             // 
-            this.lblSalePrice.Location = new System.Drawing.Point(15, 300);
+            this.lblSalePrice.Location = new System.Drawing.Point(16, 350);
             this.lblSalePrice.Name = "lblSalePrice";
             this.lblSalePrice.Size = new System.Drawing.Size(100, 23);
             this.lblSalePrice.TabIndex = 11;
@@ -581,7 +621,7 @@ namespace FantasticStock.Views.Inventory
             // 
             // lblCostPrice
             // 
-            this.lblCostPrice.Location = new System.Drawing.Point(15, 350);
+            this.lblCostPrice.Location = new System.Drawing.Point(16, 303);
             this.lblCostPrice.Name = "lblCostPrice";
             this.lblCostPrice.Size = new System.Drawing.Size(100, 23);
             this.lblCostPrice.TabIndex = 13;
@@ -717,40 +757,6 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(10, 326);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 20);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "$";
-            // 
-            // txtSalePrice
-            // 
-            this.txtSalePrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSalePrice.Location = new System.Drawing.Point(29, 370);
-            this.txtSalePrice.Name = "txtSalePrice";
-            this.txtSalePrice.Size = new System.Drawing.Size(145, 20);
-            this.txtSalePrice.TabIndex = 33;
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(10, 370);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 20);
-            this.label3.TabIndex = 33;
-            this.label3.Text = "$";
-            // 
-            // txtCostPrice
-            // 
-            this.txtCostPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCostPrice.Location = new System.Drawing.Point(29, 326);
-            this.txtCostPrice.Name = "txtCostPrice";
-            this.txtCostPrice.Size = new System.Drawing.Size(144, 20);
-            this.txtCostPrice.TabIndex = 34;
             // 
             // ProductManagementView
             // 

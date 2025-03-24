@@ -121,7 +121,7 @@ namespace FantasticStock.Views.Inventory
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblTitle.Location = new System.Drawing.Point(15, 19);
+            this.lblTitle.Location = new System.Drawing.Point(15, 15);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(180, 21);
             this.lblTitle.TabIndex = 1;
@@ -135,7 +135,7 @@ namespace FantasticStock.Views.Inventory
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 62);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1510, 828);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1510, 832);
             this.flowLayoutPanel1.TabIndex = 1;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -732,7 +732,7 @@ namespace FantasticStock.Views.Inventory
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "SupplierManagementView";
-            this.Size = new System.Drawing.Size(1510, 890);
+            this.Size = new System.Drawing.Size(1510, 894);
             this.Load += new System.EventHandler(this.SupplierManagementView_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

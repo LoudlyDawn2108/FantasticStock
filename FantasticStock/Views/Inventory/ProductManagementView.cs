@@ -20,7 +20,7 @@ namespace FantasticStock.Views.Inventory
         private const int EM_SETCUEBANNER = 0x1501;
         private ProductViewModel _viewModel;
 
-        string chuoiketnoi = "Data Source=TUNGCORN\\SQLEXPRESS;" +
+        string chuoiketnoi = "Data Source=localhost\\SQLEXPRESS;" +
                              "Initial Catalog = FantasticStock1;" +
                              "Integrated Security = true";
         SqlConnection conn;
@@ -145,11 +145,6 @@ namespace FantasticStock.Views.Inventory
             return field.Replace("\"", "\"\"");
         }
 
-        private void btnPrintList_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Print functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -203,10 +198,6 @@ namespace FantasticStock.Views.Inventory
             if (KiemTraGiaTri())
             {
                 SaveProduct();
-                //decimal SaleP = Convert.ToDecimal(txtSalePrice.Text);
-                //decimal CostP = Convert.ToDecimal(txtCostPrice.Text);
-                //decimal Markup = ((SaleP - CostP) / CostP) * 100;
-                //txtMarkup.Text = Markup.ToString();
                 Khoa_Chinh_Sua(false);
             }
         }
@@ -219,8 +210,7 @@ namespace FantasticStock.Views.Inventory
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (ProductID > 0)
-            {
+            
                 DialogResult result = MessageBox.Show("Are you sure you want to delete this product?",
                     "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -231,7 +221,7 @@ namespace FantasticStock.Views.Inventory
                     Khoa_Chinh_Sua(false);
                     Load_dvgProducts();
                 }
-            }
+            
         }
 
         private void DeleteProduct(int ProductID)
@@ -348,11 +338,13 @@ namespace FantasticStock.Views.Inventory
         private void ProductManagementView_Load(object sender, EventArgs e)
         {
             dgvProducts.AutoGenerateColumns = false;
-
             Load_dvgProducts();
             Load_comboboxCategory();
             Load_cmbSupplier();
             SetCueText(txtSearch, "Search by product name");
+            Khoa_Chinh_Sua(false);
+            cmbCategory.SelectedIndex = -1;
+            cmbSupplier.SelectedIndex = -1;
         }
 
         private void SetCueText(TextBox textBox, string cueText)

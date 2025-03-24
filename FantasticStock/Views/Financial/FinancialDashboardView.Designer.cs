@@ -49,9 +49,6 @@
         private System.Windows.Forms.GroupBox groupBoxOutstanding;
         private System.Windows.Forms.DataGridView dgvOutstandingInvoices;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnCashFlow;
-        private System.Windows.Forms.Button btnBalanceSheet;
-        private System.Windows.Forms.Button btnIncomeStatement;
         #region Component Designer generated code
 
         /// <summary> 
@@ -62,7 +59,6 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.lblEndDate = new System.Windows.Forms.Label();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
@@ -88,9 +84,7 @@
             this.groupBoxOutstanding = new System.Windows.Forms.GroupBox();
             this.dgvOutstandingInvoices = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnCashFlow = new System.Windows.Forms.Button();
-            this.btnBalanceSheet = new System.Windows.Forms.Button();
-            this.btnIncomeStatement = new System.Windows.Forms.Button();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxMetrics.SuspendLayout();
@@ -139,27 +133,17 @@
             this.panel1.Size = new System.Drawing.Size(502, 34);
             this.panel1.TabIndex = 0;
             // 
-            // btnRefresh
-            // 
-            this.btnRefresh.BackColor = System.Drawing.Color.Lime;
-            this.btnRefresh.Location = new System.Drawing.Point(267, 5);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
-            this.btnRefresh.TabIndex = 0;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = false;
-            // 
             // dtpEndDate
             // 
             this.dtpEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpEndDate.Location = new System.Drawing.Point(260, 4);
+            this.dtpEndDate.Location = new System.Drawing.Point(254, 8);
             this.dtpEndDate.Name = "dtpEndDate";
             this.dtpEndDate.Size = new System.Drawing.Size(126, 20);
             this.dtpEndDate.TabIndex = 1;
             // 
             // lblEndDate
             // 
-            this.lblEndDate.Location = new System.Drawing.Point(198, 7);
+            this.lblEndDate.Location = new System.Drawing.Point(198, 11);
             this.lblEndDate.Name = "lblEndDate";
             this.lblEndDate.Size = new System.Drawing.Size(100, 23);
             this.lblEndDate.TabIndex = 2;
@@ -168,14 +152,14 @@
             // dtpStartDate
             // 
             this.dtpStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpStartDate.Location = new System.Drawing.Point(64, 3);
+            this.dtpStartDate.Location = new System.Drawing.Point(64, 7);
             this.dtpStartDate.Name = "dtpStartDate";
             this.dtpStartDate.Size = new System.Drawing.Size(128, 20);
             this.dtpStartDate.TabIndex = 3;
             // 
             // lblStartDate
             // 
-            this.lblStartDate.Location = new System.Drawing.Point(6, 6);
+            this.lblStartDate.Location = new System.Drawing.Point(6, 10);
             this.lblStartDate.Name = "lblStartDate";
             this.lblStartDate.Size = new System.Drawing.Size(100, 23);
             this.lblStartDate.TabIndex = 4;
@@ -413,38 +397,23 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.btnRefresh);
-            this.panel2.Controls.Add(this.btnCashFlow);
-            this.panel2.Controls.Add(this.btnBalanceSheet);
-            this.panel2.Controls.Add(this.btnIncomeStatement);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(511, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(502, 34);
             this.panel2.TabIndex = 5;
             // 
-            // btnCashFlow
+            // btnRefresh
             // 
-            this.btnCashFlow.Location = new System.Drawing.Point(186, 5);
-            this.btnCashFlow.Name = "btnCashFlow";
-            this.btnCashFlow.Size = new System.Drawing.Size(75, 23);
-            this.btnCashFlow.TabIndex = 0;
-            this.btnCashFlow.Text = "Cash Flow";
-            // 
-            // btnBalanceSheet
-            // 
-            this.btnBalanceSheet.Location = new System.Drawing.Point(25, 5);
-            this.btnBalanceSheet.Name = "btnBalanceSheet";
-            this.btnBalanceSheet.Size = new System.Drawing.Size(75, 23);
-            this.btnBalanceSheet.TabIndex = 1;
-            this.btnBalanceSheet.Text = "Balance Sheet";
-            // 
-            // btnIncomeStatement
-            // 
-            this.btnIncomeStatement.Location = new System.Drawing.Point(106, 5);
-            this.btnIncomeStatement.Name = "btnIncomeStatement";
-            this.btnIncomeStatement.Size = new System.Drawing.Size(75, 23);
-            this.btnIncomeStatement.TabIndex = 2;
-            this.btnIncomeStatement.Text = "Income Statement";
+            this.btnRefresh.BackColor = System.Drawing.Color.Lime;
+            this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Location = new System.Drawing.Point(427, 0);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 34);
+            this.btnRefresh.TabIndex = 0;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = false;
             // 
             // FinancialDashboardView
             // 
