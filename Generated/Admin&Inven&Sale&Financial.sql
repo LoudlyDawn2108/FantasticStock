@@ -236,6 +236,12 @@ CREATE TABLE ExpenseCategories (
     LastModifiedDate DATETIME DEFAULT GETDATE()
 );
 
+
+-- =============================================
+-- EXPENSE MANAGEMENT INTEGRATION
+-- =============================================
+
+
 CREATE TABLE Expenses (
     ExpenseID INT PRIMARY KEY IDENTITY(1,1),
     ExpenseNumber NVARCHAR(20) NOT NULL,
@@ -251,19 +257,173 @@ CREATE TABLE Expenses (
     CreatedBy INT NOT NULL,
     CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
     
-    -- Foreign Key constraints
-    CONSTRAINT FK_Expenses_Suppliers FOREIGN KEY (SupplierID) 
-        REFERENCES Suppliers(SupplierID),
+    -- Foreign Key constraints - linking to existing tables
+    CONSTRAINT FK_Expenses_Supplier FOREIGN KEY (SupplierID) 
+        REFERENCES Supplier(SupplierID),
     CONSTRAINT FK_Expenses_Categories FOREIGN KEY (CategoryID) 
         REFERENCES ExpenseCategories(CategoryID),
     CONSTRAINT FK_Expenses_Users FOREIGN KEY (CreatedBy) 
         REFERENCES Users(UserID)
 );
 
+-- Create index on common search fields
 CREATE INDEX IX_Expenses_ExpenseDate ON Expenses(ExpenseDate);
 CREATE INDEX IX_Expenses_SupplierID ON Expenses(SupplierID);
 CREATE INDEX IX_Expenses_CategoryID ON Expenses(CategoryID);
 CREATE INDEX IX_Expenses_ExpenseNumber ON Expenses(ExpenseNumber);
+
+-- Create a view for Expenses (updated to use existing tables)
+CREATE VIEW vw_Expenses AS
+SELECT 
+    e.ExpenseID,
+    e.ExpenseNumber,
+    e.ExpenseDate,
+    e.SupplierID,
+    s.CompanyName AS SupplierName, -- Updated to match field from Supplier table
+    e.CategoryID,
+    c.CategoryName,
+    e.PaymentMethod,
+    e.ReferenceNumber,
+    e.Amount,
+    e.TaxAmount,
+    (e.Amount + e.TaxAmount) AS TotalAmount,
+    e.Notes,
+    e.IsTaxDeductible,
+    e.CreatedBy,
+    u.Username AS CreatedByName, -- Updated to match field from Users table
+    e.CreatedDate,
+    FORMAT(e.ExpenseDate, 'yyyy-MM-dd HH:mm:ss') AS FormattedDate
+FROM 
+    Expenses e
+LEFT JOIN 
+    Supplier s ON e.SupplierID = s.SupplierID
+LEFT JOIN 
+    ExpenseCategories c ON e.CategoryID = c.CategoryID
+LEFT JOIN 
+    Users u ON e.CreatedBy = u.UserID;
+
+-- =============================================
+-- PAYMENT MANAGEMENT INTEGRATION
+-- =============================================
+
+-- Create Invoices table (using existing Customer table)
+CREATE TABLE Invoices (
+    InvoiceID INT PRIMARY KEY IDENTITY(1,1),
+    InvoiceNumber NVARCHAR(20) NOT NULL,
+    CustomerID INT NOT NULL,
+    InvoiceDate DATETIME NOT NULL,
+    DueDate DATETIME NOT NULL,
+    Amount DECIMAL(18, 2) NOT NULL,
+    PaidAmount DECIMAL(18, 2) DEFAULT 0,
+    Balance AS (Amount - PaidAmount),
+    Status NVARCHAR(20) NOT NULL DEFAULT 'Open', -- Open, Paid, Partial, Overdue, Cancelled
+    Notes NVARCHAR(MAX),
+    CreatedBy INT NOT NULL,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Invoices_Customers FOREIGN KEY (CustomerID)
+        REFERENCES Customer(CustomerID), -- Updated to reference Customer instead of Customers
+    CONSTRAINT FK_Invoices_Users FOREIGN KEY (CreatedBy)
+        REFERENCES Users(UserID)
+);
+
+-- Create Payments table referencing existing tables
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY IDENTITY(1,1),
+    PaymentNumber NVARCHAR(20) NOT NULL,
+    PaymentDate DATETIME NOT NULL,
+    CustomerID INT NOT NULL,
+    InvoiceID INT NULL,
+    PaymentMethod NVARCHAR(50) NOT NULL, -- Cash, Check, Credit Card, Bank Transfer
+    ReferenceNumber NVARCHAR(50), -- Check number, transaction ID, etc.
+    Amount DECIMAL(18, 2) NOT NULL,
+    Notes NVARCHAR(MAX),
+    CreatedBy INT NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    
+    -- Foreign Key constraints
+    CONSTRAINT FK_Payments_Customer FOREIGN KEY (CustomerID) 
+        REFERENCES Customer(CustomerID), -- Updated to reference Customer instead of Customers
+    CONSTRAINT FK_Payments_Invoices FOREIGN KEY (InvoiceID) 
+        REFERENCES Invoices(InvoiceID),
+    CONSTRAINT FK_Payments_Users FOREIGN KEY (CreatedBy) 
+        REFERENCES Users(UserID)
+);
+
+-- Create index on common search fields
+CREATE INDEX IX_Payments_PaymentDate ON Payments(PaymentDate);
+CREATE INDEX IX_Payments_CustomerID ON Payments(CustomerID);
+CREATE INDEX IX_Payments_InvoiceID ON Payments(InvoiceID);
+CREATE INDEX IX_Payments_PaymentNumber ON Payments(PaymentNumber);
+
+-- Create a view for Payments
+CREATE VIEW vw_Payments AS
+SELECT 
+    p.PaymentID,
+    p.PaymentNumber,
+    p.PaymentDate,
+    p.CustomerID,
+    c.CustomerName,
+    p.InvoiceID,
+    i.InvoiceNumber,
+    p.PaymentMethod,
+    p.ReferenceNumber,
+    p.Amount,
+    p.Notes,
+    p.CreatedBy,
+    u.Username AS CreatedByName, -- Updated to match field from Users table
+    p.CreatedDate,
+    FORMAT(p.PaymentDate, 'yyyy-MM-dd HH:mm:ss') AS FormattedDate
+FROM 
+    Payments p
+LEFT JOIN 
+    Customer c ON p.CustomerID = c.CustomerID -- Updated to reference Customer instead of Customers
+LEFT JOIN 
+    Invoices i ON p.InvoiceID = i.InvoiceID
+LEFT JOIN 
+    Users u ON p.CreatedBy = u.UserID;
+
+-- Create the ApplyPaymentToInvoice stored procedure
+CREATE PROCEDURE ApplyPaymentToInvoice
+    @PaymentID INT,
+    @InvoiceID INT,
+    @Amount DECIMAL(18, 2)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    BEGIN TRANSACTION;
+    
+    DECLARE @InvoiceTotal DECIMAL(18, 2);
+    DECLARE @CurrentPaid DECIMAL(18, 2);
+    
+    -- Get invoice amount and currently paid amount
+    SELECT @InvoiceTotal = Amount, @CurrentPaid = PaidAmount
+    FROM Invoices
+    WHERE InvoiceID = @InvoiceID;
+    
+    -- Validate the amount doesn't exceed the invoice balance
+    IF (@Amount > (@InvoiceTotal - @CurrentPaid))
+    BEGIN
+        ROLLBACK;
+        RAISERROR('Payment amount exceeds invoice balance', 16, 1);
+        RETURN;
+    END
+    
+    -- Update the payment to link it to the invoice
+    UPDATE Payments
+    SET InvoiceID = @InvoiceID
+    WHERE PaymentID = @PaymentID;
+    
+    -- Update the invoice paid amount
+    UPDATE Invoices
+    SET PaidAmount = PaidAmount + @Amount,
+        Status = CASE 
+                    WHEN PaidAmount + @Amount >= Amount THEN 'Paid' 
+                    ELSE 'Partial' 
+                 END
+    WHERE InvoiceID = @InvoiceID;
+    
+    COMMIT;
+END
 
 -- =============================================
 -- BACKUP MANAGEMENT TABLES
@@ -437,7 +597,134 @@ VALUES
     (2, 2, 1, 40000000.00, 2000000.00, 38000000.00),
     (3, 3, 1, 30000000.00, 1500000.00, 28500000.00);
 
+INSERT INTO ExpenseCategories (CategoryName, Description, IsActive) VALUES 
+('Office Supplies', 'General office supplies and stationery', 1),
+('Rent', 'Office and facility rent expenses', 1),
+('Utilities', 'Electricity, water, internet, and other utilities', 1),
+('Travel', 'Business travel expenses including airfare, hotel, and meals', 1),
+('Equipment', 'Office equipment, computers, and furniture', 1),
+('Marketing', 'Advertising, promotion, and marketing expenses', 1),
+('Professional Services', 'Legal, accounting, and consulting services', 1),
+('Insurance', 'Business insurance premiums', 1),
+('Software', 'Software licenses and subscriptions', 1),
+('Maintenance', 'Repairs and maintenance of facilities and equipment', 1);
 
+INSERT INTO Expenses (
+    ExpenseNumber, 
+    ExpenseDate, 
+    SupplierID, 
+    CategoryID, 
+    PaymentMethod, 
+    ReferenceNumber, 
+    Amount, 
+    TaxAmount, 
+    Notes, 
+    IsTaxDeductible, 
+    CreatedBy
+) VALUES 
+-- March 2025
+('EXP-2025-001', '2025-03-01', 1, 1, 'Credit Card', 'CC-45678', 2500.00, 250.00, 'Monthly office supplies restock', 1, 1),
+('EXP-2025-002', '2025-03-02', 2, 2, 'Bank Transfer', 'BT-98765', 15000.00, 0.00, 'Monthly rent payment for main office', 1, 2),
+('EXP-2025-003', '2025-03-05', 3, 3, 'Credit Card', 'CC-56789', 3500.00, 350.00, 'Utility bills for February 2025', 1, 3),
+('EXP-2025-004', '2025-03-10', 1, 5, 'Check', 'CK-12345', 8900.00, 890.00, 'New computers for accounting team', 1, 1),
+('EXP-2025-005', '2025-03-12', 3, 6, 'Credit Card', 'CC-67890', 6500.00, 650.00, 'Digital marketing campaign', 1, 2),
+('EXP-2025-006', '2025-03-15', 2, 8, 'Bank Transfer', 'BT-87654', 4200.00, 0.00, 'Business liability insurance premium', 1, 1),
+('EXP-2025-007', '2025-03-18', 3, 7, 'Bank Transfer', 'BT-76543', 7500.00, 750.00, 'Legal consultation services', 1, 3),
+('EXP-2025-008', '2025-03-20', 1, 9, 'Credit Card', 'CC-78901', 3200.00, 320.00, 'Annual software licenses renewal', 1, 2),
+('EXP-2025-009', '2025-03-22', 2, 10, 'Check', 'CK-23456', 1800.00, 180.00, 'Office equipment repairs', 1, 1),
+('EXP-2025-010', '2025-03-25', 3, 4, 'Credit Card', 'CC-89012', 5500.00, 550.00, 'Business trip to supplier conference', 1, 3),
+
+('EXP-2025-011', '2025-02-02', 1, 1, 'Credit Card', 'CC-34567', 1800.00, 180.00, 'Office supplies', 1, 2),
+('EXP-2025-012', '2025-02-03', 2, 2, 'Bank Transfer', 'BT-87654', 15000.00, 0.00, 'Monthly rent payment', 1, 1),
+('EXP-2025-013', '2025-02-07', 3, 3, 'Credit Card', 'CC-45678', 3200.00, 320.00, 'Utility bills for January 2025', 1, 3),
+('EXP-2025-014', '2025-02-12', 1, 6, 'Check', 'CK-34567', 4500.00, 450.00, 'Print advertising materials', 1, 2),
+('EXP-2025-015', '2025-02-15', 2, 7, 'Bank Transfer', 'BT-76543', 3800.00, 380.00, 'Accounting services', 1, 1),
+('EXP-2025-016', '2025-02-18', 3, 9, 'Credit Card', 'CC-56789', 2500.00, 250.00, 'Cloud services subscription', 1, 3),
+('EXP-2025-017', '2025-02-22', 1, 4, 'Credit Card', 'CC-67890', 3500.00, 350.00, 'Client meeting travel expenses', 1, 1),
+('EXP-2025-018', '2025-02-25', 2, 10, 'Check', 'CK-45678', 1200.00, 120.00, 'HVAC system maintenance', 1, 2),
+('EXP-2025-019', '2025-02-27', 3, 5, 'Bank Transfer', 'BT-65432', 6800.00, 680.00, 'Office furniture for new hires', 1, 3),
+('EXP-2025-020', '2025-02-28', 1, 8, 'Bank Transfer', 'BT-54321', 2200.00, 0.00, 'Employee health insurance contribution', 1, 1);
+
+INSERT INTO Invoices (
+    InvoiceNumber, 
+    CustomerID, 
+    InvoiceDate, 
+    DueDate, 
+    Amount, 
+    Status, 
+    Notes, 
+    CreatedBy
+) VALUES
+-- March 2025
+('INV-2025-001', 1, '2025-03-01', '2025-03-31', 12500.00, 'Open', 'Monthly product supply', 1),
+('INV-2025-002', 2, '2025-03-03', '2025-04-02', 8750.50, 'Open', 'Custom order - Widget Industries', 2),
+('INV-2025-003', 3, '2025-03-05', '2025-04-04', 15200.75, 'Open', 'Software implementation services', 3),
+('INV-2025-004', 1, '2025-03-08', '2025-04-07', 6300.25, 'Open', 'Additional services requested', 1),
+('INV-2025-005', 2, '2025-03-12', '2025-04-11', 9500.00, 'Open', 'Hardware supply', 2),
+('INV-2025-006', 3, '2025-03-15', '2025-04-14', 4750.50, 'Open', 'Maintenance contract', 3),
+('INV-2025-007', 1, '2025-03-18', '2025-04-17', 22950.75, 'Open', 'Quarterly service package', 1),
+('INV-2025-008', 2, '2025-03-22', '2025-04-21', 5600.25, 'Open', 'Consulting hours', 2),
+('INV-2025-009', 3, '2025-03-25', '2025-04-24', 18500.00, 'Open', 'System upgrade', 3),
+('INV-2025-010', 1, '2025-03-28', '2025-04-27', 7250.50, 'Open', 'Training services', 1),
+
+-- February 2025 (some already paid)
+('INV-2025-011', 2, '2025-02-01', '2025-03-03', 9200.00, 'Paid', 'Monthly product supply', 2),
+('INV-2025-012', 3, '2025-02-05', '2025-03-07', 11500.50, 'Partial', 'Custom software development', 3),
+('INV-2025-013', 1, '2025-02-08', '2025-03-10', 6800.75, 'Paid', 'Hardware purchase', 1),
+('INV-2025-014', 2, '2025-02-12', '2025-03-14', 14300.25, 'Open', 'Annual service contract', 2),
+('INV-2025-015', 3, '2025-02-15', '2025-03-17', 5500.00, 'Paid', 'Consulting services', 3),
+('INV-2025-016', 1, '2025-02-18', '2025-03-20', 8750.50, 'Partial', 'System implementation', 1),
+('INV-2025-017', 2, '2025-02-22', '2025-03-24', 12950.75, 'Open', 'Hardware and software bundle', 2),
+('INV-2025-018', 3, '2025-02-25', '2025-03-27', 9600.25, 'Partial', 'Training and support', 3);
+
+-- Insert sample payments using existing CustomerIDs and UserIDs
+INSERT INTO Payments (
+    PaymentNumber, 
+    PaymentDate, 
+    CustomerID, 
+    InvoiceID, 
+    PaymentMethod, 
+    ReferenceNumber, 
+    Amount, 
+    Notes, 
+    CreatedBy
+) VALUES
+-- March 2025 Payments
+('PMT-2025-001', '2025-03-02', 1, NULL, 'Cash', '', 5000.00, 'Advance payment for future orders', 1),
+('PMT-2025-002', '2025-03-05', 2, 2, 'Bank Transfer', 'BT-123456', 4375.25, 'Partial payment for INV-2025-002', 2),
+('PMT-2025-003', '2025-03-08', 3, 3, 'Credit Card', 'CC-789012', 5000.00, 'Partial payment for INV-2025-003', 3),
+('PMT-2025-004', '2025-03-10', 1, 1, 'Bank Transfer', 'BT-234567', 12500.00, 'Full payment for INV-2025-001', 1),
+('PMT-2025-005', '2025-03-15', 2, 5, 'Check', 'CK-345678', 9500.00, 'Full payment for INV-2025-005', 2),
+('PMT-2025-006', '2025-03-20', 3, 6, 'Bank Transfer', 'BT-456789', 4750.50, 'Full payment for INV-2025-006', 3),
+('PMT-2025-007', '2025-03-22', 1, 7, 'Credit Card', 'CC-567890', 10000.00, 'Partial payment for INV-2025-007', 1),
+('PMT-2025-008', '2025-03-25', 2, 8, 'Bank Transfer', 'BT-678901', 5600.25, 'Full payment for INV-2025-008', 2),
+('PMT-2025-009', '2025-03-28', 3, 9, 'Credit Card', 'CC-789012', 9250.00, 'Partial payment for INV-2025-009', 3),
+('PMT-2025-010', '2025-03-30', 1, 10, 'Check', 'CK-890123', 7250.50, 'Full payment for INV-2025-010', 1),
+
+-- February 2025 Payments
+('PMT-2025-011', '2025-02-03', 2, 11, 'Bank Transfer', 'BT-901234', 9200.00, 'Full payment for INV-2025-011', 2),
+('PMT-2025-012', '2025-02-08', 3, 12, 'Credit Card', 'CC-012345', 6000.00, 'Partial payment for INV-2025-012', 3),
+('PMT-2025-013', '2025-02-10', 1, 13, 'Bank Transfer', 'BT-123456', 6800.75, 'Full payment for INV-2025-013', 1),
+('PMT-2025-014', '2025-02-18', 3, 15, 'Check', 'CK-234567', 5500.00, 'Full payment for INV-2025-015', 3),
+('PMT-2025-015', '2025-02-20', 1, 16, 'Bank Transfer', 'BT-345678', 4000.00, 'Partial payment for INV-2025-016', 1),
+('PMT-2025-016', '2025-02-27', 3, 18, 'Credit Card', 'CC-456789', 5000.00, 'Partial payment for INV-2025-018', 3);
+
+-- Update invoice status based on payments
+-- This will ensure that the PaidAmount and Status fields are consistent
+UPDATE i
+SET i.PaidAmount = p.PaidAmount,
+    i.Status = CASE 
+                  WHEN p.PaidAmount >= i.Amount THEN 'Paid' 
+                  WHEN p.PaidAmount > 0 THEN 'Partial' 
+                  ELSE 'Open' 
+              END
+FROM Invoices i
+INNER JOIN (
+    SELECT InvoiceID, SUM(Amount) AS PaidAmount
+    FROM Payments
+    WHERE InvoiceID IS NOT NULL
+    GROUP BY InvoiceID
+) p ON i.InvoiceID = p.InvoiceID;
     
 -- Insert default roles
 INSERT INTO Roles (RoleName, Description)

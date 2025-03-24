@@ -20,7 +20,7 @@ namespace FantasticStock.Views.Inventory
         private const int EM_SETCUEBANNER = 0x1501;
         private ProductViewModel _viewModel;
 
-        string chuoiketnoi = "Data Source=TUNGCORN\\SQLEXPRESS;" +
+        string chuoiketnoi = "Data Source=localhost\\SQLEXPRESS;" +
                              "Initial Catalog = FantasticStock1;" +
                              "Integrated Security = true";
         SqlConnection conn;

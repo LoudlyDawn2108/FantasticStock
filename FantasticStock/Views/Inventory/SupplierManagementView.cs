@@ -11,7 +11,7 @@ namespace FantasticStock.Views.Inventory
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
         private const int EM_SETCUEBANNER = 0x1501;
-        string chuoiketnoi = "Server=TUNGCORN\\SQLEXPRESS; Database=FantasticStock1; Integrated Security=true";
+        string chuoiketnoi = "Server=localhost\\SQLEXPRESS; Database=FantasticStock1; Integrated Security=true";
         SqlConnection conn;
 
         private System.ComponentModel.IContainer components = null;

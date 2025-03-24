@@ -15,7 +15,7 @@ namespace FantasticStock.Views.Financial
 {
     public partial class AddInvoiceForm : Form
     {
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
         private Models.Financial.Invoice _invoice;
         private bool _isEditMode;
 

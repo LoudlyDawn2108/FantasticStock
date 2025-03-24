@@ -17,7 +17,7 @@ namespace FantasticStock.Views.Financial
     public partial class FinancialDashboardView : UserControl
     {
         //private FinancialDashboardViewModel _viewModel;
-        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
 
         private BindingList<Payment> _recentPayments;
         private BindingList<Expense> _recentExpenses;
@@ -52,9 +52,6 @@ namespace FantasticStock.Views.Financial
             btnRefresh.Click += BtnRefresh_Click;
             dtpStartDate.ValueChanged += DateRange_ValueChanged;
             dtpEndDate.ValueChanged += DateRange_ValueChanged;
-            //btnIncomeStatement.Click += BtnIncomeStatement_Click;
-            //btnBalanceSheet.Click += BtnBalanceSheet_Click;
-            //btnCashFlow.Click += BtnCashFlow_Click;
 
             // Configure grid views when form loads
             ConfigureDataGridViews();
@@ -500,116 +497,7 @@ namespace FantasticStock.Views.Financial
 
             // Set the data source
             dgvOutstandingInvoices.DataSource = _outstandingInvoices;
-        }
-        private void BtnIncomeStatement_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Cursor = Cursors.WaitCursor;
-
-                // Get selected date range
-                DateTime startDate = dtpStartDate.Value;
-                DateTime endDate = dtpEndDate.Value;
-
-                // In a real app, you would generate the report here
-                // This would typically involve querying the database for income and expense data
-                // Then formatting it into a report (PDF, Excel, etc.)
-
-                // For now, just show a simple message
-                MessageBox.Show($"Income statement for the period {startDate:d} to {endDate:d} would be generated here.",
-                    "Income Statement", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Example of how you might implement a report export
-                /*
-                SaveFileDialog saveDialog = new SaveFileDialog
-                {
-                    Filter = "PDF Files (*.pdf)|*.pdf|Excel Files (*.xlsx)|*.xlsx",
-                    DefaultExt = "pdf",
-                    FileName = $"IncomeStatement_{startDate:yyyyMMdd}_to_{endDate:yyyyMMdd}"
-                };
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = saveDialog.FileName;
-
-                    // Generate and save the report based on file type
-                    if (Path.GetExtension(filePath).ToLower() == ".pdf")
-                    {
-                        GenerateIncomeStatementPDF(startDate, endDate, filePath);
-                    }
-                    else
-                    {
-                        GenerateIncomeStatementExcel(startDate, endDate, filePath);
-                    }
-
-                    // Open the file
-                    System.Diagnostics.Process.Start(filePath);
-                }
-                */
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error generating income statement: {ex.Message}", "Report Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
-        }
-
-        private void BtnBalanceSheet_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Cursor = Cursors.WaitCursor;
-
-                // Use the end date for the balance sheet
-                DateTime asOfDate = dtpEndDate.Value;
-
-                // For now, just show a simple message
-                MessageBox.Show($"Balance sheet as of {asOfDate:d} would be generated here.",
-                    "Balance Sheet", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Implementation would be similar to income statement
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error generating balance sheet: {ex.Message}", "Report Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
-        }
-
-        private void BtnCashFlow_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Cursor = Cursors.WaitCursor;
-
-                // Get selected date range
-                DateTime startDate = dtpStartDate.Value;
-                DateTime endDate = dtpEndDate.Value;
-
-                // For now, just show a simple message
-                MessageBox.Show($"Cash flow statement for the period {startDate:d} to {endDate:d} would be generated here.",
-                    "Cash Flow Statement", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Implementation would be similar to income statement
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error generating cash flow statement: {ex.Message}", "Report Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
-            }
-        }
+        }   
 
         // Define OutstandingInvoice class inside the UserControl
         public class OutstandingInvoice

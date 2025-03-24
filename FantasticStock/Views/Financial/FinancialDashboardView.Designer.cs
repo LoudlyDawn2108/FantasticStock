@@ -406,10 +406,11 @@
             // btnRefresh
             // 
             this.btnRefresh.BackColor = System.Drawing.Color.Lime;
+            this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Location = new System.Drawing.Point(3, 5);
+            this.btnRefresh.Location = new System.Drawing.Point(427, 0);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.Size = new System.Drawing.Size(75, 34);
             this.btnRefresh.TabIndex = 0;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = false;
