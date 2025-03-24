@@ -289,6 +289,9 @@
     <EmbeddedResource Include="Views\Sales\CMView.resx">
       <DependentUpon>CMView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Sales\CustomerManagementView.resx">
+      <DependentUpon>CustomerManagementView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Sales\POSView.resx">
       <DependentUpon>POSView.cs</DependentUpon>
     </EmbeddedResource>

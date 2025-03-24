@@ -37,7 +37,6 @@ namespace FantasticStock.Views
 
             RegisterEventHandlers();
 
-            // Initialize the presenter
             IUserService userService = ServiceLocator.GetService<IUserService>();
             IAuditService auditService = ServiceLocator.GetService<IAuditService>();
             _presenter = new UserManagementPresenter(this, userService, auditService);
@@ -157,20 +156,17 @@ namespace FantasticStock.Views
 
         public void ClearUserDetails()
         {
-            // Basic Info tab
             txtUsername.Text = string.Empty;
             txtDisplayName.Text = string.Empty;
             txtEmail.Text = string.Empty;
             txtPhone.Text = string.Empty;
             cmbRoles.SelectedIndex = 0;
 
-            // Security tab
             txtPassword.Text = string.Empty;
             txtConfirmPassword.Text = string.Empty;
             progressBarPasswordStrength.Value = 0;
             chkTwoFactorEnabled.Checked = false;
 
-            // Restrictions tab
             chkSunday.Checked = true;
             chkMonday.Checked = true;
             chkTuesday.Checked = true;
@@ -179,7 +175,6 @@ namespace FantasticStock.Views
             chkFriday.Checked = true;
             chkSaturday.Checked = true;
 
-            // Enable the detail panel for adding a new user
             panelUserDetail.Enabled = true;
             IsEdit = true;
         }
@@ -214,7 +209,6 @@ namespace FantasticStock.Views
         {
             progressBarPasswordStrength.Value = Math.Min(100, Math.Max(0, strengthPercentage));
 
-            // Also update the color based on strength
             if (strengthPercentage < 40)
                 progressBarPasswordStrength.ForeColor = Color.Red;
             else if (strengthPercentage < 70)
@@ -381,7 +375,6 @@ namespace FantasticStock.Views
                 Width = 120
             });
 
-            // Configure DataGridView
             dgvActivityLog.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvActivityLog.AllowUserToAddRows = false;
             dgvActivityLog.AllowUserToDeleteRows = false;
@@ -405,7 +398,6 @@ namespace FantasticStock.Views
             cmbRoleFilter.DataSource = new BindingList<KeyValuePair<int, string>>(rolesList);
             cmbRoleFilter.SelectedIndex = 0;
 
-            // Set up the role combo box for user details
             cmbRoles.DisplayMember = "Value";
             cmbRoles.ValueMember = "Key";
             cmbRoles.DataSource = new BindingList<KeyValuePair<int, string>>(
@@ -461,19 +453,16 @@ namespace FantasticStock.Views
 
         private void UpdateControlsEditState()
         {
-            // Basic info controls
             txtUsername.Enabled = _isEdit;
             txtDisplayName.Enabled = _isEdit;
             txtEmail.Enabled = _isEdit;
             txtPhone.Enabled = _isEdit;
             cmbRoles.Enabled = _isEdit;
 
-            // Security tab controls
             txtPassword.Enabled = _isEdit;
             txtConfirmPassword.Enabled = _isEdit;
             chkTwoFactorEnabled.Enabled = _isEdit;
 
-            // Restrictions tab controls
             chkSunday.Enabled = _isEdit;
             chkMonday.Enabled = _isEdit;
             chkTuesday.Enabled = _isEdit;
@@ -482,11 +471,9 @@ namespace FantasticStock.Views
             chkFriday.Enabled = _isEdit;
             chkSaturday.Enabled = _isEdit;
 
-            // Edit action buttons
             btnSave.Enabled = _isEdit;
             btnCancel.Enabled = _isEdit;
 
-            // Other action buttons (disabled during edit)
             btnEdit.Enabled = !_isEdit && SelectedUserId.HasValue;
             btnAddUser.Enabled = !_isEdit;
             btnDeactivate.Enabled = !_isEdit && SelectedUserId.HasValue;
