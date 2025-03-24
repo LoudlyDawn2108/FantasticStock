@@ -18,7 +18,7 @@ namespace FantasticStock.Views.Financial
 
         private List<Payment> _payments;
         private Payment _selectedPayment;
-        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
 
         public PaymentsView()
         {
@@ -470,7 +470,7 @@ namespace FantasticStock.Views.Financial
             _selectedPayment = _payments[e.RowIndex];
 
             // Edit button column
-            if (e.ColumnIndex == dgvPayments.Columns.Count - 3)
+            if (e.ColumnIndex == dgvPayments.Columns.Count - 2)
             {
                 EditPayment(_selectedPayment);
             }
