@@ -709,13 +709,6 @@ INNER JOIN (
     GROUP BY InvoiceID
 ) p ON i.InvoiceID = p.InvoiceID;
     
--- Insert default roles
-INSERT INTO Roles (RoleName, Description)
-VALUES ('Admin', 'System Administrator with full access'),
-    ('Manager', 'Manager with elevated privileges'),
-    ('Sales', 'Sales department user'),
-    ('Inventory', 'Inventory management user'),
-    ('Finance', 'Finance department user');
 
 
 -- Insert admin user (password is 'admin123' with salt)
