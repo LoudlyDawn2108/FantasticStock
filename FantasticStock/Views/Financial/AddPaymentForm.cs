@@ -9,19 +9,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FantasticStock.Services.Admin;
 
 namespace FantasticStock.Views.Financial
 {
     public partial class AddPaymentForm : Form
     {
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
         private Payment _payment;
         private bool _isEditMode;
-
+        private readonly SqlDatabaseService _databaseService;
         public AddPaymentForm()
         {
             InitializeComponent();
             _isEditMode = false;
+            _databaseService = new SqlDatabaseService();
             LoadCustomers();
             LoadInvoices();
             LoadPaymentMethods();
@@ -119,7 +120,7 @@ namespace FantasticStock.Views.Financial
             try
             {
                 string query = "SELECT CustomerID, CustomerName FROM Customer WHERE IsActive = 1 ORDER BY CustomerName";
-                DataTable customersTable = ExecuteQuery(query);
+                DataTable customersTable = _databaseService.ExecuteQuery(query);
 
                 cboCustomer.Items.Clear();
                 cboCustomer.Items.Add(new ComboboxItem { Text = "-- Select Customer --", Value = 0 });
@@ -171,7 +172,7 @@ namespace FantasticStock.Views.Financial
                 ORDER BY InvoiceDate DESC";
 
                 SqlParameter[] parameters = { new SqlParameter("@CustomerID", customerId) };
-                DataTable invoicesTable = ExecuteQuery(query, parameters);
+                DataTable invoicesTable = _databaseService.ExecuteQuery(query, parameters);
 
                 cboInvoice.Items.Clear();
                 cboInvoice.Items.Add(new ComboboxItem { Text = "-- No Invoice (Unallocated) --", Value = 0 });
@@ -236,188 +237,175 @@ namespace FantasticStock.Views.Financial
                 decimal amount = decimal.Parse(txtAmount.Text);
                 string notes = txtNotes.Text.Trim();
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                _databaseService.ExecuteInTransaction((connection, transaction) =>
                 {
-                    connection.Open();
-
-                    // Start a transaction to ensure data consistency
-                    using (SqlTransaction transaction = connection.BeginTransaction())
+                    try
                     {
-                        try
+                        if (_isEditMode)
                         {
-                            if (_isEditMode)
+                            // UPDATE EXISTING PAYMENT
+
+                            // Check if invoice allocation changed
+                            bool invoiceChanged = false;
+                            if (_payment.InvoiceID.HasValue)
                             {
-                                // UPDATE EXISTING PAYMENT
-
-                                // Check if invoice allocation changed
-                                bool invoiceChanged = false;
-                                if (_payment.InvoiceID.HasValue)
-                                {
-                                    // If we already had an invoice and it's different now
-                                    invoiceChanged = (invoiceId == DBNull.Value ||
-                                        Convert.ToInt32(invoiceId) != _payment.InvoiceID.Value);
-                                }
-                                else
-                                {
-                                    // If we didn't have an invoice before but do now
-                                    invoiceChanged = (invoiceId != DBNull.Value);
-                                }
-
-                                // Check if amount changed
-                                bool amountChanged = (_payment.Amount != amount);
-
-                                // If invoice or amount changed, we need to update invoice payment records
-                                if (invoiceChanged || amountChanged)
-                                {
-                                    // If payment was previously allocated to an invoice, update that invoice
-                                    if (_payment.InvoiceID.HasValue)
-                                    {
-                                        // Reduce the paid amount on the old invoice
-                                        string reduceOldInvoiceQuery = @"
-                                            UPDATE Invoices 
-                                            SET PaidAmount = PaidAmount - @Amount,
-                                                Status = CASE 
-                                                    WHEN PaidAmount - @Amount <= 0 THEN 'Open'
-                                                    WHEN PaidAmount - @Amount < Amount THEN 'Partial'
-                                                    ELSE Status 
-                                                END
-                                            WHERE InvoiceID = @InvoiceID";
-
-                                        using (SqlCommand cmd = new SqlCommand(reduceOldInvoiceQuery, connection, transaction))
-                                        {
-                                            cmd.Parameters.AddWithValue("@Amount", _payment.Amount);
-                                            cmd.Parameters.AddWithValue("@InvoiceID", _payment.InvoiceID.Value);
-                                            cmd.ExecuteNonQuery();
-                                        }
-                                    }
-
-                                    // If payment is now allocated to an invoice, update that invoice
-                                    if (invoiceId != DBNull.Value && Convert.ToInt32(invoiceId) > 0)
-                                    {
-                                        string updateNewInvoiceQuery = @"
-                                            UPDATE Invoices
-                                            SET PaidAmount = PaidAmount + @Amount,
-                                                Status = CASE 
-                                                    WHEN PaidAmount + @Amount >= Amount THEN 'Paid' 
-                                                    ELSE 'Partial' 
-                                                END
-                                            WHERE InvoiceID = @InvoiceID";
-
-                                        using (SqlCommand cmd = new SqlCommand(updateNewInvoiceQuery, connection, transaction))
-                                        {
-                                            cmd.Parameters.AddWithValue("@Amount", amount);
-                                            cmd.Parameters.AddWithValue("@InvoiceID", invoiceId);
-                                            cmd.ExecuteNonQuery();
-                                        }
-                                    }
-                                }
-
-                                // Update the payment record
-                                string updateQuery = @"
-                                    UPDATE Payments SET 
-                                        PaymentDate = @PaymentDate,
-                                        CustomerID = @CustomerID,
-                                        InvoiceID = @InvoiceID,
-                                        PaymentMethod = @PaymentMethod,
-                                        ReferenceNumber = @ReferenceNumber,
-                                        Amount = @Amount,
-                                        Notes = @Notes
-                                    WHERE PaymentID = @PaymentID";
-
-                                using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
-                                {
-                                    command.Parameters.AddWithValue("@PaymentDate", paymentDate);
-                                    command.Parameters.AddWithValue("@CustomerID", customerId);
-                                    command.Parameters.AddWithValue("@InvoiceID", invoiceId);
-                                    command.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
-                                    command.Parameters.AddWithValue("@ReferenceNumber",
-                                        string.IsNullOrEmpty(referenceNumber) ? DBNull.Value : (object)referenceNumber);
-                                    command.Parameters.AddWithValue("@Amount", amount);
-                                    command.Parameters.AddWithValue("@Notes",
-                                        string.IsNullOrEmpty(notes) ? DBNull.Value : (object)notes);
-                                    command.Parameters.AddWithValue("@PaymentID", _payment.PaymentID);
-                                    command.ExecuteNonQuery();
-                                }
+                                // If we already had an invoice and it's different now
+                                invoiceChanged = (invoiceId == DBNull.Value ||
+                                    Convert.ToInt32(invoiceId) != _payment.InvoiceID.Value);
                             }
                             else
                             {
-                                // INSERT NEW PAYMENT - existing code
-                                string query = @"
-                                INSERT INTO Payments (
-                                    PaymentNumber,
-                                    PaymentDate,
-                                    CustomerID,
-                                    InvoiceID,
-                                    PaymentMethod,
-                                    ReferenceNumber,
-                                    Amount,
-                                    Notes,
-                                    CreatedBy,
-                                    CreatedDate
-                                ) VALUES (
-                                    @PaymentNumber,
-                                    @PaymentDate,
-                                    @CustomerID,
-                                    @InvoiceID,
-                                    @PaymentMethod,
-                                    @ReferenceNumber,
-                                    @Amount,
-                                    @Notes,
-                                    @CreatedBy,
-                                    @CreatedDate
-                                )";
+                                // If we didn't have an invoice before but do now
+                                invoiceChanged = (invoiceId != DBNull.Value);
+                            }
 
-                                SqlParameter[] parameters = {
-                                    new SqlParameter("@PaymentNumber", paymentNumber),
-                                    new SqlParameter("@PaymentDate", paymentDate),
-                                    new SqlParameter("@CustomerID", customerId),
-                                    new SqlParameter("@InvoiceID", invoiceId),
-                                    new SqlParameter("@PaymentMethod", paymentMethod),
-                                    new SqlParameter("@ReferenceNumber", string.IsNullOrEmpty(referenceNumber) ? DBNull.Value : (object)referenceNumber),
-                                    new SqlParameter("@Amount", amount),
-                                    new SqlParameter("@Notes", string.IsNullOrEmpty(notes) ? DBNull.Value : (object)notes),
-                                    new SqlParameter("@CreatedBy", 1), // Use the current user ID in a real app
-                                    new SqlParameter("@CreatedDate", DateTime.Now)
-                                };
+                            // Check if amount changed
+                            bool amountChanged = (_payment.Amount != amount);
 
-                                using (SqlCommand command = new SqlCommand(query, connection, transaction))
+                            // If invoice or amount changed, we need to update invoice payment records
+                            if (invoiceChanged || amountChanged)
+                            {
+                                // If payment was previously allocated to an invoice, update that invoice
+                                if (_payment.InvoiceID.HasValue)
                                 {
-                                    command.Parameters.AddRange(parameters);
-                                    command.ExecuteNonQuery();
+                                    // Reduce the paid amount on the old invoice
+                                    string reduceOldInvoiceQuery = @"
+                                UPDATE Invoices 
+                                SET PaidAmount = PaidAmount - @Amount,
+                                    Status = CASE 
+                                        WHEN PaidAmount - @Amount <= 0 THEN 'Open'
+                                        WHEN PaidAmount - @Amount < Amount THEN 'Partial'
+                                        ELSE Status 
+                                    END
+                                WHERE InvoiceID = @InvoiceID";
+
+                                    using (SqlCommand cmd = new SqlCommand(reduceOldInvoiceQuery, connection, transaction))
+                                    {
+                                        cmd.Parameters.AddWithValue("@Amount", _payment.Amount);
+                                        cmd.Parameters.AddWithValue("@InvoiceID", _payment.InvoiceID.Value);
+                                        cmd.ExecuteNonQuery();
+                                    }
                                 }
 
-                                // If payment is allocated to an invoice, update the invoice paid amount
+                                // If payment is now allocated to an invoice, update that invoice
                                 if (invoiceId != DBNull.Value && Convert.ToInt32(invoiceId) > 0)
                                 {
-                                    string updateInvoiceQuery = @"
-                                    UPDATE Invoices
-                                    SET PaidAmount = PaidAmount + @Amount,
-                                        Status = CASE 
-                                                  WHEN PaidAmount + @Amount >= Amount THEN 'Paid' 
-                                                  ELSE 'Partial' 
-                                                END
-                                    WHERE InvoiceID = @InvoiceID";
+                                    string updateNewInvoiceQuery = @"
+                                UPDATE Invoices
+                                SET PaidAmount = PaidAmount + @Amount,
+                                    Status = CASE 
+                                        WHEN PaidAmount + @Amount >= Amount THEN 'Paid' 
+                                        ELSE 'Partial' 
+                                    END
+                                WHERE InvoiceID = @InvoiceID";
 
-                                    using (SqlCommand command = new SqlCommand(updateInvoiceQuery, connection, transaction))
+                                    using (SqlCommand cmd = new SqlCommand(updateNewInvoiceQuery, connection, transaction))
                                     {
-                                        command.Parameters.AddWithValue("@Amount", amount);
-                                        command.Parameters.AddWithValue("@InvoiceID", invoiceId);
-                                        command.ExecuteNonQuery();
+                                        cmd.Parameters.AddWithValue("@Amount", amount);
+                                        cmd.Parameters.AddWithValue("@InvoiceID", invoiceId);
+                                        cmd.ExecuteNonQuery();
                                     }
                                 }
                             }
 
-                            // Commit the transaction
-                            transaction.Commit();
+                            // Update the payment record
+                            string updateQuery = @"
+                        UPDATE Payments SET 
+                            PaymentDate = @PaymentDate,
+                            CustomerID = @CustomerID,
+                            InvoiceID = @InvoiceID,
+                            PaymentMethod = @PaymentMethod,
+                            ReferenceNumber = @ReferenceNumber,
+                            Amount = @Amount,
+                            Notes = @Notes
+                        WHERE PaymentID = @PaymentID";
+
+                            using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@PaymentDate", paymentDate);
+                                command.Parameters.AddWithValue("@CustomerID", customerId);
+                                command.Parameters.AddWithValue("@InvoiceID", invoiceId);
+                                command.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
+                                command.Parameters.AddWithValue("@ReferenceNumber",
+                                    string.IsNullOrEmpty(referenceNumber) ? DBNull.Value : (object)referenceNumber);
+                                command.Parameters.AddWithValue("@Amount", amount);
+                                command.Parameters.AddWithValue("@Notes",
+                                    string.IsNullOrEmpty(notes) ? DBNull.Value : (object)notes);
+                                command.Parameters.AddWithValue("@PaymentID", _payment.PaymentID);
+                                command.ExecuteNonQuery();
+                            }
                         }
-                        catch
+                        else
                         {
-                            transaction.Rollback();
-                            throw;
+                            // INSERT NEW PAYMENT
+                            string query = @"
+                    INSERT INTO Payments (
+                        PaymentNumber,
+                        PaymentDate,
+                        CustomerID,
+                        InvoiceID,
+                        PaymentMethod,
+                        ReferenceNumber,
+                        Amount,
+                        Notes,
+                        CreatedBy,
+                        CreatedDate
+                    ) VALUES (
+                        @PaymentNumber,
+                        @PaymentDate,
+                        @CustomerID,
+                        @InvoiceID,
+                        @PaymentMethod,
+                        @ReferenceNumber,
+                        @Amount,
+                        @Notes,
+                        @CreatedBy,
+                        @CreatedDate
+                    )";
+
+                            using (SqlCommand command = new SqlCommand(query, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@PaymentNumber", paymentNumber);
+                                command.Parameters.AddWithValue("@PaymentDate", paymentDate);
+                                command.Parameters.AddWithValue("@CustomerID", customerId);
+                                command.Parameters.AddWithValue("@InvoiceID", invoiceId);
+                                command.Parameters.AddWithValue("@PaymentMethod", paymentMethod);
+                                command.Parameters.AddWithValue("@ReferenceNumber",
+                                    string.IsNullOrEmpty(referenceNumber) ? DBNull.Value : (object)referenceNumber);
+                                command.Parameters.AddWithValue("@Amount", amount);
+                                command.Parameters.AddWithValue("@Notes",
+                                    string.IsNullOrEmpty(notes) ? DBNull.Value : (object)notes);
+                                command.Parameters.AddWithValue("@CreatedBy", 1); // Use the current user ID in a real app
+                                command.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
+                                command.ExecuteNonQuery();
+                            }
+
+                            // If payment is allocated to an invoice, update the invoice paid amount
+                            if (invoiceId != DBNull.Value && Convert.ToInt32(invoiceId) > 0)
+                            {
+                                string updateInvoiceQuery = @"
+                        UPDATE Invoices
+                        SET PaidAmount = PaidAmount + @Amount,
+                            Status = CASE 
+                                      WHEN PaidAmount + @Amount >= Amount THEN 'Paid' 
+                                      ELSE 'Partial' 
+                                    END
+                        WHERE InvoiceID = @InvoiceID";
+
+                                using (SqlCommand command = new SqlCommand(updateInvoiceQuery, connection, transaction))
+                                {
+                                    command.Parameters.AddWithValue("@Amount", amount);
+                                    command.Parameters.AddWithValue("@InvoiceID", invoiceId);
+                                    command.ExecuteNonQuery();
+                                }
+                            }
                         }
                     }
-                }
-
+                    catch
+                    {
+                        throw; // Let ExecuteInTransaction handle the rollback
+                    }
+                });              
                 MessageBox.Show(_isEditMode ? "Payment updated successfully!" : "Payment saved successfully!",
                     "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.DialogResult = DialogResult.OK;
@@ -462,28 +450,6 @@ namespace FantasticStock.Views.Financial
 
             return true;
         }
-
-        private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
-        }
-
         // ComboboxItem class for storing text/value pairs in comboboxes
         public class ComboboxItem
         {
