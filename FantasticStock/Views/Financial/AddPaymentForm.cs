@@ -118,7 +118,7 @@ namespace FantasticStock.Views.Financial
         {
             try
             {
-                string query = "SELECT CustomerID, CustomerName FROM Customers WHERE IsActive = 1 ORDER BY CustomerName";
+                string query = "SELECT CustomerID, CustomerName FROM Customer WHERE IsActive = 1 ORDER BY CustomerName";
                 DataTable customersTable = ExecuteQuery(query);
 
                 cboCustomer.Items.Clear();
