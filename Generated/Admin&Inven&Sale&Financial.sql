@@ -1005,3 +1005,17 @@ VALUES -- Admin users
         0
     );
 -- VALUES ('admin', 'f07a147a4e14f6027c9d248a379c2212d7cd4fb5e34908de6c732978de4e239c', 'adminSalt123', 'System Administrator', 'admin@example.com', 1);
+
+-- Insert sample Customer data (English names)
+INSERT INTO Customer (CustomerName, ContactName, ContactTitle, Phone, Email, Address, City, Country, PostalCode, CustomerTypeID, LoyaltyPoints, IsActive)
+VALUES 
+    ('ABC Corp', 'John Doe', 'CEO', '0912345678', 'john.doe@abccorp.com', '123 Main Street', 'New York', 'USA', '10001', 1, 150, 1),
+    ('XYZ Enterprises', 'Jane Smith', 'Manager', '0923456789', 'jane.smith@xyzenterprises.com', '456 Elm Street', 'Los Angeles', 'USA', '90001', 2, 300, 1),
+    ('LMN Solutions', 'Robert Brown', 'Director', '0934567890', 'robert.brown@lmnsolutions.com', '789 Pine Street', 'Chicago', 'USA', '60601', 3, 75, 1),
+    ('Global Tech', 'Emily Davis', 'CTO', '0945678901', 'emily.davis@globaltech.com', '321 Oak Street', 'San Francisco', 'USA', '94101', 1, 200, 1),
+    ('Innovative Systems', 'Michael Wilson', 'CFO', '0956789012', 'michael.wilson@innovativesystems.com', '654 Maple Street', 'Boston', 'USA', '02101', 2, 250, 1),
+    ('Tech Solutions', 'Sarah Johnson', 'VP of Sales', '0967890123', 'sarah.johnson@techsolutions.com', '987 Cedar Street', 'Seattle', 'USA', '98101', 3, 175, 1),
+    ('Future Innovations', 'David Lee', 'VP of Marketing', '0978901234', 'david.lee@futureinnovations.com', '111 Birch Street', 'Austin', 'USA', '73301', 1, 125, 1),
+    ('NextGen Enterprises', 'Linda Miller', 'VP of Operations', '0989012345', 'linda.miller@nextgenenterprises.com', '222 Walnut Street', 'Miami', 'USA', '33101', 2, 225, 1),
+    ('Bright Ideas', 'James Anderson', 'VP of Product', '0990123456', 'james.anderson@brightideas.com', '333 Cherry Street', 'Denver', 'USA', '80201', 3, 100, 1),
+    ('Epic Ventures', 'Patricia Martinez', 'VP of HR', '0901234567', 'patricia.martinez@epicventures.com', '444 Willow Street', 'Dallas', 'USA', '75201', 1, 275, 1);

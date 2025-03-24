@@ -155,6 +155,8 @@
             // 
             this.dgvCustomers.AllowUserToAddRows = false;
             this.dgvCustomers.AllowUserToDeleteRows = false;
+            this.dgvCustomers.AllowUserToResizeColumns = false;
+            this.dgvCustomers.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.dgvCustomers.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -183,6 +185,7 @@
             this.dgvCustomers.Name = "dgvCustomers";
             this.dgvCustomers.ReadOnly = true;
             this.dgvCustomers.RowHeadersVisible = false;
+            this.dgvCustomers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCustomers.Size = new System.Drawing.Size(434, 404);
             this.dgvCustomers.TabIndex = 2;
@@ -275,7 +278,7 @@
             this.lblResults.AutoSize = true;
             this.lblResults.Location = new System.Drawing.Point(3, 19);
             this.lblResults.Name = "lblResults";
-            this.lblResults.Size = new System.Drawing.Size(106, 13);
+            this.lblResults.Size = new System.Drawing.Size(100, 13);
             this.lblResults.TabIndex = 3;
             this.lblResults.Text = "0 customer(s) found";
             // 
@@ -378,7 +381,7 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(76, 24);
             this.txtSearch.Name = "txtSearch";
@@ -668,7 +671,7 @@
             this.chkVIP.AutoSize = true;
             this.chkVIP.Location = new System.Drawing.Point(23, 101);
             this.chkVIP.Name = "chkVIP";
-            this.chkVIP.Size = new System.Drawing.Size(88, 17);
+            this.chkVIP.Size = new System.Drawing.Size(90, 17);
             this.chkVIP.TabIndex = 3;
             this.chkVIP.Text = "VIP Customer";
             this.chkVIP.UseVisualStyleBackColor = true;
@@ -678,7 +681,7 @@
             this.chkOptInMarketing.AutoSize = true;
             this.chkOptInMarketing.Location = new System.Drawing.Point(23, 64);
             this.chkOptInMarketing.Name = "chkOptInMarketing";
-            this.chkOptInMarketing.Size = new System.Drawing.Size(179, 17);
+            this.chkOptInMarketing.Size = new System.Drawing.Size(178, 17);
             this.chkOptInMarketing.TabIndex = 2;
             this.chkOptInMarketing.Text = "Opt-in for Marketing and Promos";
             this.chkOptInMarketing.UseVisualStyleBackColor = true;
@@ -700,7 +703,7 @@
             this.lblLoyaltyPoints.AutoSize = true;
             this.lblLoyaltyPoints.Location = new System.Drawing.Point(20, 27);
             this.lblLoyaltyPoints.Name = "lblLoyaltyPoints";
-            this.lblLoyaltyPoints.Size = new System.Drawing.Size(76, 13);
+            this.lblLoyaltyPoints.Size = new System.Drawing.Size(75, 13);
             this.lblLoyaltyPoints.TabIndex = 0;
             this.lblLoyaltyPoints.Text = "Loyalty Points:";
             // 
@@ -730,7 +733,7 @@
             this.pnlButtons.Controls.Add(this.btnCancel);
             this.pnlButtons.Controls.Add(this.btnSave);
             this.pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlButtons.Location = new System.Drawing.Point(3, 541);
+            this.pnlButtons.Location = new System.Drawing.Point(3, 497);
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Size = new System.Drawing.Size(524, 40);
             this.pnlButtons.TabIndex = 1;
@@ -762,7 +765,7 @@
             this.pnlSystemInfo.Controls.Add(this.txtCreatedDate);
             this.pnlSystemInfo.Controls.Add(this.lblCreatedDate);
             this.pnlSystemInfo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlSystemInfo.Location = new System.Drawing.Point(3, 497);
+            this.pnlSystemInfo.Location = new System.Drawing.Point(3, 537);
             this.pnlSystemInfo.Name = "pnlSystemInfo";
             this.pnlSystemInfo.Size = new System.Drawing.Size(524, 44);
             this.pnlSystemInfo.TabIndex = 0;
@@ -831,6 +834,7 @@
             this.tabAddress.PerformLayout();
             this.tabPreferences.ResumeLayout(false);
             this.tabPreferences.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numLoyaltyPoints)).EndInit();
             this.tabNotes.ResumeLayout(false);
             this.tabNotes.PerformLayout();
             this.pnlButtons.ResumeLayout(false);
