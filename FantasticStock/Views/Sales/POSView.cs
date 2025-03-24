@@ -23,7 +23,7 @@ namespace FantasticStock.Views.Sales
 
         // If ConfigurationManager isn't available, use this fallback
         // private string connectionString = @"Data Source=DESKTOP-DOEUG5N;Initial Catalog=FantasticStock;Integrated Security=True";
-        private string connectionString = @"Data Source=TUNGCORN\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True";
+        private string connectionString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True";
         public POSView()
         {
             InitializeComponent();

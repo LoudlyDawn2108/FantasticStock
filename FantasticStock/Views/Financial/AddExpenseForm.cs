@@ -15,7 +15,7 @@ namespace FantasticStock.Views.Financial
     public partial class AddExpenseForm: Form
     {
 
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
         private List<ExpensesView.ComboboxItem> _categories;
         private List<ExpensesView.ComboboxItem> _suppliers;
         private bool _isEditMode;
@@ -118,7 +118,7 @@ namespace FantasticStock.Views.Financial
                     cboCategory.SelectedIndex = 0;
 
                 // Load suppliers
-                string supplierQuery = "SELECT SupplierID, SupplierName FROM Suppliers WHERE IsActive = 1 ORDER BY SupplierName";
+                string supplierQuery = "SELECT SupplierID, SupplierName FROM Supplier WHERE IsActive = 1 ORDER BY SupplierName";
                 DataTable suppliers = ExecuteQuery(supplierQuery);
 
                 cboSupplier.Items.Clear();
