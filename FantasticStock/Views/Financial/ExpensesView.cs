@@ -75,7 +75,7 @@ namespace FantasticStock.Views.Financial
 
         private int ExecuteNonQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))
