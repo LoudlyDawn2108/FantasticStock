@@ -290,6 +290,7 @@ CREATE INDEX IX_Expenses_CategoryID ON Expenses(CategoryID);
 CREATE INDEX IX_Expenses_ExpenseNumber ON Expenses(ExpenseNumber);
 
 -- Create a view for Expenses (updated to use existing tables)
+GO
 CREATE VIEW vw_Expenses AS
 SELECT 
     e.ExpenseID,
@@ -318,6 +319,7 @@ LEFT JOIN
     ExpenseCategories c ON e.CategoryID = c.CategoryID
 LEFT JOIN 
     Users u ON e.CreatedBy = u.UserID;
+GO
 
 -- =============================================
 -- PAYMENT MANAGEMENT INTEGRATION
@@ -373,6 +375,7 @@ CREATE INDEX IX_Payments_InvoiceID ON Payments(InvoiceID);
 CREATE INDEX IX_Payments_PaymentNumber ON Payments(PaymentNumber);
 
 -- Create a view for Payments
+GO
 CREATE VIEW vw_Payments AS
 SELECT 
     p.PaymentID,
@@ -400,6 +403,7 @@ LEFT JOIN
     Users u ON p.CreatedBy = u.UserID;
 
 -- Create the ApplyPaymentToInvoice stored procedure
+GO
 CREATE PROCEDURE ApplyPaymentToInvoice
     @PaymentID INT,
     @InvoiceID INT,
@@ -441,46 +445,8 @@ BEGIN
     
     COMMIT;
 END
+GO
 
--- =============================================
--- BACKUP MANAGEMENT TABLES
--- =============================================
-
--- Create BackupHistory table
-CREATE TABLE BackupHistory (
-    BackupID INT PRIMARY KEY IDENTITY(1, 1),
-    BackupName NVARCHAR(100) NOT NULL,
-    BackupPath NVARCHAR(500) NOT NULL,
-    Description NVARCHAR(255),
-    BackupSize BIGINT,
-    Duration INT, -- in seconds
-    IncludeAttachments BIT NOT NULL DEFAULT 0,
-    CompressionLevel INT NOT NULL DEFAULT 0, -- 0=None, 1=Low, 2=Medium, 3=High
-    IsEncrypted BIT NOT NULL DEFAULT 0,
-    CreatedBy INT,
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_Backup_User FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
-);
-
--- Create ScheduledBackups table
-CREATE TABLE ScheduledBackups (
-    ScheduleID INT PRIMARY KEY IDENTITY(1, 1),
-    BackupPath NVARCHAR(500) NOT NULL,
-    Description NVARCHAR(255),
-    IncludeAttachments BIT NOT NULL DEFAULT 0,
-    CompressionLevel INT NOT NULL DEFAULT 0,
-    IsEncrypted BIT NOT NULL DEFAULT 0,
-    EncryptionPassword NVARCHAR(255),
-    ScheduleType NVARCHAR(20) NOT NULL, -- Daily, Weekly, Monthly
-    ScheduleTime TIME NOT NULL,
-    DayOfWeek INT, -- For weekly backups
-    DayOfMonth INT, -- For monthly backups
-    IsActive BIT NOT NULL DEFAULT 1,
-    CreatedBy INT,
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    ModifiedDate DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_ScheduledBackup_User FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
-);
 
 -- =============================================
 -- AUDIT AND MONITORING TABLES
