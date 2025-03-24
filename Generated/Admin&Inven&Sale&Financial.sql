@@ -1,8 +1,20 @@
-﻿
+﻿-- Force drop the database if it exists
+USE master;
+GO
+
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'FantasticStock1')
+BEGIN
+    ALTER DATABASE FantasticStock1 SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE FantasticStock1;
+END
+GO
+
 CREATE DATABASE FantasticStock1;
+GO
 USE FantasticStock1;
 
 GO
+
 
 -- =============================================
 -- USER MANAGEMENT TABLES
@@ -16,6 +28,7 @@ CREATE TABLE Roles (
     CreatedDate DATETIME DEFAULT GETDATE(),
     ModifiedDate DATETIME DEFAULT GETDATE()
 );
+
 
 -- Create Users table (combining both versions)
 CREATE TABLE Users (
@@ -36,6 +49,7 @@ CREATE TABLE Users (
     CONSTRAINT FK_Users_Role FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 );
 
+
 -- Create UserScheduleRestrictions table
 CREATE TABLE UserScheduleRestrictions (
     RestrictionID INT PRIMARY KEY IDENTITY(1, 1),
@@ -45,6 +59,7 @@ CREATE TABLE UserScheduleRestrictions (
     EndTime TIME NOT NULL,
     CONSTRAINT FK_UserSchedule_User FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
+
 
 -- Create UserActivityLog table
 CREATE TABLE UserActivityLog (
@@ -70,6 +85,8 @@ CREATE TABLE CustomerType (
     CreatedDate DATETIME DEFAULT GETDATE() NULL,
     ModifiedDate DATETIME DEFAULT GETDATE() NULL
 );
+
+
 
 -- Create Customer table
 CREATE TABLE Customer (
@@ -274,6 +291,7 @@ CREATE INDEX IX_Expenses_CategoryID ON Expenses(CategoryID);
 CREATE INDEX IX_Expenses_ExpenseNumber ON Expenses(ExpenseNumber);
 
 -- Create a view for Expenses (updated to use existing tables)
+GO
 CREATE VIEW vw_Expenses AS
 SELECT 
     e.ExpenseID,
@@ -302,6 +320,7 @@ LEFT JOIN
     ExpenseCategories c ON e.CategoryID = c.CategoryID
 LEFT JOIN 
     Users u ON e.CreatedBy = u.UserID;
+GO
 
 -- =============================================
 -- PAYMENT MANAGEMENT INTEGRATION
@@ -357,6 +376,7 @@ CREATE INDEX IX_Payments_InvoiceID ON Payments(InvoiceID);
 CREATE INDEX IX_Payments_PaymentNumber ON Payments(PaymentNumber);
 
 -- Create a view for Payments
+GO
 CREATE VIEW vw_Payments AS
 SELECT 
     p.PaymentID,
@@ -384,6 +404,7 @@ LEFT JOIN
     Users u ON p.CreatedBy = u.UserID;
 
 -- Create the ApplyPaymentToInvoice stored procedure
+GO
 CREATE PROCEDURE ApplyPaymentToInvoice
     @PaymentID INT,
     @InvoiceID INT,
@@ -425,46 +446,8 @@ BEGIN
     
     COMMIT;
 END
+GO
 
--- =============================================
--- BACKUP MANAGEMENT TABLES
--- =============================================
-
--- Create BackupHistory table
-CREATE TABLE BackupHistory (
-    BackupID INT PRIMARY KEY IDENTITY(1, 1),
-    BackupName NVARCHAR(100) NOT NULL,
-    BackupPath NVARCHAR(500) NOT NULL,
-    Description NVARCHAR(255),
-    BackupSize BIGINT,
-    Duration INT, -- in seconds
-    IncludeAttachments BIT NOT NULL DEFAULT 0,
-    CompressionLevel INT NOT NULL DEFAULT 0, -- 0=None, 1=Low, 2=Medium, 3=High
-    IsEncrypted BIT NOT NULL DEFAULT 0,
-    CreatedBy INT,
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_Backup_User FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
-);
-
--- Create ScheduledBackups table
-CREATE TABLE ScheduledBackups (
-    ScheduleID INT PRIMARY KEY IDENTITY(1, 1),
-    BackupPath NVARCHAR(500) NOT NULL,
-    Description NVARCHAR(255),
-    IncludeAttachments BIT NOT NULL DEFAULT 0,
-    CompressionLevel INT NOT NULL DEFAULT 0,
-    IsEncrypted BIT NOT NULL DEFAULT 0,
-    EncryptionPassword NVARCHAR(255),
-    ScheduleType NVARCHAR(20) NOT NULL, -- Daily, Weekly, Monthly
-    ScheduleTime TIME NOT NULL,
-    DayOfWeek INT, -- For weekly backups
-    DayOfMonth INT, -- For monthly backups
-    IsActive BIT NOT NULL DEFAULT 1,
-    CreatedBy INT,
-    CreatedDate DATETIME DEFAULT GETDATE(),
-    ModifiedDate DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_ScheduledBackup_User FOREIGN KEY (CreatedBy) REFERENCES Users(UserID)
-);
 
 -- =============================================
 -- AUDIT AND MONITORING TABLES
@@ -736,13 +719,6 @@ INNER JOIN (
     GROUP BY InvoiceID
 ) p ON i.InvoiceID = p.InvoiceID;
     
--- Insert default roles
-INSERT INTO Roles (RoleName, Description)
-VALUES ('Admin', 'System Administrator with full access'),
-    ('Manager', 'Manager with elevated privileges'),
-    ('Sales', 'Sales department user'),
-    ('Inventory', 'Inventory management user'),
-    ('Finance', 'Finance department user');
 
 
 -- Insert admin user (password is 'admin123' with salt)

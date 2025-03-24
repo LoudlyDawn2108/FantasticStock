@@ -1,0 +1,32 @@
+sequenceDiagram
+    actor Admin as Quản trị viên
+    participant UI as UserManagementView
+    participant Presenter as UserManagementPresenter
+    participant Service as AuditService
+    participant DB as Database
+    
+    Admin->>+UI: Chọn tab "Activity Log"
+    UI-->>-Admin: Hiển thị tab
+    
+    Admin->>+UI: Chọn ngày bắt đầu và kết thúc
+    UI-->>-Admin: Hiển thị lựa chọn
+    
+    Admin->>+UI: Chọn loại hoạt động (nếu có)
+    UI-->>-Admin: Hiển thị lựa chọn
+    
+    Admin->>+UI: Nhấn "Apply Filter"
+    UI->>+Presenter: FilterActivityClicked()
+    Presenter->>+Service: GetAuditLogs(startDate, endDate, actionType)
+    Service->>+DB: SELECT * FROM AuditLog WHERE...
+    DB-->>-Service: auditLogs
+    Service-->>-Presenter: activities
+    Presenter->>UI: DisplayActivities(activities)
+    Presenter-->>-UI: UpdateEventTypeFilters(eventTypes)
+    UI-->>-Admin: Hiển thị nhật ký hoạt động đã lọc
+    
+    Admin->>+UI: Nhấn "Export"
+    UI->>+Presenter: ExportActivityClicked()
+    Presenter->>+Service: ExportActivities(activities, filePath)
+    Service-->>-Presenter: result
+    Presenter-->>-UI: ShowMessage("Export completed")
+    UI-->>-Admin: Hiển thị thông báo kết quả
