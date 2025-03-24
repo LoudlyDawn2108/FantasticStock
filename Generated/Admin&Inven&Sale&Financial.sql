@@ -12,6 +12,7 @@ GO
 CREATE DATABASE FantasticStock1;
 GO
 USE FantasticStock1;
+
 GO
 
 
@@ -537,33 +538,42 @@ VALUES
     ('Cá nhân Lê Văn C', 'Lê Văn C', NULL, '0934567890', 'levanc@email.com', '789 Đường 3/2', 'Đà Nẵng', 'Việt Nam', '50000', 3, 50, 1);
 
 -- Insert sample Category data
+-- Insert sample Category data
 INSERT INTO Category (CategoryName, Description, IsActive, CreatedBy)
 VALUES 
-    ('Điện thoại', 'Điện thoại di động và phụ kiện', 1, 1),
-    ('Máy tính', 'Máy tính xách tay, máy tính để bàn và linh kiện', 1, 1),
-    ('Đồ gia dụng', 'Thiết bị gia dụng và nhà bếp', 1, 1);
+    ('Mobile Phones', 'Mobile phones and accessories', 1, 1),
+    ('Computers', 'Laptops, desktop computers and components', 1, 1),
+    ('Home Appliances', 'Household and kitchen appliances', 1, 1),
+    ('Electronics', 'Electronic devices and gadgets', 1, 1),
+    ('Audio & Video', 'Audio and video equipment', 1, 1);
 
 -- Insert sample Brand data
 INSERT INTO Brand (BrandName, Description, IsActive, CreatedBy)
 VALUES 
-    ('Samsung', 'Tập đoàn điện tử hàng đầu Hàn Quốc', 1, 1),
-    ('Apple', 'Công ty công nghệ đa quốc gia của Mỹ', 1, 1),
-    ('LG', 'Tập đoàn điện tử và thiết bị gia dụng', 1, 1);
+    ('Samsung', 'Leading electronics corporation from South Korea', 1, 1),
+    ('Apple', 'Multinational technology company from the US', 1, 1),
+    ('LG', 'Electronics and home appliances corporation', 1, 1),
+    ('Sony', 'Japanese multinational conglomerate', 1, 1),
+    ('Dell', 'American computer technology company', 1, 1);
+
 
 -- Insert sample Supplier data
 INSERT INTO Supplier (CompanyName, SupplierName, ContactName, ContactTitle, Address, City, Country, PostalCode, Phone, Email, IsActive)
 VALUES 
-    ('Công ty Phân phối ABC', 'ABC Distribution', 'Nguyễn Văn X', 'Giám đốc kinh doanh', '123 Đường Lê Lai', 'TP Hồ Chí Minh', 'Việt Nam', '70000', '0912345678', 'sales@abcdist.com', 1),
-    ('Công ty Nhập khẩu XYZ', 'XYZ Import', 'Trần Thị Y', 'Quản lý chuỗi cung ứng', '456 Đường Hai Bà Trưng', 'Hà Nội', 'Việt Nam', '10000', '0923456789', 'info@xyzimport.com', 1),
-    ('Đại lý Thiết bị DEF', 'DEF Equipment', 'Lê Văn Z', 'Đại diện bán hàng', '789 Đường Nguyễn Hữu Thọ', 'Đà Nẵng', 'Việt Nam', '50000', '0934567890', 'contact@defequip.com', 1);
+    ('ABC Distribution Co.', 'ABC Distribution', 'John Smith', 'Sales Director', '123 Le Lai Street', 'Ho Chi Minh City', 'Vietnam', '70000', '0912345678', 'sales@abcdist.com', 1),
+    ('XYZ Import Company', 'XYZ Import', 'Sarah Johnson', 'Supply Chain Manager', '456 Hai Ba Trung Street', 'Hanoi', 'Vietnam', '10000', '0923456789', 'info@xyzimport.com', 1),
+    ('DEF Equipment Agency', 'DEF Equipment', 'Michael Lee', 'Sales Representative', '789 Nguyen Huu Tho Street', 'Da Nang', 'Vietnam', '50000', '0934567890', 'contact@defequip.com', 1),
+    ('Global Tech Supplies', 'Global Tech', 'Emma Wilson', 'CEO', '321 Nguyen Trai Street', 'Ho Chi Minh City', 'Vietnam', '70000', '0945678901', 'info@globaltech.com', 1),
+    ('Prime Electronics', 'Prime Electronics', 'Robert Chen', 'Managing Director', '654 Tran Hung Dao Street', 'Hanoi', 'Vietnam', '10000', '0956789012', 'sales@primeelec.com', 1);
 
 -- Insert sample Product data
 INSERT INTO Product (SKU, Barcode, ProductName, Description, CategoryID, BrandID, SupplierID, CostPrice, SellingPrice, WholesalePrice, ReorderLevel, StockQuantity, IsActive, CreatedBy)
 VALUES 
-    ('PHONE-SAM-S22', '8801234567890', 'Samsung Galaxy S22', 'Điện thoại thông minh Samsung Galaxy S22', 1, 1, 1, 15000000.00, 18000000.00, 17000000.00, 10, 25, 1, 1),
-    ('LAPTOP-APP-MB14', '8901234567890', 'Apple MacBook Pro 14"', 'Máy tính xách tay Apple MacBook Pro 14 inch', 2, 2, 2, 35000000.00, 40000000.00, 38000000.00, 5, 12, 1, 1),
-    ('TV-LG-OLED65', '9012345678901', 'LG OLED TV 65"', 'Tivi LG OLED 65 inch 4K', 3, 3, 3, 25000000.00, 30000000.00, 28000000.00, 3, 8, 1, 1);
-
+    ('PHONE-SAM-S22', '8801234567890', 'Samsung Galaxy S22', 'Samsung Galaxy S22 smartphone', 1, 1, 1, 1000, 2000, 17000000.00, 10, 25, 1, 1),
+    ('LAPTOP-APP-MB14', '8901234567890', 'Apple MacBook Pro 14"', 'Apple MacBook Pro 14 inch laptop', 2, 2, 2, 900, 1200, 38000000.00, 5, 12, 1, 1),
+    ('TV-LG-OLED65', '9012345678901', 'LG OLED TV 65"', 'LG OLED 65 inch 4K TV', 3, 3, 3, 1500, 1700, 28000000.00, 3, 8, 1, 1),
+    ('AUDIO-SONY-WH1000', '9123456789012', 'Sony WH-1000XM4', 'Sony WH-1000XM4 Wireless Noise Cancelling Headphones', 5, 4, 4, 200, 500, 7000000.00, 8, 15, 1, 1),
+    ('LAPTOP-DELL-XPS15', '9234567890123', 'Dell XPS 15', 'Dell XPS 15 high-performance laptop', 2, 5, 5,3000, 4000, 33000000.00, 4, 10, 1, 1);
 -- Insert sample Sale data (using the current date)
 DECLARE @CurrentDate DATETIME = GETDATE();
 
@@ -995,3 +1005,17 @@ VALUES -- Admin users
         0
     );
 -- VALUES ('admin', 'f07a147a4e14f6027c9d248a379c2212d7cd4fb5e34908de6c732978de4e239c', 'adminSalt123', 'System Administrator', 'admin@example.com', 1);
+
+-- Insert sample Customer data (English names)
+INSERT INTO Customer (CustomerName, ContactName, ContactTitle, Phone, Email, Address, City, Country, PostalCode, CustomerTypeID, LoyaltyPoints, IsActive)
+VALUES 
+    ('ABC Corp', 'John Doe', 'CEO', '0912345678', 'john.doe@abccorp.com', '123 Main Street', 'New York', 'USA', '10001', 1, 150, 1),
+    ('XYZ Enterprises', 'Jane Smith', 'Manager', '0923456789', 'jane.smith@xyzenterprises.com', '456 Elm Street', 'Los Angeles', 'USA', '90001', 2, 300, 1),
+    ('LMN Solutions', 'Robert Brown', 'Director', '0934567890', 'robert.brown@lmnsolutions.com', '789 Pine Street', 'Chicago', 'USA', '60601', 3, 75, 1),
+    ('Global Tech', 'Emily Davis', 'CTO', '0945678901', 'emily.davis@globaltech.com', '321 Oak Street', 'San Francisco', 'USA', '94101', 1, 200, 1),
+    ('Innovative Systems', 'Michael Wilson', 'CFO', '0956789012', 'michael.wilson@innovativesystems.com', '654 Maple Street', 'Boston', 'USA', '02101', 2, 250, 1),
+    ('Tech Solutions', 'Sarah Johnson', 'VP of Sales', '0967890123', 'sarah.johnson@techsolutions.com', '987 Cedar Street', 'Seattle', 'USA', '98101', 3, 175, 1),
+    ('Future Innovations', 'David Lee', 'VP of Marketing', '0978901234', 'david.lee@futureinnovations.com', '111 Birch Street', 'Austin', 'USA', '73301', 1, 125, 1),
+    ('NextGen Enterprises', 'Linda Miller', 'VP of Operations', '0989012345', 'linda.miller@nextgenenterprises.com', '222 Walnut Street', 'Miami', 'USA', '33101', 2, 225, 1),
+    ('Bright Ideas', 'James Anderson', 'VP of Product', '0990123456', 'james.anderson@brightideas.com', '333 Cherry Street', 'Denver', 'USA', '80201', 3, 100, 1),
+    ('Epic Ventures', 'Patricia Martinez', 'VP of HR', '0901234567', 'patricia.martinez@epicventures.com', '444 Willow Street', 'Dallas', 'USA', '75201', 1, 275, 1);

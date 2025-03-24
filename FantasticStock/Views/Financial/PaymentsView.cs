@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FantasticStock.Models.Financial;
 using static FantasticStock.Views.Financial.ExpensesView;
+using FantasticStock.Services.Admin;
 
 namespace FantasticStock.Views.Financial
 {
@@ -18,13 +19,15 @@ namespace FantasticStock.Views.Financial
 
         private List<Payment> _payments;
         private Payment _selectedPayment;
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
+        private readonly SqlDatabaseService _databaseService;
 
         public PaymentsView()
         {
             InitializeComponent();
             dtpFromDate.Value = DateTime.Today.AddMonths(-1);
             dtpToDate.Value = DateTime.Today;
+
+            _databaseService = new SqlDatabaseService();
 
             this.Load += PaymentsView_Load;
             btnSearch.Click += BtnSearch_Click;
@@ -41,26 +44,6 @@ namespace FantasticStock.Views.Financial
             LoadPaymentMethods();
             LoadInvoices();
             LoadRecentPayments(20);
-        }
-        private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
         }
 
         private void BtnSearch_Click(object sender, EventArgs e)
@@ -86,7 +69,7 @@ namespace FantasticStock.Views.Financial
                 cboCustomer.Items.Add(new ComboboxItem { Text = "All Customers", Value = 0 });
 
                 string query = "SELECT CustomerID, CustomerName FROM Customer WHERE IsActive = 1 ORDER BY CustomerName";
-                DataTable customers = ExecuteQuery(query);
+                DataTable customers = _databaseService.ExecuteQuery(query);
 
                 foreach (DataRow row in customers.Rows)
                 {
@@ -114,7 +97,7 @@ namespace FantasticStock.Views.Financial
                 cboInvoice.Items.Add(new ComboboxItem { Text = "Unallocated Payments", Value = -1 });
 
                 string query = "SELECT InvoiceID, InvoiceNumber FROM Invoices ORDER BY InvoiceDate DESC";
-                DataTable invoices = ExecuteQuery(query);
+                DataTable invoices = _databaseService.ExecuteQuery(query);
 
                 foreach (DataRow row in invoices.Rows)
                 {
@@ -167,7 +150,7 @@ namespace FantasticStock.Views.Financial
             p.PaymentDate DESC, p.PaymentID DESC";
 
                 SqlParameter[] parameters = { new SqlParameter("@Limit", limit) };
-                DataTable dataTable = ExecuteQuery(query, parameters);
+                DataTable dataTable = _databaseService.ExecuteQuery(query, parameters);
 
                 if (dataTable.Rows.Count > 0)
                 {
@@ -301,7 +284,7 @@ namespace FantasticStock.Views.Financial
                 query += " ORDER BY p.PaymentDate DESC, p.PaymentID DESC";
 
                 // Execute query and get results
-                DataTable dataTable = ExecuteQuery(query, parameters.ToArray());
+                DataTable dataTable = _databaseService.ExecuteQuery(query, parameters.ToArray());
 
                 // Convert DataTable to list of Payment objects
                 _payments = new List<Payment>();
@@ -470,7 +453,7 @@ namespace FantasticStock.Views.Financial
             _selectedPayment = _payments[e.RowIndex];
 
             // Edit button column
-            if (e.ColumnIndex == dgvPayments.Columns.Count - 3)
+            if (e.ColumnIndex == dgvPayments.Columns.Count - 2)
             {
                 EditPayment(_selectedPayment);
             }
@@ -548,59 +531,44 @@ namespace FantasticStock.Views.Financial
             {
                 try
                 {
-                    // Start a transaction to ensure data consistency
-                    using (SqlConnection connection = new SqlConnection(ConnectionString))
+                    // Use the ExecuteInTransaction method from SqlDatabaseService
+                    _databaseService.ExecuteInTransaction((connection, transaction) =>
                     {
-                        connection.Open();
-                        using (SqlTransaction transaction = connection.BeginTransaction())
+                        // Check if the payment is allocated to an invoice
+                        if (payment.InvoiceID.HasValue)
                         {
-                            try
+                            // Need to update the invoice balance first
+                            string updateInvoiceQuery = @"
+                            UPDATE Invoices 
+                            SET PaidAmount = PaidAmount - @Amount,
+                                Status = CASE 
+                                            WHEN PaidAmount - @Amount <= 0 THEN 'Open'
+                                            WHEN PaidAmount - @Amount < Amount THEN 'Partial'
+                                            ELSE Status 
+                                        END
+                            WHERE InvoiceID = @InvoiceID";
+
+                            using (SqlCommand cmd = new SqlCommand(updateInvoiceQuery, connection, transaction))
                             {
-                                // Check if the payment is allocated to an invoice
-                                if (payment.InvoiceID.HasValue)
-                                {
-                                    // Need to update the invoice balance first
-                                    string updateInvoiceQuery = @"
-                                        UPDATE Invoices 
-                                        SET PaidAmount = PaidAmount - @Amount,
-                                            Status = CASE 
-                                                        WHEN PaidAmount - @Amount <= 0 THEN 'Open'
-                                                        WHEN PaidAmount - @Amount < Amount THEN 'Partial'
-                                                        ELSE Status 
-                                                    END
-                                        WHERE InvoiceID = @InvoiceID";
-
-                                    using (SqlCommand cmd = new SqlCommand(updateInvoiceQuery, connection, transaction))
-                                    {
-                                        cmd.Parameters.AddWithValue("@Amount", payment.Amount);
-                                        cmd.Parameters.AddWithValue("@InvoiceID", payment.InvoiceID.Value);
-                                        cmd.ExecuteNonQuery();
-                                    }
-                                }
-
-                                // Now delete the payment
-                                string deleteQuery = "DELETE FROM Payments WHERE PaymentID = @PaymentID";
-                                using (SqlCommand cmd = new SqlCommand(deleteQuery, connection, transaction))
-                                {
-                                    cmd.Parameters.AddWithValue("@PaymentID", payment.PaymentID);
-                                    cmd.ExecuteNonQuery();
-                                }
-
-                                // Commit the transaction
-                                transaction.Commit();
-                                MessageBox.Show("Payment deleted successfully.", "Delete Payment", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                // Refresh the payments list
-                                LoadRecentPayments(20);
-                            }
-                            catch (Exception ex)
-                            {
-                                // Roll back the transaction on error
-                                transaction.Rollback();
-                                throw new Exception($"Error during payment deletion: {ex.Message}");
+                                cmd.Parameters.AddWithValue("@Amount", payment.Amount);
+                                cmd.Parameters.AddWithValue("@InvoiceID", payment.InvoiceID.Value);
+                                cmd.ExecuteNonQuery();
                             }
                         }
-                    }
+
+                        // Now delete the payment
+                        string deleteQuery = "DELETE FROM Payments WHERE PaymentID = @PaymentID";
+                        using (SqlCommand cmd = new SqlCommand(deleteQuery, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@PaymentID", payment.PaymentID);
+                            cmd.ExecuteNonQuery();
+                        }
+                    });
+
+                    MessageBox.Show("Payment deleted successfully.", "Delete Payment", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Refresh the payments list
+                    LoadRecentPayments(20);
                 }
                 catch (Exception ex)
                 {

@@ -9,18 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FantasticStock.Services.Admin;
 
 namespace FantasticStock.Views.Financial
 {
     public partial class AddExpenseForm: Form
     {
-
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
         private List<ExpensesView.ComboboxItem> _categories;
         private List<ExpensesView.ComboboxItem> _suppliers;
         private bool _isEditMode;
         private int _expenseId;
-
+        private readonly SqlDatabaseService _databaseService = new SqlDatabaseService();
 
         public AddExpenseForm()
         {
@@ -28,6 +27,8 @@ namespace FantasticStock.Views.Financial
             LoadCategoriesAndSuppliers();
             LoadPaymentMethods();
             GenerateExpenseNumber();
+
+            _databaseService = new SqlDatabaseService();
 
             // Default date to today
             dtpExpenseDate.Value = DateTime.Today;
@@ -98,7 +99,7 @@ namespace FantasticStock.Views.Financial
             {
                 // Load categories
                 string categoryQuery = "SELECT CategoryID, CategoryName FROM ExpenseCategories WHERE IsActive = 1 ORDER BY CategoryName";
-                DataTable categories = ExecuteQuery(categoryQuery);
+                DataTable categories = _databaseService.ExecuteQuery(categoryQuery);
 
                 cboCategory.Items.Clear();
                 _categories = new List<ExpensesView.ComboboxItem>();
@@ -119,7 +120,7 @@ namespace FantasticStock.Views.Financial
 
                 // Load suppliers
                 string supplierQuery = "SELECT SupplierID, SupplierName FROM Supplier WHERE IsActive = 1 ORDER BY SupplierName";
-                DataTable suppliers = ExecuteQuery(supplierQuery);
+                DataTable suppliers = _databaseService.ExecuteQuery(supplierQuery);
 
                 cboSupplier.Items.Clear();
                 _suppliers = new List<ExpensesView.ComboboxItem>();
@@ -172,7 +173,7 @@ namespace FantasticStock.Views.Financial
                 string query = "SELECT MAX(ExpenseNumber) FROM Expenses WHERE ExpenseNumber LIKE @Prefix+'%'";
                 SqlParameter[] parameters = { new SqlParameter("@Prefix", prefix) };
 
-                object result = ExecuteScalar(query, parameters);
+                object result = _databaseService.ExecuteScalar(query, parameters);
                 int sequence = 1;
 
                 if (result != null && result != DBNull.Value)
@@ -332,10 +333,8 @@ namespace FantasticStock.Views.Financial
                 string notes = txtNotes.Text.Trim();
                 bool isTaxDeductible = chkTaxDeductible.Checked;
 
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                _databaseService.ExecuteInTransaction((connection, transaction) =>
                 {
-                    connection.Open();
-
                     string query;
                     List<SqlParameter> parameters = new List<SqlParameter>();
 
@@ -343,18 +342,18 @@ namespace FantasticStock.Views.Financial
                     {
                         // Update existing expense
                         query = @"
-                            UPDATE Expenses
-                            SET ExpenseNumber = @ExpenseNumber,
-                                ExpenseDate = @ExpenseDate,
-                                SupplierID = @SupplierID,
-                                CategoryID = @CategoryID,
-                                PaymentMethod = @PaymentMethod,
-                                ReferenceNumber = @ReferenceNumber,
-                                Amount = @Amount,
-                                TaxAmount = @TaxAmount,
-                                Notes = @Notes,
-                                IsTaxDeductible = @IsTaxDeductible
-                            WHERE ExpenseID = @ExpenseID";
+                    UPDATE Expenses
+                    SET ExpenseNumber = @ExpenseNumber,
+                        ExpenseDate = @ExpenseDate,
+                        SupplierID = @SupplierID,
+                        CategoryID = @CategoryID,
+                        PaymentMethod = @PaymentMethod,
+                        ReferenceNumber = @ReferenceNumber,
+                        Amount = @Amount,
+                        TaxAmount = @TaxAmount,
+                        Notes = @Notes,
+                        IsTaxDeductible = @IsTaxDeductible
+                    WHERE ExpenseID = @ExpenseID";
 
                         parameters.Add(new SqlParameter("@ExpenseID", _expenseId));
                     }
@@ -362,33 +361,33 @@ namespace FantasticStock.Views.Financial
                     {
                         // Insert new expense
                         query = @"
-                            INSERT INTO Expenses (
-                                ExpenseNumber,
-                                ExpenseDate,
-                                SupplierID,
-                                CategoryID,
-                                PaymentMethod,
-                                ReferenceNumber,
-                                Amount,
-                                TaxAmount,
-                                Notes,
-                                IsTaxDeductible,
-                                CreatedBy,
-                                CreatedDate
-                            ) VALUES (
-                                @ExpenseNumber,
-                                @ExpenseDate,
-                                @SupplierID,
-                                @CategoryID,
-                                @PaymentMethod,
-                                @ReferenceNumber,
-                                @Amount,
-                                @TaxAmount,
-                                @Notes,
-                                @IsTaxDeductible,
-                                @CreatedBy,
-                                @CreatedDate
-                            )";
+                    INSERT INTO Expenses (
+                        ExpenseNumber,
+                        ExpenseDate,
+                        SupplierID,
+                        CategoryID,
+                        PaymentMethod,
+                        ReferenceNumber,
+                        Amount,
+                        TaxAmount,
+                        Notes,
+                        IsTaxDeductible,
+                        CreatedBy,
+                        CreatedDate
+                    ) VALUES (
+                        @ExpenseNumber,
+                        @ExpenseDate,
+                        @SupplierID,
+                        @CategoryID,
+                        @PaymentMethod,
+                        @ReferenceNumber,
+                        @Amount,
+                        @TaxAmount,
+                        @Notes,
+                        @IsTaxDeductible,
+                        @CreatedBy,
+                        @CreatedDate
+                    )";
 
                         parameters.Add(new SqlParameter("@CreatedBy", 1)); // Replace with current user ID in a real app
                         parameters.Add(new SqlParameter("@CreatedDate", DateTime.Now));
@@ -405,60 +404,18 @@ namespace FantasticStock.Views.Financial
                     parameters.Add(new SqlParameter("@Notes",
                         string.IsNullOrEmpty(notes) ? (object)DBNull.Value : notes));
                     parameters.Add(new SqlParameter("@IsTaxDeductible", isTaxDeductible));
-                    using (SqlCommand command = new SqlCommand(query, connection))
+
+                    using (SqlCommand command = new SqlCommand(query, connection, transaction))
                     {
                         command.Parameters.AddRange(parameters.ToArray());
                         command.ExecuteNonQuery();
                     }
-
-                    MessageBox.Show(_isEditMode ? "Expense updated successfully!" : "Expense added successfully!",
-                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
-                }
+                });
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error saving expense: {ex.Message}", "Save Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
-        }
-
-        private object ExecuteScalar(string query, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-                    return command.ExecuteScalar();
-                }
             }
         }
     }

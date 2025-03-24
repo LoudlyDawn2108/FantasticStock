@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FantasticStock.Models.Financial;
 using System.Data.SqlClient;
+using FantasticStock.Services.Admin;
 
 namespace FantasticStock.Views.Financial
 {
@@ -16,12 +17,16 @@ namespace FantasticStock.Views.Financial
     {
         private List<Expense> _expenses;
         private Expense _selectedExpense;
+        private readonly SqlDatabaseService _databaseService;
 
         public ExpensesView()
         {
             InitializeComponent();
             dtpFromDate.Value = DateTime.Today.AddMonths(-1);
             dtpToDate.Value = DateTime.Today;
+
+            _databaseService = new SqlDatabaseService();
+
             this.Load += ExpensesView_Load;
             txtSearch.KeyDown += TxtSearch_KeyDown;
             btnSearch.Click += BtnSearch_Click;
@@ -50,45 +55,6 @@ namespace FantasticStock.Views.Financial
                 return Text;
             }
         }
-
-        private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
-        }
-
-        private int ExecuteNonQuery(string query, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-
-                    return command.ExecuteNonQuery();
-                }
-            }
-        }
-
         private void LoadRecentExpenses(int limit)
         {
             try
@@ -127,7 +93,7 @@ namespace FantasticStock.Views.Financial
                 e.ExpenseDate DESC, e.ExpenseID DESC";
 
                 SqlParameter[] parameters = { new SqlParameter("@Limit", limit) };
-                DataTable dataTable = ExecuteQuery(query, parameters);
+                DataTable dataTable = _databaseService.ExecuteQuery(query, parameters);
 
                 // Convert DataTable to List<Expense>
                 _expenses = new List<Expense>();
@@ -177,7 +143,7 @@ namespace FantasticStock.Views.Financial
                 // Delete the expense from the database
                 string query = "DELETE FROM Expenses WHERE ExpenseID = @ExpenseID";
                 SqlParameter[] parameters = { new SqlParameter("@ExpenseID", expense.ExpenseID) };
-                ExecuteNonQuery(query, parameters);
+                _databaseService.ExecuteNonQuery(query, parameters);
 
                 // Refresh the list
                 LoadRecentExpenses(20);
@@ -192,7 +158,7 @@ namespace FantasticStock.Views.Financial
                 cboCategory.Items.Add(new ComboboxItem { Text = "All Categories", Value = 0 });
 
                 string query = "SELECT CategoryID, CategoryName FROM ExpenseCategories WHERE IsActive = 1 ORDER BY CategoryName";
-                DataTable categories = ExecuteQuery(query);
+                DataTable categories = _databaseService.ExecuteQuery(query);
 
                 foreach (DataRow row in categories.Rows)
                 {
@@ -240,7 +206,7 @@ namespace FantasticStock.Views.Financial
                 cboSupplier.Items.Add(new ComboboxItem { Text = "All Suppliers", Value = 0 });
 
                 string query = "SELECT SupplierID, SupplierName FROM Supplier WHERE IsActive = 1 ORDER BY SupplierName";
-                DataTable suppliers = ExecuteQuery(query);
+                DataTable suppliers = _databaseService.ExecuteQuery(query);
 
                 foreach (DataRow row in suppliers.Rows)
                 {
@@ -500,7 +466,7 @@ namespace FantasticStock.Views.Financial
                 query += " ORDER BY e.ExpenseDate DESC, e.ExpenseID DESC";
 
                 // Execute the query
-                DataTable dataTable = ExecuteQuery(query, parameters.ToArray());
+                DataTable dataTable = _databaseService.ExecuteQuery(query, parameters.ToArray());
 
                 // Convert DataTable to List<Expense>
                 _expenses = new List<Expense>();

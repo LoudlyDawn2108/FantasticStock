@@ -11,7 +11,7 @@ namespace FantasticStock.Views.Inventory
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
         private const int EM_SETCUEBANNER = 0x1501;
-        string chuoiketnoi = "Server=localhost\\SQLEXPRESS; Database=FantasticStock1; Integrated Security=true";
+        string chuoiketnoi = "Server=.\\SQLEXPRESS; Database=FantasticStock1; Integrated Security=true";
         SqlConnection conn;
 
         private System.ComponentModel.IContainer components = null;
@@ -97,23 +97,28 @@ namespace FantasticStock.Views.Inventory
         {
             using(conn = new SqlConnection(chuoiketnoi))
             {
-                conn.Open();
-                string query = "Delete from Supplier where SupplierID = @SupplierID";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
-                try
-                {
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Supplier information deleted successfully.", "Delete Successful",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    XoaDuLieu();
-                    Load_dgvSuppiler();
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this supplier?", "Delete Supplier",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.Yes){
+                    conn.Open();
+                    string query = "Delete from Supplier where SupplierID = @SupplierID";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@SupplierID", supplierID);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Supplier information deleted successfully.", "Delete Successful",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        XoaDuLieu();
+                        Load_dgvSuppiler();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Please delete the product related to the supplier before deleting.", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Please delete the product related to the supplier before deleting.", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+               
                 
 
             }

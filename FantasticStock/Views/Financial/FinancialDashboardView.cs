@@ -10,18 +10,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FantasticStock.Models.Financial;
+using FantasticStock.Services.Admin;
 
 
 namespace FantasticStock.Views.Financial
 {
     public partial class FinancialDashboardView : UserControl
     {
-        //private FinancialDashboardViewModel _viewModel;
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
-
         private BindingList<Payment> _recentPayments;
         private BindingList<Expense> _recentExpenses;
-        private BindingList<FinancialDashboardView.OutstandingInvoice> _outstandingInvoices;
+        private BindingList<OutstandingInvoice> _outstandingInvoices;
 
         // Dashboard metrics
         private decimal _totalSalesCurrentMonth;
@@ -35,6 +33,9 @@ namespace FantasticStock.Views.Financial
         private DateTime _startDate;
         private DateTime _endDate;
 
+        //Database service
+        private readonly SqlDatabaseService _databaseService;
+
         public FinancialDashboardView()
         {
             InitializeComponent();
@@ -47,6 +48,9 @@ namespace FantasticStock.Views.Financial
             // Initialize date pickers
             dtpStartDate.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
             dtpEndDate.Value = DateTime.Today;
+
+            // Initialize database service
+            _databaseService = new SqlDatabaseService();
 
             // Wire up events
             btnRefresh.Click += BtnRefresh_Click;
@@ -73,27 +77,6 @@ namespace FantasticStock.Views.Financial
                 dtpEndDate.Value = dtpStartDate.Value;
 
             LoadDashboardData();
-        }
-
-        private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dataTable = new DataTable();
-                        adapter.Fill(dataTable);
-                        return dataTable;
-                    }
-                }
-            }
         }
 
         private void ConfigureDataGridViews()
@@ -270,84 +253,93 @@ namespace FantasticStock.Views.Financial
             DateTime startDate = dtpStartDate.Value;
             DateTime endDate = dtpEndDate.Value;
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            try
             {
-                connection.Open();
-
-                // Total Sales for current period
-                string salesQuery = @"
-                    SELECT COALESCE(SUM(i.Amount), 0) AS TotalSales
-                    FROM Invoices i
-                    WHERE i.InvoiceDate BETWEEN @StartDate AND @EndDate";
-
-                using (SqlCommand command = new SqlCommand(salesQuery, connection))
+                // Using a single transaction for all queries for better performance
+                _databaseService.ExecuteInTransaction((connection, transaction) =>
                 {
-                    command.Parameters.AddWithValue("@StartDate", startDate);
-                    command.Parameters.AddWithValue("@EndDate", endDate);
+                    // Total Sales for current period
+                    string salesQuery = @"
+                SELECT COALESCE(SUM(i.Amount), 0) AS TotalSales
+                FROM Invoices i
+                WHERE i.InvoiceDate BETWEEN @StartDate AND @EndDate";
 
-                    _totalSalesCurrentMonth = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
-                    lblTotalSalesValue.Text = _totalSalesCurrentMonth.ToString("C2");
-                }
+                    using (SqlCommand command = new SqlCommand(salesQuery, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@StartDate", startDate);
+                        command.Parameters.AddWithValue("@EndDate", endDate);
 
-                // Total Expenses for current period
-                string expensesQuery = @"
-                    SELECT COALESCE(SUM(e.Amount + e.TaxAmount), 0) AS TotalExpenses
-                    FROM Expenses e
-                    WHERE e.ExpenseDate BETWEEN @StartDate AND @EndDate";
+                        _totalSalesCurrentMonth = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
+                    }
 
-                using (SqlCommand command = new SqlCommand(expensesQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@StartDate", startDate);
-                    command.Parameters.AddWithValue("@EndDate", endDate);
+                    // Total Expenses for current period
+                    string expensesQuery = @"
+                SELECT COALESCE(SUM(e.Amount + e.TaxAmount), 0) AS TotalExpenses
+                FROM Expenses e
+                WHERE e.ExpenseDate BETWEEN @StartDate AND @EndDate";
 
-                    _totalExpensesCurrentMonth = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
-                    lblTotalExpensesValue.Text = _totalExpensesCurrentMonth.ToString("C2");
-                }
+                    using (SqlCommand command = new SqlCommand(expensesQuery, connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@StartDate", startDate);
+                        command.Parameters.AddWithValue("@EndDate", endDate);
+
+                        _totalExpensesCurrentMonth = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
+                    }
+
+                    // Total Receivables
+                    string receivablesQuery = @"
+                SELECT COALESCE(SUM(i.Amount - i.PaidAmount), 0) AS TotalReceivables
+                FROM Invoices i
+                WHERE i.Status <> 'Paid'";
+
+                    using (SqlCommand command = new SqlCommand(receivablesQuery, connection, transaction))
+                    {
+                        _totalReceivables = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
+                    }
+
+                    // Overdue Receivables
+                    string overdueQuery = @"
+                SELECT COALESCE(SUM(i.Amount - i.PaidAmount), 0) AS OverdueReceivables
+                FROM Invoices i
+                WHERE i.DueDate < GETDATE() AND i.Status <> 'Paid'";
+
+                    using (SqlCommand command = new SqlCommand(overdueQuery, connection, transaction))
+                    {
+                        _totalReceivablesOverdue = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
+                    }
+
+                    // Cash Balance (estimated)
+                    string cashQuery = @"
+                SELECT 
+                    (SELECT COALESCE(SUM(Amount), 0) FROM Payments) - 
+                    (SELECT COALESCE(SUM(Amount + TaxAmount), 0) FROM Expenses)
+                AS CashBalance";
+
+                    using (SqlCommand command = new SqlCommand(cashQuery, connection, transaction))
+                    {
+                        _cashBalance = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
+                    }
+                });
 
                 // Calculate Net Income
                 _netIncomeCurrentMonth = _totalSalesCurrentMonth - _totalExpensesCurrentMonth;
+
+                // Update UI with calculated values
+                lblTotalSalesValue.Text = _totalSalesCurrentMonth.ToString("C2");
+                lblTotalExpensesValue.Text = _totalExpensesCurrentMonth.ToString("C2");
                 lblNetIncomeValue.Text = _netIncomeCurrentMonth.ToString("C2");
+                lblTotalReceivablesValue.Text = _totalReceivables.ToString("C2");
+                lblOverdueReceivablesValue.Text = _totalReceivablesOverdue.ToString("C2");
+                lblCashBalanceValue.Text = _cashBalance.ToString("C2");
 
-                // Total Receivables
-                string receivablesQuery = @"
-                    SELECT COALESCE(SUM(i.Amount - i.PaidAmount), 0) AS TotalReceivables
-                    FROM Invoices i
-                    WHERE i.Status <> 'Paid'";
-
-                using (SqlCommand command = new SqlCommand(receivablesQuery, connection))
-                {
-                    _totalReceivables = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
-                    lblTotalReceivablesValue.Text = _totalReceivables.ToString("C2");
-                }
-
-                // Overdue Receivables
-                string overdueQuery = @"
-                    SELECT COALESCE(SUM(i.Amount - i.PaidAmount), 0) AS OverdueReceivables
-                    FROM Invoices i
-                    WHERE i.DueDate < GETDATE() AND i.Status <> 'Paid'";
-
-                using (SqlCommand command = new SqlCommand(overdueQuery, connection))
-                {
-                    _totalReceivablesOverdue = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
-                    lblOverdueReceivablesValue.Text = _totalReceivablesOverdue.ToString("C2");
-                }
-
-                // Cash Balance (estimated)
-                string cashQuery = @"
-                    SELECT 
-                        (SELECT COALESCE(SUM(Amount), 0) FROM Payments) - 
-                        (SELECT COALESCE(SUM(Amount + TaxAmount), 0) FROM Expenses)
-                    AS CashBalance";
-
-                using (SqlCommand command = new SqlCommand(cashQuery, connection))
-                {
-                    _cashBalance = Convert.ToDecimal(command.ExecuteScalar() ?? 0m);
-                    lblCashBalanceValue.Text = _cashBalance.ToString("C2");
-                }
+                // Update display colors based on values
+                UpdateDisplayColors();
             }
-
-            // Update display colors based on values
-            UpdateDisplayColors();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading financial metrics: {ex.Message}", "Database Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UpdateDisplayColors()
@@ -386,7 +378,7 @@ namespace FantasticStock.Views.Financial
                 ORDER BY 
                     p.PaymentDate DESC, p.PaymentID DESC";
 
-            DataTable paymentsTable = ExecuteQuery(query);
+            DataTable paymentsTable = _databaseService.ExecuteQuery(query);
 
             // Clear the existing list
             _recentPayments.Clear();
@@ -425,7 +417,7 @@ namespace FantasticStock.Views.Financial
         LEFT JOIN Supplier s ON e.SupplierID = s.SupplierID
         ORDER BY e.ExpenseDate DESC, e.ExpenseID DESC";
 
-            DataTable expensesData = ExecuteQuery(query);
+            DataTable expensesData = _databaseService.ExecuteQuery(query);
 
             // Clear the existing list
             _recentExpenses.Clear();
@@ -472,7 +464,7 @@ namespace FantasticStock.Views.Financial
         WHERE i.Status <> 'Paid'
         ORDER BY i.DueDate ASC";
 
-            DataTable invoicesData = ExecuteQuery(query);
+            DataTable invoicesData = _databaseService.ExecuteQuery(query);
 
             // Clear the existing list
             _outstandingInvoices.Clear();
@@ -498,20 +490,5 @@ namespace FantasticStock.Views.Financial
             // Set the data source
             dgvOutstandingInvoices.DataSource = _outstandingInvoices;
         }   
-
-        // Define OutstandingInvoice class inside the UserControl
-        public class OutstandingInvoice
-        {
-            public int InvoiceID { get; set; }
-            public string InvoiceNumber { get; set; }
-            public int CustomerID { get; set; }
-            public string CustomerName { get; set; }
-            public DateTime InvoiceDate { get; set; }
-            public DateTime DueDate { get; set; }
-            public decimal Amount { get; set; }
-            public decimal PaidAmount { get; set; }
-            public decimal AmountDue { get; set; }
-            public int DaysOverdue { get; set; }
-        }
     }
 }
