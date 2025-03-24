@@ -46,7 +46,7 @@ namespace FantasticStock.Views.Sales
                 InitializeData();
 
                 // Initialize default state
-                InitializeDefaultState();
+               // InitializeDefaultState();
 
                 // Add this line to initialize search options
                 SetupSearchOptions();

@@ -12,7 +12,7 @@ namespace FantasticStock.Services.Admin
         
         public SqlDatabaseService()
         {
-            _connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;";
+            _connectionString = @"Data Source=TUNGCORN\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;";
             _masterConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=master;Integrated Security=True;";
 
         }
