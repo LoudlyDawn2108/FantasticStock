@@ -23,7 +23,7 @@ namespace FantasticStock.Views.Sales
         // Update connection string to your FantasticStock database
     //    private string connectionString = @"Data Source=DESKTOP-DOEUG5N;Initial Catalog=FantasticStock;Integrated Security=True";
 
-        private string connectionString = @"Data Source=.\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True";
+        private string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True";
 
         private SqlConnection connection;
 
