@@ -34,7 +34,7 @@ namespace FantasticStock.Views.Inventory
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.colProductID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,6 +71,10 @@ namespace FantasticStock.Views.Inventory
             this.lblPageInfo = new System.Windows.Forms.Label();
             this.btnNext = new System.Windows.Forms.Button();
             this.panelDetails = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtSalePrice = new System.Windows.Forms.TextBox();
+            this.txtCostPrice = new System.Windows.Forms.TextBox();
             this.lblDetailsHeader = new System.Windows.Forms.Label();
             this.lblProductName = new System.Windows.Forms.Label();
             this.txtProductName = new System.Windows.Forms.TextBox();
@@ -99,10 +103,6 @@ namespace FantasticStock.Views.Inventory
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtSalePrice = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtCostPrice = new System.Windows.Forms.TextBox();
             this.panelHeader.SuspendLayout();
             this.panelActions.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -273,14 +273,14 @@ namespace FantasticStock.Views.Inventory
             this.dgvProducts.AllowUserToResizeRows = false;
             this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProducts.BackgroundColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvProducts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvProducts.ColumnHeadersHeight = 34;
             this.dgvProducts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvProductID,
@@ -485,6 +485,42 @@ namespace FantasticStock.Views.Inventory
             this.panelDetails.Size = new System.Drawing.Size(809, 833);
             this.panelDetails.TabIndex = 10;
             // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(10, 326);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(19, 20);
+            this.label2.TabIndex = 32;
+            this.label2.Text = "$";
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(10, 370);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(19, 20);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "$";
+            // 
+            // txtSalePrice
+            // 
+            this.txtSalePrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSalePrice.Location = new System.Drawing.Point(29, 370);
+            this.txtSalePrice.Name = "txtSalePrice";
+            this.txtSalePrice.Size = new System.Drawing.Size(145, 20);
+            this.txtSalePrice.TabIndex = 33;
+            this.txtSalePrice.TextChanged += new System.EventHandler(this.txtCostPrice_TextChanged);
+            // 
+            // txtCostPrice
+            // 
+            this.txtCostPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCostPrice.Location = new System.Drawing.Point(29, 329);
+            this.txtCostPrice.Name = "txtCostPrice";
+            this.txtCostPrice.Size = new System.Drawing.Size(144, 20);
+            this.txtCostPrice.TabIndex = 34;
+            this.txtCostPrice.TextChanged += new System.EventHandler(this.txtSalePrice_TextChanged);
+            // 
             // lblDetailsHeader
             // 
             this.lblDetailsHeader.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
@@ -543,7 +579,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.lblCategory.Location = new System.Drawing.Point(15, 200);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(100, 23);
+            this.lblCategory.Size = new System.Drawing.Size(100, 17);
             this.lblCategory.TabIndex = 7;
             this.lblCategory.Text = "Category";
             // 
@@ -559,7 +595,7 @@ namespace FantasticStock.Views.Inventory
             // 
             this.lblSupplier.Location = new System.Drawing.Point(15, 250);
             this.lblSupplier.Name = "lblSupplier";
-            this.lblSupplier.Size = new System.Drawing.Size(100, 23);
+            this.lblSupplier.Size = new System.Drawing.Size(100, 17);
             this.lblSupplier.TabIndex = 9;
             this.lblSupplier.Text = "Supplier";
             // 
@@ -573,7 +609,7 @@ namespace FantasticStock.Views.Inventory
             // 
             // lblSalePrice
             // 
-            this.lblSalePrice.Location = new System.Drawing.Point(15, 300);
+            this.lblSalePrice.Location = new System.Drawing.Point(16, 350);
             this.lblSalePrice.Name = "lblSalePrice";
             this.lblSalePrice.Size = new System.Drawing.Size(100, 23);
             this.lblSalePrice.TabIndex = 11;
@@ -581,7 +617,7 @@ namespace FantasticStock.Views.Inventory
             // 
             // lblCostPrice
             // 
-            this.lblCostPrice.Location = new System.Drawing.Point(15, 350);
+            this.lblCostPrice.Location = new System.Drawing.Point(16, 303);
             this.lblCostPrice.Name = "lblCostPrice";
             this.lblCostPrice.Size = new System.Drawing.Size(100, 23);
             this.lblCostPrice.TabIndex = 13;
@@ -717,40 +753,6 @@ namespace FantasticStock.Views.Inventory
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = false;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(10, 326);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(19, 20);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "$";
-            // 
-            // txtSalePrice
-            // 
-            this.txtSalePrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSalePrice.Location = new System.Drawing.Point(29, 370);
-            this.txtSalePrice.Name = "txtSalePrice";
-            this.txtSalePrice.Size = new System.Drawing.Size(145, 20);
-            this.txtSalePrice.TabIndex = 33;
-            // 
-            // label3
-            // 
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(10, 370);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(19, 20);
-            this.label3.TabIndex = 33;
-            this.label3.Text = "$";
-            // 
-            // txtCostPrice
-            // 
-            this.txtCostPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCostPrice.Location = new System.Drawing.Point(29, 326);
-            this.txtCostPrice.Name = "txtCostPrice";
-            this.txtCostPrice.Size = new System.Drawing.Size(144, 20);
-            this.txtCostPrice.TabIndex = 34;
             // 
             // ProductManagementView
             // 

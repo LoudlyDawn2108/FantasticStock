@@ -227,6 +227,44 @@ CREATE TABLE SaleItem (
     CONSTRAINT FK_SaleItem_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
 );
 
+CREATE TABLE ExpenseCategories (
+    CategoryID INT PRIMARY KEY IDENTITY(1,1),
+    CategoryName NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(255),
+    IsActive BIT DEFAULT 1,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    LastModifiedDate DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Expenses (
+    ExpenseID INT PRIMARY KEY IDENTITY(1,1),
+    ExpenseNumber NVARCHAR(20) NOT NULL,
+    ExpenseDate DATETIME NOT NULL,
+    SupplierID INT NULL,
+    CategoryID INT NOT NULL,
+    PaymentMethod NVARCHAR(50) NOT NULL,
+    ReferenceNumber NVARCHAR(50),
+    Amount DECIMAL(18, 2) NOT NULL,
+    TaxAmount DECIMAL(18, 2) NOT NULL DEFAULT 0,
+    Notes NVARCHAR(MAX),
+    IsTaxDeductible BIT NOT NULL DEFAULT 0,
+    CreatedBy INT NOT NULL,
+    CreatedDate DATETIME NOT NULL DEFAULT GETDATE(),
+    
+    -- Foreign Key constraints
+    CONSTRAINT FK_Expenses_Suppliers FOREIGN KEY (SupplierID) 
+        REFERENCES Suppliers(SupplierID),
+    CONSTRAINT FK_Expenses_Categories FOREIGN KEY (CategoryID) 
+        REFERENCES ExpenseCategories(CategoryID),
+    CONSTRAINT FK_Expenses_Users FOREIGN KEY (CreatedBy) 
+        REFERENCES Users(UserID)
+);
+
+CREATE INDEX IX_Expenses_ExpenseDate ON Expenses(ExpenseDate);
+CREATE INDEX IX_Expenses_SupplierID ON Expenses(SupplierID);
+CREATE INDEX IX_Expenses_CategoryID ON Expenses(CategoryID);
+CREATE INDEX IX_Expenses_ExpenseNumber ON Expenses(ExpenseNumber);
+
 -- =============================================
 -- BACKUP MANAGEMENT TABLES
 -- =============================================

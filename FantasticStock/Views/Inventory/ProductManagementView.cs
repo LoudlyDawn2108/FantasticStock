@@ -145,11 +145,6 @@ namespace FantasticStock.Views.Inventory
             return field.Replace("\"", "\"\"");
         }
 
-        private void btnPrintList_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Print functionality not yet implemented.", "Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -203,10 +198,6 @@ namespace FantasticStock.Views.Inventory
             if (KiemTraGiaTri())
             {
                 SaveProduct();
-                //decimal SaleP = Convert.ToDecimal(txtSalePrice.Text);
-                //decimal CostP = Convert.ToDecimal(txtCostPrice.Text);
-                //decimal Markup = ((SaleP - CostP) / CostP) * 100;
-                //txtMarkup.Text = Markup.ToString();
                 Khoa_Chinh_Sua(false);
             }
         }
@@ -348,7 +339,6 @@ namespace FantasticStock.Views.Inventory
         private void ProductManagementView_Load(object sender, EventArgs e)
         {
             dgvProducts.AutoGenerateColumns = false;
-
             Load_dvgProducts();
             Load_comboboxCategory();
             Load_cmbSupplier();

@@ -18,7 +18,7 @@ namespace FantasticStock.Views.Financial
 
         private List<Payment> _payments;
         private Payment _selectedPayment;
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
 
         public PaymentsView()
         {
@@ -85,7 +85,7 @@ namespace FantasticStock.Views.Financial
                 cboCustomer.Items.Clear();
                 cboCustomer.Items.Add(new ComboboxItem { Text = "All Customers", Value = 0 });
 
-                string query = "SELECT CustomerID, CustomerName FROM Customers WHERE IsActive = 1 ORDER BY CustomerName";
+                string query = "SELECT CustomerID, CustomerName FROM Customer WHERE IsActive = 1 ORDER BY CustomerName";
                 DataTable customers = ExecuteQuery(query);
 
                 foreach (DataRow row in customers.Rows)
@@ -158,7 +158,7 @@ namespace FantasticStock.Views.Financial
         FROM 
             Payments p
         LEFT JOIN 
-            Customers c ON p.CustomerID = c.CustomerID
+            Customer c ON p.CustomerID = c.CustomerID
         LEFT JOIN 
             Invoices i ON p.InvoiceID = i.InvoiceID
         LEFT JOIN 
@@ -231,7 +231,7 @@ namespace FantasticStock.Views.Financial
             FROM 
                 Payments p
             LEFT JOIN 
-                Customers c ON p.CustomerID = c.CustomerID
+                Customer c ON p.CustomerID = c.CustomerID
             LEFT JOIN 
                 Invoices i ON p.InvoiceID = i.InvoiceID
             LEFT JOIN 

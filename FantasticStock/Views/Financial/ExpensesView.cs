@@ -53,7 +53,7 @@ namespace FantasticStock.Views.Financial
 
         private DataTable ExecuteQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True"))
+            using (SqlConnection connection = new SqlConnection("Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
@@ -74,7 +74,7 @@ namespace FantasticStock.Views.Financial
 
         private int ExecuteNonQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True"))
+            using (SqlConnection connection = new SqlConnection("Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True"))
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -118,7 +118,7 @@ namespace FantasticStock.Views.Financial
             FROM 
                 Expenses e
             LEFT JOIN 
-                Suppliers s ON e.SupplierID = s.SupplierID
+                Supplier s ON e.SupplierID = s.SupplierID
             LEFT JOIN 
                 ExpenseCategories c ON e.CategoryID = c.CategoryID
             LEFT JOIN 
@@ -339,7 +339,7 @@ namespace FantasticStock.Views.Financial
                 cboSupplier.Items.Clear();
                 cboSupplier.Items.Add(new ComboboxItem { Text = "All Suppliers", Value = 0 });
 
-                string query = "SELECT SupplierID, SupplierName FROM Suppliers WHERE IsActive = 1 ORDER BY SupplierName";
+                string query = "SELECT SupplierID, SupplierName FROM Supplier WHERE IsActive = 1 ORDER BY SupplierName";
                 DataTable suppliers = ExecuteQuery(query);
 
                 foreach (DataRow row in suppliers.Rows)
@@ -531,7 +531,7 @@ namespace FantasticStock.Views.Financial
             FROM 
                 Expenses e
             LEFT JOIN 
-                Suppliers s ON e.SupplierID = s.SupplierID
+                Supplier s ON e.SupplierID = s.SupplierID
             LEFT JOIN 
                 ExpenseCategories c ON e.CategoryID = c.CategoryID
             LEFT JOIN 

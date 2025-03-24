@@ -17,7 +17,7 @@ namespace FantasticStock.Views.Financial
     public partial class FinancialDashboardView : UserControl
     {
         //private FinancialDashboardViewModel _viewModel;
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
 
         private BindingList<Payment> _recentPayments;
         private BindingList<Expense> _recentExpenses;
@@ -385,7 +385,7 @@ namespace FantasticStock.Views.Financial
                 FROM 
                     Payments p
                 LEFT JOIN 
-                    Customers c ON p.CustomerID = c.CustomerID
+                    Customer c ON p.CustomerID = c.CustomerID
                 ORDER BY 
                     p.PaymentDate DESC, p.PaymentID DESC";
 
@@ -425,7 +425,7 @@ namespace FantasticStock.Views.Financial
             e.TaxAmount,
             e.Amount + e.TaxAmount AS TotalAmount
         FROM Expenses e
-        LEFT JOIN Suppliers s ON e.SupplierID = s.SupplierID
+        LEFT JOIN Supplier s ON e.SupplierID = s.SupplierID
         ORDER BY e.ExpenseDate DESC, e.ExpenseID DESC";
 
             DataTable expensesData = ExecuteQuery(query);
@@ -471,7 +471,7 @@ namespace FantasticStock.Views.Financial
                 ELSE 0
             END AS DaysOverdue
         FROM Invoices i
-        LEFT JOIN Customers c ON i.CustomerID = c.CustomerID
+        LEFT JOIN Customer c ON i.CustomerID = c.CustomerID
         WHERE i.Status <> 'Paid'
         ORDER BY i.DueDate ASC";
 
