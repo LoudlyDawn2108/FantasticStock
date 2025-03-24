@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class SqlDatabaseService : IDatabaseService
     {

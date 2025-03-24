@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using FantasticStock.Common;
 using FantasticStock.Models;
-using FantasticStock.Services;
+using FantasticStock.Services.Admin;
 
 namespace FantasticStock.ViewModels
 {
@@ -494,7 +494,6 @@ namespace FantasticStock.ViewModels
                 RoleName = user.RoleName,
                 Status = user.Status,
                 TwoFactorEnabled = user.TwoFactorEnabled,
-                AccountExpiry = user.AccountExpiry,
                 LastLogin = user.LastLogin,
                 CreatedDate = user.CreatedDate,
                 ModifiedDate = user.ModifiedDate

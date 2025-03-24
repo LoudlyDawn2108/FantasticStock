@@ -1,5 +1,9 @@
-﻿using FantasticStock.Models;
+﻿using FantasticStock.Common;
+using FantasticStock.Models;
+using FantasticStock.Presenters.Admin;
+using FantasticStock.Services.Admin;
 using FantasticStock.ViewModels;
+using FantasticStock.Views.Admin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,129 +16,317 @@ using System.Windows.Forms;
 
 namespace FantasticStock.Views
 {
-    public partial class UserManagementView : UserControl
+    public partial class UserManagementView : UserControl, IUserManagementView
     {
-        private UserManagementViewModel _viewModel;
+        private readonly UserManagementPresenter _presenter;
+        private bool _isEdit = false;
 
+        // Constructors and initialization
         public UserManagementView()
         {
             InitializeComponent();
 
-            // Initialize view model
-            _viewModel = new UserManagementViewModel();
+            // Set up the DataGridViews
+            SetupUsersDataGridView();
+            SetupActivityLogDataGridView();
 
-            // Set up data bindings
-            SetupBindings();
+            // Set up combo boxes
+            PopulateRoleComboBoxes();
+            PopulateStatusComboBoxes();
+            PopulateActionTypeComboBox();
 
-            // Format the grids
-            FormatUserGrid();
-            FormatActivityLogGrid();
+            // Set up date pickers
+            dtpStartDate.Value = DateTime.Now.AddDays(-7);
+            dtpEndDate.Value = DateTime.Now;
 
-            // Initialize UI elements
-            InitializeStatusFilter();
+            // Register the event handlers
+            RegisterEventHandlers();
 
+            // Initialize the presenter
+            IUserService userService = ServiceLocator.GetService<IUserService>();
+            IAuditService auditService = ServiceLocator.GetService<IAuditService>();
+            _presenter = new UserManagementPresenter(this, userService, auditService);
         }
 
-        private void SetupBindings()
+        #region IUserManagementView properties
+
+        public string SearchText => txtSearch.Text;
+
+        public int? RoleFilter
         {
-            try
+            get
             {
-                dgvUsers.Columns.Clear();
-                dgvUsers.DataSource = _viewModel.Users;
-                dgvUsers.DataBindings.Add("DataSource", _viewModel, "Users", true, DataSourceUpdateMode.OnPropertyChanged);
-
-
-                txtUsername.DataBindings.Add("Text", _viewModel, "SelectedUser.Username", true, DataSourceUpdateMode.OnPropertyChanged);
-                txtDisplayName.DataBindings.Add("Text", _viewModel, "SelectedUser.DisplayName", true, DataSourceUpdateMode.OnPropertyChanged);
-                txtEmail.DataBindings.Add("Text", _viewModel, "SelectedUser.Email", true, DataSourceUpdateMode.OnPropertyChanged);
-                txtPhone.DataBindings.Add("Text", _viewModel, "SelectedUser.Phone", true, DataSourceUpdateMode.OnPropertyChanged);
-                chkTwoFactorEnabled.DataBindings.Add("Checked", _viewModel, "SelectedUser.TwoFactorEnabled", true, DataSourceUpdateMode.OnPropertyChanged);
-
-                dateTimePickerExpiration.DataBindings.Add("Value", _viewModel, "SelectedUser.AccountExpiry", true, DataSourceUpdateMode.OnPropertyChanged);
-                dateTimePickerExpiration.Checked = _viewModel.SelectedUser?.AccountExpiry != null;
-
-                cmbRoles.DataSource = _viewModel.Roles;
-                cmbRoles.DisplayMember = "RoleName";
-                cmbRoles.ValueMember = "RoleID";
-                cmbRoles.DataBindings.Add("SelectedValue", _viewModel, "SelectedUser.RoleID", true, DataSourceUpdateMode.OnPropertyChanged);
-                
-
-                txtSearch.DataBindings.Add("Text", _viewModel, "SearchText", true, DataSourceUpdateMode.OnPropertyChanged);
-
-                cmbStatusFilter.Items.Add("All status");
-                cmbStatusFilter.Items.Add("Active");
-                cmbStatusFilter.Items.Add("Inactive");
-                cmbStatusFilter.Items.Add("Locked");
-                cmbStatusFilter.SelectedItem = "All status";
-                cmbStatusFilter.DataBindings.Add("SelectedItem", _viewModel, "StatusFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-                cmbStatusFilter.SelectedIndexChanged += (s, e) =>
-                {
-                    _viewModel.StatusFilter = cmbStatusFilter.SelectedItem?.ToString();
-                };
-
-
-                cmbRoleFilter.DataSource = new BindingSource(_viewModel.Roles, null);
-                cmbRoleFilter.DisplayMember = "RoleName";
-                cmbRoleFilter.ValueMember = "RoleID";
-                cmbRoleFilter.DataBindings.Add("SelectedValue", _viewModel, "RoleFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-
-                ((BindingSource)cmbRoleFilter.DataSource).Insert(0, new Role { RoleID = 0, RoleName = "All Roles" });
-
-
-                dgvActivityLog.DataSource = _viewModel.ActivityLogs;
-                dgvActivityLog.DataBindings.Add("DataSource", _viewModel, "ActivityLogs", true, DataSourceUpdateMode.OnPropertyChanged);
-
-                dtpStartDate.DataBindings.Add("Value", _viewModel, "ActivityStartDate", true, DataSourceUpdateMode.OnPropertyChanged);
-                dtpEndDate.DataBindings.Add("Value", _viewModel, "ActivityEndDate", true, DataSourceUpdateMode.OnPropertyChanged);
-                cmbActionType.DataBindings.Add("SelectedItem", _viewModel, "ActivityTypeFilter", true, DataSourceUpdateMode.OnPropertyChanged);
-
-                btnAddUser.Click += (s, e) => _viewModel.AddUserCommand.Execute(null);
-                btnEdit.Click += (s, e) => _viewModel.EditUserCommand.Execute(null);
-                btnDeactivate.Click += (s, e) => _viewModel.DeactivateUserCommand.Execute(null);
-                btnDelete.Click += (s, e) => _viewModel.DeleteUserCommand.Execute(null);
-                btnResetPassword.Click += (s, e) => _viewModel.ResetPasswordCommand.Execute(null);
-                btnSave.Click += (s, e) => _viewModel.SaveUserCommand.Execute(null);
-                btnCancel.Click += (s, e) => _viewModel.CancelEditCommand.Execute(null);
-                btnExport.Click += (s, e) => _viewModel.ExportActivityCommand.Execute(null);
-                btnFilter.Click += (s, e) => _viewModel.FilterActivityCommand.Execute(null);
-
-                dgvUsers.SelectionChanged += DgvUsers_SelectionChanged;
-                txtPassword.TextChanged += TxtPassword_TextChanged;
-
-                UpdateUIEditState(_viewModel.IsEditMode);
-                btnEdit.Enabled = true;
-                btnDeactivate.Enabled = true;
-                btnDelete.Enabled = true;
-                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error setting up bindings: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (cmbRoleFilter.SelectedIndex > 0)
+                    return (int)cmbRoleFilter.SelectedValue;
+                return null;
             }
         }
 
-        private void FormatUserGrid()
+        public string StatusFilter
+        {
+            get
+            {
+                if (cmbStatusFilter.SelectedIndex > 0)
+                    return (string)cmbStatusFilter.SelectedItem;
+                return null;
+            }
+        }
+
+        public int? SelectedUserId
+        {
+            get
+            {
+                if (dgvUsers.SelectedRows.Count > 0)
+                    return (int)dgvUsers.SelectedRows[0].Cells["UserID"].Value;
+                return null;
+            }
+        }
+
+        public DateTime StartDate => dtpStartDate.Value;
+
+        public DateTime EndDate => dtpEndDate.Value;
+
+        public string ActionTypeFilter
+        {
+            get
+            {
+                if (cmbActionType.SelectedIndex > 0)
+                    return (string)cmbActionType.SelectedValue;
+                return null;
+            }
+        }
+
+        public bool IsEdit
+        {
+            get { return _isEdit; }
+            set 
+            { 
+                _isEdit = value;
+                UpdateControlsEditState();
+            }
+        }
+
+        #endregion
+
+        #region IUserManagementView events
+
+        public event EventHandler SearchTextChanged;
+        public event EventHandler RoleFilterChanged;
+        public event EventHandler StatusFilterChanged;
+        public event EventHandler UserSelected;
+        public event EventHandler AddUserClicked;
+        public event EventHandler EditUserClicked;
+        public event EventHandler DeactivateUserClicked;
+        public event EventHandler DeleteUserClicked;
+        public event EventHandler SaveUserClicked;
+        public event EventHandler CancelEditClicked;
+        public event EventHandler ResetPasswordClicked;
+        public event EventHandler PasswordTextChanged;
+        public event EventHandler FilterActivityClicked;
+        public event EventHandler ExportActivityClicked;
+
+        #endregion
+
+        #region IUserManagementView methods
+
+        public void DisplayUsers(BindingList<User> users)
+        {
+            dgvUsers.DataSource = null;
+            dgvUsers.DataSource = users;
+        }
+
+        public void ShowUserDetails(User user)
+        {
+            txtUsername.Text = user.Username;
+            txtDisplayName.Text = user.DisplayName;
+            txtEmail.Text = user.Email;
+            txtPhone.Text = user.Phone;
+            cmbRoles.SelectedIndex = user.RoleID - 1;
+
+            txtPassword.Text = string.Empty;
+            txtConfirmPassword.Text = string.Empty;
+            progressBarPasswordStrength.Value = 0;
+            chkTwoFactorEnabled.Checked = user.TwoFactorEnabled;
+
+            chkSunday.Checked = user.AllowedDays[0];
+            chkMonday.Checked = user.AllowedDays[1];
+            chkTuesday.Checked = user.AllowedDays[2];
+            chkWednesday.Checked = user.AllowedDays[3];
+            chkThursday.Checked = user.AllowedDays[4];
+            chkFriday.Checked = user.AllowedDays[5];
+            chkSaturday.Checked = user.AllowedDays[6];
+
+            panelUserDetail.Enabled = true;
+            UpdateControlsEditState();
+        }
+
+        public void ClearUserDetails()
+        {
+            // Basic Info tab
+            txtUsername.Text = string.Empty;
+            txtDisplayName.Text = string.Empty;
+            txtEmail.Text = string.Empty;
+            txtPhone.Text = string.Empty;
+            cmbRoles.SelectedIndex = 0;
+
+            // Security tab
+            txtPassword.Text = string.Empty;
+            txtConfirmPassword.Text = string.Empty;
+            progressBarPasswordStrength.Value = 0;
+            chkTwoFactorEnabled.Checked = false;
+
+            // Restrictions tab
+            chkSunday.Checked = true;
+            chkMonday.Checked = true;
+            chkTuesday.Checked = true;
+            chkWednesday.Checked = true;
+            chkThursday.Checked = true;
+            chkFriday.Checked = true;
+            chkSaturday.Checked = true;
+
+            // Enable the detail panel for adding a new user
+            panelUserDetail.Enabled = true;
+            IsEdit = true;
+        }
+
+        public User GetUserFromForm()
+        {
+            User user = new User
+            {
+                Username = txtUsername.Text.Trim(),
+                DisplayName = txtDisplayName.Text.Trim(),
+                Email = txtEmail.Text.Trim(),
+                Phone = txtPhone.Text.Trim(),
+                Password = txtPassword.Text,
+                RoleID = (int)cmbRoles.SelectedValue,
+                TwoFactorEnabled = chkTwoFactorEnabled.Checked,
+                AllowedDays = new bool[]
+                {
+                    chkSunday.Checked,
+                    chkMonday.Checked,
+                    chkTuesday.Checked,
+                    chkWednesday.Checked,
+                    chkThursday.Checked,
+                    chkFriday.Checked,
+                    chkSaturday.Checked
+                }
+            };
+
+            return user;
+        }
+
+        public void SetPasswordStrength(int strengthPercentage)
+        {
+            progressBarPasswordStrength.Value = Math.Min(100, Math.Max(0, strengthPercentage));
+
+            // Also update the color based on strength
+            if (strengthPercentage < 40)
+                progressBarPasswordStrength.ForeColor = Color.Red;
+            else if (strengthPercentage < 70)
+                progressBarPasswordStrength.ForeColor = Color.Yellow;
+            else
+                progressBarPasswordStrength.ForeColor = Color.Green;
+        }
+
+        public void DisplayActivities(BindingList<AuditLogEntry> activities)
+        {
+            dgvActivityLog.DataSource = null;
+            dgvActivityLog.DataSource = activities;
+        }
+
+        public void UpdateEventTypeFilters(IEnumerable<string> availableEventTypes)
+        {
+            var currentSelectedValue = cmbActionType.SelectedIndex > 0
+                ? cmbActionType.SelectedValue
+                : null;
+
+            var actionTypes = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("", "All event types")
+            };
+
+            foreach (var eventType in availableEventTypes)
+            {
+                actionTypes.Add(new KeyValuePair<string, string>(eventType, eventType));
+            }
+
+            cmbActionType.DisplayMember = "Value";
+            cmbActionType.ValueMember = "Key";
+            cmbActionType.DataSource = new BindingList<KeyValuePair<string, string>>(actionTypes);
+
+            if (currentSelectedValue != null)
+            {
+                var matchingItem = actionTypes.FirstOrDefault(at => at.Key.Equals(currentSelectedValue));
+                if (!EqualityComparer<KeyValuePair<string, string>>.Default.Equals(matchingItem, default))
+                {
+                    cmbActionType.SelectedValue = currentSelectedValue;
+                }
+                else
+                {
+                    cmbActionType.SelectedIndex = 0;
+                }
+            }
+            else
+            {
+                cmbActionType.SelectedIndex = 0;
+            }
+        }
+
+
+        public void ShowMessage(string message)
+        {
+            MessageBox.Show(message, "User Management", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public bool ConfirmAction(string message)
+        {
+            return MessageBox.Show(message, "Confirm Action", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+        }
+
+        #endregion
+
+        #region Helper methods
+        private void SetupUsersDataGridView()
         {
             dgvUsers.AutoGenerateColumns = false;
-            dgvUsers.Columns.Clear();
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "UserID",
+                Name = "UserID",
+                HeaderText = "ID",
+                Width = 50,
+                Visible = false
+            });
 
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "Username",
+                Name = "Username",
                 HeaderText = "Username",
-                Width = 100
+                Width = 120
             });
 
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "DisplayName",
-                HeaderText = "Name",
+                Name = "DisplayName",
+                HeaderText = "Display Name",
                 Width = 150
             });
 
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
+                DataPropertyName = "Email",
+                Name = "Email",
+                HeaderText = "Email",
+                Width = 180
+            });
+
+            dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+            {
                 DataPropertyName = "RoleName",
+                Name = "Role",
                 HeaderText = "Role",
                 Width = 100
             });
@@ -142,192 +334,171 @@ namespace FantasticStock.Views
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "Status",
+                Name = "Status",
                 HeaderText = "Status",
                 Width = 80
             });
 
-            dgvUsers.Columns.Add(new DataGridViewCheckBoxColumn
-            {
-                DataPropertyName = "TwoFactorEnabled",
-                HeaderText = "2FA",
-                Width = 50
-            });
-
             dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "LastLogin",
+                DataPropertyName = "LastLoginDate",
+                Name = "LastLoginDate",
                 HeaderText = "Last Login",
-                Width = 120
+                Width = 120,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "yyyy-MM-dd HH:mm" }
             });
+
+            dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvUsers.AllowUserToAddRows = false;
+            dgvUsers.AllowUserToDeleteRows = false;
+            dgvUsers.ReadOnly = true;
+            dgvUsers.MultiSelect = false;
         }
 
-        private void FormatActivityLogGrid()
+        private void SetupActivityLogDataGridView()
         {
             dgvActivityLog.AutoGenerateColumns = false;
-            dgvActivityLog.Columns.Clear();
 
-            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "Timestamp",
-                HeaderText = "Timestamp",
-                Width = 150
-            });
 
             dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "Username",
-                HeaderText = "User",
+                Name = "Username",
+                HeaderText = "Username",
                 Width = 100
             });
+
+            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Timestamp",
+                Name = "Timestamp",
+                HeaderText = "Timestamp",
+                Width = 150,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "yyyy-MM-dd HH:mm:ss" }
+            });
+
 
             dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "EventType",
-                HeaderText = "Action",
-                Width = 100
-            });
-
-            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "TableName",
-                HeaderText = "Module",
-                Width = 100
-            });
-
-            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "RecordID",
-                HeaderText = "Record ID",
-                Width = 80
-            });
-
-            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "IPAddress",
-                HeaderText = "IP Address",
+                Name = "EventType",
+                HeaderText = "Event Type",
                 Width = 120
             });
 
-            dgvActivityLog.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "SeverityText",
-                HeaderText = "Severity",
-                Width = 80
-            });
+            // Configure DataGridView
+            dgvActivityLog.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvActivityLog.AllowUserToAddRows = false;
+            dgvActivityLog.AllowUserToDeleteRows = false;
+            dgvActivityLog.ReadOnly = true;
         }
 
-        private void InitializeStatusFilter()
+        private void PopulateRoleComboBoxes()
         {
-            // Already implemented in SetupBindings
-        }
-
-        private void DgvUsers_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvUsers.SelectedRows.Count > 0 && !_viewModel.IsEditMode)
+            var rolesList = new List<KeyValuePair<int, string>>
             {
-                User selectedUser = dgvUsers.SelectedRows[0].DataBoundItem as User;
-                _viewModel.SelectedUser = selectedUser;
-                if (selectedUser.Status == "Active")
-                {
-                    btnDeactivate.Text = "Deactivate";
-                }
-                else
-                {
-                    btnDeactivate.Text = "Activate";
-                }
-            }
+                new KeyValuePair<int, string>(0, "All roles"),
+                new KeyValuePair<int, string>(1, "Admin"),
+                new KeyValuePair<int, string>(2, "Manager"),
+                new KeyValuePair<int, string>(3, "Sales"),
+                new KeyValuePair<int, string>(4, "Inventory"),
+                new KeyValuePair<int, string>(5, "Finance")
+            };
+
+            cmbRoleFilter.DisplayMember = "Value";
+            cmbRoleFilter.ValueMember = "Key";
+            cmbRoleFilter.DataSource = new BindingList<KeyValuePair<int, string>>(rolesList);
+            cmbRoleFilter.SelectedIndex = 0;
+
+            // Set up the role combo box for user details
+            cmbRoles.DisplayMember = "Value";
+            cmbRoles.ValueMember = "Key";
+            cmbRoles.DataSource = new BindingList<KeyValuePair<int, string>>(
+                rolesList.Where(r => r.Key != 0).ToList());
         }
 
-        private void TxtPassword_TextChanged(object sender, EventArgs e)
+        private void PopulateStatusComboBoxes()
         {
-            string password = txtPassword.Text;
-            int strength = CalculatePasswordStrength(password);
+            var statusList = new List<string>
+            {
+                "All statuses",
+                "Active",
+                "Inactive",
+                "Locked"
+            };
 
-            progressBarPasswordStrength.Value = strength;
-
-            if (strength < 40)
-            {
-                lblPasswordStrength.Text = "Weak";
-                lblPasswordStrength.ForeColor = Color.Red;
-            }
-            else if (strength < 70)
-            {
-                lblPasswordStrength.Text = "Medium";
-                lblPasswordStrength.ForeColor = Color.Orange;
-            }
-            else
-            {
-                lblPasswordStrength.Text = "Strong";
-                lblPasswordStrength.ForeColor = Color.Green;
-            }
+            cmbStatusFilter.DataSource = new BindingList<string>(statusList);
+            cmbStatusFilter.SelectedIndex = 0;
         }
 
-        private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PopulateActionTypeComboBox()
         {
-            if (e.PropertyName == "IsEditMode")
+            var actionTypes = new List<KeyValuePair<string, string>>
             {
-                UpdateUIEditState(_viewModel.IsEditMode);
-            }
+                new KeyValuePair<string, string>("", "All event types")
+            };
+
+            cmbActionType.DisplayMember = "Value";
+            cmbActionType.ValueMember = "Key";
+            cmbActionType.DataSource = new BindingList<KeyValuePair<string, string>>(actionTypes);
+            cmbActionType.SelectedIndex = 0;
         }
 
-        private void UpdateUIEditState(bool isEditMode)
+        private void RegisterEventHandlers()
         {
-            txtUsername.ReadOnly = !isEditMode || (_viewModel.SelectedUser?.UserID > 0);
-            txtDisplayName.ReadOnly = !isEditMode;
-            txtEmail.ReadOnly = !isEditMode;
-            txtPhone.ReadOnly = !isEditMode;
-            cmbRoles.Enabled = isEditMode;
-            chkTwoFactorEnabled.Enabled = isEditMode;
-            dateTimePickerExpiration.Enabled = isEditMode;
+            txtSearch.TextChanged += (s, e) => SearchTextChanged?.Invoke(s, e);
+            cmbRoleFilter.SelectedIndexChanged += (s, e) => RoleFilterChanged?.Invoke(s, e);
+            cmbStatusFilter.SelectedIndexChanged += (s, e) => StatusFilterChanged?.Invoke(s, e);
+            dgvUsers.SelectionChanged += (s, e) => UserSelected?.Invoke(s, e);
+            btnAddUser.Click += (s, e) => AddUserClicked?.Invoke(s, e);
+            btnEdit.Click += (s, e) => EditUserClicked?.Invoke(s, e);
+            btnDeactivate.Click += (s, e) => DeactivateUserClicked?.Invoke(s, e);
+            btnDelete.Click += (s, e) => DeleteUserClicked?.Invoke(s, e);
 
-            txtPassword.Enabled = isEditMode;
-            txtConfirmPassword.Enabled = isEditMode;
+            btnSave.Click += (s, e) => SaveUserClicked?.Invoke(s, e);
+            btnCancel.Click += (s, e) => CancelEditClicked?.Invoke(s, e);
+            btnResetPassword.Click += (s, e) => ResetPasswordClicked?.Invoke(s, e);
+            txtPassword.TextChanged += (s, e) => PasswordTextChanged?.Invoke(s, e);
 
-            chkSunday.Enabled = isEditMode;
-            chkMonday.Enabled = isEditMode;
-            chkTuesday.Enabled = isEditMode;
-            chkWednesday.Enabled = isEditMode;
-            chkThursday.Enabled = isEditMode;
-            chkFriday.Enabled = isEditMode;
-            chkSaturday.Enabled = isEditMode;
-
-            btnSave.Enabled = isEditMode;
-            btnCancel.Enabled = isEditMode;
-            btnResetPassword.Enabled = !isEditMode && _viewModel.SelectedUser?.UserID > 0;
-
-            btnAddUser.Enabled = !isEditMode;
-            btnEdit.Enabled = !isEditMode && _viewModel.SelectedUser != null;
-            btnDeactivate.Enabled = !isEditMode && _viewModel.SelectedUser != null;
-            btnDelete.Enabled = !isEditMode && _viewModel.SelectedUser != null;
-
-            dgvUsers.Enabled = !isEditMode;
+            btnFilter.Click += (s, e) => FilterActivityClicked?.Invoke(s, e);
+            btnExport.Click += (s, e) => ExportActivityClicked?.Invoke(s, e);
         }
 
-        private int CalculatePasswordStrength(string password)
+        private void UpdateControlsEditState()
         {
-            if (string.IsNullOrEmpty(password))
-                return 0;
+            // Basic info controls
+            txtUsername.Enabled = _isEdit;
+            txtDisplayName.Enabled = _isEdit;
+            txtEmail.Enabled = _isEdit;
+            txtPhone.Enabled = _isEdit;
+            cmbRoles.Enabled = _isEdit;
 
-            int score = 0;
+            // Security tab controls
+            txtPassword.Enabled = _isEdit;
+            txtConfirmPassword.Enabled = _isEdit;
+            chkTwoFactorEnabled.Enabled = _isEdit;
 
-            if (password.Length >= 8)
-                score += 20;
-            else if (password.Length >= 6)
-                score += 10;
+            // Restrictions tab controls
+            chkSunday.Enabled = _isEdit;
+            chkMonday.Enabled = _isEdit;
+            chkTuesday.Enabled = _isEdit;
+            chkWednesday.Enabled = _isEdit;
+            chkThursday.Enabled = _isEdit;
+            chkFriday.Enabled = _isEdit;
+            chkSaturday.Enabled = _isEdit;
 
-            if (password.Any(char.IsUpper))
-                score += 20;
+            // Edit action buttons
+            btnSave.Enabled = _isEdit;
+            btnCancel.Enabled = _isEdit;
 
-            if (password.Any(char.IsLower))
-                score += 20;
-
-            if (password.Any(char.IsDigit))
-                score += 20;
-
-            if (password.Any(c => !char.IsLetterOrDigit(c)))
-                score += 20;
-
-            return Math.Min(100, score);
+            // Other action buttons (disabled during edit)
+            btnEdit.Enabled = !_isEdit && SelectedUserId.HasValue;
+            btnAddUser.Enabled = !_isEdit;
+            btnDeactivate.Enabled = !_isEdit && SelectedUserId.HasValue;
+            btnDelete.Enabled = !_isEdit && SelectedUserId.HasValue;
+            btnResetPassword.Enabled = !_isEdit && SelectedUserId.HasValue;
         }
+
+        #endregion
     }
 }

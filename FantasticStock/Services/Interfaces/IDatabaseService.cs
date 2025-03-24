@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public interface IDatabaseService
     {

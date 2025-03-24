@@ -4,7 +4,7 @@ using System.Linq;
 using FantasticStock.Models.Sales;
 using FantasticStock.Common;
 
-namespace FantasticStock.Services
+namespace FantasticStock.Services.Admin
 {
     public class SalesService : ISalesService
     {
