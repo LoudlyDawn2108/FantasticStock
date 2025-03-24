@@ -275,6 +275,7 @@
             // 
             this.btnAddExpense.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddExpense.BackColor = System.Drawing.Color.Lime;
+            this.btnAddExpense.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddExpense.Location = new System.Drawing.Point(850, 8);
             this.btnAddExpense.Name = "btnAddExpense";
             this.btnAddExpense.Size = new System.Drawing.Size(90, 23);

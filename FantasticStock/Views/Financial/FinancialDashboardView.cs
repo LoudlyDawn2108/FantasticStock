@@ -52,9 +52,9 @@ namespace FantasticStock.Views.Financial
             btnRefresh.Click += BtnRefresh_Click;
             dtpStartDate.ValueChanged += DateRange_ValueChanged;
             dtpEndDate.ValueChanged += DateRange_ValueChanged;
-            btnIncomeStatement.Click += BtnIncomeStatement_Click;
-            btnBalanceSheet.Click += BtnBalanceSheet_Click;
-            btnCashFlow.Click += BtnCashFlow_Click;
+            //btnIncomeStatement.Click += BtnIncomeStatement_Click;
+            //btnBalanceSheet.Click += BtnBalanceSheet_Click;
+            //btnCashFlow.Click += BtnCashFlow_Click;
 
             // Configure grid views when form loads
             ConfigureDataGridViews();

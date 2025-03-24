@@ -223,6 +223,7 @@
             // 
             this.btnAddPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddPayment.BackColor = System.Drawing.Color.Lime;
+            this.btnAddPayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddPayment.Location = new System.Drawing.Point(797, 8);
             this.btnAddPayment.Name = "btnAddPayment";
             this.btnAddPayment.Size = new System.Drawing.Size(82, 23);

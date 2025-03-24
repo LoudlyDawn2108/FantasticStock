@@ -421,7 +421,7 @@
             this.button15.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
             this.button15.Size = new System.Drawing.Size(165, 35);
             this.button15.TabIndex = 8;
-            this.button15.Text = "Financial Reports";
+            this.button15.Text = "Invoices";
             this.button15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.menuButton_Click);
