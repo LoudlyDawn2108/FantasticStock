@@ -17,7 +17,7 @@ namespace FantasticStock.Views.Financial
     public partial class FinancialDashboardView : UserControl
     {
         //private FinancialDashboardViewModel _viewModel;
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
 
         private BindingList<Payment> _recentPayments;
         private BindingList<Expense> _recentExpenses;

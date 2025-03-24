@@ -18,7 +18,7 @@ namespace FantasticStock.Views.Financial
 
         private List<Payment> _payments;
         private Payment _selectedPayment;
-        private const string ConnectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
+        private const string ConnectionString = "Data Source=TUNGCORN\\SQLEXPRESS;Initial Catalog=FantasticStock1;Integrated Security=True;TrustServerCertificate=True";
 
         public PaymentsView()
         {
