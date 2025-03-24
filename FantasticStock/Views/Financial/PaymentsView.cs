@@ -509,6 +509,7 @@ namespace FantasticStock.Views.Financial
             }
         }
 
+        /*
         private void AllocatePayment(Payment payment)
         {
             try
@@ -536,6 +537,7 @@ namespace FantasticStock.Views.Financial
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        */
 
         private void DeletePayment(Payment payment)
         {
