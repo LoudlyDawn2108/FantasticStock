@@ -15,7 +15,7 @@ namespace FantasticStock.Views.Admin
         int? RoleFilter { get; }
         string StatusFilter { get; }
         int? SelectedUserId { get; }
-        bool IsEdit { get; set; } // Add this property
+        bool IsEdit { get; set; }
 
         void ShowUserDetails(User user);
         void ClearUserDetails();

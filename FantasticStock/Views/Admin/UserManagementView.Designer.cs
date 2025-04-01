@@ -63,6 +63,7 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.tabPageSecurity = new System.Windows.Forms.TabPage();
             this.chkTwoFactorEnabled = new System.Windows.Forms.CheckBox();
+            this.lblPasswordStrength = new System.Windows.Forms.Label();
             this.progressBarPasswordStrength = new System.Windows.Forms.ProgressBar();
             this.txtConfirmPassword = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -95,7 +96,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lblPasswordStrength = new System.Windows.Forms.Label();
             this.tabControlMain.SuspendLayout();
             this.tabPageUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
@@ -138,7 +138,7 @@
             this.tabPageUsers.Controls.Add(this.splitContainerMain);
             this.tabPageUsers.Location = new System.Drawing.Point(4, 22);
             this.tabPageUsers.Name = "tabPageUsers";
-            this.tabPageUsers.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageUsers.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageUsers.Size = new System.Drawing.Size(982, 531);
             this.tabPageUsers.TabIndex = 0;
             this.tabPageUsers.Text = "Users";
@@ -163,7 +163,7 @@
             this.splitContainerMain.Panel2.Controls.Add(this.panelDetailActions);
             this.splitContainerMain.Panel2MinSize = 350;
             this.splitContainerMain.Size = new System.Drawing.Size(976, 525);
-            this.splitContainerMain.SplitterDistance = 474;
+            this.splitContainerMain.SplitterDistance = 473;
             this.splitContainerMain.TabIndex = 0;
             // 
             // panelUserList
@@ -172,8 +172,8 @@
             this.panelUserList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelUserList.Location = new System.Drawing.Point(0, 80);
             this.panelUserList.Name = "panelUserList";
-            this.panelUserList.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.panelUserList.Size = new System.Drawing.Size(474, 402);
+            this.panelUserList.Padding = new System.Windows.Forms.Padding(5);
+            this.panelUserList.Size = new System.Drawing.Size(473, 402);
             this.panelUserList.TabIndex = 2;
             // 
             // dgvUsers
@@ -192,7 +192,7 @@
             this.dgvUsers.ReadOnly = true;
             this.dgvUsers.RowHeadersWidth = 30;
             this.dgvUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUsers.Size = new System.Drawing.Size(464, 392);
+            this.dgvUsers.Size = new System.Drawing.Size(463, 392);
             this.dgvUsers.TabIndex = 0;
             // 
             // panelFilters
@@ -203,7 +203,7 @@
             this.panelFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilters.Location = new System.Drawing.Point(0, 0);
             this.panelFilters.Name = "panelFilters";
-            this.panelFilters.Size = new System.Drawing.Size(474, 80);
+            this.panelFilters.Size = new System.Drawing.Size(473, 80);
             this.panelFilters.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -220,7 +220,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(415, 32);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(414, 32);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // panel3
@@ -265,7 +265,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(210, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(202, 26);
+            this.panel4.Size = new System.Drawing.Size(201, 26);
             this.panel4.TabIndex = 1;
             // 
             // cmbRoleFilter
@@ -275,7 +275,7 @@
             this.cmbRoleFilter.FormattingEnabled = true;
             this.cmbRoleFilter.Location = new System.Drawing.Point(80, 3);
             this.cmbRoleFilter.Name = "cmbRoleFilter";
-            this.cmbRoleFilter.Size = new System.Drawing.Size(113, 21);
+            this.cmbRoleFilter.Size = new System.Drawing.Size(112, 21);
             this.cmbRoleFilter.TabIndex = 5;
             // 
             // lblRoleFilter
@@ -294,7 +294,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(101, 15);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(318, 20);
+            this.txtSearch.Size = new System.Drawing.Size(317, 20);
             this.txtSearch.TabIndex = 3;
             // 
             // lblSearch
@@ -311,18 +311,17 @@
             this.panelListActions.Controls.Add(this.btnDelete);
             this.panelListActions.Controls.Add(this.btnDeactivate);
             this.panelListActions.Controls.Add(this.btnEdit);
-            this.panelListActions.Controls.Add(this.btnAddUser);
             this.panelListActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelListActions.Location = new System.Drawing.Point(0, 482);
             this.panelListActions.Name = "panelListActions";
-            this.panelListActions.Size = new System.Drawing.Size(474, 43);
+            this.panelListActions.Size = new System.Drawing.Size(473, 43);
             this.panelListActions.TabIndex = 0;
             // 
             // btnDelete
             // 
-            this.btnDelete.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnDelete.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDelete.ForeColor = System.Drawing.Color.Red;
-            this.btnDelete.Location = new System.Drawing.Point(363, 10);
+            this.btnDelete.Location = new System.Drawing.Point(378, 10);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 3;
@@ -331,9 +330,9 @@
             // 
             // btnDeactivate
             // 
-            this.btnDeactivate.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnDeactivate.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnDeactivate.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.btnDeactivate.Location = new System.Drawing.Point(261, 10);
+            this.btnDeactivate.Location = new System.Drawing.Point(276, 10);
             this.btnDeactivate.Name = "btnDeactivate";
             this.btnDeactivate.Size = new System.Drawing.Size(75, 23);
             this.btnDeactivate.TabIndex = 2;
@@ -342,9 +341,9 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnEdit.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.btnEdit.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.btnEdit.Location = new System.Drawing.Point(145, 10);
+            this.btnEdit.Location = new System.Drawing.Point(18, 10);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(75, 23);
             this.btnEdit.TabIndex = 1;
@@ -353,10 +352,10 @@
             // 
             // btnAddUser
             // 
-            this.btnAddUser.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnAddUser.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.btnAddUser.BackColor = System.Drawing.SystemColors.Highlight;
             this.btnAddUser.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.btnAddUser.Location = new System.Drawing.Point(33, 10);
+            this.btnAddUser.Location = new System.Drawing.Point(878, 10);
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(75, 23);
             this.btnAddUser.TabIndex = 0;
@@ -369,8 +368,8 @@
             this.panelUserDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelUserDetail.Location = new System.Drawing.Point(0, 0);
             this.panelUserDetail.Name = "panelUserDetail";
-            this.panelUserDetail.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.panelUserDetail.Size = new System.Drawing.Size(498, 482);
+            this.panelUserDetail.Padding = new System.Windows.Forms.Padding(5);
+            this.panelUserDetail.Size = new System.Drawing.Size(499, 482);
             this.panelUserDetail.TabIndex = 1;
             // 
             // tabControlUserDetail
@@ -382,7 +381,7 @@
             this.tabControlUserDetail.Location = new System.Drawing.Point(5, 5);
             this.tabControlUserDetail.Name = "tabControlUserDetail";
             this.tabControlUserDetail.SelectedIndex = 0;
-            this.tabControlUserDetail.Size = new System.Drawing.Size(488, 472);
+            this.tabControlUserDetail.Size = new System.Drawing.Size(489, 472);
             this.tabControlUserDetail.TabIndex = 0;
             // 
             // tabPageBasicInfo
@@ -399,8 +398,8 @@
             this.tabPageBasicInfo.Controls.Add(this.lblUsername);
             this.tabPageBasicInfo.Location = new System.Drawing.Point(4, 22);
             this.tabPageBasicInfo.Name = "tabPageBasicInfo";
-            this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
-            this.tabPageBasicInfo.Size = new System.Drawing.Size(480, 446);
+            this.tabPageBasicInfo.Padding = new System.Windows.Forms.Padding(10);
+            this.tabPageBasicInfo.Size = new System.Drawing.Size(481, 446);
             this.tabPageBasicInfo.TabIndex = 0;
             this.tabPageBasicInfo.Text = "Basic Info";
             this.tabPageBasicInfo.UseVisualStyleBackColor = true;
@@ -413,7 +412,7 @@
             this.cmbRoles.FormattingEnabled = true;
             this.cmbRoles.Location = new System.Drawing.Point(120, 144);
             this.cmbRoles.Name = "cmbRoles";
-            this.cmbRoles.Size = new System.Drawing.Size(339, 21);
+            this.cmbRoles.Size = new System.Drawing.Size(340, 21);
             this.cmbRoles.TabIndex = 9;
             // 
             // lblRole
@@ -432,7 +431,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPhone.Location = new System.Drawing.Point(120, 110);
             this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(339, 20);
+            this.txtPhone.Size = new System.Drawing.Size(340, 20);
             this.txtPhone.TabIndex = 7;
             // 
             // txtEmail
@@ -442,7 +441,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEmail.Location = new System.Drawing.Point(120, 80);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(339, 20);
+            this.txtEmail.Size = new System.Drawing.Size(340, 20);
             this.txtEmail.TabIndex = 6;
             // 
             // txtDisplayName
@@ -452,7 +451,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDisplayName.Location = new System.Drawing.Point(120, 50);
             this.txtDisplayName.Name = "txtDisplayName";
-            this.txtDisplayName.Size = new System.Drawing.Size(339, 20);
+            this.txtDisplayName.Size = new System.Drawing.Size(340, 20);
             this.txtDisplayName.TabIndex = 5;
             // 
             // txtUsername
@@ -462,7 +461,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.Location = new System.Drawing.Point(120, 20);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(339, 20);
+            this.txtUsername.Size = new System.Drawing.Size(340, 20);
             this.txtUsername.TabIndex = 4;
             // 
             // lblPhone
@@ -512,8 +511,8 @@
             this.tabPageSecurity.Controls.Add(this.lblPassword);
             this.tabPageSecurity.Location = new System.Drawing.Point(4, 22);
             this.tabPageSecurity.Name = "tabPageSecurity";
-            this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
-            this.tabPageSecurity.Size = new System.Drawing.Size(480, 446);
+            this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(10);
+            this.tabPageSecurity.Size = new System.Drawing.Size(481, 446);
             this.tabPageSecurity.TabIndex = 1;
             this.tabPageSecurity.Text = "Security";
             this.tabPageSecurity.UseVisualStyleBackColor = true;
@@ -528,10 +527,20 @@
             this.chkTwoFactorEnabled.Text = "Two-Factor Authentication";
             this.chkTwoFactorEnabled.UseVisualStyleBackColor = true;
             // 
+            // lblPasswordStrength
+            // 
+            this.lblPasswordStrength.AutoSize = true;
+            this.lblPasswordStrength.Location = new System.Drawing.Point(20, 80);
+            this.lblPasswordStrength.Name = "lblPasswordStrength";
+            this.lblPasswordStrength.Size = new System.Drawing.Size(50, 13);
+            this.lblPasswordStrength.TabIndex = 5;
+            this.lblPasswordStrength.Text = "Strength:";
+            // 
             // progressBarPasswordStrength
             // 
             this.progressBarPasswordStrength.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBarPasswordStrength.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.progressBarPasswordStrength.Location = new System.Drawing.Point(120, 83);
             this.progressBarPasswordStrength.Name = "progressBarPasswordStrength";
             this.progressBarPasswordStrength.Size = new System.Drawing.Size(308, 10);
@@ -588,8 +597,8 @@
             this.tabPageRestrictions.Controls.Add(this.lblAllowedDays);
             this.tabPageRestrictions.Location = new System.Drawing.Point(4, 22);
             this.tabPageRestrictions.Name = "tabPageRestrictions";
-            this.tabPageRestrictions.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
-            this.tabPageRestrictions.Size = new System.Drawing.Size(480, 448);
+            this.tabPageRestrictions.Padding = new System.Windows.Forms.Padding(10);
+            this.tabPageRestrictions.Size = new System.Drawing.Size(481, 446);
             this.tabPageRestrictions.TabIndex = 3;
             this.tabPageRestrictions.Text = "Restrictions";
             this.tabPageRestrictions.UseVisualStyleBackColor = true;
@@ -695,13 +704,13 @@
             this.panelDetailActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelDetailActions.Location = new System.Drawing.Point(0, 482);
             this.panelDetailActions.Name = "panelDetailActions";
-            this.panelDetailActions.Size = new System.Drawing.Size(498, 43);
+            this.panelDetailActions.Size = new System.Drawing.Size(499, 43);
             this.panelDetailActions.TabIndex = 0;
             // 
             // btnResetPassword
             // 
             this.btnResetPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnResetPassword.Location = new System.Drawing.Point(244, 10);
+            this.btnResetPassword.Location = new System.Drawing.Point(245, 10);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(91, 23);
             this.btnResetPassword.TabIndex = 2;
@@ -711,7 +720,7 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(342, 10);
+            this.btnCancel.Location = new System.Drawing.Point(343, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(70, 23);
             this.btnCancel.TabIndex = 1;
@@ -723,7 +732,7 @@
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSave.BackColor = System.Drawing.SystemColors.Highlight;
             this.btnSave.ForeColor = System.Drawing.SystemColors.Menu;
-            this.btnSave.Location = new System.Drawing.Point(417, 10);
+            this.btnSave.Location = new System.Drawing.Point(418, 10);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(70, 23);
             this.btnSave.TabIndex = 0;
@@ -736,7 +745,7 @@
             this.tabPageActivityLog.Controls.Add(this.panelActivityControls);
             this.tabPageActivityLog.Location = new System.Drawing.Point(4, 22);
             this.tabPageActivityLog.Name = "tabPageActivityLog";
-            this.tabPageActivityLog.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPageActivityLog.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageActivityLog.Size = new System.Drawing.Size(982, 531);
             this.tabPageActivityLog.TabIndex = 1;
             this.tabPageActivityLog.Text = "Activity Log";
@@ -858,6 +867,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.btnAddUser);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -883,15 +893,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(990, 557);
             this.panel2.TabIndex = 2;
-            // 
-            // lblPasswordStrength
-            // 
-            this.lblPasswordStrength.AutoSize = true;
-            this.lblPasswordStrength.Location = new System.Drawing.Point(20, 80);
-            this.lblPasswordStrength.Name = "lblPasswordStrength";
-            this.lblPasswordStrength.Size = new System.Drawing.Size(50, 13);
-            this.lblPasswordStrength.TabIndex = 5;
-            this.lblPasswordStrength.Text = "Strength:";
             // 
             // UserManagementView
             // 
