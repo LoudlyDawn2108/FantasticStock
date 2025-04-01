@@ -441,12 +441,12 @@ namespace FantasticStock.Views.Inventory
                 string query;
                 if (ProductID > 0)
                 {
-                    query = "update Product set SKU = @SKU, Barcode = @Barcode, ProductName = @ProductName, Description = @Description, CategoryID = @CategoryID,SupplierID = @SupplierID, CostPrice = @CostPrice, SellingPrice = @SellingPrice, StockQuantity = @StockQuantity, ReorderLevel = @ReorderLevel, ProductImage = @ProductImage, ModifiedDate = @ModifiedDate where ProductID = @ProductID";
+                    query = "update Product set SKU = @SKU, Barcode = @Barcode, ProductName = @ProductName, Description = @Description, CategoryID = @CategoryID, CategoryName = @CategoryName, SupplierID = @SupplierID, SupplierName = @SupplierName, CostPrice = @CostPrice, SellingPrice = @SellingPrice, StockQuantity = @StockQuantity, ReorderLevel = @ReorderLevel, ProductImage = @ProductImage, ModifiedDate = @ModifiedDate where ProductID = @ProductID";
                     cmd = new SqlCommand(query, conn);
                 }
                 else
                 {
-                    query = "insert into Product (SKU, Barcode, ProductName, Description, CategoryID, SupplierID, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate) values(@SKU, @Barcode, @ProductName, @Description, @CategoryID, @SupplierID, @CostPrice, @SellingPrice, @StockQuantity, @ReorderLevel, @ProductImage, @CreatedDate)";
+                    query = "insert into Product (SKU, Barcode, ProductName, Description, CategoryID, CategoryName, SupplierID, SupplierName, CostPrice, SellingPrice, StockQuantity, ReorderLevel, ProductImage, CreatedDate) values(@SKU, @Barcode, @ProductName, @Description, @CategoryID, @CategoryName, @SupplierID, @SupplierName, @CostPrice, @SellingPrice, @StockQuantity, @ReorderLevel, @ProductImage, @CreatedDate)";
                     cmd = new SqlCommand(query, conn);
                 }
 
@@ -456,6 +456,8 @@ namespace FantasticStock.Views.Inventory
                 cmd.Parameters.AddWithValue("@ProductName", txtProductName.Text);
                 cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
                 cmd.Parameters.AddWithValue("@CategoryID", cmbCategory.SelectedValue);
+                cmd.Parameters.AddWithValue("@CategoryName", cmbCategory.Text);
+                cmd.Parameters.AddWithValue("@SupplierName", cmbSupplier.Text);
                 cmd.Parameters.AddWithValue("@SupplierID", cmbSupplier.SelectedValue);
                 cmd.Parameters.AddWithValue("@CostPrice", txtCostPrice.Text);
                 cmd.Parameters.AddWithValue("@SellingPrice", txtSalePrice.Text);
